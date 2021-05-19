@@ -1295,7 +1295,6 @@
     <Content Include="Content\assets\imagesemoji\emoji_spritesheet_3.png" />
     <Content Include="Content\assets\imagesemoji\emoji_spritesheet_4.png" />
     <Content Include="Content\common\1.2.js" />
-    <Content Include="Content\common\2.js" />
     <Content Include="Content\common\component.css" />
     <Content Include="Content\common\customCareers.js" />
     <Content Include="Content\common\custom.js" />
