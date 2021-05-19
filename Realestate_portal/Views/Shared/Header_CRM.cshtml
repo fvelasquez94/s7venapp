@@ -1,0 +1,203 @@
+﻿
+@{
+    Layout = null;
+    List<Realestate_portal.Models.Sys_Notifications> notifications = ViewBag.notifications;
+    Realestate_portal.Models.Sys_Users activeuser = Session["activeUser"] as Realestate_portal.Models.Sys_Users;
+}
+
+<!-- Begin Header -->
+<header class="header" style="box-shadow: rgba(0,0,0,0.1) 3px 3px">
+    <nav class="navbar fixed-top">
+        <!-- Begin Search Box-->
+        <!-- End Search Box-->
+        <!-- Begin Topbar -->
+        <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
+            <!-- Begin Logo -->
+            <div class="navbar-header">     
+                    <a href="@Url.Action("Dashboard","Portal",new {broker=ViewBag.selbroker })" class="navbar-brand">
+                        <div class="brand-image brand-big">
+                            <img src="~/Content/pgrlogos/S7VENLogoBlack.png" alt="logo" style="width:100px;" class="logo-big">
+                        </div>
+                        <div class="brand-image brand-small">
+                            <img src="~/Content/pgrlogos/S7VENLogoBlack.png" alt="logo" style="width:100px;" class="logo-big">
+                        </div>
+                    </a>
+                <!-- Toggle Button -->
+                <a id="toggle-btn" href="#" class="menu-btn active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+                <!-- End Toggle -->
+            </div>
+            <!-- End Logo -->
+            <!-- Begin Navbar Menu -->
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
+                <!-- Search -->
+                <!-- End Search -->
+                <!-- Begin Notifications -->
+                <li class="nav-item dropdown">
+                    <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+
+                        @if (notifications.Count > 0)
+                        {
+                            <i class="la la-bell animated infinite swing primary-color"></i>
+                            <span class="badge-pulse"></span>
+                        }
+                        else
+                        {
+                            <i class="la la-bell primary-color"></i>
+                        }
+                    </a>
+
+                    <ul aria-labelledby="notifications" class="dropdown-menu notification">
+                        <li>
+                            <div class="notifications-header">
+                                <div class="title">Notifications (@notifications.Count())</div>
+                                <div class="notifications-overlay"></div>
+                                <img src="~/Content/assets/img/notifications/01.jpg" alt="..." class="img-fluid">
+                            </div>
+                        </li>
+                        @if (notifications.Count > 0)
+                        {
+                            foreach (var notif in notifications)
+                            {
+                                <li>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#modalNotifications" onclick="shownotification('@notif.Title', '@notif.Description.Replace("," , "")')">
+                                        <div class="message-icon">
+                                            @if (notif.Title == "New lead Created.")
+                                            {
+                                                <i class="la la-user"></i>
+                                            }
+                                            else if (notif.Title == "New property assigned.")
+                                            {
+                                                <i class="la la-home"></i>
+                                            }
+                                            else if (notif.Title == "New webinar.")
+                                            {
+                                                <i class="la la-calendar"></i>
+                                            }
+                                            else if (notif.Title == "New Customer assigned.")
+                                            {
+                                                <i class="la la-user"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="la la-home"></i>
+                                            }
+
+                                        </div>
+                                        <div class="message-body">
+                                            <div class="message-body-heading">
+                                                @notif.Title
+                                            </div>
+                                            <span class="date">@notif.Description</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                            <li>
+                                <a rel="nofollow" href="@Url.Action("markasread","Portal")" class="dropdown-item all-notifications text-center">Mark all as read</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item all-notifications text-center">No new notifications</a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+                <!-- End Notifications -->
+                <!-- User -->
+                <li class="nav-item dropdown">
+                    <a id="user" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+                        @*@if (activeuser.Image == "")
+        {
+            <img src="~/Content/pgrlogos/S7VENStandalone.png" alt="..." class="avatar rounded-circle">
+        }
+        else
+        {
+            <img src="@Url.Content(activeuser.Image)" alt="..." class="avatar rounded-circle">
+        }*@
+                        <img src="~/Content/pgrlogos/S7VENStandalone.png" alt="..." class="avatar rounded-circle">
+                    </a>
+                    <ul aria-labelledby="user" class="user-size dropdown-menu">
+                        <li><br /></li>
+                        <li>
+                            @if (ViewBag.rol != "SA")
+                            {
+                                <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile" })" class="dropdown-item no-padding-bottom">
+                                    <i class="la la-user"></i> My account
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile",broker=ViewBag.selbroker })" class="dropdown-item no-padding-bottom">
+                                    <i class="la la-user"></i> My account
+                                </a>
+                            }
+                        </li>
+                        <li><br /></li>
+                        @if (ViewBag.rol == "Admin")
+                        {
+                            <li>
+
+                                <a href="@Url.Action("Index", "Users")" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
+                            </li>
+                            <li><br /></li>
+
+                            <li class="#"></li>
+                            <li>
+                                <a href="@Url.Action("Index", "Posts")" class="dropdown-item no-padding-top">
+                                    <i class="la la-globe"></i>  Broker Messages
+                                </a>
+                            </li>
+                            <li><br /></li>
+                            <li class="#"></li>
+
+                            <li>
+                                <a href="@Url.Action("Index", "Tb_Options")" class="dropdown-item no-padding-top">
+                                    <i class="la la-battery-empty"></i>  Categories
+                                </a>
+                            </li>
+                        }
+                        else if (ViewBag.rol == "SA")
+                        {
+                            <li>
+
+                                <a href="@Url.Action("Index","Users",new { broker=ViewBag.selbroker})" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
+                            </li>
+                            <li><br /></li>
+
+                            <li class="#"></li>
+                            <li>
+                                <a href="@Url.Action("Index","Posts",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                    <i class="la la-globe"></i>  Broker Messages
+                                </a>
+                            </li>
+                            <li><br /></li>
+                            <li class="#"></li>
+
+                            <li>
+                                <a href="@Url.Action("Index","Tb_Options",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                    <i class="la la-battery-empty"></i>  Categories
+                                </a>
+                            </li>
+                        }
+
+                        <li><a rel="nofollow" href="@Url.Action("Log_out", "Portal")" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
+                    </ul>
+                </li>
+                <!-- End User -->
+                <!-- Begin Quick Actions -->
+                <li class="nav-item "><a href="#off-canvas" class="open-sidebar"><i class="la la-ellipsis-h primary-color"></i></a></li>
+                <!-- End Quick Actions -->
+            </ul>
+            <!-- End Navbar Menu -->
+        </div>
+        <!-- End Topbar -->
+    </nav>
+</header>
+<!-- End Header -->

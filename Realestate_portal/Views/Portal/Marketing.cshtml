@@ -1,0 +1,255 @@
+﻿@model List<Realestate_portal.Models.Tb_Marketing>
+@{
+    ViewBag.Title = "Premium Group Realty";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">MARKETING</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Row -->
+
+
+    <div class="row">
+
+
+        <!-- Begin Widget Header -->
+        <!-- End Widget Header -->
+        <!-- Begin Widget Body -->
+        <div class="widget-body" style="width: 100%;">
+            <div class="widget-header bordered d-flex align-items-center">
+                <div class="today">
+                    <div class="title">DOWNLOAD</div>
+                    <div class="new-tasks">ALL THE AVAILABLES IMAGES FOR MARKETING </div>
+                </div><h2></h2>
+                <div class="widget-options">
+                    @if (ViewBag.rol == "Admin")
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Image</a>
+                        <a class="btn btn-shadow" href="@Url.Action("Marketing_management", "Portal")">Management</a>
+                    }
+                </div>
+            </div><br /><br />
+            @foreach (var category in lstcategories)
+            {
+                <label>@category.Description</label>
+                <div class="owl-carousel">
+                    @if (Model.Where(a => a.Category == category.Description).Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Category == category.Description))
+                        {
+
+                            <div class="item" style="margin-right:10px;">
+                                <div class="widget has-shadow">
+                                    <figure class="img-hover-01" style="max-width:500px;max-height:250px;">
+                                        <div style="top:0 !important">
+                                            <span>@item.Name</span>
+                                        </div>
+                                        @if (item.T_image == "~/Content/Uploads/Images/Marketing_img/")
+                                        {
+                                            <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
+                                        }
+                                        else
+                                        {
+                                            if (item.T_image.Contains("pdf") || item.T_image.Contains("doc"))
+                                            {
+                                                <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
+                                            }
+                                            else
+                                            {
+                                                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="...">
+                                            }
+
+                                        }
+                                        <div>
+                                            @if (item.T_image.Contains("pdf") || item.T_image.Contains("doc"))
+                                            {
+                                                <a href="@Url.Action("DownloadDocpdfmarketing", "Portal", new { id = item.ID_marketing })"><span class="btn btn-danger btn-sm">Download</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Download_imageMarketing", "Portal", new { id = item.ID_marketing })" target="_blank"><span class="btn btn-danger btn-sm">Download</span></a>
+                                            }
+                                        </div>
+                                    </figure>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="item" style="margin-right:10px;">
+                            <label>No data to show</label>
+                        </div>
+                    }
+
+                </div><hr />
+
+            }
+
+
+        </div>
+        <!-- End Widget Body -->
+
+
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Container -->
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Image</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo" class="form-control" required>
+                                    @foreach (var item in lstcategories)
+    {
+                                <option value="@item.Description">@item.Description</option>
+}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Description *</label>
+                                <textarea id="descriptionvideo" class="form-control" required></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="imageUpload" class="form-control"/>
+                                @*<input type="file" id="imageUpload" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="validateFileType()"/>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        $(".owl-carousel").owlCarousel({ center: false, items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true"></i>', '<i class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 4 } } });
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var description = $.trim($("#descriptionvideo").val());
+            var url = $("#urlvideo").val();
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+ 
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadImage',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Image added successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+
+
+
+    }
+
+
+</script>
+<script type="text/javascript">
+    //function validateFileType() {
+    //    var fileName = document.getElementById("imageUpload").value;
+    //    var idxDot = fileName.lastIndexOf(".") + 1;
+    //    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    //    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    //        //TO DO
+    //    } else {
+    //        alert("Only jpg/jpeg and png files are allowed.");
+    //        document.getElementById("imageUpload").value = "";
+    //    }
+    //}
+</script>

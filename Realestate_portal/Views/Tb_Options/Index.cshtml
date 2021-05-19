@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Options>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">CATEGORIES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <div class="row">
+        <div class="col-xl-12">
+            <!-- Sorting -->
+            <div class="widget has-shadow">
+                <div class="widget-header bordered no-actions d-flex align-items-center">
+                    <h4>Categories Management</h4>
+                </div>
+                <div class="widget-body">
+                    @if (TempData["advertencia"] != null)
+                    {
+                        <div class="alert alert-outline-warning dashed" role="alert">
+                            @TempData["advertencia"]
+                        </div><br />
+                    }
+                    @if (TempData["exito"] != null)
+                    {
+                        <div class="alert alert-outline-success dashed" role="alert">
+                            @TempData["exito"]
+                        </div><br />
+                    }
+
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Type)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Active)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="color:#000">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @if (item.Type == 1)
+    {
+                                <label>MARKETING</label>
+}  @if (item.Type == 2)
+    {
+                                <label>PGR NETWORK</label>
+}
+                                @if (item.Type == 3)
+{
+                                <label>VIDEOS</label>
+}                                @if (item.Type == 4)
+{
+                                <label>BROKER VIDEOS</label>
+}
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Active)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_option }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_option })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>

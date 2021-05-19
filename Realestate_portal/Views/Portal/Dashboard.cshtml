@@ -1,0 +1,1006 @@
+﻿@model List<Realestate_portal.Models.Tb_Posts>
+@using Realestate_portal.Models;
+@{
+    ViewBag.Title = "Dashboard";
+    Sys_Users user = (Sys_Users)ViewBag.userdata;
+    Sys_Users userBroker = (Sys_Users)ViewBag.userdataBroker;
+}
+
+<div class="container-fluid newsfeed">
+    <div class="row justify-content-center">
+        <div class="col-xl-11">
+            <div class="row">
+                <div class="col-xl-4 column">
+                    <!-- Begin Groups -->
+                    <div class="widget widget-13 has-shadow">
+                        <div class="widget-body p-0">
+
+                            <div class="author-avatar" id="OpenImgUpload" style="cursor:pointer">
+
+                                @if (user.Image == "")
+                                {
+                                    <img src="~/Content/assets/img/avatar/avatar-04.jpg" alt="..." class="img-fluid rounded-circle" style="width:100px !important;height:100px !important;">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(user.Image)" alt="..." class="img-fluid rounded-circle" style="width:100px !important;height:100px !important;">
+                                }
+                                <i class="la la-rotate-right"></i>
+
+
+
+
+                            </div>
+
+                            <div class="author-name">
+                                <br />
+                                @user.Name @user.LastName
+                                @if (ViewBag.rol == "Agent")
+                                {
+                                    <span>Real Estate Agent</span>
+                                }
+                                else if (ViewBag.rol == "Admin")
+                                { <span>Broker</span>}
+                                else if (ViewBag.rol == "SA")
+                                { <span>Super Administrator</span>}
+
+                            </div>
+                            <input type="file" id="imgupload" style="display:none" />
+                            <br /><br />
+                            <div class="social-stats " style="margin-left:20px;margin-top:10px">
+                                <div class="row">
+                                    <div class="col-12">
+                                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                        {
+                                            <p>Brokerage Name: @userBroker.Name @userBroker.LastName</p>
+                                            <p>Address: @userBroker.Brokerage_address</p>
+                                            <p>Broker Contact: @userBroker.Broker_Contact</p>
+                                            <p>Broker License: @userBroker.Broker_License</p>
+                                            <p>My License #: @user.My_License </p>
+                                            <p>Member Since: @user.Member_since.ToShortDateString()</p>
+                                        }
+                                        else if (ViewBag.rol == "SA")
+                                        { }
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="shape-container">
+                                <svg class="wavy" viewbox="00 0 85 25">
+                                    <path fill="#e4e8f0" d="M0 30 V15 Q30 3 60 15 V30z" />
+                                    <path fill="#265fa4" d="M0 30 V5 Q30 20 55 12 T100 11 V30z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Begin Widget -->
+                    <div class="widget has-shadow">
+                        <!-- End Widget Header -->
+                        <!-- Begin Widget Body -->
+                        <!-- Begin Comments -->
+                        <div class="comments">
+                            <div class="comments-header d-flex align-items-center">
+                                <div class="d-flex flex-column mr-auto">
+                                    <div class="title">
+                                        <span class="username">Quote of the day</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="comments-body">
+                                <p>
+                                    "@ViewBag.quote"
+                                </p>
+                            </div>
+                            <div class="comments-footer d-flex align-items-center">
+                                <div class="meta">
+                                    -@ViewBag.author
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Comments -->
+
+
+                    </div>
+                    <!-- End Groups -->
+
+                </div>
+                <!-- End Col -->
+                <!-- Begin Timeline -->
+                <div class="col-xl-8">
+                    @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                    {
+                        if (Model.Count > 0)
+                        {
+                            foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
+                            {
+                                <!-- Begin Widget -->
+                                <div class="widget has-shadow">
+                                    <!-- Begin Widget Header -->
+                                    <div class="widget-header d-flex align-items-center">
+                                        <div class="user-image">
+                                            @*<img class="rounded-circle" src="~/Content/assets/img/avatar/avatar-09.jpg" alt="...">*@
+                                        </div>
+                                        <div class="d-flex flex-column mr-auto">
+                                            <div class="title">
+                                                <span class="username" style="color:#4f3a58">News Feed</span>
+                                            </div>
+                                            <div class="time">Broker message: @item.Title</div>
+                                        </div>
+
+                                    </div>
+                                    <!-- End Widget Header -->
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+                                        <p>
+                                            @item.Content_post
+                                        </p>
+                                    </div>
+                                    <!-- End Widget Body -->
+                                    <!-- Begin Widget Footer -->
+                                    <div class="widget-footer d-flex align-items-center">
+                                        <div class="col no-padding d-flex justify-content-start">
+                                            <div class="users-like">
+                                                @*<a href="javascript:void(0);">
+                                                        <img src="~/Content/assets/img/avatar/avatar-03.jpg" class="img-fluid rounded-circle" alt="...">
+                                                    </a>
+                                                    <a href="javascript:void(0);">
+                                                        <img src="~/Content/assets/img/avatar/avatar-05.jpg" class="img-fluid rounded-circle" alt="...">
+                                                    </a>
+                                                    <a href="javascript:void(0);">
+                                                        <img src="~/Content/assets/img/avatar/avatar-07.jpg" class="img-fluid rounded-circle" alt="...">
+                                                    </a>
+                                                    <a href="javascript:void(0);">
+                                                        <img src="~/Content/assets/img/avatar/avatar-04.jpg" class="img-fluid rounded-circle" alt="...">
+                                                    </a>*@
+                                                @if (ViewBag.likepost == 1)
+                                                {
+                                                    <label id="textlike">You like this post.</label>
+                                                }
+                                                else
+                                                {
+                                                    <label id="textlike" style="display:none;">You like this post.</label>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col no-padding d-flex justify-content-end">
+                                            <div class="meta">
+                                                <ul>
+                                                    <li>
+                                                        <a style="color:#5d5386 !important" href="javascript:void(0);" onclick="showcomments();">
+                                                            <i class="la la-comment"></i><span class="numb" id="numcomments">@item.Comments</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a style="color:#5d5386 !important" href="javascript:void(0);" onclick="likepost();">
+                                                            @if (ViewBag.likepost == 1)
+                                                            {
+                                                                <i class="la la-heart" id="likeposticon"></i><span class="numb" id="numlikes">@item.Likes</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="la la-heart-o" id="likeposticon"></i><span class="numb" id="numlikes">@item.Likes</span>
+                                                            }
+
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Widget Footer -->
+                                    <!--POSTS-->
+                                    @if (Model.Where(c => c.Active == true && c.Post_type == 2).Count() > 0)
+                                    {
+                                        <div id="commentshide" style="display:none;">
+                                            <div class="basic-scroll pr-2 pl-2" style="height: 350px; overflow: hidden; outline: none; touch-action: none;" tabindex="3">
+                                                @foreach (var item2 in Model.Where(c => c.Active == true && c.Post_type == 2))
+                                                {
+
+                                                    <div class="reply" style="background-color:white !important">
+                                                        <div class="reply-header d-flex align-items-center">
+                                                            <div class="d-flex flex-column mr-auto">
+                                                                <div class="title">
+                                                                    <span class="username">@item2.Username</span>
+                                                                </div>
+                                                                <div class="time">@item2.created_at</div>
+                                                            </div>
+                                                            <div class="widget-options">
+                                                                @if (user.Roles.Contains("SA"))
+                                                                {
+                                                                    <a class="btn btn-shadow" href="@Url.Action("DelPostcomment", "Portal", new { idparent = item2.Post_parent, idpost=item2.ID_Post })">X</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (user.ID_User == item2.ID_User)
+                                                                    {
+
+                                                                        <a class="btn btn-shadow" href="@Url.Action("DelPostcomment", "Portal", new { idparent = item2.Post_parent, idpost=item2.ID_Post })">X </a>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="reply-body">
+                                                            <p>
+                                                                @item2.Content_post
+                                                            </p>
+                                                        </div>
+                                                        <div class="reply-footer d-flex align-items-center">
+                                                            <div class="meta">
+                                                                @* <ul>
+                                                                        <li>
+                                                                            <a href="javascript:void(0);">
+                                                                                <i class="la la-heart-o"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="javascript:void(0);">
+                                                                                <span class="rep">Like</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                }
+                                            </div>
+
+
+                                            <!-- Begin Publisher -->
+                                            <div class="publisher publisher-multi">
+
+                                                <div data-emojiarea
+                                                     data-type="image"
+                                                     data-global-picker="false">
+                                                    <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
+                                                    <textarea id="commentposttext" class="publisher-input" rows="1"></textarea>
+                                                </div>
+                                                @*<textarea id="commentposttext" class="publisher-input" rows="1"></textarea>*@
+                                                <div class="publisher-bottom d-flex justify-content-end">
+                                                    @*<a class="publisher-btn" href="javascript:void(0);"><i class="la la-smile-o"></i></a>
+                                                        <a class="publisher-btn" href="javascript:void(0);"><i class="la la-camera"></i></a>*@
+                                                    <button class="btn btn-gradient-01" id="btnpostcomment" onclick="saveComment()">Post Comment</button>
+                                                </div>
+                                            </div>
+                                            <!-- End Publisher -->
+
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+
+                                        <div id="commentshide" style="display:none;">
+
+                                            <!-- Begin Publisher -->
+                                            <div class="publisher publisher-multi">
+
+                                                <div data-emojiarea
+                                                     data-type="image"
+                                                     data-global-picker="false">
+                                                    <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
+                                                    <textarea id="commentposttext" class="publisher-input" rows="1"></textarea>
+                                                </div>
+                                                @*<textarea id="commentposttext" class="publisher-input" rows="1"></textarea>*@
+                                                <div class="publisher-bottom d-flex justify-content-end">
+                                                    @*<a class="publisher-btn" href="javascript:void(0);"><i class="la la-smile-o"></i></a>
+                                                        <a class="publisher-btn" href="javascript:void(0);"><i class="la la-camera"></i></a>*@
+                                                    <button class="btn btn-gradient-01" id="btnpostcomment" onclick="saveComment()">Post Comment</button>
+                                                </div>
+                                            </div>
+                                            <!-- End Publisher -->
+
+                                        </div>
+                                    }
+
+
+
+
+
+                                </div>
+                                <!-- End Widget -->
+                            }
+
+                        }
+                        else
+                        {
+                            <!-- Begin Widget -->
+                            <div class="widget has-shadow">
+                                <!-- Begin Widget Header -->
+                                <div class="widget-header d-flex align-items-center">
+                                    <div class="user-image">
+                                        <img class="rounded-circle" src="~/Content/assets/img/avatar/avatar-09.jpg" alt="...">
+                                    </div>
+                                    <div class="d-flex flex-column mr-auto">
+                                        <div class="title">
+                                            <span class="username"></span>
+                                        </div>
+                                        <div class="time">Broker Message</div>
+                                    </div>
+
+                                </div>
+                                <!-- End Widget Header -->
+                                <!-- Begin Widget Body -->
+                                <div class="widget-body">
+                                    <p>
+                                        No message from Broker
+                                    </p>
+                                </div>
+                                <!-- End Widget Body -->
+                                <!-- Begin Widget Footer -->
+                                <!-- End Widget Footer -->
+                                <!-- Begin Publisher -->
+                                <!-- End Publisher -->
+
+
+                            </div>
+                            <!-- End Widget -->
+                        }
+                    }
+                    else if (ViewBag.rol == "SA")
+                    {
+
+                    }
+
+
+
+                    <div class="row">
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-group"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("CRMDashboard","CRM", new { broker=ViewBag.selbroker})">CRM</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("CRMDashboard","CRM")">CRM</a></h4>
+                                        }
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Customer Relationship Manager. Manage your customer Data
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-share-alt"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("PGR_network","Portal", new { broker=ViewBag.selbroker})">Network</a></h4>
+                                        }
+                                        else
+                                        {
+
+                                            <h4 class="name"><a href="@Url.Action("PGR_network","Portal")">Network</a></h4>
+                                        }
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Find and Connect with Professionals for a smother transaction.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-shopping-cart"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("PGR_market","Portal", new { broker=ViewBag.selbroker})">Market</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("PGR_market","Portal")">Market</a></h4>
+
+                                        }
+
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            All approved designs ready for you to order.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-cloud-upload"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal", new { broker=ViewBag.selbroker})">Documents Upload</a></h4>
+                                        }
+                                        else
+                                        {
+
+                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal")">Documents Upload</a></h4>
+                                        }
+
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Upload all your transaction documents.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-archive"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Resources","Portal", new { broker=ViewBag.selbroker})">Resources</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Resources","Portal")">Resources</a></h4>
+
+                                        }
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Access to all MLS forms, Scripts and more.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-youtube-play"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+                                        @if (ViewBag.rol == "SA")
+                                        {
+
+                                            <h4 class="name"><a href="@Url.Action("Videos","Portal",new { broker=ViewBag.selbroker})">Videos</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Videos","Portal")">Videos</a></h4>
+                                        }
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Training videos.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-image"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Marketing","Portal", new { broker=ViewBag.selbroker})">Marketing</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Marketing","Portal")">Marketing</a></h4>
+                                        }
+
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Images for your social networks.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-calendar-o"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+                                        @if (ViewBag.rol == "SA")
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Webinar","Portal", new { broker=ViewBag.selbroker})">Webinars</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="name"><a href="@Url.Action("Webinar","Portal")">Webinars</a></h4>
+
+                                        }
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Stay up to date with all 7 events and access to live trainings.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin")
+                        {
+                            <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                                <!-- Begin Card -->
+                                <div class="widget-image has-shadow">
+                                    <div class="contact-card">
+                                        <!-- Begin Widget Image -->
+                                        <div class="cover-image mx-auto">
+
+                                            <div class="c-icon">
+                                                <i class="la la-calendar-o"></i>
+                                            </div>
+                                        </div>
+                                        <!-- Begin Widget Body -->
+                                        <div class="widget-body">
+
+                                            @if (ViewBag.rol == "SA")
+                                            {
+                                                <h4 class="name"><a href="@Url.Action("Reservations","Portal", new { broker=ViewBag.selbroker})">Bookings</a></h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="name"><a href="@Url.Action("Reservations","Portal")">Bookings</a></h4>
+
+                                            }
+
+
+                                            <div class="item">
+                                                <div class="quick-about">
+                                                    <div class="row d-flex align-items-center">
+                                                        <div class="col-12">
+
+                                                            <p>
+                                                                Bookings.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- End Widget Body -->
+                                    </div>
+                                </div>
+                                <!-- End Card -->
+                            </div>}
+                    </div>
+
+                </div>
+                <!-- End Timeline -->
+                <!-- Begin Column -->
+                <!-- End Column -->
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Container -->
+
+<script type="text/javascript">
+
+
+    //const settings2 = {
+    //    "async": true,
+    //    "crossDomain": true,
+    //    "url": "https://type.fit/api/quotes",
+    //    "method": "GET"
+    //}
+    window.onload = function () {
+        //$.ajax(settings2).done(function (response) {
+        //    const data = JSON.parse(response);
+        //    var items = data;
+        //    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+        //    const header = Object.keys(items[0]);
+        //    let csv = items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+        //    csv.unshift(header.join(','));
+        //    csv = csv.join('\r\n');
+
+        //    //Download the file as CSV
+        //    var downloadLink = document.createElement("a");
+        //    var blob = new Blob(["\ufeff", csv]);
+        //    var url = URL.createObjectURL(blob);
+        //    downloadLink.href = url;
+        //    downloadLink.download = "DataDump.csv";  //Name the file here
+        //    document.body.appendChild(downloadLink);
+        //    downloadLink.click();
+        //    document.body.removeChild(downloadLink);
+        //});
+
+
+
+        $('#OpenImgUpload').click(function () { $('#imgupload').trigger('click'); });
+
+
+        $('input[type="file"]').change(function () {
+               var fileData = new FormData();
+            var iduser = @user.ID_User;
+            var file = document.getElementById("imgupload").files[0];
+
+
+        // Adding one more key to FormData object
+            fileData.append('id', iduser);
+            fileData.append("imgupload", file);
+
+        //if true rotate to the right
+        //$('#maindivprogress_' + ID).show();
+        $.ajax({
+            url: '/Users/changeProfilePicture',
+            //xhr: function () {
+            //    var xhr = new window.XMLHttpRequest();
+            //    xhr.upload.addEventListener("progress", function (evt) {
+            //        if (evt.lengthComputable) {
+            //            var percentComplete = (evt.loaded / evt.total) * 100;
+
+            //            $('#divprogress_' + ID).width(percentComplete + '%');
+            //            $('#imgprogress_' + ID).html(percentComplete.toFixed(2) + "%");
+
+            //        }
+            //    }, false);
+            //    return xhr;
+            //},
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            //async: true,
+            timeout: 80000,
+            data: fileData,
+            success: function (result) {
+                //$("#modal_demoform_saving").modal('hide');
+                if (result == "SUCCESS") {
+                    window.location.reload(true);
+                } else {
+                    console.log(result);
+                }
+                //$("#loading").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error uploading image. " + errorThrown );
+            }
+        });
+        });
+
+    };
+
+
+
+
+
+
+    var like = @ViewBag.likepost;
+    var showcomm = 0;
+    function showcomments() {
+        if (showcomm == 0) {
+            $("#commentshide").show();
+            showcomm = 1;
+        } else {
+            $("#commentshide").hide();
+            showcomm = 0;
+        }
+
+    }
+
+    function likepost() {
+        if (like == 0) {
+
+
+            var id_parentPost = @ViewBag.idparentpost;
+
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Likepost',
+            data: JSON.stringify({
+                id: id_parentPost
+            }),
+            datatype: 'application/json',
+            contentType: 'application/json',
+            processData: false,
+            success: function (response) {
+                if (response == "SUCCESS") {
+
+                    like = 1;
+                    $("#likeposticon").removeClass('la-heart-o');
+                    $("#likeposticon").addClass('la-heart');
+                    $("#textlike").show();
+
+                    var numl = parseInt($("#numlikes").html());
+                    var numl = numl + 1;
+                    $("#numlikes").html(numl);
+
+                } else {
+
+                    alert(response);
+                }
+            },
+            error: function (error) {
+
+                alert("Error posting comment");
+            }
+        });
+
+
+        } else {
+
+                        var id_parentPost = @ViewBag.idparentpost;
+
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Dislikepost',
+            data: JSON.stringify({
+                id: id_parentPost
+            }),
+            datatype: 'application/json',
+            contentType: 'application/json',
+            processData: false,
+            success: function (response) {
+                if (response == "SUCCESS") {
+
+                    like = 0;
+                    $("#likeposticon").addClass('la-heart-o');
+                    $("#likeposticon").removeClass('la-heart');
+                    $("#textlike").hide();
+
+                    var numl = parseInt($("#numlikes").html());
+                    var numl = numl -1;
+                    $("#numlikes").html(numl);
+
+                } else {
+
+                    alert(response);
+                }
+            },
+            error: function (error) {
+
+                alert("Error posting comment");
+            }
+        });
+
+
+        }
+
+    }
+
+    function saveComment() {
+
+        var comment = $.trim($("#commentposttext").val());
+        var id_parentPost = @ViewBag.idparentpost;
+        $("#btnpostcomment").attr("disabled", true);
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Postcomment',
+            data: JSON.stringify({
+                comment: comment,
+                id: id_parentPost
+            }),
+            datatype: 'application/json',
+            contentType: 'application/json',
+            processData: false,
+            success: function (response) {
+                if (response == "SUCCESS") {
+
+                    $("#btnpostcomment").attr("disabled", false);
+                    var numl = parseInt($("#numcomments").html());
+                    var numl = numl + 1;
+                    $("#numcomments").html(numl);
+                    window.location.reload(true);
+                } else {
+                    $("#btnpostcomment").attr("disabled", false);
+                    alert(response);
+                }
+            },
+            error: function (error) {
+                $("#btnpostcomment").attr("disabled", false);
+                alert("Error posting comment");
+            }
+        });
+    }
+
+</script>

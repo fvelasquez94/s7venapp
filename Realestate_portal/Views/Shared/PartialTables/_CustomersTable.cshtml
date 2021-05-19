@@ -1,0 +1,118 @@
+﻿@model Realestate_portal.Models.ViewModels.CRM.CustomerViewModel
+
+<h2>CustomersTable</h2>
+
+<!-- Begin Widget -->
+<div class="widget has-shadow">
+
+    <!-- End Widget Header -->
+    <!-- Begin Widget Body -->
+    <div class="widget-body" style="padding-bottom:250px">
+        <div class="table-responsive">
+            <table class="table" id="tableresources" style="width: 100% !important">
+                <thead>
+                    <tr style="background-color: #2c9ad6 !important; " id="tableHeader">
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Phone
+                        </th>
+                        <th>
+                            E-mail
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        @if (ViewBag.rol == "Admin")
+                        {
+                            <th>
+                                Agent
+                            </th>
+                        }
+                        <th>
+                            Last Activity
+                        </th>
+                        <th>
+                            City
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @{
+                        int counter = 0;
+                    }
+                    @foreach (var item in Model.customers)
+                    {
+
+                        <tr style="color:black">
+                            <td style="width:200px">
+                                <a href="@Url.Action("EditCheck", "CRM", new { id=item.ID_Customer})">
+                                    <span id="initials"  class="mg-fluid ">
+                                        @Model.initials.ElementAt(counter)
+                                    </span>
+
+                                    &nbsp;  @Html.DisplayFor(modelItem => item.Name)  @Html.DisplayFor(modelItem => item.LastName)
+                                </a>
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Marital_status)
+                            </td>
+                            @if (ViewBag.rol == "Admin")
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User_assigned)
+                                </td>
+
+                            }
+
+                            <td>
+                                @item.Creation_date.ToShortDateString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+
+                            <td>
+                                @if (ViewBag.rol != "SA")
+                                {
+                                    <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">Edit |</a>
+                                    <a href="@Url.Action("Delete","Customers",new { id=item.ID_Customer})"> Delete |</a>
+                                }
+
+                                <a href="#" onclick="shownotes(@item.ID_Customer)" data-toggle="modal" data-target="#modalnotes">Notes</a>
+
+                            </td>
+                        </tr>
+
+
+                        counter++;
+                    }
+
+
+                </tbody>
+
+
+            </table>
+        </div>
+
+       
+

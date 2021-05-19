@@ -1,0 +1,166 @@
+﻿@model IEnumerable<Realestate_portal.Models.Sys_Users>
+
+@{
+    ViewBag.Title = "Premium Group Realty";
+    Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">AGENTS</div>
+                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
+            </div><h2></h2>
+            @if (ViewBag.rol == "SA")
+            {
+
+            }
+            else
+            {
+                <div class="widget-options">
+                    <a class="btn btn-shadow" href="@Url.Action("Create","Users", new {broker=ViewBag.selbroker })">Add Agent</a>
+
+                </div>
+            }
+
+        </div><br />
+
+        <h2>AgentsTable</h2>
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <div class="table-responsive">
+                    <table class="table" id="tableresources" style="width:100%">
+                        <thead id="tableHeader">
+                            <tr style="background-color: #2c9ad6 !important;">
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th>
+                                    Last login
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.City)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.State)
+                                </th>
+
+                                <th>
+                                    Telephone
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Active)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Position)
+                                </th>
+
+
+                                <th>
+                                    Broker
+                                </th>
+                                <th>
+                                    Agent License
+                                </th>
+                                <th>
+                                    Member since
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+
+                                {
+                                    char[] name = item.Name.ToCharArray();
+                                    char[] last = item.LastName.ToCharArray();
+
+                                    <tr>
+                                        <td>                                                                                          
+                                            <a href="@Url.Action("EditAgent", "Users", new { id = item.ID_User, module = "agents", broker=ViewBag.selbroker })">
+                                                <span style="text-align:center; border-radius:50%; background-color:#c9c9c9; width:30px; padding:5px 0; text-transform:uppercase; color: white;" class="mg-fluid ">
+                                                  @name[0]@last[0]
+                                                </span> &nbsp;
+
+                                                @item.Name  @item.LastName
+                                            </a>
+
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+
+                                        <td>
+                                            @item.Last_login.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.City)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.State)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Main_telephone)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Active)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Position)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Brokerage_name)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.My_License)
+                                        </td>
+                                        <td>
+                                            @item.Member_since.ToShortDateString()
+                                        </td>                                       
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+            <!-- End Calendar -->
+        </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+
+<!-- End Container -->
+<!-- End Container -->
+<script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+            $("#tableHeader").find('*').css({ "color": 'white' });
+        }
+
+</script>

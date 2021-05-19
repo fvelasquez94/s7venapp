@@ -1,0 +1,11 @@
+property stage - changed when customer stage changes
+
+only one property per customer. 
+
+
+stage dropdown
+agent dropdown 
+edit customer
+save button 
+
+notes and properties from the tab menu 

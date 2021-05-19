@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Realestate_portal.Models.Sys_Company>
+
+@{
+    ViewBag.Title = "Premium Group Realty - Brokers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">BROKERS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">BROKERS</div>
+                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
+            </div><h2></h2>
+            <div class="widget-options">
+                <a class="btn btn-shadow" href="@Url.Action("Create","Sys_Company")">Add new Broker</a>
+
+            </div>
+        </div><br />
+        <!---->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <div class="table-responsive">
+                    <table class="table" id="tableresources" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Logo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Web)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ShortName)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <!--Cuerpo de tabla-->
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Logo))
+                                            {
+                                                <img src="@Url.Content(item.Logo)" alt="" style="width: 50px" />
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Web)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShortName)
+                                        </td>
+                                        <td>
+                                            @if (item.ID_Company != 1)
+    {
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID_Company }) <label>|</label>
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID_Company })
+}
+else
+{
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID_Company })
+}
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                       
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+
+</script>

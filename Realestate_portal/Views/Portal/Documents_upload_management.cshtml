@@ -1,0 +1,91 @@
+﻿@model List<Realestate_portal.Models.Tb_Docpackages>
+@{
+    ViewBag.Title = "Premium Group Realty - Management Packages";
+}
+
+
+    <div class="container-fluid">
+        <!-- Begin Page Header-->
+        <div class="row">
+            <div class="page-header">
+                <div class="d-flex align-items-center">
+                    <h2 class="page-header-title"></h2>
+                    <div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                            <li class="breadcrumb-item active">DOCUMENTS UPLOAD</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Header -->
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Sorting -->
+                <div class="widget has-shadow">
+                    <div class="widget-header bordered no-actions d-flex align-items-center">
+                        <h4>Packages Management</h4>
+                    </div>
+                    <div class="widget-body">
+                        @if (TempData["advertencia"] != null)
+    {
+                    <div class="alert alert-outline-warning dashed" role="alert">
+                        @TempData["advertencia"]
+                    </div><br />
+}
+
+                        @if (TempData["exito"] != null)
+    {
+                    <div class="alert alert-outline-success dashed" role="alert">
+                        @TempData["exito"]
+                    </div><br />
+}
+                        <div class="table-responsive">
+                            <table id="tableresources" class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Package ID</th>
+                                        <th>Title (click to show details)</th>
+                                        <th>Category</th>
+                                        <th>Last Update</th>
+                                        <th>Total Docs</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><span class="text-primary">@item.ID_docpackage</span></td>
+                        <td><a class="text-primary" href="@Url.Action("Package_details","Portal", new { idpackage=item.ID_docpackage})">@item.Description</a>  </td>
+                        <td><span class="badge badge-success" style="font-size:12px;">@item.Category</span></td>
+                        <td>@item.Last_update.ToShortDateString()</td>
+                        <td>@item.Total_docs</td>
+
+                        <td class="td-actions">
+                            <a href="@Url.Action("DeletePackage","Portal", new { id=item.ID_docpackage })"><i class="la la-close delete"></i></a>
+                        </td>
+                    </tr>
+}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Sorting -->
+
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Container -->
+
+    
+<script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+
+</script>

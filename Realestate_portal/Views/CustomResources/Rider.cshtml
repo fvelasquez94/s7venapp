@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Step_one";
+    Layout = "~/Views/Shared/_Layout_CD.cshtml";
+}
+
+@Html.Partial("~/Views/Shared/Header_customresources.cshtml")
+
+<div class="main-container">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Rider</h1>
+                    <ol class="breadcrumbs">
+                        <li>
+                            <a href="@Url.Action("Index","CustomResources")">Store</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Step_one","CustomResources")">Templates</a>
+                        </li>
+                        <li>Rider</li>
+                    </ol>
+                    <hr>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section class="space--lg">
+        <div class="container">
+            <div class="row justify-content-around">
+                <div class="col-md-8 col-lg-8">
+                
+                        <div class="slider border--round boxed--border" data-paging="true" data-arrows="true">
+                            <ul class="slides">
+                                <li>
+                                    <img alt="Image" src="~/Content/assetsPD/templates/Rider/blackandgold.jpg" />
+                                </li>
+                                <li>
+                                    <img alt="Image" src="~/Content/assetsPD/templates/Rider/bluewhite.jpg" />
+                                </li>
+                                <li>
+                                    <img alt="Image" src="~/Content/assetsPD/templates/Rider/red.jpg" />
+                                </li>      
+                                <li>
+                                    <img alt="Image" src="~/Content/assetsPD/templates/Rider/redwhitegray.jpg" />
+                                </li>
+                            </ul>
+                        </div>
+                      
+                        <!--end slider-->
+                        <!--end slider-->
+                    </div>
+                <div class="col-md-5 col-lg-4">
+                    @using (Html.BeginForm("Agregardetalle", "CustomResources", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h2>Edit your data</h2>
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="your name" />
+                        <input type="text" class="form-control" id="Cellphone" name="Cellphone" placeholder="cellphone" />
+                        <input type="hidden" class="form-control" id="Resource" name="Resource" value="Rider" />
+                        <br />
+
+                        <div class="text-block">
+                            @*<span class="h4 type--strikethrough inline-block">$549.99</span>*@
+                            <span class="h4 inline-block">$79.00</span>
+                        </div>
+
+                        <ul class="accordion accordion-2 accordion--oneopen">
+                            <li class="active">
+                                <div class="accordion__title">
+                                    <span class="h5">Specifications</span>
+                                </div>
+                                <div class="accordion__content">
+                                    <ul class="bullets">
+                                        <li>
+                                            <span>Content: 30 units</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="accordion__title">
+                                    <span class="h5">Dimensions</span>
+                                </div>
+                                <div class="accordion__content">
+                                    <ul>
+                                        <li>
+                                            <span>Size: 3.5”W X 3.0”H X 3.0”D</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--end accordion-->
+                       
+                            <div class="col-md-12">
+                                <div class="input-select">
+                                    <select name="finish">
+                                        <option selected="" value="Default">Select A Color</option>
+                                        <option>Black and gold</option>
+                                        <option>Blue and white</option>
+                                        <option>Red</option>
+                                        <option>Red, white and gray</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <input type="text" name="Quantity" id="Quantity" placeholder="QTY" />
+                            </div>
+                            <div class="col-md-6 col-lg-8">
+                                <button type="submit" class="btn btn--primary">Add To Cart</button>
+                            </div>
+                    }
+                </div>
+                </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+    @Html.Partial("~/Views/Shared/Footer_customresources.cshtml")
+</div>
+
+
+<!--<div class="loader"></div>-->
+<a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
+    <i class="stack-interface stack-up-open-big"></i>
+</a>

@@ -1,0 +1,119 @@
+﻿@model Realestate_portal.Models.Sys_Company
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">Brokers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+
+
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                @using (Html.BeginForm("Create","Sys_Company",FormMethod.Post,new { enctype ="multipart/form-data"}))
+                {
+                     @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>New Broker</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <!--aqui esta el label titulo-->
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <!--es es el textbox-->
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })*@
+                            @*@Html.EditorFor(model => model.Logo, new { htmlAttributes = new {@id="logo",@name="logo", @type="File"} })*@
+                            @*@Html.TextBox("imagen","", new {type="file" })*@
+                            <input type="file" name="logo" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!--aqui esta el label titulo-->
+                        <label class="control-label col-md-2">Email for notifications</label>
+                        <!--es es el textbox-->
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Web, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Web, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShortName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                       <label for="email">Email for Admin Account</label>
+                        <div class="col-md-10">
+                            @Html.TextBox("email","",htmlAttributes: new { @class ="form-control" })
+                            @*<input type="text" id="email" name="email" class="form-control"/>*@
+                        </div>
+                    </div>                    
+                <div class="form-group" style="display:none;">
+                       <label for="email">Load default data</label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="information" id="information">
+                                <option>Yes</option>
+                                <option selected>No</option>
+                            </select>
+                            @*<input type="text" id="email" name="email" class="form-control"/>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>}
+
+            </div>
+            <!-- End Calendar -->
+        </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+
+<!-- End Container -->

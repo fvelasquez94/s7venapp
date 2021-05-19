@@ -1,0 +1,449 @@
+﻿@model Realestate_portal.Models.Tb_Process
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_CRM.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">PROPERTIES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+
+        @if (TempData["advertencia"] != null)
+    {
+        <div class="alert alert-outline-warning dashed" role="alert">
+            @TempData["advertencia"]
+        </div><br />
+}
+
+        @if (TempData["exito"] != null)
+    {
+        <div class="alert alert-outline-success dashed" role="alert">
+            @TempData["exito"]
+        </div><br />
+}
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>EDIT PROPERTY</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID_Process)
+
+                    <div class="form-group" style="display:none">
+                        @Html.LabelFor(model => model.ID_Property, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ID_Property, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.ID_Property, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <label class="control-label col-md-2">Status</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="Property" name="Property">
+                                <option>------</option>
+                                @if (Model.Property == "LISTED")
+                {
+                    <option selected>LISTED</option>}
+else
+{
+                <option>LISTED</option>}
+                                @if (Model.Property == "PENDING")
+                {
+                    <option selected>PENDING</option>}
+else
+{
+                <option>PENDING</option>}
+                                @if (Model.Property == "CLOSED")
+                {
+                    <option selected>CLOSED</option>}
+else
+{
+                <option>CLOSED</option>}
+                                @if (Model.Property == "RENTED")
+                {
+                    <option selected>RENTED</option> }
+else
+{
+                <option>RENTED</option>}
+                                @if (Model.Property == "EXPIRED")
+                {
+                    <option selected>EXPIRED</option> }
+else
+{
+                <option>EXPIRED</option>}
+
+
+
+
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display:none;">
+                        <label class="control-label col-md-2">Listing Type</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @if (ViewBag.rol != "Admin")
+    {
+
+                <div class="form-group" style="display:none;">
+                    <label class="control-label col-md-2">Assigned Agent</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ID_User, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+}
+else
+{
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Assigned Agent</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ID_User, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+}
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Customer</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ID_Customer", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ID_Customer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Purchase Price ($)</label>
+                        <div class="col-md-10">
+                            @if (Model.Source == "PGR Web")
+            {
+                <input type="number" readonly name="Purchase_price" id="Purchase_price" class="form-control" value="@Model.Purchase_price" />
+}
+else
+{
+                <input type="number" name="Purchase_price" id="Purchase_price" class="form-control" value="@Model.Purchase_price" />
+}
+                            @Html.ValidationMessageFor(model => model.Purchase_price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Stage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <select class="form-control" id="stage" name="stage">
+                                <option>NOT ASSIGNED</option>
+                                @if (Model.Stage == "ACTIVE")
+                {
+                                <option selected>ACTIVE</option>}
+else
+{
+                                <option>ACTIVE</option>}
+                                @if (Model.Stage == "CLOSED")
+                {
+                                <option selected>CLOSED</option>}
+else
+{
+                                <option>CLOSED</option>}
+                                @if (Model.Stage == "UNDER CONTRACT")
+                {
+                    <option selected>UNDER CONTRACT</option>}
+else
+{
+                <option>UNDER CONTRACT</option>}
+                                @if (Model.Stage == "FOLLOW UP")
+                {
+                <option selected>FOLLOW UP</option> }
+else
+{
+                <option>FOLLOW UP</option>}
+                                @if (Model.Stage == "DEAD LEADS")
+                {
+                <option selected>DEAD LEADS</option> }
+else
+{
+                <option>DEAD LEADS</option>}
+
+
+
+
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    @if (Model.Stage == "UNDER CONTRACT")
+    {
+                <div id="stagediv">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Under Contract Date</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="Under_contract_date" id="Under_contract_date" value="@Model.Under_contract_date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Commission (%)</label>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" value="@Model.Commissionperc" name="Commissionperc" id="Commissionperc" min="0" max="100" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Commission ($)</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Commission_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Commission_amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                </div>
+}
+else
+{
+                <div id="stagediv" style="display:none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Under Contract Date</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="Under_contract_date" id="Under_contract_date" value="@Model.Under_contract_date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Commission (%)</label>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" value="@Model.Commissionperc" name="Commissionperc" id="Commissionperc" min="0" max="100" />
+                            @Html.ValidationMessageFor(model => model.Commissionperc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Commission ($)</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Commission_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Commission_amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                </div>
+}
+
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Closing Date</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="Closing_date" id="Closing_date" value="@Model.Closing_date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Offer Accepted Date</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="Offer_accepted_date" id="Offer_accepted_date" value="@Model.Offer_accepted_date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Inspection Date</label>
+                        <div class="col-md-10">
+                            <input type="date" class="form-control" name="Inspection_date" id="Inspection_date" value="@Model.Inspection_date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Source, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Source, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Type of Agency</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="TypeofAgency" name="TypeofAgency">
+                                <option>NOT ASSIGNED</option>
+                                @if (Model.TypeofAgency == "BROKERS AGENT")
+                {
+                                <option selected>BROKERS AGENT</option>}
+else
+{
+                                <option>BROKERS AGENT</option>}
+                                @if (Model.TypeofAgency == "BUYERS AGENT")
+                {
+                                <option selected>BUYERS AGENT</option>}
+else
+{
+                                <option>BUYERS AGENT</option>}
+                                @if (Model.TypeofAgency == "SELLING AGENT")
+                {
+                                <option selected>SELLING AGENT</option>}
+else
+{
+                                <option>SELLING AGENT</option>}
+                                @if (Model.TypeofAgency == "DUAL AGENT")
+                {
+                                <option selected>DUAL AGENT</option> }
+else
+{
+                                <option>DUAL AGENT</option>}                                
+                                @if (Model.TypeofAgency == "LISTING AGENT")
+                {
+                                <option selected>LISTING AGENT</option> }
+else
+{
+                                <option>LISTING AGENT</option>}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Loan Officer's Name</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Loan_Officer_name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Loan_Officer_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>                    
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Loan Officer's Telephone</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Loan_Officer_tel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Loan_Officer_tel, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Attorney's Name</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Attorneys_name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Attorneys_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>                    
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Attorney's Telephone</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Attorneys_tel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Attorneys_tel, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                       
+                        <div class="col-md-10">
+                            <a class="btn btn-info" href="@Url.Action("Index","Notes", new {ID_Propery=Model.ID_Process, module="Properties" })">Go to notes</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                        @Html.LabelFor(model => model.Creation_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Creation_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Last_update, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Last_update, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Last_update, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+        }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        window.onload = function () {
+
+            $(function () {
+                $('#stage').change(function (e) {
+                    var selected = $(e.target).val();
+                    if (selected == "UNDER CONTRACT") {
+                        $("#stagediv").show();
+                    } else {
+                        $("#stagediv").hide();
+                    }
+
+
+
+                });
+            });
+
+            $(document).on('keyup mouseup', '#Commissionperc', function () {
+                var perc = $(this).val();
+                if (isNaN(perc) || perc == null || perc == 0) {
+                    $("#Commission_amount").val(0.00);
+                } else {
+                    var price = $("#Purchase_price").val();
+                    var totalamount = (price * perc) / 100;
+                    $("#Commission_amount").val(parseFloat(totalamount).toFixed(2));
+                }
+           
+            });
+
+        };
+</script>

@@ -1,0 +1,241 @@
+﻿@model List<Realestate_portal.Models.Tb_Videos>
+@{
+    ViewBag.Title = "Premium Group Realty";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+<div class="container-fluid" style="background-color:#fff">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" style="color:#000"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active" style="color:#000">VIDEOS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Row -->
+
+
+    <div class="row">
+
+
+        <!-- Begin Widget Header -->
+        <!-- End Widget Header -->
+        <!-- Begin Widget Body -->
+        <div class="widget-body" style="width: 100%;background-color:#fff">
+
+            <div class="widget-header bordered d-flex align-items-center" style="background-color:#fff; border-bottom:0px !important;">
+                <div class="today">
+                    <div class="title" style="color:#000">WATCH</div>
+                    <div class="new-tasks" style="color:#000">ALL THE AVAILABLES VIDEOS </div>
+                </div><h2></h2>
+                      <div class="widget-options" style="background-color:#fff">
+                          @if (ViewBag.rol == "Admin")
+    {
+                      <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Video</a>
+
+                      <a class="btn btn-shadow" href="@Url.Action("Videos_management", "Portal")">Management</a>
+                      <a class="btn btn-shadow" href="@Url.Action("Videos_broker", "Portal", new { broker=ViewBag.selbroker})">Videos for brokers</a>
+}
+else if (ViewBag.rol == "SA")
+{
+                      <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Video</a>
+
+                      <a class="btn btn-shadow" href="@Url.Action("Videos_management", "Portal")">Management</a>
+                      <a class="btn btn-shadow" href="@Url.Action("Videos_broker", "Portal", new { broker=ViewBag.selbroker})">Videos for brokers</a>
+}
+
+                      </div>
+            </div><br /><br />
+                      @foreach (var category in lstcategories)
+                      {
+            <label style="color:#265fa4;font-size:20px;font-weight:bold">@category.Description</label>
+            <div class="owl-carousel">
+                @if (Model.Where(a => a.Category == category.Description).Count() > 0)
+                {
+                    foreach (var item in Model.Where(a => a.Category == category.Description))
+                    {
+
+                <div class="item" style="margin-right:10px;">
+                    <div class="widget has-shadow">
+                        <figure class="img-hover-01" style="max-width:500px;max-height:250px;">
+                            <div style="top:0 !important">
+                                <span style="font-size:15px">@item.Name</span>
+
+                            </div>
+                            @if (item.T_image == "~/Content/Uploads/Images/Videos_img/")
+                            {
+                        <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
+                            }
+                            else
+                            {
+                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="...">
+                            }
+                            <div>
+                                <a href="@Url.Action("Video_watch", "Portal", new { id = item.ID_Video })"><span class="btn btn-info btn-sm">Watch now</span></a>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+
+                    }
+                }
+                else
+                {
+        <div class="item" style="margin-right:10px;">
+            <label  style="color:white;">No data to show</label>
+        </div>
+                }
+
+
+            </div>
+
+            <hr />
+                      }
+            
+
+
+        </div>
+        <!-- End Widget Body -->
+
+
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Container -->
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Video</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo" class="form-control" required>
+                                    @foreach (var item in lstcategories) {
+                                    <option value="@item.Description">@item.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Description *</label>
+                                <textarea id="descriptionvideo" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="imageUpload" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>URL *</label>
+                                <input type="text" id="urlvideo" class="form-control" required/>
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        $(".owl-carousel").owlCarousel({ center: false, items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true"></i>', '<i class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 4 } } });
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var description = $.trim($("#descriptionvideo").val());
+            var url = $("#urlvideo").val();
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+            formData.append("url", url);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadVideo',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Video added successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+    }
+</script>

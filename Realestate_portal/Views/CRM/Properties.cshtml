@@ -1,0 +1,214 @@
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Process>
+
+@{
+    ViewBag.Title = "Properties";
+    Layout = "~/Views/Shared/_CRM.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">PROPERTIES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">PROPERTIES</div>
+                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
+            </div><h2></h2>
+            @if (ViewBag.rol == "SA")
+            {
+
+            }
+            else
+            {
+                <div class="widget-options">
+                    <a class="btn btn-shadow" href="@Url.Action("Create","Properties")">Add Property</a>
+
+                </div>
+            }
+
+        </div><br />
+
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <div class="table-responsive">
+                    <table class="table" id="tableresources" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+
+
+                                <th>
+                                    Purchase price
+                                </th>
+                                <th>
+                                    Stage
+                                </th>
+                                <th>
+                                    Customer
+                                </th>
+                                <th>
+                                    Type of Agency
+                                </th>
+                                <th>
+                                    Agent
+                                </th>
+                                <th>
+                                    Last Update
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                {
+                            <tr style="color:black">
+                                <td>
+                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.ID_Process</a>
+                                </td>
+                                <td>
+                                    @item.Property
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.Address</a>
+                                </td>
+
+                                <td>
+                                    $@Convert.ToDecimal(item.Purchase_price).ToString("N2")
+                                </td>
+                                <td>
+                                    @item.Stage
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
+
+                                </td>
+                                <td>
+                                    @item.TypeofAgency
+                                </td>
+                                <td>
+                                    @item.Loan_Officer_name
+                                </td>
+                                <td>
+                                    @item.Last_update.ToShortDateString()
+                                </td>
+                                <td>
+                                    @if (ViewBag.rol != "SA")
+                                    {
+                                        <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">Edit</a>
+                                        <a href = "@Url.Action("Delete","Properties",new { id=item.ID_Process})" > Delete </a>
+                                    }
+
+                                    <a href="#" onclick="shownotes(@item.ID_Process)" data-toggle="modal" data-target="#modalnotes">Notes</a>
+
+                                </td>
+                            </tr>
+    }
+                        </tbody>
+                    </table>
+
+
+                </div>
+                </div>
+                <!-- End Calendar -->
+            </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+<div id="modalnotes" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Notes</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table" id="tbodynotes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Text</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Container -->
+<script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+    function shownotes(idcustomer) {
+        $.ajax
+            ({
+                url: '/Properties/Getnotes',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    idprocess: idcustomer
+                }),
+                success: function (result) {
+
+                    $("#tbodynotes tbody").html("");
+                    $.each($.parseJSON(result), function (i, notes) {
+
+                        var newRowContent = "<tr><td>" + notes.ID_note + " </td><td>" + notes.Text + " </td><td>" + new Date(parseInt(notes.Date.substr(6))).toLocaleDateString('en-US'); + "</td></tr>";
+
+                        $("#tbodynotes tbody").append(newRowContent);
+
+                    }
+
+                    )
+
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+    }
+</script>

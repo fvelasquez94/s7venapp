@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Customers>
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
+}
+
+
+    <!-- Begin Widget 08 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <!-- Begin Page Header-->
+                <div class="row">
+                    <div class="page-header">
+                        <div class="d-flex align-items-center">
+                            @if (ViewBag.rol == "Agent")
+                            {
+                <h2 class="page-header-title">DASHBOARD Agent</h2>}
+                            @if (ViewBag.rol == "Admin")
+                            {
+                <h2 class="page-header-title">DASHBOARD Broker</h2>}
+                            @if (ViewBag.rol == "SA")
+                            {
+                <h2 class="page-header-title">DASHBOARD Super Admin</h2>}
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Page Header -->
+                <div class="row">
+                    <div class="col-md-12" style="background-color:white">
+                        @if (ViewBag.rol == "Agent")
+                        {
+            <img src="~/Content/crm/AGENTPROFILE.png" style="width: 100%;" />}
+                        @if (ViewBag.rol == "Admin")
+                        {
+            <img src="~/Content/crm/BROKERPROFILE.png" style="width: 100%;" />}
+                        @if (ViewBag.rol == "SA")
+                        {
+            <img src="~/Content/crm/ADMINPROFILE.png" style="width: 100%;" />}
+
+                    </div>
+                </div>
+                <!--End gadget 08-->
+
+            </div>
+        </div>
+    </div>
+
+            <!-- End Container -->
+            <!-- End Container -->
+            <script type="text/javascript">
+                window.onload = function () {
+                    $("#tableresources").DataTable();
+
+                }
+
+                function shownotes(idcustomer) {
+                    $.ajax
+                        ({
+                            url: '/Customers/Getnotes',
+                            type: 'POST',
+                            datatype: 'application/json',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                idcustomer: idcustomer
+                            }),
+                            success: function (result) {
+
+                                $("#tbodynotes tbody").html("");
+                                $.each($.parseJSON(result), function (i, notes) {
+
+                                    var newRowContent = "<tr><td>" + notes.ID_note + " </td><td>" + notes.Text + " </td><td>" + new Date(parseInt(notes.Date.substr(6))).toLocaleDateString('en-US'); + "</td></tr>";
+
+                                    $("#tbodynotes tbody").append(newRowContent);
+
+                                }
+
+                                )
+
+                            },
+                            error: function () {
+                                alert("Whooaaa! Something went wrong..")
+                            },
+                        });
+                }
+            </script>

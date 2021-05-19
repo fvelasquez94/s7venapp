@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Posts>
+
+@{
+    ViewBag.Title = "Premium Group Realty - Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">POSTS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">POSTS</div>
+                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
+            </div><h2></h2>
+                  <div class="widget-options">
+                      @if (ViewBag.rol == "Admin")
+    {
+                  <a class="btn btn-shadow" href="@Url.Action("Create","Posts")">Add new Broker message</a>
+}
+
+                  </div>
+        </div><br />
+
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <div class="table-responsive">
+                    <table class="table" id="tableresources" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </th>
+                                <th>
+                                    Content
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Likes)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Comments)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Active)
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+
+
+                                {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Title)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Content_post)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Start_at)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Likes)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Comments)
+                                                    </td>
+
+
+                                                    <td>
+                                                        @if (item.Active == true)
+                                                        {
+                                                            <span class="badge badge-success" style="font-size:12px;">Yes</span> }
+                                                        else
+                                                        {
+                                                             <span class="badge badge-warning" style="font-size:12px;">No</span>}
+                                                    </td>
+
+                                                    <td>
+                                                        @if (ViewBag.rol != "SA")
+                                                        {
+                                                             @Html.ActionLink("Edit", "Edit", new { id = item.ID_Post }) <span> | </span>
+
+                                                            @Html.ActionLink("Delete", "Delete", new { id = item.ID_Post })
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                }
+                            }
+
+                                            </tbody>
+
+
+
+ 
+
+                    </table>
+
+                </div>
+            </div>
+            <!-- End Calendar -->
+        </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+
+<!-- End Container -->
+<script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+
+</script>

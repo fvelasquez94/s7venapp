@@ -1,0 +1,492 @@
+﻿@model List<Realestate_portal.Models.Tb_Network>
+@{
+    ViewBag.Title = "Premium Group Realty - Network";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+<link rel="stylesheet" href="~/Content/assetsEditor/css/line-awesome.min.css">
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">NETWORK</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Row -->
+
+
+    <div class="row">
+
+
+        <!-- Begin Widget Header -->
+        <!-- End Widget Header -->
+        <!-- Begin Widget Body -->
+        <div class="widget-body" style="width: 100%">
+
+            <div class="widget-header bordered d-flex align-items-center" style="border-bottom:0px !important;">
+                <div class="today">
+                    <div class="title">NETWORK</div>
+                    <div class="new-tasks"></div>
+                </div><h2></h2>
+                <div class="widget-options">
+                    @if (ViewBag.rol == "Admin")
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Information</a>
+                        <a class="btn btn-shadow" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
+                    }
+                    else if (ViewBag.rol == "SA")
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Information</a>
+                        <a class="btn btn-shadow" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
+                    }
+                </div>
+            </div><br /><br />
+            @foreach (var category in lstcategories)
+            {
+                <label style="color:indianred;font-size:20px">@category.Description</label>
+                <div class="owl-carousel ">
+                    @if (Model.Where(a => a.Category == category.Description).Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Category == category.Description))
+                        {
+
+                            <div class="item disable-owl-swipe" style="margin-right:10px;">
+
+                                <div class="media">
+                                    <div class="media-left align-self-start">
+                                        @if (item.T_image == "~/Content/Uploads/Images/Network/")
+                                        {
+                                            <img src="~/Content/assets/img/avatar/avatar-02.jpg" class="img-fluid" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img src="@Url.Content(item.T_image)" style="width:170px" class="img-fluid" alt="">
+                                        }
+                                    </div>
+                                    <div class="media-body align-self-center" style="margin-left:20px !important">
+                                        <div class="username">
+                                            @if (item.Url == null || item.Url.Equals("-") || item.Url.Equals(""))
+                                            {
+                                                <h4>@item.Name</h4>
+                                            }
+                                            else
+                                            {
+                                                <a href="@item.Url" target="_blank"><h4>@item.Name</h4></a>
+                                            }
+                                        </div>
+
+                                        <div class="meta">
+
+                                            <textarea readonly class="mr-3" rows="9" style="width: 100% !important;background: transparent;border: none; outline: none;">@item.Description</textarea>
+                                            <a class="btn btn-shadow" href="#" onclick="showReviews(@item.ID_Network)" data-toggle="modal" data-target="#modalReview">Reviews</a>
+
+                                            <h6></h6>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <label>No data to show</label>
+                        </div>
+                    }
+
+
+                </div>
+                <hr />
+            }
+
+
+
+
+
+        </div>
+        <!-- End Widget Body -->
+
+
+    </div>
+    <!-- End Row -->
+</div>
+<div class="row">
+    <!--Begin row-->
+    <div class="footer-bottom">
+        <div class="widget-header bordered d-flex align-items-center" style="border-bottom:0px !important;">
+            <div class="today">
+                <div class="title">
+                    <h6>
+                        S7VEN makes no representations or warranties, either expressed or implied, of any kind with respect to products or services offered by these businesses and does not directly or indirectly endorse any particular business, product or service. LIBOR does not assume liability resulting from your dealings with these businesses.
+                    </h6>
+                </div>
+                <div class="new-tasks"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--End row-->
+    <!-- End Container -->
+
+    <div id="modalNewvideo" class="modal fade">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add PGR Network</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">close</span>
+                    </button>
+                </div>
+                <form id="htmlform" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Full Name *</label>
+                                    <input type="text" class="form-control" id="titlevideo" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Company *</label>
+                                    <input type="text" class="form-control" id="company" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Contact *</label>
+                                    <input type="text" class="form-control" id="contact" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="text" class="form-control" id="email" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Website *</label>
+                                    <input type="text" class="form-control" id="website" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Address *</label>
+                                    <input type="text" class="form-control" id="address" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Category *</label>
+                                    <select id="categoryvideo" class="form-control" required>
+                                        @foreach (var item in lstcategories)
+                                        {
+                                            <option value="@item.Description">@item.Description</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="descriptionvideo" class="form-control" style="white-space: pre-line !important" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" id="imageUpload" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                        <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- here start review sections -->
+    <div id="modalReview" class="modal fade">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <!-- here stars no note in tab menu section -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Review</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">close</span>
+                    </button>
+                </div>
+                <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                    <div class="media w-100">
+
+                        <form id="reviewForm" class="media-body align-self-center text-align-center">
+
+
+
+                            <h4>Write your review...</h4>
+                            <br />
+                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" maxlength="100"></textarea>
+
+                            <span class="la la-star la-2x" id="Rate1" onclick="CRate(1)"></span>
+                            <span class="la la-star-o la-2x" id="Rate2" onclick="CRate(2)"></span>
+                            <span class="la la-star-o la-2x" id="Rate3" onclick="CRate(3)"></span>
+                            <span class="la la-star-o la-2x" id="Rate4" onclick="CRate(4)"></span>
+                            <span class="la la-star-o la-2x" id="Rate5" onclick="CRate(5)"></span>
+                            <input type="hidden" name="rating" id="rating" value="1">
+                            <br />
+                            <br />
+                            <button class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addReview">Add Review</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- here ends no note in tab menu section -->
+                <div id="reviewCard" style="width:100%">
+                    <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                       
+                        <input type="hidden" id="index" value="0" />
+                        <input type="hidden" id="reviewId" value="" />
+                        <input type="hidden" id="reviewText" value="" />
+
+                    </div>
+                    <div class="media-body align-self-center text-align-center">
+
+                        <br />
+                        <div class="files-number">Date : </div>
+                        <br />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    
+<!--end review-->
+<script type="text/javascript">
+        function showReviews(idNetwork) {
+
+            var network = idNetwork;
+
+
+            $('#reviewForm').on('submit', function (event) {
+                $("#addReview").attr("disabled", true);
+                event.preventDefault();
+
+                var comment = $("#reviewComment").val();
+                var rate = $("#rating").val();
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddReview", "Review")',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        network: network, comment: comment, rate: rate
+                    }),
+                    success: function (response) {
+                        if (response == "SUCCESS") {
+                            window.location.reload(true);
+                        }
+                        else {
+                            alert(response);
+                        }
+                    },
+                    error: function (error) {
+
+                        alert("Error" + error);
+                        window.location.reload(true);
+                    }
+                });
+
+
+            });
+            $.ajax
+                ({
+                    url: '@Url.Action("GetReview", "Review")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        idnetwork: network
+                    }),
+                    success: function (result) {
+
+                        $('#reviewCard').html('');
+
+                        $.each(result, function (i, review) {
+
+                            $('#reviewCard').append(`<div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                                                       <h4>Review #${i + 1}  </h4>
+                                                       <h2><span class="la la-star la-2x"></span>${review.Review_Rate}</h2>
+                                                       <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" disabled>${review.Comment}</textarea>
+                                                       <h6>Date : ${review.Date}</h6>
+
+
+                                                    </div >
+
+                                                </div>
+                                            </div >`
+                            );
+
+
+                        }
+                        );
+
+                    },
+                    error: function (result) {
+                        alert("Whooaaa! Something went wrong.." + result)
+                    }
+                });
+
+        };
+        function CRate(r) {
+            $("#rating").val(r);
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+            // unselect remaining
+            for (var i = r + 1; i <= 5; i++) {
+                $("#Rate" + i).attr('class', 'la la-star-o la-2x');
+            }
+        };
+
+        function CRateOver(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+        };
+
+        function CRateOut(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star-o la-2x');
+            }
+        };
+
+        function CRateSelected() {
+            var setRating = $("#rating").val();
+            for (var i = 1; i <= setRating; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+        };
+
+        window.onload = function () {
+            $(".owl-carousel").owlCarousel({
+                center: false,
+                onInitialize: function (event) { if (event.item.count <= 4) { this.options.mouseDrag = false; this.options.touchDrag = false; } else { this.options.mouseDrag = true; this.options.touchDrag = true; } },
+                items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true" style="font-size: 30px;"></i>', '<i  style="font-size: 30px;"class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 3 } }
+            });
+
+            $('#htmlform').on('submit', function (event) {
+                $("#subbtnenviar").attr("disabled", true);
+                event.preventDefault();
+
+                $("#preloader").show();
+
+
+                var formData = new FormData();
+                var photo = document.getElementById("imageUpload");
+                var photoSize = photo.files[0].size;
+                var photoType = photo.files[0].type;
+
+                if (photoSize < 25600) {
+                    var file = photo.files[0];
+
+                    var title = $("#titlevideo").val();
+                    var category = $("#categoryvideo").val();
+
+
+                    var company = $("#company").val();
+                    var contact = $("#contact").val();
+                    var email = $("#email").val();
+                    var website = $("#website").val();
+                    var address = $("#address").val();
+
+                    var txtArea = document.getElementById("descriptionvideo");
+                    txtArea.value = "";
+                    txtArea.value += company + '\r\n';
+                    txtArea.value += contact + '\r\n';
+                    txtArea.value += email + '\r\n';
+                    txtArea.value += website + '\r\n';
+                    txtArea.value += address + '\r\n';
+
+
+                    var description = $.trim($("#descriptionvideo").val());
+                    var url = website;
+
+                    formData.append("imageUploadForm", file);
+                    formData.append("title", title);
+                    formData.append("category", category);
+                    formData.append("description", description);
+                    formData.append("url", url);
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/Portal/UploadNetwork',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response == "SUCCESS") {
+                                $("#loader_form").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+
+                                new Noty({
+                                    type: 'success',
+                                    layout: 'topRight',
+                                    text: 'Information added successfully',
+                                    progressBar: true,
+                                    timeout: 2500
+                                }).show()
+                                setTimeout(function () {
+                                    window.location.reload(true);
+                                }, 2000);
+
+                            } else {
+                                $("#loader_form").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+                                alert(response);
+                            }
+                        },
+                        error: function (error) {
+                            $("#loader_form").hide();
+                            $("#subbtnenviar").attr("disabled", false);
+                            alert("Error uploading information");
+                        }
+                    });
+
+                }
+                else {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("The photo must be lower than 25KB");
+                    window.location.reload(true);
+                }
+
+
+            });
+
+        }
+</script>

@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+<!-- Begin Container -->
+<div class="container-fluid no-padding h-100">
+    <div class="row flex-row h-100 bg-white">
+        <!-- Begin Left Content -->
+        <div class="col-xl-8 col-lg-6 col-md-5 no-padding">
+            <div class="elisyam-bg" style="background-color:#a001e2">
+                <div class="elisyam-overlay overlay-01"></div>
+                <div class="authentication-col-content mx-auto">
+                    <h1 class="gradient-text-01">
+                        Welcome to your real estate agent portal!
+                    </h1>
+                    <span class="description">
+                        Powered by SEVEN.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- End Left Content -->
+        <!-- Begin Right Content -->
+        <div class="col-xl-4 col-lg-6 col-md-7 my-auto no-padding">
+            <!-- Begin Form -->
+            @using (Html.BeginForm("Log_in", "Portal", FormMethod.Post, new { id = "myform" }))
+    {
+        <div class="authentication-form mx-auto">
+            <div class="logo-centered">
+                <a href="#">
+                    <img src="~/Content/pgrlogos/S7VENLogoBlack.png" alt="logo">
+                </a>
+            </div>
+               @if (TempData["advertencia"] != null)
+    {
+        <div class="alert alert-outline-warning dashed" role="alert">
+           @TempData["advertencia"]
+        </div><br />
+    }
+
+
+            <div class="group material-input">
+                <input type="text" value="@ViewBag.correo" name="email" id="email" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Email</label>
+            </div>
+            <div class="group material-input">
+                <input type="password" value="@ViewBag.pass" name="password" id="password" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Password</label>
+            </div>
+
+            <div class="row" >
+                <div class="col text-left">
+                    <div class="styled-checkbox" style="display:none">
+                        @*<input type="checkbox" name="rememberme" id="rememberme" value="false">*@
+                        @Html.CheckBox("rememberme", (bool)ViewBag.remember, new { @class = "" })
+                        <label for="rememberme">Remember me</label>
+                    </div>
+                </div>
+                <div class="col text-right">
+                    <a href="@Url.Action("Forgot_password", "Portal")">Forgot Password ?</a>
+                </div>
+            </div>
+            <div class="sign-btn text-center">
+                <button type="submit" class="btn btn-lg btn-gradient-01">
+                    Sign in
+                </button>
+            </div>
+
+            @*<div class="register">
+                Don't have an account?
+                <br>
+                <a href="#">More information</a>
+            </div>*@
+        </div>
+}
+            <!-- End Form -->
+        </div>
+        <!-- End Right Content -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Container -->
+
+    <script type="text/javascript">
+        window.onload = function () {
+
+            $('input[type="hidden"]').remove();
+        };
+    </script>

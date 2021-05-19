@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<a id="start"></a>
+<section class="bar bar-3 bar--sm bg--secondary">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="bar__module">
+                    <span class="type--fade">PGR Store | Custom Resources</span>
+                </div>
+            </div>
+            <div class="col-lg-6 text-right text-left-xs text-left-sm">
+                <div class="bar__module">
+                    <ul class="menu-horizontal">
+                        <li>
+                            @ViewBag.userName
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Check_out","CustomResources")">
+                                <i class="stack-basket"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Orders","CustomResources")">
+                                <i class="btn btn-shadow">Orders</i>
+                                
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<!--end bar-->

@@ -1,0 +1,226 @@
+﻿@model Realestate_portal.Models.ViewModels.CRM.CustomerCRMDashboard
+
+    @if (Model.pack_Det.Count > 0)
+    {
+        var package = Model.package;
+        var property = Model.property;
+        var customer = Model.customer;
+        var modelcount = Model.pack_Det.Where(a => a.mandatory == true).Count();
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Sorting -->
+                    <div class="widget has-shadow">
+                        <div class="widget-header bordered no-actions d-flex align-items-center">
+                            <div class="today">
+                                <div class="title">Document Package Details</div>
+                                <div class="new-tasks">                                 <label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
+                            </div><h2></h2>
+                                  <div class="widget-options">
+                                      @if (Model.pack_Det.Count > 0)
+                                      {
+                                          if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
+                                          {
+                                              <button class="btn btn-success" id="sendtobroker">Send to Broker</button>
+                                              <br />
+                                              <br />
+                                              <label class="control-label">Add extra E-mail</label>
+                                              <br />
+                                              <input class="form-control" type="text" id="extraemail" />
+                                          }
+
+                                      }
+
+                                  </div>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="table-responsive">
+                                <table id="tableresources" class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Document ID</th>
+                                            <th>Title</th>
+                                            <th>Required</th>
+                                            <th>Uploaded</th>
+                                            <th>Document</th>
+                                            @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                            {
+                                        <th>Select a file</th>
+                                            }
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.pack_Det)
+                                        {
+                                            <tr>
+                                                <td><span class="text-primary">@item.ID_Detail</span></td>
+                                                <td><span class="text-primary">@item.Title</span></td>
+                                                <td>
+                                                    @if (item.mandatory)
+                                                    {
+                                                        <label class="badge badge-success">YES</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="badge badge-secondary">NO</label>
+                                                    }
+                                                </td>
+
+
+                                                <td>
+                                                    @if (item.uploaded)
+                                                    {
+                                                        <label class="badge badge-success">YES</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="badge badge-warning">NO</label>
+                                                    }
+                                                </td>
+
+                                                <td>
+                                                    @if (item.uploaded)
+                                                    {
+                                                        if (item.Extension == ".pdf")
+                                                        {
+                                                            <a href="@Url.Action("Showpdf_docspackage","Portal", new { id=item.ID_Detail})" target="_blank">
+                                                                <div class="c-icon">
+                                                                    <i class="la la-file-pdf-o"></i>
+                                                                </div>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("DownloadDocPackage","Portal", new { id=item.ID_Detail})">
+                                                                <div class="c-icon">
+
+
+
+
+
+                                                                    <i class="la la-file-word-o"></i>
+
+                                                                </div>
+                                                            </a>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>-</label>
+                                                    }
+                                                </td>
+                                                @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                                {
+                                                    <td class="td-actions">
+                                                        <input type="file" class="form-control fileToUpload" id="file_@item.ID_Detail" />
+                                                    </td>
+                                                }
+
+                                            </tr>
+
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                            {
+                                <div class="row">
+                                    <div class="col-12" style="margin:auto">
+                                        <button id="uploadall" class="btn btn-info">Upload all</button>
+                                    </div>
+
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <!-- End Sorting -->
+
+                </div>
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Container -->
+
+
+    }<script>
+
+
+        //here we extract all the elements with the class specified
+        var uploadfile = document.querySelectorAll(".fileToUpload");
+
+        //here we listen for the even on every html element
+        for (const file of uploadfile) {
+            file.addEventListener('change', handleChange);
+        }
+        //variables to store the file and id arrays
+        var files = [];
+        var ids = [];
+
+
+        //we capture the data we need from the html attribute
+        function handleChange(e) {
+            var id = $(this).attr("id");
+            var idtosave = id.substring(5);
+            files.push(e.target.files[0]);
+            ids.push(idtosave);
+        }
+
+
+
+        uploadall.onclick = function () {
+
+            $("#preloader").show();
+            var formData = new FormData();
+
+            $.each(files, (i, file) => {
+                formData.append("imageUploadForm", file);
+            });
+
+            $.each(ids, (i, id) => {
+                formData.append("ids", id);
+            });
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/Uploadfile',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Files uploaded successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#loader_form").hide();
+
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+
+                    alert("Error uploading file");
+                }
+            });
+        }
+    </script>
