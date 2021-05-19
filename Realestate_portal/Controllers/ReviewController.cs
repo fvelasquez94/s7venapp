@@ -83,5 +83,18 @@ namespace Realestate_portal.Controllers
 
             }
         }
+
+        public ActionResult DeleteReview(int network) {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json("");
+        }
     }
 }
