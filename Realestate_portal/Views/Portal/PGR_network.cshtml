@@ -48,11 +48,24 @@
                         <a class="btn btn-shadow" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
                     }
                 </div>
-            </div><br /><br />
-            @*<input class="form-control" id="inputCategory" type="text" placeholder="Search..">*@
+                
+            </div>
+           
+            
+
             <div id="networkSponsors">
 
-
+                <div class="container widget-body">
+                    <div class="row align-items-start align-items-lg-start align-items-md-start align-items-sm-start align-items-xl-start">
+                        <div class="col-4">
+                            <input class="form-control" id="inputCategory" type="text" placeholder="Search by category" style="width: 75%">
+                            <button class="btn btn-shadow">Search</button>
+                        </div>
+                        <div class="col-6">
+                            
+                        </div>
+                    </div>
+                </div>
                 @foreach (var category in lstcategories)
                 {
 
