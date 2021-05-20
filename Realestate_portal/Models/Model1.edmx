@@ -401,7 +401,7 @@
           <Property Name="Id_Review" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rate_Review" Type="int" Nullable="false" />
           <Property Name="Date_Review" Type="datetime" Nullable="false" />
-          <Property Name="Comment" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="Id_Network" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tb_TemplatesCatalogo">
@@ -1897,7 +1897,7 @@
           <Property Name="Id_Review" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rate_Review" Type="Int32" Nullable="false" />
           <Property Name="Date_Review" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="Id_Network" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tb_Network" Relationship="Realstate_agentsModel.FK_Network" FromRole="Tb_Reviews" ToRole="Tb_Network" />
         </EntityType>

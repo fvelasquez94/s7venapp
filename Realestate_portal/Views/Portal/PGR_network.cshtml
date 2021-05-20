@@ -49,69 +49,74 @@
                     }
                 </div>
             </div><br /><br />
-            @foreach (var category in lstcategories)
-            {
-                <label style="color:indianred;font-size:20px">@category.Description</label>
-                <div class="owl-carousel ">
-                    @if (Model.Where(a => a.Category == category.Description).Count() > 0)
-                    {
-                        foreach (var item in Model.Where(a => a.Category == category.Description))
+            @*<input class="form-control" id="inputCategory" type="text" placeholder="Search..">*@
+            <div id="networkSponsors">
+
+
+                @foreach (var category in lstcategories)
+                {
+
+                    <label style="color:indianred;font-size:20px">@category.Description</label>
+                    <div class="owl-carousel" id="filter">
+                        @if (Model.Where(a => a.Category == category.Description).Count() > 0)
                         {
+                            foreach (var item in Model.Where(a => a.Category == category.Description))
+                            {
 
-                            <div class="item disable-owl-swipe" style="margin-right:10px;">
+                                <div class="item disable-owl-swipe" style="margin-right:10px;">
 
-                                <div class="media">
-                                    <div class="media-left align-self-start">
-                                        @if (item.T_image == "~/Content/Uploads/Images/Network/")
-                                        {
-                                            <img src="~/Content/assets/img/avatar/avatar-02.jpg" class="img-fluid" alt="">
-                                        }
-                                        else
-                                        {
-                                            <img src="@Url.Content(item.T_image)" style="width:170px" class="img-fluid" alt="">
-                                        }
-                                    </div>
-                                    <div class="media-body align-self-center" style="margin-left:20px !important">
-                                        <div class="username">
-                                            @if (item.Url == null || item.Url.Equals("-") || item.Url.Equals(""))
+                                    <div class="media">
+                                        <div class="media-left align-self-start">
+                                            @if (item.T_image == "~/Content/Uploads/Images/Network/")
                                             {
-                                                <h4>@item.Name</h4>
+                                                <img src="~/Content/assets/img/avatar/avatar-02.jpg" class="img-fluid" alt="">
                                             }
                                             else
                                             {
-                                                <a href="@item.Url" target="_blank"><h4>@item.Name</h4></a>
+                                                <img src="@Url.Content(item.T_image)" style="width:170px" class="img-fluid" alt="">
                                             }
                                         </div>
+                                        <div class="media-body align-self-center" style="margin-left:20px !important">
+                                            <div class="username">
+                                                @if (item.Url == null || item.Url.Equals("-") || item.Url.Equals(""))
+                                                {
+                                                    <h4>@item.Name</h4>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@item.Url" target="_blank"><h4>@item.Name</h4></a>
+                                                }
+                                            </div>
 
-                                        <div class="meta">
+                                            <div class="meta">
 
-                                            <textarea readonly class="mr-3" rows="9" style="width: 100% !important;background: transparent;border: none; outline: none;">@item.Description</textarea>
-                                            <a class="btn btn-shadow" href="#" onclick="showReviews(@item.ID_Network)" data-toggle="modal" data-target="#modalReview">Reviews</a>
+                                                <textarea readonly class="mr-3" rows="9" style="width: 100% !important;background: transparent;border: none; outline: none;">@item.Description</textarea>
+                                                <a class="btn btn-shadow" href="#" onclick="showReviews(@item.ID_Network)" data-toggle="modal" data-target="#modalReview">Reviews</a>
 
-                                            <h6></h6>
+                                                <h6></h6>
+                                            </div>
                                         </div>
+
                                     </div>
 
                                 </div>
 
-                            </div>
-
+                            }
                         }
-                    }
-                    else
-                    {
-                        <div class="item">
-                            <label>No data to show</label>
-                        </div>
-                    }
+                        else
+                        {
+                            <div class="item">
+                                <label>No data to show</label>
+                            </div>
+                        }
 
 
-                </div>
-                <hr />
-            }
+                    </div>
+                    <hr />
+                }
 
 
-
+            </div>
 
 
         </div>
@@ -128,7 +133,7 @@
             <div class="today">
                 <div class="title">
                     <h6>
-                        S7VEN makes no representations or warranties, either expressed or implied, of any kind with respect to products or services offered by these businesses and does not directly or indirectly endorse any particular business, product or service. LIBOR does not assume liability resulting from your dealings with these businesses.
+                        S7VEN makes no representations or warranties, either expressed or implied, of any kind with respect to products or services offered by these businesses and does not directly or indirectly endorse any particular business, product or service. S7VEN does not assume liability resulting from your dealings with these businesses.
                     </h6>
                 </div>
                 <div class="new-tasks"></div>
@@ -246,7 +251,7 @@
 
                             <h4>Write your review...</h4>
                             <br />
-                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" maxlength="100"></textarea>
+                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" placeholder="Write your review..."></textarea>
 
                             <span class="la la-star la-2x" id="Rate1" onclick="CRate(1)"></span>
                             <span class="la la-star-o la-2x" id="Rate2" onclick="CRate(2)"></span>
@@ -339,7 +344,7 @@
                             $('#reviewCard').append(`<div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
                                                        <h4>Review #${i + 1}  </h4>
                                                        <h2><span class="la la-star la-2x"></span>${review.Review_Rate}</h2>
-                                                       <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" disabled>${review.Comment}</textarea>
+                                                       <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" disabled>${review.Comment}</textarea>
                                                        <h6>Date : ${review.Date}</h6>
 
 
@@ -360,6 +365,7 @@
                 });
 
         };
+   
         function CRate(r) {
             $("#rating").val(r);
             for (var i = 1; i <= r; i++) {

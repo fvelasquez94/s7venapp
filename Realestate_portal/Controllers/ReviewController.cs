@@ -84,17 +84,25 @@ namespace Realestate_portal.Controllers
             }
         }
 
-        public ActionResult DeleteReview(int network) {
+        public ActionResult DeleteReview(int review) {
             try
             {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                Tb_Reviews newReview = new Tb_Reviews();
+                newReview.Id_Review = review;
+                db.Tb_Reviews.Remove(newReview);
+                db.SaveChanges();
 
+                var result = "SUCCESS";
+                return Json(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
 
-                throw;
             }
-            return Json("");
+            
         }
     }
 }
