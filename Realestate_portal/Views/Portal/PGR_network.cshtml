@@ -1,7 +1,11 @@
 ﻿@model List<Realestate_portal.Models.Tb_Network>
+@using Realestate_portal.Models;
 @{
     ViewBag.Title = "Premium Group Realty - Network";
     List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+    List<Realestate_portal.Models.Tb_Reviews> lstreviews = (List<Realestate_portal.Models.Tb_Reviews>)ViewBag.reviews;
+
+
 }
 <link rel="stylesheet" href="~/Content/assetsEditor/css/line-awesome.min.css">
 <div class="container-fluid">
@@ -48,10 +52,10 @@
                         <a class="btn btn-shadow" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
                     }
                 </div>
-                
+
             </div>
-           
-            
+
+
 
             <div id="networkSponsors">
 
@@ -59,13 +63,20 @@
                     <div class="row align-items-start align-items-lg-start align-items-md-start align-items-sm-start align-items-xl-start">
                         <div class="col-4">
                             <input class="form-control" id="inputCategory" type="text" placeholder="Search by category" style="width: 75%">
-                            <button class="btn btn-shadow">Search</button>
+                            <button type="button" id="searchButton" class="btn btn-shadow" value="Submit">Search</button>
                         </div>
-                        <div class="col-6">
-                            
+                        <div class="col-4">
+                            <input class="form-control" id="inputName" type="text" placeholder="Search by name" style="width: 75%">
+                            <button type="button" id="searchName" class="btn btn-shadow" value="Submit">Search</button>
                         </div>
                     </div>
                 </div>
+                @if (lstcategories.Count() == 0)
+                {
+                    <div class="item">
+                        <label>No data to show</label>
+                    </div>
+                }
                 @foreach (var category in lstcategories)
                 {
 
@@ -91,19 +102,53 @@
                                         </div>
                                         <div class="media-body align-self-center" style="margin-left:20px !important">
                                             <div class="username">
-                                                @if (item.Url == null || item.Url.Equals("-") || item.Url.Equals(""))
-                                                {
-                                                    <h4>@item.Name</h4>
-                                                }
-                                                else
-                                                {
-                                                    <a href="@item.Url" target="_blank"><h4>@item.Name</h4></a>
-                                                }
+
+                                                <h4>@item.Name</h4>
+
                                             </div>
 
                                             <div class="meta">
 
                                                 <textarea readonly class="mr-3" rows="9" style="width: 100% !important;background: transparent;border: none; outline: none;">@item.Description</textarea>
+                                                @if (item.Url == null || item.Url.Equals("-") || item.Url.Equals(""))
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <a href="@item.Url" target="_blank"><h5>Website:@item.Url</h5></a>
+                                                }
+                                                <div>
+                                                    @{
+                                                        int i = 0, rate = 0, prom = 0;
+                                                    }
+                                                    @foreach (var r in lstreviews)
+                                                    {
+                                                        if (r.Id_Network == item.ID_Network)
+                                                        {
+                                                            rate = rate + r.Rate_Review;
+                                                            i++;
+                                                        }
+                                                        if (i != 0)
+                                                        {
+                                                            prom = rate / i;
+                                                        }
+
+
+                                                    }
+
+                                                    @if (prom > 0)
+                                                    {
+                                                        for (int x = 0; x < prom; x++)
+                                                        {
+                                                            <span class="la la-star la-2x"></span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="la la-star-o la-2x"></span>
+                                                    }
+                                                </div>
                                                 <a class="btn btn-shadow" href="#" onclick="showReviews(@item.ID_Network)" data-toggle="modal" data-target="#modalReview">Reviews</a>
 
                                                 <h6></h6>
@@ -281,7 +326,7 @@
                 <!-- here ends no note in tab menu section -->
                 <div id="reviewCard" style="width:100%">
                     <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
-                       
+
                         <input type="hidden" id="index" value="0" />
                         <input type="hidden" id="reviewId" value="" />
                         <input type="hidden" id="reviewText" value="" />
@@ -300,11 +345,29 @@
         </div>
     </div>
 </div>
-    
+
 <!--end review-->
 <script type="text/javascript">
-        function showReviews(idNetwork) {
+        document.getElementById("searchButton").onclick = function () { searchByCat() };
+        function searchByCat() {
+            var category = $('#inputCategory').val();
+           
+            category = category.toUpperCase();
 
+            window.location.href = "/Portal/PGR_network?category=" + category;
+
+         };
+        document.getElementById("searchName").onclick = function () { searchByName() };
+        function searchByName() {
+            var name = $('#inputName').val();
+
+          
+
+            window.location.href = "/Portal/PGR_network?name="+name;
+
+        };
+        function showReviews(idNetwork) {
+            var star = "";
             var network = idNetwork;
 
 
@@ -354,11 +417,14 @@
 
                         $.each(result, function (i, review) {
 
+                            for (var x = 0; x < review.Review_Rate; x++) {
+                                star = star.concat(`<span class="la la-star la-2x"></span>`)
+                            };
                             $('#reviewCard').append(`<div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
                                                        <h4>Review #${i + 1}  </h4>
-                                                       <h2><span class="la la-star la-2x"></span>${review.Review_Rate}</h2>
+                                                       <h2>${star}:${review.Review_Rate}</h2>
                                                        <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" disabled>${review.Comment}</textarea>
-                                                       <h6>Date : ${review.Date}</h6>
+                                                       <h6>Date : ${review.Date} created by: ${review.User}</h6>
 
 
                                                     </div >
@@ -366,7 +432,7 @@
                                                 </div>
                                             </div >`
                             );
-
+                            star = "";
 
                         }
                         );
@@ -378,7 +444,7 @@
                 });
 
         };
-   
+
         function CRate(r) {
             $("#rating").val(r);
             for (var i = 1; i <= r; i++) {

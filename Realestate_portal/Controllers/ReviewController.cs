@@ -40,6 +40,7 @@ namespace Realestate_portal.Controllers
                                      Comment = a.Comment,
                                      Date_Review = (DateTime)a.Date_Review,
                                      Review_Rate = a.Rate_Review,
+                                     User = a.Name_User
 
                                  }).ToList();
 
@@ -69,6 +70,7 @@ namespace Realestate_portal.Controllers
                 newReview.Id_Network = network;
                 newReview.Rate_Review = rate;
                 newReview.Comment = comment;
+                newReview.Name_User = activeuser.Name + " " + activeuser.LastName;
                 db.Tb_Reviews.Add(newReview);
                 db.SaveChanges();
 

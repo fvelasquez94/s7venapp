@@ -13,5 +13,7 @@ namespace Realestate_portal.Models.ViewModels
         public DateTime Date_Review { get; set; }
         public string Date { get; set; }
         public int Review_Rate { get; set; }
+
+        public string User { get; set; }
     }
 }

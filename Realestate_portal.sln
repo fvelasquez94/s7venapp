@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realestate_portal", "Realestate_portal\Realestate_portal.csproj", "{5EAE6610-70A0-4FC0-B132-7F15327F0592}"
 EndProject
@@ -13,8 +13,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAE6610-70A0-4FC0-B132-7F15327F0592}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

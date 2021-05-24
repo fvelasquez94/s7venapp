@@ -19,6 +19,7 @@ namespace Realestate_portal.Models
         public System.DateTime Date_Review { get; set; }
         public string Comment { get; set; }
         public int Id_Network { get; set; }
+        public string Name_User { get; set; }
     
         public virtual Tb_Network Tb_Network { get; set; }
     }

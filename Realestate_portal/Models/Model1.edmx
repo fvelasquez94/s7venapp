@@ -403,6 +403,7 @@
           <Property Name="Date_Review" Type="datetime" Nullable="false" />
           <Property Name="Comment" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="Id_Network" Type="int" Nullable="false" />
+          <Property Name="Name_User" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Tb_TemplatesCatalogo">
           <Key>
@@ -1900,6 +1901,7 @@
           <Property Name="Comment" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="Id_Network" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tb_Network" Relationship="Realstate_agentsModel.FK_Network" FromRole="Tb_Reviews" ToRole="Tb_Network" />
+          <Property Name="Name_User" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Network">
           <End Type="Realstate_agentsModel.Tb_Network" Role="Tb_Network" Multiplicity="1" />
@@ -2415,6 +2417,7 @@
           <EntitySetMapping Name="Tb_Reviews">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Reviews">
               <MappingFragment StoreEntitySet="Tb_Reviews">
+                <ScalarProperty Name="Name_User" ColumnName="Name_User" />
                 <ScalarProperty Name="Id_Network" ColumnName="Id_Network" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Date_Review" ColumnName="Date_Review" />

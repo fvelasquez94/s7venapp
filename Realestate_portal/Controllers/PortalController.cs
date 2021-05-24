@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Web;
@@ -50,7 +51,7 @@ namespace Realestate_portal.Controllers
 
 
 
-            return RedirectToAction("Login", "Portal", new { access = true, logpage=2 });
+            return RedirectToAction("Login", "Portal", new { access = true, logpage = 2 });
         }
 
         [HttpPost]
@@ -60,7 +61,7 @@ namespace Realestate_portal.Controllers
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                string company_email= (from c in db.Sys_Company where c.ID_Company == activeuser.ID_Company select c.Web).FirstOrDefault<string>();
+                string company_email = (from c in db.Sys_Company where c.ID_Company == activeuser.ID_Company select c.Web).FirstOrDefault<string>();
                 if (activeuser != null)
                 {
                     var zippackage = "";
@@ -91,10 +92,10 @@ namespace Realestate_portal.Controllers
                             zip.Save(zippackage);
                         }
 
-                            var brokeremail = company_email;
+                        var brokeremail = company_email;
                         try
                         {
-                           
+
 
                             if (brokeremail != null && brokeremail != "")
                             {
@@ -102,21 +103,21 @@ namespace Realestate_portal.Controllers
                                 dynamic emailtosend = new Email("newpackage_notification");
                                 emailtosend.To = brokeremail;
                                 emailtosend.From = "support@s7ven.co";
-                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - PGR Agents Portal";
+                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead " + customer.Name + " " + customer.LastName + " - PGR Agents Portal";
                                 emailtosend.Body = HttpUtility.HtmlDecode("<a style=\"color:blue\"> New package has been created for " + docpackage.Description + "</a>");
                                 emailtosend.Attach(new Attachment(zippackage));
                                 emailtosend.Send();
-                                
-                                if (email!=null)
+
+                                if (email != null)
                                 {
                                     //Enviamos correo para notificar
                                     dynamic emailtosendagent = new Email("newpackage_notification");
                                     emailtosendagent.To = email;
                                     emailtosendagent.From = "support@s7ven.co";
                                     emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - PGR Agents Portal";
-                                    emailtosend.Body = HttpUtility.HtmlDecode( "<a style=\"color:blue\"> New package has been created for " + docpackage.Description + "</a>");
+                                    emailtosend.Body = HttpUtility.HtmlDecode("<a style=\"color:blue\"> New package has been created for " + docpackage.Description + "</a>");
                                     emailtosendagent.Attach(new Attachment(zippackage));
-                                    emailtosendagent.Send();                                    
+                                    emailtosendagent.Send();
                                 }
 
                                 result = "SUCCESS";
@@ -124,14 +125,14 @@ namespace Realestate_portal.Controllers
                             else {
                                 result = "Data saved but email was not configured";
                             }
-                           
+
                         }
                         catch (Exception ex)
                         {
-                            result =  "Data saved but email was not configured.";
+                            result = "Data saved but email was not configured.";
                         }
 
-                     
+
                     }
                 }
                 else {
@@ -156,7 +157,7 @@ namespace Realestate_portal.Controllers
         [HttpGet]
         public ActionResult markasread()
         {
-          
+
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
@@ -168,7 +169,7 @@ namespace Realestate_portal.Controllers
                 return Redirect(Request.UrlReferrer.ToString());
             }
 
-           
+
 
         }
 
@@ -184,8 +185,8 @@ namespace Realestate_portal.Controllers
                 {
                     TempData["advertencia"] = "Wrong email or password.";
                 }
-                else{
-                 
+                else {
+
                 }
 
             }
@@ -315,7 +316,7 @@ namespace Realestate_portal.Controllers
                 if (activeuser.Roles.Contains("SA"))
                 {
                     ViewBag.rol = "SA";
-                    return RedirectToAction("Dashboard", "Portal", new { broker=1} );
+                    return RedirectToAction("Dashboard", "Portal", new { broker = 1 });
                 }
                 else if (activeuser.Roles.Contains("Admin"))
                 {
@@ -392,7 +393,7 @@ namespace Realestate_portal.Controllers
 
             return View();
         }
-        public ActionResult Forgot_password(bool token = false, bool email = false, string errorconsole="")
+        public ActionResult Forgot_password(bool token = false, bool email = false, string errorconsole = "")
         {
             if (token == true)
             {
@@ -422,7 +423,7 @@ namespace Realestate_portal.Controllers
         {
 
 
-            Sys_Users User = (from a in db.Sys_Users where (a.Email == email && a.Active==true) select a).FirstOrDefault();
+            Sys_Users User = (from a in db.Sys_Users where (a.Email == email && a.Active == true) select a).FirstOrDefault();
             if (User != null)
             {
                 User.Password = "pgr2020";
@@ -442,7 +443,7 @@ namespace Realestate_portal.Controllers
                         semail.password = User.Password;
 
                         semail.Send();
-                        return RedirectToAction("Forgot_password", "Portal", new { token = true, email = false, errorconsole="" });
+                        return RedirectToAction("Forgot_password", "Portal", new { token = true, email = false, errorconsole = "" });
                     }
                     else {
                         return RedirectToAction("Forgot_password", "Portal", new { token = false, email = true, errorconsole = "No email configured" });
@@ -458,7 +459,7 @@ namespace Realestate_portal.Controllers
 
             }
 
-            return RedirectToAction("Forgot_password", "Portal", new { token = false, email = true,errorconsole = "No user email found" });
+            return RedirectToAction("Forgot_password", "Portal", new { token = false, email = true, errorconsole = "No user email found" });
         }
 
 
@@ -514,7 +515,7 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
-                         
+
                         }
                         else
                         {
@@ -523,7 +524,7 @@ namespace Realestate_portal.Controllers
 
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == broker && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                             var brokersel = (from b in db.Sys_Users where (b.ID_Company == broker && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                          
+
                         }
                     }
 
@@ -534,7 +535,7 @@ namespace Realestate_portal.Controllers
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
 
-           
+
 
                 return View();
 
@@ -574,22 +575,22 @@ namespace Realestate_portal.Controllers
                 //Filtros SA
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
-                ViewBag.lstCompanies= lstCompanies;
+                ViewBag.lstCompanies = lstCompanies;
                 //
                 List<Tb_Posts> lstpost = new List<Tb_Posts>();
                 Tb_Posts Broker_post = new Tb_Posts();
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin"))select b).FirstOrDefault();
+                    var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                     Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                     ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
-                    ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.Roles.Contains("Admin") && usd.ID_Company==activeuser.ID_Company) select usd).FirstOrDefault();
+                    ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.Roles.Contains("Admin") && usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
 
                 }
                 else
                 {
-                    if(r.Contains("SA") && broker==0)
+                    if (r.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
@@ -611,14 +612,14 @@ namespace Realestate_portal.Controllers
                         {
 
                             ViewBag.rol = "SA";
-                           
+
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                             ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                             var brokersel = (from b in db.Sys_Users where (b.ID_Company == broker && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                             Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                         }
                     }
-                    
+
 
 
                 }
@@ -630,12 +631,12 @@ namespace Realestate_portal.Controllers
                 int likepost = 0;
                 int idparentpost = 0;
 
-               
-                if (Broker_post != null && Broker_post.Title !=null)
+
+                if (Broker_post != null && Broker_post.Title != null)
                 {
                     idparentpost = Broker_post.ID_Post;
                     lstpost.Add(Broker_post);
-                    var agent_posts= (from a in db.Tb_Posts where (a.Post_type == 2 && a.Post_parent == Broker_post.ID_Post) select a).ToList();
+                    var agent_posts = (from a in db.Tb_Posts where (a.Post_type == 2 && a.Post_parent == Broker_post.ID_Post) select a).ToList();
                     if (agent_posts.Count > 0) {
                         lstpost.AddRange(agent_posts);
                     }
@@ -650,8 +651,8 @@ namespace Realestate_portal.Controllers
                         }
 
                     }
-                    
-                    
+
+
 
 
                 }
@@ -713,7 +714,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Documents_upload(int broker =0)
+        public ActionResult Documents_upload(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -748,13 +749,13 @@ namespace Realestate_portal.Controllers
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
-                                                          where(t.ID_User==activeuser.ID_User)
+                                                          where (t.ID_User == activeuser.ID_User)
                                                           select new
                                                           {
                                                               ID = t.ID_Process,
                                                               FullName = t.Address + " | CUSTOMER: " + t.Tb_Customers.Name + " " + t.Tb_Customers.LastName
                                                           }), "ID", "FullName");
-                    
+
                     lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
 
                 }
@@ -763,7 +764,7 @@ namespace Realestate_portal.Controllers
                     if (r.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin"))  select usd).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                         lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
 
@@ -844,7 +845,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Documents_upload_management(int broker =0)
+        public ActionResult Documents_upload_management(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -877,8 +878,8 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstdocpacakges = (from a in db.Tb_Docpackages where(a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
-                    
+                    lstdocpacakges = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
+
                 }
                 else
                 {
@@ -968,7 +969,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.customer = customer;
 
                 List<Tb_Docpackages_details> lstpackages = new List<Tb_Docpackages_details>();
-                lstpackages = (from a in db.Tb_Docpackages_details where (a.ID_docpackage==idpackage && a.original == false) select a).ToList();
+                lstpackages = (from a in db.Tb_Docpackages_details where (a.ID_docpackage == idpackage && a.original == false) select a).ToList();
 
                 var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
                 var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
@@ -1114,7 +1115,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Reservations(int broker=0)
+        public ActionResult Reservations(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1176,10 +1177,10 @@ namespace Realestate_portal.Controllers
                             lstwebinars = (from a in db.Tb_Webinars where (a.Date >= sunday && a.Date <= saturday) && a.Active == 1 select a).ToList();
                         }
                     }
-                    
+
 
                 }
-           
+
                 //WEBINAR TYPE:
 
                 ViewBag.selbroker = broker;
@@ -1247,7 +1248,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Reservations_management(int broker=0)
+        public ActionResult Reservations_management(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1298,12 +1299,12 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
 
-                            lstwebinars = (from a in db.Tb_Webinars  select a).ToList();
+                            lstwebinars = (from a in db.Tb_Webinars select a).ToList();
                         }
                         else
                         {
                             ViewBag.rol = "SA";
-                            lstwebinars = (from a in db.Tb_Webinars  select a).ToList();
+                            lstwebinars = (from a in db.Tb_Webinars select a).ToList();
                         }
 
                     }
@@ -1342,7 +1343,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Obtener_actividadesConflictoBooking(string resource,DateTime horainicio, DateTime horafin)
+        public ActionResult Obtener_actividadesConflictoBooking(string resource, DateTime horainicio, DateTime horafin)
         {
             List<Tb_Webinars> lst_planificacion = new List<Tb_Webinars>();
             lst_planificacion = (from a in db.Tb_Webinars
@@ -1356,12 +1357,12 @@ namespace Realestate_portal.Controllers
             }
 
             JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-           
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult UploadWebinar(string title, string url, string description, string category, DateTime date,DateTime datefin)
+        public ActionResult UploadWebinar(string title, string url, string description, string category, DateTime date, DateTime datefin)
         {
             try
             {
@@ -1369,7 +1370,7 @@ namespace Realestate_portal.Controllers
                 Tb_Webinars newebinar = new Tb_Webinars();
                 newebinar.Title = title;
                 if (description == null) { newebinar.Description = ""; } else { newebinar.Description = description; }
-                
+
                 newebinar.Url = "";
                 newebinar.Url_video = "";
                 newebinar.Notes = "";
@@ -1389,7 +1390,7 @@ namespace Realestate_portal.Controllers
 
                 try
                 {//Enviamos notificaciones  a todos los Admin y SA
-                    var agents = (from a in db.Sys_Users where (a.Active == true && a.ID_Company==activeuser.ID_Company && a.Roles.Contains("Admin") || a.Roles.Contains("SA")) select a).ToList();
+                    var agents = (from a in db.Sys_Users where (a.Active == true && a.ID_Company == activeuser.ID_Company && a.Roles.Contains("Admin") || a.Roles.Contains("SA")) select a).ToList();
 
                     if (agents.Count > 0)
                     {
@@ -1420,13 +1421,13 @@ namespace Realestate_portal.Controllers
                                     emailtosend.date = newebinar.Date.ToLongDateString() + " " + newebinar.Date.ToShortTimeString();
                                     emailtosend.time = newebinar.Date_end.ToLongDateString() + " " + newebinar.Date_end.ToShortTimeString();
                                     emailtosend.Send();
-                           
+
                                 }
 
                             }
                             catch (Exception ex)
                             {
-         
+
                             }
 
 
@@ -1474,8 +1475,8 @@ namespace Realestate_portal.Controllers
                 newpost.Username = activeuser.Name + " " + activeuser.LastName;
                 newpost.Likes = 0;
                 newpost.Comments = 0;
-                newpost.User_likes="";
-                newpost.User_comments="";
+                newpost.User_likes = "";
+                newpost.User_comments = "";
                 newpost.created_at = DateTime.UtcNow;
                 newpost.Active = true;
                 newpost.Post_parent = id;
@@ -1549,7 +1550,7 @@ namespace Realestate_portal.Controllers
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-                Tb_Posts newpost = (from a in db.Tb_Posts where(a.ID_Post==id) select a).FirstOrDefault();
+                Tb_Posts newpost = (from a in db.Tb_Posts where (a.ID_Post == id) select a).FirstOrDefault();
                 List<int> TagIds = new List<int>();
                 newpost.Likes = newpost.Likes + 1;
                 if (newpost.User_likes == "") {
@@ -1611,14 +1612,14 @@ namespace Realestate_portal.Controllers
 
                     if (TagIds.Count > 0) { newpost.User_likes = string.Join<int>(",", TagIds); } else { newpost.User_likes = ""; }
 
-                    
+
                 }
 
 
-              
+
                 db.Entry(newpost).State = EntityState.Modified;
                 db.SaveChanges();
-              
+
                 var result = "SUCCESS";
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -1632,7 +1633,7 @@ namespace Realestate_portal.Controllers
 
         }
 
-        public ActionResult Videos(int broker=0)
+        public ActionResult Videos(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1725,7 +1726,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Videos_management(int broker=0)
+        public ActionResult Videos_management(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1758,7 +1759,7 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstvideos = (from a in db.Tb_Videos where (a.ID_Company==activeuser.ID_Company && a.Type != "broker") select a).ToList();
+                    lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
                 }
                 else
                 {
@@ -1775,16 +1776,16 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
 
-                            lstvideos = (from a in db.Tb_Videos where (a.ID_Company==activeuser.ID_Company && a.Type != "broker") select a).ToList();
+                            lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
                         }
                         else
                         {
                             ViewBag.rol = "SA";
-                            lstvideos = (from a in db.Tb_Videos where (a.ID_Company==broker && a.Type != "broker") select a).ToList();
+                            lstvideos = (from a in db.Tb_Videos where (a.ID_Company == broker && a.Type != "broker") select a).ToList();
                         }
                     }
 
-                  
+
 
                 }
                 //VIDEO TYPE:
@@ -1818,7 +1819,7 @@ namespace Realestate_portal.Controllers
             }
         }
 
-        public ActionResult Marketing(int broker=0)
+        public ActionResult Marketing(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1877,7 +1878,7 @@ namespace Realestate_portal.Controllers
                             lstmarketing = (from a in db.Tb_Marketing where (a.ID_Company == broker) select a).ToList();
                         }
                     }
-                    
+
 
                 }
                 //VIDEO TYPE:
@@ -1912,7 +1913,7 @@ namespace Realestate_portal.Controllers
             }
         }
 
-        public ActionResult Marketing_management(int broker=0)
+        public ActionResult Marketing_management(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -1973,7 +1974,7 @@ namespace Realestate_portal.Controllers
                             lstmarketing = (from a in db.Tb_Marketing where (a.ID_Company == broker) select a).ToList();
                         }
                     }
-                    
+
 
                 }
 
@@ -2025,7 +2026,7 @@ namespace Realestate_portal.Controllers
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
                     var file = Request.Files[i];
-                     extension = Path.GetExtension(Request.Files[i].FileName).ToLower();
+                    extension = Path.GetExtension(Request.Files[i].FileName).ToLower();
                     size = ConvertBytesToMegabytes(Request.Files[i].ContentLength).ToString("0.00");
                     fileName = Path.GetFileName(file.FileName);
 
@@ -2036,7 +2037,7 @@ namespace Realestate_portal.Controllers
                     else {
                         path = Path.Combine(Server.MapPath("~/Content/Uploads/Resources/Scripts/"), fileName);
                     }
-                  
+
                     file.SaveAs(path);
                 }
             }
@@ -2049,7 +2050,7 @@ namespace Realestate_portal.Controllers
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-        
+
                 Tb_Resources newresource = new Tb_Resources();
                 newresource.Name = title;
                 newresource.Description = "";
@@ -2060,12 +2061,12 @@ namespace Realestate_portal.Controllers
                 else {
                     newresource.Url = "~/Content/Uploads/Resources/Scripts/" + fileName;
                 }
-           
+
                 newresource.Type = type;
 
-   
-                newresource.Size =size + " MB";
-                newresource.Times_downloaded =0;
+
+                newresource.Size = size + " MB";
+                newresource.Times_downloaded = 0;
                 newresource.Doc_type = category;
                 newresource.Last_update = DateTime.UtcNow;
                 newresource.Extension_file = extension;
@@ -2099,7 +2100,7 @@ namespace Realestate_portal.Controllers
         [HttpPost]
         public ActionResult UploadCampaign(htmlModel modelhtml)
         {
-      
+
 
             try
             {
@@ -2110,7 +2111,7 @@ namespace Realestate_portal.Controllers
                 newresource.Description = "";
 
                 newresource.Url = modelhtml.htmlformat;
-              
+
                 newresource.Type = modelhtml.type;
 
 
@@ -2199,7 +2200,7 @@ namespace Realestate_portal.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
 
             }
-            catch (Exception ex){
+            catch (Exception ex) {
                 var result = ex.Message;
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -2306,7 +2307,7 @@ namespace Realestate_portal.Controllers
                 {
                     editvideo.T_image = "~/Content/Uploads/Images/Videos_img/" + date + "_" + min + fileName;
                 }
-               
+
                 editvideo.Last_update = DateTime.UtcNow;
 
                 db.Entry(editvideo).State = EntityState.Modified;
@@ -2327,7 +2328,7 @@ namespace Realestate_portal.Controllers
 
 
         [HttpPost]
-        public ActionResult EditNetwork(int id,string title, string url, string description, string category)
+        public ActionResult EditNetwork(int id, string title, string url, string description, string category)
         {
             var path = "";
             var fileName = "";
@@ -2428,7 +2429,7 @@ namespace Realestate_portal.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
 
             }
-            catch (Exception ex){
+            catch (Exception ex) {
                 var result = ex.Message;
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -2463,7 +2464,7 @@ namespace Realestate_portal.Controllers
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-                Tb_Marketing newimage= new Tb_Marketing();
+                Tb_Marketing newimage = new Tb_Marketing();
                 newimage.Name = title;
                 newimage.Description = description;
                 newimage.Url = "";
@@ -2494,7 +2495,7 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditImage(int id,string title, string description, string category)
+        public ActionResult EditImage(int id, string title, string description, string category)
         {
             var path = "";
             var fileName = "";
@@ -2555,15 +2556,15 @@ namespace Realestate_portal.Controllers
             var path = "";
             var fileName = "";
             string extension = "";
-            string size = "";           
+            string size = "";
             try
             {
                 if (Request.Files.Count > 0)
                 {
-                    for (int x=0;x < ids.Length; x++)
-                {
+                    for (int x = 0; x < ids.Length; x++)
+                    {
                         var id = ids[x];
-                        var detail = (from a in db.Tb_Docpackages_details where (a.ID_Detail ==id) select a).FirstOrDefault();
+                        var detail = (from a in db.Tb_Docpackages_details where (a.ID_Detail == id) select a).FirstOrDefault();
                         var headerpack = (from b in db.Tb_Docpackages where (b.ID_docpackage == detail.ID_docpackage) select b).FirstOrDefault();
 
 
@@ -2573,7 +2574,7 @@ namespace Realestate_portal.Controllers
                             if (System.IO.File.Exists(fullPath))
                             {
                                 System.IO.File.Delete(fullPath);
-                            }                           
+                            }
                             detail.uploaded = false;
                             detail.Extension = "";
                             detail.Size = "";
@@ -2581,14 +2582,14 @@ namespace Realestate_portal.Controllers
                             headerpack.Last_update = DateTime.UtcNow;
                         }
                         Random rnd = new Random();
-                       
-                            var file = Request.Files[x];
-                            extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
-                            size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
-                            fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day + rnd.Next(3981) + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
-                            path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/"), fileName);
-                            file.SaveAs(path);
-                        
+
+                        var file = Request.Files[x];
+                        extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
+                        size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
+                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day + rnd.Next(3981) + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/"), fileName);
+                        file.SaveAs(path);
+
 
                         detail.URL = "~/Content/Uploads/DocumentsPackages/" + fileName;
                         detail.Extension = extension;
@@ -2598,8 +2599,8 @@ namespace Realestate_portal.Controllers
                         detail.uploaded = true;
                         db.Entry(detail).State = EntityState.Modified;
                         db.Entry(headerpack).State = EntityState.Modified;
-                        db.SaveChanges();                                                                
-                }
+                        db.SaveChanges();
+                    }
                     var result = "SUCCESS";
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
@@ -2716,7 +2717,7 @@ namespace Realestate_portal.Controllers
                     if (r.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                       
+
                         lstvideos = (from a in db.Tb_Videos where (a.Type == "broker") select a).ToList();
                     }
                     else
@@ -2739,7 +2740,7 @@ namespace Realestate_portal.Controllers
 
                 ViewBag.selbroker = broker;
                 //VIDEO TYPE:
-          
+
                 var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
                 var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
                 var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
@@ -2911,9 +2912,9 @@ namespace Realestate_portal.Controllers
 
 
         [HttpGet]
-        public ActionResult newPackage(string title,int idpackage, string category, int customer, int property)
+        public ActionResult newPackage(string title, int idpackage, string category, int customer, int property)
         {
-  //Metodo para que los agentes agreguen paquetes
+            //Metodo para que los agentes agreguen paquetes
             try
             {
                 Tb_Docpackages newpackage = new Tb_Docpackages();
@@ -2924,7 +2925,7 @@ namespace Realestate_portal.Controllers
                 newpackage.Total_docs = 0;
                 newpackage.Total_docsf = 0;
                 newpackage.ID_User = activeuser.ID_User;
-                newpackage.ID_Company = activeuser.ID_Company; 
+                newpackage.ID_Company = activeuser.ID_Company;
                 newpackage.Active = true;
                 newpackage.original = false;
                 newpackage.Finished = false;
@@ -2934,14 +2935,14 @@ namespace Realestate_portal.Controllers
                 var customerfromProp = (from t in db.Tb_Process where (t.ID_Process == property) select t).FirstOrDefault();
                 var cust = (from t in db.Tb_Customers where (t.ID_Customer == customerfromProp.ID_Customer) select t).FirstOrDefault();
                 newpackage.ID_Customer = customerfromProp.ID_Customer;
-                newpackage.ID_Property =customerfromProp.ID_Process;
+                newpackage.ID_Property = customerfromProp.ID_Process;
 
 
                 //buscamos los detalles
                 List<Tb_Docpackages_details> lsttosave = new List<Tb_Docpackages_details>();
                 Tb_Docpackages_details packdetails = new Tb_Docpackages_details();
 
-                var details = (from a in db.Tb_docCategies where (a.ID_Category == idpackage ) select a).ToList();
+                var details = (from a in db.Tb_docCategies where (a.ID_Category == idpackage) select a).ToList();
 
                 newpackage.Total_docs = details.Count();
                 db.Tb_Docpackages.Add(newpackage);
@@ -2958,7 +2959,7 @@ namespace Realestate_portal.Controllers
                     packdetails.Notes = "";
                     packdetails.Size = "";
                     packdetails.uploaded = false;
-                    packdetails.sent = false;                   
+                    packdetails.sent = false;
 
                     lsttosave.Add(packdetails);
                     packdetails = new Tb_Docpackages_details();
@@ -2971,22 +2972,22 @@ namespace Realestate_portal.Controllers
                 customerCRM.property = customerfromProp;
                 customerCRM.customer = cust;
                 customerCRM.pack_Det = lsttosave;
-                           
+
                 List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
 
                 if (r.Contains("Agent"))
                 {
-                    ViewBag.rol = "Agent";                   
+                    ViewBag.rol = "Agent";
                 }
                 else
-                {                   
+                {
                     if (r.Contains("Admin"))
                     {
                         ViewBag.rol = "Admin";
                     }
                     else
                     {
-                        ViewBag.rol = "SA";                      
+                        ViewBag.rol = "SA";
                     }
                 }
 
@@ -3004,7 +3005,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Resources(int broker=0)
+        public ActionResult Resources(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -3039,7 +3040,7 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstresources = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker" ) || a.ID_Company == 1) select a).ToList();
+                    lstresources = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker") || a.ID_Company == 1) select a).ToList();
 
                 }
                 else
@@ -3067,7 +3068,7 @@ namespace Realestate_portal.Controllers
                             lstresources = (from a in db.Tb_Resources where (a.ID_Company == broker && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
                         }
                     }
-                    
+
 
                 }
 
@@ -3138,7 +3139,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Resources_management(int broker=0)
+        public ActionResult Resources_management(int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -3201,7 +3202,7 @@ namespace Realestate_portal.Controllers
                             lstresources = (from a in db.Tb_Resources where (a.ID_Company == broker && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
                         }
                     }
-                    
+
 
                 }
 
@@ -3420,8 +3421,8 @@ namespace Realestate_portal.Controllers
             }
         }
 
-
-        public ActionResult PGR_network(int broker=0)
+       
+        public ActionResult PGR_network(string category="", string name = "",int broker=0)
         {
             if (generalClass.checkSession())
             {
@@ -3449,12 +3450,21 @@ namespace Realestate_portal.Controllers
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
-
                 List<Tb_Network> lstnetwork = new List<Tb_Network>();
+                
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstnetwork = (from a in db.Tb_Network where (a.ID_Company==activeuser.ID_Company || a.ID_Company == 1) select a).ToList();
+                    if (name.Equals(""))
+                    {
+                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                    }
+                    else
+                    {
+                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
+                    }
+                   
+
 
                 }
                 else
@@ -3465,19 +3475,47 @@ namespace Realestate_portal.Controllers
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                         lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        if (name.Equals(""))
+                        {
+                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        }
+                        else 
+                        {
+                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
+                        }
+
+                        
                     }
                     else
                     {
                         ViewBag.rol = "Admin";
                         if (broker == 0)
                         {
+                            if (name.Equals(""))
+                            {
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                            }
+                            else
+                            {
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
+                            }
+                           
 
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company || a.ID_Company == 1) select a).ToList();
                         }
                         else
                         {
                             ViewBag.rol = "SA";
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker) select a).ToList();
+                            if (name.Equals(""))
+                            {
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker) select a).ToList();
+                            }
+                            else
+                            {
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker && a.Name.Contains(name)) select a).ToList();
+                            }
+                           
+
+
                         }
                     }
                    
@@ -3502,8 +3540,18 @@ namespace Realestate_portal.Controllers
                 ViewBag.totalgainsprojected = totalprojectedgains;
                 ViewBag.totalgains = totalgains;
 
-                var categories = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
-                ViewBag.categories = categories;
+                if (category.Equals(""))
+                {
+                    var categories = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
+                    ViewBag.categories = categories;
+                }
+                else
+                {
+                    var categories = (from a in db.Tb_Options where (a.Type == 2 && a.Description.Equals(category)) select a).ToList();
+                    ViewBag.categories = categories;
+                }
+                var reviews = (from e in db.Tb_Reviews select e).ToList();
+                ViewBag.reviews = reviews;
 
 
                 return View(lstnetwork);
