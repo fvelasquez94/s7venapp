@@ -58,7 +58,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.notifications = lstAlerts;
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && u.Roles== "Agent" select u).ToList();
+                ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles== "Agent" || u.Roles =="Admin")select u).ToList();
 
                 ViewBag.rol = "";
 
