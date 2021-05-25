@@ -70,7 +70,9 @@
                                 <option>LENDERS</option>
                                 <option>VIRTUAL ASSISTANT </option>
                                 <option>PHOTOGRAPHY </option>
-
+                                <option>ACCOUNTING</option>
+                                <option>WEBSITES & SOCIAL MEDIA MARKETING</option>
+                                <option>MOVING/CLEAN OUT SERVICES</option>
                             </select>
                             <button type="button" id="searchButton" class="btn btn-shadow" value="Submit">Search</button>
                         </div>
@@ -212,7 +214,7 @@
     <!--End row-->
     <!-- End Container -->
 
-    <div id="modalNewvideo" class="modal fade">
+    <div id="modalNewvideo" class="modal hide fade in" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -298,13 +300,13 @@
         </div>
     </div>
     <!-- here start review sections -->
-    <div id="modalReview" class="modal fade">
+    <div id="modalReview"  class="modal hide fade in" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <!-- here stars no note in tab menu section -->
                 <div class="modal-header">
                     <h4 class="modal-title">Review</h4>
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button type="button" class="close" data-dismiss="modal" id="buttonClose">
                         <span aria-hidden="true">×</span>
                         <span class="sr-only">close</span>
                     </button>
@@ -357,10 +359,12 @@
 
 <!--end review-->
 <script type="text/javascript">
+        document.getElementById("buttonClose").onclick = function () { window.location.reload() };
+       
         document.getElementById("searchButton").onclick = function () { searchByCat() };
         function searchByCat() {
             var category = $('#inputCategory').val();
-           
+
             category = category.toUpperCase();
 
             window.location.href = "/Portal/PGR_network?category=" + category;
@@ -370,7 +374,7 @@
         function searchByName() {
             var name = $('#inputName').val();
 
-          
+
 
             window.location.href = "/Portal/PGR_network?name="+name;
 
@@ -433,8 +437,13 @@
                                                        <h4>Review #${i + 1}  </h4>
                                                        <h2>${star}:${review.Review_Rate}</h2>
                                                        <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" disabled>${review.Comment}</textarea>
-                                                       <h6>Date : ${review.Date} created by: ${review.User}</h6>
+                                                       <h6>Date: ${review.Date} Created by: ${review.User}</h6>
+                                                        @if (ViewBag.rol == "SA")
+                                                        {
 
+                                                            <a class="btn btn-shadow" id="deleteReview" onclick="deleteReview(${review.Id_Review})">Delete review</a>
+                                                           
+                                                        }
 
                                                     </div >
 
@@ -453,7 +462,40 @@
                 });
 
         };
+        function deleteReview(idReview) {
+            var review = idReview
+            console.log(review);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteReview", "Review")',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    review: review
+                }),
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Information deleted successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+                    }
+                    else {
+                        alert(response);
+                    }
+                },
+                error: function (error) {
 
+                    alert("Error" + error + " " + response );
+                    window.location.reload(true);
+                }
+            });
+        };
         function CRate(r) {
             $("#rating").val(r);
             for (var i = 1; i <= r; i++) {

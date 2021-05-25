@@ -85,14 +85,15 @@ namespace Realestate_portal.Controllers
 
             }
         }
-
+        [HttpPost]
         public ActionResult DeleteReview(int review) {
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                Tb_Reviews newReview = new Tb_Reviews();
-                newReview.Id_Review = review;
-                db.Tb_Reviews.Remove(newReview);
+              
+                Tb_Reviews tb_network = db.Tb_Reviews.Find(review);
+
+                db.Tb_Reviews.Remove(tb_network);
                 db.SaveChanges();
 
                 var result = "SUCCESS";
