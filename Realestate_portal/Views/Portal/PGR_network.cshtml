@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Premium Group Realty - Network";
     List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+    List<Realestate_portal.Models.Tb_Options> categoryList = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categoryList;
     List<Realestate_portal.Models.Tb_Reviews> lstreviews = (List<Realestate_portal.Models.Tb_Reviews>)ViewBag.reviews;
 
 
@@ -64,15 +65,10 @@
                         <div class="col-4">
                             <select class="form-control" id="inputCategory" type="text" placeholder="Search by category" style="width: 75%">
                                 <option></option>
-                                <option>ATTORNEYS</option>
-                                <option>HOME INSPECTOR</option>
-                                <option>HOMEOWNERS INSURANCE</option>
-                                <option>LENDERS</option>
-                                <option>VIRTUAL ASSISTANT </option>
-                                <option>PHOTOGRAPHY </option>
-                                <option>ACCOUNTING</option>
-                                <option>WEBSITES & SOCIAL MEDIA MARKETING</option>
-                                <option>MOVING/CLEAN OUT SERVICES</option>
+                                @foreach(var item in categoryList){
+                                    <option value="@item.ID_option">@item.Description</option>
+                                }
+                                
                             </select>
                             <button type="button" id="searchButton" class="btn btn-shadow" value="Submit">Search</button>
                         </div>
@@ -365,7 +361,7 @@
         function searchByCat() {
             var category = $('#inputCategory').val();
 
-            category = category.toUpperCase();
+          
 
             window.location.href = "/Portal/PGR_network?category=" + category;
 

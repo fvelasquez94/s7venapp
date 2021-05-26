@@ -3422,7 +3422,7 @@ namespace Realestate_portal.Controllers
         }
 
        
-        public ActionResult PGR_network(string category="", string name = "",int broker=0)
+        public ActionResult PGR_network(int category=0, string name = "",int broker=0)
         {
             if (generalClass.checkSession())
             {
@@ -3540,19 +3540,20 @@ namespace Realestate_portal.Controllers
                 ViewBag.totalgainsprojected = totalprojectedgains;
                 ViewBag.totalgains = totalgains;
 
-                if (category.Equals(""))
+                if (category == 0)
                 {
                     var categories = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
                     ViewBag.categories = categories;
                 }
                 else
                 {
-                    var categories = (from a in db.Tb_Options where (a.Type == 2 && a.Description.Equals(category)) select a).ToList();
+                    var categories = (from a in db.Tb_Options where (a.ID_option == category) select a).ToList();
                     ViewBag.categories = categories;
                 }
                 var reviews = (from e in db.Tb_Reviews select e).ToList();
                 ViewBag.reviews = reviews;
-
+                var categorieslist = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
+                ViewBag.categoryList = categorieslist;
 
                 return View(lstnetwork);
 
