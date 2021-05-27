@@ -30,24 +30,24 @@
                     </div><h2></h2>
                           <div class="widget-options">
                               @if (ViewBag.rol == "Admin")
-    {
+                            {
                           <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
 
 
                           <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-}
-else if (ViewBag.rol == "Agent")
-{
+                            }
+                            else if (ViewBag.rol == "Agent")
+                            {
                           <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
                           <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-}
-else
-{
+                            }
+                            else
+                            {
                           <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
 
 
                           <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-}
+                            }
                           </div>
                 </div><br />
            
@@ -75,7 +75,11 @@ else
                                     <div class="col-md-4">
                                         <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:50%">
                                     </div>          
-               
+                                    <div class="col-md-3">
+                                        <input type="date" id="dateSearch" class="form-control" style="width:60%">
+                                        <button type="button" class="btn btn-shadow" id="searchByDate" value="submit">Search</button>
+                                        <button type="button" class="btn btn-shadow" id="resetDate" value="submit">Reset</button>
+                                    </div>
                                 </div>
                      
                                 <!-- Begin List -->
@@ -93,10 +97,11 @@ else
         {
                                                 <input type="checkbox" id="pack_@item.ID_docpackage" readonly checked>
 }
-
+                                                   
                                                         <label class="text-primary" for="task-1">@item.Description | PROCESS ID: @item.ID_Process |CATEGORY: @item.Category </label><br />
                                                         <label class="badge-text-small">Last update: @Convert.ToDateTime(item.Last_update).ToShortDateString()</label> | <label class="badge-text-small">Total Documents (@item.Total_docsf/@item.Total_docs)</label>
-                                                    </div>
+                                                    
+                                                   </div>
                                                 </a>
                                         </li>
                                           
@@ -188,6 +193,13 @@ else
 
 
     <script type="text/javascript">
+        document.getElementById("searchByDate").onclick = function () { searchByDate() };
+        function searchByDate() {
+            var date = $('#dateSearch').val();
+            window.location.href = "/Portal/Documents_upload?date=" + date;
+
+        };
+       
         window.onload = function () {
                     $('#htmlform').on('submit', function (event) {
                         $("#subbtnenviar").attr("disabled", true);
@@ -293,7 +305,8 @@ else
 
                 // Loop through all list items, and hide those who don't match the search query
                 for (i = 0; i < li.length; i++) {
-                    a = li[i].id;
+                    a = li[i].id
+                        ;
                     txtValue = a;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         li[i].style.display = "";

@@ -714,7 +714,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Documents_upload(int broker = 0)
+        public ActionResult Documents_upload(DateTime? date, int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -744,6 +744,13 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
                 List<Tb_Docpackages> lstpackages = new List<Tb_Docpackages>();
+                DateTime dateClose = new DateTime();
+                if (date != null)
+                {
+                    dateClose = Convert.ToDateTime(date).AddHours(24);
+                    //dateClose = dateOpen.AddHours(24);
+                }
+               
 
                 if (r.Contains("Agent"))
                 {
@@ -755,8 +762,14 @@ namespace Realestate_portal.Controllers
                                                               ID = t.ID_Process,
                                                               FullName = t.Address + " | CUSTOMER: " + t.Tb_Customers.Name + " " + t.Tb_Customers.LastName
                                                           }), "ID", "FullName");
-
-                    lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
+                    if (date == null)
+                    {
+                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
+                    }
+                    else {
+                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                    }
+                   
 
                 }
                 else
@@ -766,7 +779,13 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        if (date == null)
+                        {
+                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        }
+                        else {
+                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                        }
 
                         var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company).Select(c => c.ID_User).ToArray();
                         ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
@@ -783,7 +802,14 @@ namespace Realestate_portal.Controllers
 
                         if (broker == 0)
                         {
-                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                            if (date == null)
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                            }
+                            else
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                            }
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Agent")).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
                                                                   where (agentes.Contains(t.ID_User))
@@ -796,7 +822,14 @@ namespace Realestate_portal.Controllers
                         else
                         {
                             ViewBag.rol = "SA";
-                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker) select a).ToList();
+                            if (date == null)
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker) select a).ToList();
+                            }
+                            else
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                            }
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == broker).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
                                                                   where (agentes.Contains(t.ID_User))
