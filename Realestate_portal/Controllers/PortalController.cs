@@ -2622,7 +2622,7 @@ namespace Realestate_portal.Controllers
                         var file = Request.Files[x];
                         extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
                         size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
-                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day + rnd.Next(3981) + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
+                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day.ToString() + rnd.Next(3981) + x.ToString() + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
                         path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/"), fileName);
                         file.SaveAs(path);
 
@@ -3856,7 +3856,7 @@ namespace Realestate_portal.Controllers
 
 
         }
-        public ActionResult DeletePackage(int id, int iduser,int broker)
+        public ActionResult DeletePackage(int id=0,int broker=0, int iduser = 0)
         {
             try
             {
