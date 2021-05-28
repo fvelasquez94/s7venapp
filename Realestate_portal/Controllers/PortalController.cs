@@ -75,21 +75,26 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
 
                         var listdetais = (from a in db.Tb_Docpackages_details where (a.ID_docpackage == idpackage && a.URL != "") select a).ToList();
-                        using (ZipFile zip = new ZipFile())
+
+                        zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
+                        if (!System.IO.File.Exists(zippackage))
                         {
-                            foreach (var item in listdetais)
+                            using (ZipFile zip = new ZipFile())
                             {
-                                // add this map file into the "images" directory in the zip archive
-                                zip.AddFile(Server.MapPath(item.URL), "documents");
+                                foreach (var item in listdetais)
+                                {
+                                    // add this map file into the "images" directory in the zip archive
+                                    zip.AddFile(Server.MapPath(item.URL), "documents");
+                                }
+
+                                zip.Save(zippackage);
                             }
-
-                            zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
-
-
-
-
-                            zip.Save(zippackage);
                         }
+                        else
+                        {
+
+                        }
+                    
 
                             var brokeremail = company_email;
                         try
@@ -102,19 +107,17 @@ namespace Realestate_portal.Controllers
                                 dynamic emailtosend = new Email("newpackage_notification");
                                 emailtosend.To = brokeremail;
                                 emailtosend.From = "support@s7ven.co";
-                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - PGR Agents Portal";
-                                emailtosend.Body = HttpUtility.HtmlDecode("<a style=\"color:blue\"> New package has been created for " + docpackage.Description + "</a>");
+                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - PGR Agents Portal";                               
                                 emailtosend.Attach(new Attachment(zippackage));
                                 emailtosend.Send();
                                 
-                                if (email!=null)
+                                if (email!=null && email!="")
                                 {
                                     //Enviamos correo para notificar
                                     dynamic emailtosendagent = new Email("newpackage_notification");
                                     emailtosendagent.To = email;
                                     emailtosendagent.From = "support@s7ven.co";
-                                    emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - PGR Agents Portal";
-                                    emailtosend.Body = HttpUtility.HtmlDecode( "<a style=\"color:blue\"> New package has been created for " + docpackage.Description + "</a>");
+                                    emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - PGR Agents Portal";                                   
                                     emailtosendagent.Attach(new Attachment(zippackage));
                                     emailtosendagent.Send();                                    
                                 }
@@ -436,7 +439,7 @@ namespace Realestate_portal.Controllers
                         //Send the email
                         dynamic semail = new Email("reset_password");
                         semail.To = User.Email.ToString();
-                        semail.From = "customercare@premiumgrealty.com";
+                        semail.From = "support@s7ven.co";
                         semail.user = User.Name + " " + User.LastName;
                         semail.email = User.Email;
                         semail.password = User.Password;
@@ -1412,7 +1415,7 @@ namespace Realestate_portal.Controllers
                                     //Enviamos correo para notificar
                                     dynamic emailtosend = new Email("newNotification_booking");
                                     emailtosend.To = brokeremail;
-                                    emailtosend.From = "customercare@premiumgrealty.com";
+                                    emailtosend.From = "support@s7ven.co";
                                     emailtosend.subject = "New Booking added - PGR Agents Portal";
                                     emailtosend.email = activeuser.Email;
                                     emailtosend.broker = activeuser.Sys_Company.Name;
