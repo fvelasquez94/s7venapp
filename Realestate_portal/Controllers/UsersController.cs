@@ -313,17 +313,7 @@ namespace Realestate_portal.Controllers
             sys_Users.Creation_date = DateTime.UtcNow;
             sys_Users.Last_login = DateTime.UtcNow;
             sys_Users.Last_update = DateTime.UtcNow;
-            if(sys_Users.Position=="Real Estate Agent")
-            {
-                sys_Users.Roles = "Agent";
-            }else if (sys_Users.Position == "Real Estate Broker")
-            {
-                sys_Users.Roles = "Broker";
-            }
-            else
-            {
-                sys_Users.Roles = "SA";
-            }         
+            sys_Users.Roles = "Agent";
             sys_Users.Department = "";
             sys_Users.Email_active=true;
             sys_Users.Active=true;

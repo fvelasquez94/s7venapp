@@ -764,6 +764,17 @@ namespace Realestate_portal.Controllers
             db.Entry(tb_Customers).State = EntityState.Modified;
             db.SaveChanges();
 
+            
+
+            Sys_Notifications newnotification = new Sys_Notifications();
+            newnotification.Active = true;
+            newnotification.Date = DateTime.UtcNow;
+            newnotification.Title = "New Customer assigned.";
+            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+            newnotification.ID_user = UserID;
+            db.Sys_Notifications.Add(newnotification);
+            db.SaveChanges();
+
             return null;
         }
 
