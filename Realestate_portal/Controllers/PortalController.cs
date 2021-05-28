@@ -151,7 +151,7 @@ namespace Realestate_portal.Controllers
             }
             catch (Exception ex)
             {
-                return Json("Something when wrong..." + ex);
+                return Json("Something when wrong...");
             }
 
         }
