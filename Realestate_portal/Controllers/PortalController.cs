@@ -147,7 +147,7 @@ namespace Realestate_portal.Controllers
 
 
 
-                return Json(result);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
