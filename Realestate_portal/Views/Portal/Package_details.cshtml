@@ -38,7 +38,7 @@
                         @if (Model.Count > 0)
                         {
                             if (Model.Where(a => a.uploaded == true && a.mandatory==true).Count() == modelcount) {
-                                  <a class="btn btn-success" href="@Url.Action("SendPackage","Portal", new { idpackage = package.ID_docpackage})">Send to Broker</a>
+                                  <a class="btn btn-success"  id ="sendtoBroker" >Send to Broker</a>
                             }
 
                         }
@@ -150,7 +150,51 @@
     }
 
 </script>
+<script type="text/javascript">
+     var broker = document.getElementById("sendtoBroker");
+        broker.onclick= function () {
+            
+            var idpack = '@package.ID_docpackage';
+            var data = { idpackage: idpack};
+            $.ajax({
+              url:'@Url.Action("SendPackage", "Portal")',
+                type: 'POST',
+                data: data,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: true,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Document Package sent successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                        }, 2000);
+                    } else {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: response,
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                        }, 2000);
+                    }
 
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+
+
+</script>
 
 
 <script type="text/javascript">
