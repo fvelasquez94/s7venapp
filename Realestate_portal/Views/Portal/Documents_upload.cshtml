@@ -76,7 +76,15 @@
                                         <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:50%">
                                     </div>          
                                     <div class="col-md-3">
-                                        <input type="date" id="dateSearch" class="form-control" style="width:60%">
+                                        <label class="form-control-label">Date range</label>
+                                        <select class="selectpicker show-menu-arrow" id="dateRange" style="width:60%">
+                                            <option></option>
+                                            <option value="3">Last 3 months</option>
+                                            <option value="6">Last 6 months</option>
+                                            <option value="12">Last 12 months</option>
+                                            <option value="24">Last 24 months</option>
+                                            <option value="36">Last 36 months</option>
+                                        </select>
                                         <button type="button" class="btn btn-shadow" id="searchByDate" value="submit">Search</button>
                                        
                                     </div>
@@ -195,7 +203,7 @@
     <script type="text/javascript">
         document.getElementById("searchByDate").onclick = function () { searchByDate() };
         function searchByDate() {
-            var date = $('#dateSearch').val();
+            var date = $('#dateRange').val();
             window.location.href = "/Portal/Documents_upload?date=" + date;
 
         };
@@ -258,6 +266,7 @@
                                 $("#preloader").hide();
                                 $("#subbtnenviar").attr("disabled", false);
                                 alert("Error uploading package");
+                                window.location.reload(true);
                             }
                         });
                     });

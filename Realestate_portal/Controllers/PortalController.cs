@@ -717,7 +717,7 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Documents_upload(DateTime? date, int broker = 0)
+        public ActionResult Documents_upload(int date = 0, int broker = 0)
         {
             if (generalClass.checkSession())
             {
@@ -748,9 +748,12 @@ namespace Realestate_portal.Controllers
 
                 List<Tb_Docpackages> lstpackages = new List<Tb_Docpackages>();
                 DateTime dateClose = new DateTime();
-                if (date != null)
+                DateTime dateOpen = new DateTime();
+                if (date != 0)
                 {
-                    dateClose = Convert.ToDateTime(date).AddHours(24);
+                    date = date * (-1);
+                    dateClose= DateTime.UtcNow;
+                    dateOpen = dateClose.AddMonths(date);
                     //dateClose = dateOpen.AddHours(24);
                 }
                
@@ -765,12 +768,12 @@ namespace Realestate_portal.Controllers
                                                               ID = t.ID_Process,
                                                               FullName = t.Address + " | CUSTOMER: " + t.Tb_Customers.Name + " " + t.Tb_Customers.LastName
                                                           }), "ID", "FullName");
-                    if (date == null)
+                    if (date == 0)
                     {
                         lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
                     }
                     else {
-                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false && (a.Last_update <= dateClose && a.Last_update >= dateOpen)) select a).ToList();
                     }
                    
 
@@ -782,12 +785,12 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        if (date == null)
+                        if (date == 0)
                         {
                             lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
                         }
                         else {
-                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update <= dateClose && a.Last_update >= dateOpen)) select a).ToList();
                         }
 
                         var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company).Select(c => c.ID_User).ToArray();
@@ -805,13 +808,13 @@ namespace Realestate_portal.Controllers
 
                         if (broker == 0)
                         {
-                            if (date == null)
+                            if (date == 0)
                             {
                                 lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
                             }
                             else
                             {
-                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update <= dateClose && a.Last_update >= dateOpen)) select a).ToList();
                             }
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Agent")).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
@@ -825,13 +828,13 @@ namespace Realestate_portal.Controllers
                         else
                         {
                             ViewBag.rol = "SA";
-                            if (date == null)
+                            if (date == 0)
                             {
                                 lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker) select a).ToList();
                             }
                             else
                             {
-                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker && (a.Last_update < dateClose && a.Last_update >= date)) select a).ToList();
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker && (a.Last_update <= dateClose && a.Last_update >= dateOpen)) select a).ToList();
                             }
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == broker).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
@@ -2622,7 +2625,10 @@ namespace Realestate_portal.Controllers
                         var file = Request.Files[x];
                         extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
                         size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
-                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day.ToString() + rnd.Next(3981) + x.ToString() + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
+                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day.ToString() + rnd.Next(3981).ToString() + x.ToString() + DateTime.Now.Millisecond.ToString() + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
+                        
+                        
+                        
                         path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/"), fileName);
                         file.SaveAs(path);
 
@@ -3871,6 +3877,25 @@ namespace Realestate_portal.Controllers
             {
                 var result = ex.Message;
                 return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+        public ActionResult DeletePackageManagement(int id = 0, int broker = 0, int iduser = 0)
+        {
+            try
+            {
+                Tb_Docpackages tb_Docpackages = db.Tb_Docpackages.Find(id);
+                db.Tb_Docpackages.Remove(tb_Docpackages);
+                db.SaveChanges();
+
+               
+                return RedirectToAction("Documents_upload_management", "Portal");
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return RedirectToAction("Documents_upload_management", "Portal");
             }
 
 
