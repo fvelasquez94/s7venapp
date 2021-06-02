@@ -67,6 +67,7 @@ namespace Realestate_portal.Controllers
                     var zippackage = "";
                     var docpackage = (from h in db.Tb_Docpackages where (h.ID_docpackage == idpackage) select h).FirstOrDefault();
                     var customer = (from a in db.Tb_Customers.Where(a => a.ID_Customer == docpackage.ID_Customer) select a).FirstOrDefault();
+                    var process = (from p in db.Tb_Process.Where(p => p.ID_Customer == docpackage.ID_Customer) select p).FirstOrDefault();
                     if (docpackage != null)
                     {
 
@@ -108,9 +109,11 @@ namespace Realestate_portal.Controllers
                                 dynamic emailtosend = new Email("newpackage_notification");
                                 emailtosend.To = brokeremail;
                                 emailtosend.From = "support@s7ven.co";
-                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - PGR Agents Portal";                               
+                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - S7VEN Agents Portal";
+                                emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
                                 emailtosend.Attach(new Attachment(zippackage));
                                 emailtosend.Send();
+                                
                                 
                                 if (email!=null && email!="")
                                 {
@@ -118,7 +121,8 @@ namespace Realestate_portal.Controllers
                                     dynamic emailtosendagent = new Email("newpackage_notification");
                                     emailtosendagent.To = email;
                                     emailtosendagent.From = "support@s7ven.co";
-                                    emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - PGR Agents Portal";                                   
+                                    emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - S7VEN Agents Portal";
+                                    emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
                                     emailtosendagent.Attach(new Attachment(zippackage));
                                     emailtosendagent.Send();
                                 }
@@ -1453,7 +1457,7 @@ namespace Realestate_portal.Controllers
                                     dynamic emailtosend = new Email("newNotification_booking");
                                     emailtosend.To = brokeremail;
                                     emailtosend.From = "support@s7ven.co";
-                                    emailtosend.subject = "New Booking added - PGR Agents Portal";
+                                    emailtosend.subject = "New Booking added - S7VEN Agents Portal";
                                     emailtosend.email = activeuser.Email;
                                     emailtosend.broker = activeuser.Sys_Company.Name;
                                     emailtosend.resource = newebinar.Title;

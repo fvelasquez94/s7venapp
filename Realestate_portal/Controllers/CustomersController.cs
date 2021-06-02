@@ -71,7 +71,7 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-
+                    ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User select u).ToList();
                 }
                 else
                 {
@@ -94,8 +94,8 @@ namespace Realestate_portal.Controllers
 
                         }
                     }
-                    
 
+                    ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") select u).ToList();
 
                 }
                 ViewBag.selbroker = broker;

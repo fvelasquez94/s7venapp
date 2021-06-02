@@ -155,11 +155,22 @@
                     <div class="col-md-6">
                         <label class="control-label">Agent Assigned</label>
                         <select class="form-control" name="ID_User">
-                            <option value="-1">...</option>
-                            @foreach (var item in agents)
+                            @if (ViewBag.rol == "Agent")
                             {
-                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                foreach (var item in agents)
+                                {
+                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                }
                             }
+                            else
+                            {
+                                <option value="-1">...</option>
+                                foreach (var item in agents)
+                                {
+                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                }
+                            }
+
                         </select>
                     </div>
                     <br />
