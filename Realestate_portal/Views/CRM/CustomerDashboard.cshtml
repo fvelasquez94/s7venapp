@@ -1188,15 +1188,32 @@
                                         <div class="widget-header bordered no-actions d-flex align-items-center">
                                             <div class="today">
                                                 <div class="title">Document Package Details</div>
-                                                <div class="new-tasks">                                 <label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
+                                                <div class="new-tasks"><label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
                                             </div><h2></h2>
                                                   <div class="widget-options">
                                                       @if (Model.pack_Det.Count > 0)
                                                       {
                                                           if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
                                                           {
-                                                              <button class="btn btn-success" id="sendtobroker">Send to Broker</button>
+                                                              <button class="btn btn-success" id="sendtobroker">Send package</button>
                                                               <br />
+                                                              <br />
+                                                              <div class="form-check">
+                                                                  <input class="form-check-input" type="checkbox" id="checkBroker" checked>
+                                                                  <label class="form-check-label">
+
+                                                                      Send to broker
+                                                                  </label>
+
+                                                              </div>
+                                                              <div class="form-check">
+                                                                  <input class="form-check-input" type="checkbox" id="checkExtra">
+                                                                  <label class="form-check-label">
+
+                                                                      Send to extra mail
+                                                                  </label>
+
+                                                              </div>
                                                               <br />
                                                               <label class="control-label">Add extra e-mail</label>
                                                               <br />
@@ -1377,6 +1394,7 @@
 </div>
 <!-- here ends category package modal section -->
 <script>
+   
     function closingAlert() {
         var con = confirm("Are you sure you wanna close?");
         if (con) {
@@ -1794,8 +1812,13 @@
             if (!extraemail.value) {
                 extraemail.value = "";
             }
+            var checkBroker = document.getElementById('checkBroker');
+            var checkExtra = document.getElementById('checkExtra');
+
+            console.log(checkBroker.checked);
+            console.log(checkBroker.checked);
             var idpack = '@Model.package.ID_docpackage';
-            var data = { idpackage: idpack, email: extraemail.value};
+            var data = { idpackage: idpack, email: extraemail.value, broker: checkBroker.checked, extra: checkExtra.checked };
             $.ajax({
               url:'@Url.Action("SendPackage", "Portal")',
                 type: 'POST',

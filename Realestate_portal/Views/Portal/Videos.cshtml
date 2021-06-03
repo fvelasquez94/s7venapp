@@ -72,11 +72,11 @@ else if (ViewBag.rol == "SA")
                             </div>
                             @if (item.T_image == "~/Content/Uploads/Images/Videos_img/")
                             {
-                        <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
+                                <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
                             }
                             else
                             {
-                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="...">
+                                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="...">
                             }
                             <div>
                                 <a href="@Url.Action("Video_watch", "Portal", new { id = item.ID_Video })"><span class="btn btn-info btn-sm">Watch now</span></a>

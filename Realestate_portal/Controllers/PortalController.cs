@@ -55,7 +55,7 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendPackage(int idpackage, string email)
+        public ActionResult SendPackage(int idpackage, string email, bool broker, bool extra)
         {
             var result = "";
             try
@@ -103,7 +103,7 @@ namespace Realestate_portal.Controllers
                         {
 
 
-                            if (brokeremail != null && brokeremail != "")
+                            if (brokeremail != null && brokeremail != "" && broker == true)
                             {
                                 //Enviamos correo para notificar
                                 dynamic emailtosend = new Email("newpackage_notification");
@@ -113,23 +113,26 @@ namespace Realestate_portal.Controllers
                                 emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
                                 emailtosend.Attach(new Attachment(zippackage));
                                 emailtosend.Send();
-                                
-                                
-                                if (email!=null && email!="")
-                                {
+                                result = "SUCCESS";
+
+                            }
+                            if (email!=null && email!="" && extra == true)
+                            {
                                     //Enviamos correo para notificar
                                     dynamic emailtosendagent = new Email("newpackage_notification");
                                     emailtosendagent.To = email;
                                     emailtosendagent.From = "support@s7ven.co";
                                     emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - S7VEN Agents Portal";
-                                    emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
+                                    emailtosendagent.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
                                     emailtosendagent.Attach(new Attachment(zippackage));
                                     emailtosendagent.Send();
-                                }
-
-                                result = "SUCCESS";
+                                    result = "SUCCESS";
                             }
-                            else {
+
+                               
+                            
+                            else 
+                            {
                                 result = "Data saved but email was not configured";
                             }
 
