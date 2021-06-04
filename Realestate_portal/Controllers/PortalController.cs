@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Realestate_portal.Controllers
 {
@@ -1761,7 +1762,10 @@ namespace Realestate_portal.Controllers
 
                 var categories = (from a in db.Tb_Options where (a.Type == 3) select a).ToList();
                 ViewBag.categories = categories;
-
+                foreach (var item in lstvideos)
+                {
+                    item.Url = GetVideoId(item.Url);
+                }
                 return View(lstvideos);
 
             }
@@ -1771,6 +1775,52 @@ namespace Realestate_portal.Controllers
                 return RedirectToAction("Login", "Portal", new { access = false });
 
             }
+        }
+        public string GetVideoId(string url)
+        {
+
+            Uri uri = null;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                try
+                {
+                    uri = new UriBuilder("http", url).Uri;
+                }
+                catch
+                {
+
+                    return "";
+                }
+            }
+            string host = uri.Host;
+            string[] youTubeHosts = { "www.youtube.com", "youtube.com", "youtu.be", "www.youtu.be", "studio.youtube.com" };
+
+            if (!youTubeHosts.Contains(host))
+                return "";
+
+            var query = HttpUtility.ParseQueryString(uri.Query);
+
+            if (query.AllKeys.Contains("v"))
+            {
+                return Regex.Match(query["v"], @"^[a-zA-Z0-9_-]{11}$").Value;
+            }
+            else if (query.AllKeys.Contains("u"))
+            {
+                return Regex.Match(query["u"], @"/watch\?v=([a-zA-Z0-9_-]{11})").Groups[1].Value;
+            }
+            else
+            {
+                var last = uri.Segments.Last().Replace("/", "");
+                if (Regex.IsMatch(last, @"^v=[a-zA-Z0-9_-]{11}$"))
+                    return last.Replace("v=", "");
+
+                string[] segments = uri.Segments;
+                if (segments.Length > 2 && segments[segments.Length - 2] != "v/" && segments[segments.Length - 2] != "watch/")
+                    return "";
+
+                return Regex.Match(last, @"^[a-zA-Z0-9_-]{11}$").Value;
+            }
+
         }
         public ActionResult Videos_management(int broker = 0)
         {

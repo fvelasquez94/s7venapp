@@ -70,16 +70,17 @@ else if (ViewBag.rol == "SA")
                                 <span style="font-size:15px">@item.Name</span>
 
                             </div>
-                            @if (item.T_image == "~/Content/Uploads/Images/Videos_img/")
-                            {
-                                <img src="~/Content/assets/img/no-image-available.png" class="img-fluid" alt="...">
+                            @{
+                                string imagen = "http://img.youtube.com/vi/" + item.Url + "/default.jpg";
                             }
-                            else
-                            {
-                                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="...">
+                            <img src="@imagen" class="img-fluid" alt="...">
+
+
+                            @{
+                                string url = "https://youtu.be/" + item.Url;
                             }
                             <div>
-                                <a href="@Url.Action("Video_watch", "Portal", new { id = item.ID_Video })"><span class="btn btn-info btn-sm">Watch now</span></a>
+                                <a href="@url" data-lity=""><span class="btn btn-info btn-sm">Watch now</span></a>
                             </div>
                         </figure>
                     </div>
