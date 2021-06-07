@@ -130,8 +130,11 @@ namespace Realestate_portal.Controllers
                                     result = "SUCCESS";
                             }
 
-                               
-                            
+
+                            if (broker == true || extra == true)
+                            {
+
+                            }
                             else 
                             {
                                 result = "Data saved but email was not configured";
