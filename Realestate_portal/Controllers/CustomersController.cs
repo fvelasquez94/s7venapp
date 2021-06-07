@@ -58,7 +58,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.notifications = lstAlerts;
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles== "Agent" || u.Roles =="Admin")select u).ToList();
+                ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles== "Agent" || u.Roles =="Admin") && u.Active == true) select u).ToList();
 
                 ViewBag.rol = "";
 
@@ -71,7 +71,7 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User orderby u.LastName ascending select u).ToList();
+                    ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Realestate_portal.Controllers
                         }
                     }
 
-                    ViewBag.userslist = (from u in db.Sys_Users where u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") orderby u.LastName ascending select u).ToList();
+                    ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
 
                 }
                 ViewBag.selbroker = broker;
@@ -140,7 +140,7 @@ namespace Realestate_portal.Controllers
             if (birthdemo < theDate) {
                 tb_Customers.Birthday = DateTime.UtcNow;
             }
-            var user_assigned = (from u in db.Sys_Users where u.ID_User == tb_Customers.ID_User orderby u.LastName ascending select u).FirstOrDefault();
+            var user_assigned = (from u in db.Sys_Users where (u.ID_User == tb_Customers.ID_User && u.Active == true) orderby u.LastName ascending select u).FirstOrDefault();
         
             tb_Customers.User_assigned = user_assigned.Name + " " + user_assigned.LastName;
             tb_Customers.ID_Company = activeuser.ID_Company;
