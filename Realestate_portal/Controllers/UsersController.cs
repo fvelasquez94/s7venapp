@@ -483,7 +483,17 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
-
+                if (sys_Users.Active == false)
+                {
+                    var companybroker = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
+                    var leadlist = (from l in db.Tb_Customers where (l.ID_User == sys_Users.ID_User) select l).ToList();
+                    foreach (var item in leadlist)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
                 db.Entry(sys_Users).State = EntityState.Modified;
                 db.SaveChanges();
                 try
@@ -754,6 +764,7 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
                 if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
 
+             
                     db.Entry(sys_Users).State = EntityState.Modified;
                     db.SaveChanges();
 
