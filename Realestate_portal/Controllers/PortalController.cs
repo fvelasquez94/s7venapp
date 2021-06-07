@@ -600,6 +600,7 @@ namespace Realestate_portal.Controllers
                     Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                     ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                     ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.Roles.Contains("Admin") && usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
+                    ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
 
                 }
                 else
@@ -609,6 +610,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                         ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
 
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
@@ -620,6 +622,7 @@ namespace Realestate_portal.Controllers
                         {
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                             ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
+                            ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
                             Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == activeuser.ID_User)) select a).FirstOrDefault();
                         }
                         else
@@ -629,6 +632,7 @@ namespace Realestate_portal.Controllers
 
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                             ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                            ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
                             var brokersel = (from b in db.Sys_Users where (b.ID_Company == broker && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                             Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                         }

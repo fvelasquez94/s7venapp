@@ -4,6 +4,7 @@
     ViewBag.Title = "Dashboard";
     Sys_Users user = (Sys_Users)ViewBag.userdata;
     Sys_Users userBroker = (Sys_Users)ViewBag.userdataBroker;
+    Sys_Company company = (Sys_Company)ViewBag.company;
 }
 
 <div class="container-fluid newsfeed">
@@ -52,7 +53,7 @@
                                     <div class="col-12">
                                         @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
                                         {
-                                            <p>Brokerage Name: @userBroker.Name @userBroker.LastName @userBroker.Brokerage_name</p>
+                                            <p>Brokerage Name: @company.Name</p>
                                             <p>Address: @userBroker.Brokerage_address</p>
                                             <p>Broker Contact: @userBroker.Broker_Contact</p>
                                             <p>Broker License: @userBroker.Broker_License</p>
