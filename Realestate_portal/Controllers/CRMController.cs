@@ -274,7 +274,7 @@ namespace Realestate_portal.Controllers
             }
         }
 
-            public ActionResult CustomerAjax(string status, int broker=0)
+        public ActionResult CustomerAjax(string status, int broker=0)
         {
             if (generalClass.checkSession())
             {
@@ -819,7 +819,8 @@ namespace Realestate_portal.Controllers
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                          // where (t.Roles.Contains("Agent"))
+                                                      orderby t.LastName ascending
+                                                      // where (t.Roles.Contains("Agent"))
                                                       select new
                                                       {
                                                           ID = t.ID_User,
@@ -849,7 +850,8 @@ namespace Realestate_portal.Controllers
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
                         ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                              // where (t.Roles.Contains("Agent"))
+                                                          orderby t.LastName ascending
+                                                          // where (t.Roles.Contains("Agent"))
                                                           select new
                                                           {
                                                               ID = t.ID_User,
@@ -863,6 +865,7 @@ namespace Realestate_portal.Controllers
                         {
                             ViewBag.ID_User = new SelectList((from t in db.Sys_Users
                                                               where (t.ID_Company == activeuser.ID_Company || t.ID_User == 4)
+                                                              orderby t.LastName ascending
                                                               select new
                                                               {
                                                                   ID = t.ID_User,

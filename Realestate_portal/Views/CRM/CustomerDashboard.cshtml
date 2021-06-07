@@ -977,7 +977,7 @@
                                             <div class="row" style="text-align:center">
                                                 <div class="col-md-12">
                                                     <label class="control-label">Description</label>
-                                                    <input class="form-control" required type="text" value="" id="Description" name="Description" />
+                                                    <input class="form-control" type="text" value="" id="Description" name="Description" />
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label class="control-label">Assigned Agent : </label>
@@ -1955,7 +1955,7 @@
                                                                                 
                                             $("#subbtnenviar").attr("disabled", false);
 
-                    new Noty({
+                                        new Noty({
                                                 type: 'success',
                                                 layout: 'topRight',
                                                 text: 'Document Package added successfully',
@@ -1965,7 +1965,7 @@
                                         setTimeout(function () {                                                                                                                                   
                                             }, 2000);
 
-            },
+                                            },
                                     error: function(error) {
                                         $("#preloader").hide();
                                         $("#subbtnenviar").attr("disabled", false);
@@ -1999,7 +1999,6 @@
 
     uploadall.onclick = function () {
 
-        $("#preloader").show();
         var formData = new FormData();
 
         $.each(files, (i, file) => {
@@ -2009,7 +2008,7 @@
         $.each(ids, (i, id) => {
             formData.append("ids", id);
         });
-
+        
 
                 $.ajax({
                     type: "POST",
@@ -2020,8 +2019,14 @@
                     processData: false,
                     success: function (response) {
                         if (response == "SUCCESS") {
-                            $("#loader_form").hide();
+                            console.log(response);
+                            var closebuttondocuments = $("#closemodal");
+                            var adddocument = $("#opendocument");
+                            closebuttondocuments.trigger('click');
+                            setTimeout(function () {
 
+                                adddocument.trigger('click');
+                            }, 1000);
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
@@ -2029,9 +2034,7 @@
                                 progressBar: true,
                                 timeout: 2500
                             }).show()
-                            setTimeout(function () {
-                                window.location.reload(true);
-                            }, 2000);
+                           
 
                         } else {
                             $("#loader_form").hide();
