@@ -119,7 +119,7 @@ namespace Realestate_portal.Controllers
                     {
                         // se utiliza id = 4 para registros no asignados
                         ViewBag.rol = "SA";
-                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin") && t.ID_Company == broker).Include(t => t.Sys_Company).ToList();
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin")).Include(t => t.Sys_Company).ToList();
 
                     }
                   
