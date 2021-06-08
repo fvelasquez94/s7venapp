@@ -490,6 +490,7 @@ namespace Realestate_portal.Controllers
                     foreach (var item in leadlist)
                     {
                         item.ID_User = companybroker.ID_User;
+                        item.User_assigned = companybroker.Name + " " + companybroker.LastName;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -847,6 +848,16 @@ namespace Realestate_portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Sys_Users activeUser = Session["activeUser"] as Sys_Users;
+            var companybroker = (from a in db.Sys_Users where (a.ID_Company == activeUser.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
+            var leadlist = (from l in db.Tb_Customers where (l.ID_User == activeUser.ID_User) select l).ToList();
+            foreach (var item in leadlist)
+            {
+                item.ID_User = companybroker.ID_User;
+                item.User_assigned = companybroker.Name + " " + companybroker.LastName;
+                db.Entry(item).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             Sys_Users sys_Users = db.Sys_Users.Find(id);
             db.Sys_Users.Remove(sys_Users);
             db.SaveChanges();
