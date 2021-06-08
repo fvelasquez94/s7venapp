@@ -4057,7 +4057,7 @@ namespace Realestate_portal.Controllers
         {
             try
             {
-                var lstusers = (from a in db.Sys_Users where (a.Email == email) select a).ToList();
+                var lstusers = (from a in db.Sys_Users where (a.Email == email && a.Active == true) select a).ToList();
 
                 if (lstusers.Count > 0)
                 {
