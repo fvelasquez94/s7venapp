@@ -403,6 +403,27 @@
           <Property Name="Id_Network" Type="int" Nullable="false" />
           <Property Name="Name_User" Type="varchar" MaxLength="30" />
         </EntityType>
+        <EntityType Name="Tb_Source">
+          <Key>
+            <PropertyRef Name="Id_Source" />
+          </Key>
+          <Property Name="Id_Source" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source_name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Tb_Stage">
+          <Key>
+            <PropertyRef Name="Id_Stage" />
+          </Key>
+          <Property Name="Id_Stage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Stage_name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Tb_Status">
+          <Key>
+            <PropertyRef Name="Id_Status" />
+          </Key>
+          <Property Name="Id_Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Stage_name" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Tb_TemplatesCatalogo">
           <Key>
             <PropertyRef Name="ID_Template" />
@@ -823,6 +844,9 @@
           <EntitySet Name="Tb_Reminders" EntityType="Self.Tb_Reminders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Resources" EntityType="Self.Tb_Resources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Reviews" EntityType="Self.Tb_Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Source" EntityType="Self.Tb_Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Stage" EntityType="Self.Tb_Stage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Status" EntityType="Self.Tb_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_TemplatesCatalogo" EntityType="Self.Tb_TemplatesCatalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Videos" EntityType="Self.Tb_Videos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Webinars" EntityType="Self.Tb_Webinars" Schema="dbo" store:Type="Tables" />
@@ -1863,6 +1887,9 @@
             <End Role="Tb_Network" EntitySet="Tb_Network" />
             <End Role="Tb_Reviews" EntitySet="Tb_Reviews" />
           </AssociationSet>
+          <EntitySet Name="Tb_Source" EntityType="Realstate_agentsModel.Tb_Source" />
+          <EntitySet Name="Tb_Stage" EntityType="Realstate_agentsModel.Tb_Stage" />
+          <EntitySet Name="Tb_Status" EntityType="Realstate_agentsModel.Tb_Status" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1911,6 +1938,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Tb_Source">
+          <Key>
+            <PropertyRef Name="Id_Source" />
+          </Key>
+          <Property Name="Id_Source" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Source_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tb_Stage">
+          <Key>
+            <PropertyRef Name="Id_Stage" />
+          </Key>
+          <Property Name="Id_Stage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tb_Status">
+          <Key>
+            <PropertyRef Name="Id_Status" />
+          </Key>
+          <Property Name="Id_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2417,6 +2465,30 @@
                 <ScalarProperty Name="Date_Review" ColumnName="Date_Review" />
                 <ScalarProperty Name="Rate_Review" ColumnName="Rate_Review" />
                 <ScalarProperty Name="Id_Review" ColumnName="Id_Review" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Source">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Source">
+              <MappingFragment StoreEntitySet="Tb_Source">
+                <ScalarProperty Name="Source_name" ColumnName="Source_name" />
+                <ScalarProperty Name="Id_Source" ColumnName="Id_Source" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Stage">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Stage">
+              <MappingFragment StoreEntitySet="Tb_Stage">
+                <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
+                <ScalarProperty Name="Id_Stage" ColumnName="Id_Stage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Status">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Status">
+              <MappingFragment StoreEntitySet="Tb_Status">
+                <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
+                <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -294,6 +294,15 @@
     <Compile Include="Models\Tb_Reviews.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tb_Source.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tb_Stage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tb_Status.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tb_TemplatesCatalogo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

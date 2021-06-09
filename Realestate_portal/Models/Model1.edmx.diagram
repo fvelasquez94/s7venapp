@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Notifications" Width="1.5" PointX="5.125" PointY="25.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Roles" Width="1.5" PointX="2.875" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Users" Width="1.5" PointX="2.875" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="Realstate_agentsModel.sysdiagram" Width="1.5" PointX="0.625" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Appointments" Width="1.5" PointX="2.875" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Conversation" Width="1.5" PointX="2.875" PointY="31.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Customers" Width="1.5" PointX="2.875" PointY="35" IsExpanded="true" />
@@ -57,6 +57,9 @@
         <AssociationConnector Association="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Reviews" Width="1.5" PointX="5.125" PointY="51.75" />
         <AssociationConnector Association="Realstate_agentsModel.FK_Network" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Source" Width="1.5" PointX="11.5" PointY="0.5" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Stage" Width="1.5" PointX="13.125" PointY="0.5" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Status" Width="1.5" PointX="9.75" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
