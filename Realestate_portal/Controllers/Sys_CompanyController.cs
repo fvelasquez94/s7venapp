@@ -182,7 +182,6 @@ namespace Realestate_portal.Controllers
                 nuevoUsuario.Creation_date = DateTime.Today;
                 nuevoUsuario.Last_update = DateTime.Today;
                 nuevoUsuario.Last_login = DateTime.Today;
-                nuevoUsuario.Country = "";
                 nuevoUsuario.City = "";
                 nuevoUsuario.State = "";
                 nuevoUsuario.Address = "";

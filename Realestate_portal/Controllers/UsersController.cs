@@ -306,7 +306,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,Country,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
+        public ActionResult Create([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             sys_Users.Birth = DateTime.UtcNow;
@@ -323,7 +323,6 @@ namespace Realestate_portal.Controllers
             sys_Users.Gender = "Male";
 
             if (sys_Users.Address == null) { sys_Users.Address = ""; }
-            if (sys_Users.Country == null) { sys_Users.Country = ""; }
             if (sys_Users.State == null) { sys_Users.State = ""; }
             if (sys_Users.City == null) { sys_Users.City = ""; }
             if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
@@ -450,14 +449,13 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,Country,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
+        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
         {
             try
             {
 
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
-                if (sys_Users.Country == null) { sys_Users.Country = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
                 if (sys_Users.City == null) { sys_Users.City = ""; }
                 if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
@@ -731,13 +729,12 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,Country,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
+        public ActionResult Edit([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,City,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
         {
             try
             {
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
-                if (sys_Users.Country == null) { sys_Users.Country = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
                 if (sys_Users.City == null) { sys_Users.City = ""; }
                 if (sys_Users.Bank == null) { sys_Users.Bank = ""; }

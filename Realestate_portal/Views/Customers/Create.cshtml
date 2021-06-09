@@ -115,13 +115,7 @@
                         @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <select class="form-control" id="Country" name="Country">
-                            <option>United States</option>
-                        </select>
-
-                    </div>
+                  
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
