@@ -59,11 +59,11 @@ namespace Realestate_portal.Controllers
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles== "Agent" || u.Roles =="Admin") && u.Active == true) select u).ToList();
-
+             
                 ViewBag.rol = "";
 
                 //Filtros SA
-                var lstsource = (from o in db.Tb_Source select o).ToList();
+                var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company || o.Id_Company == null) select o).ToList();
                 ViewBag.lstSource = lstsource;
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;

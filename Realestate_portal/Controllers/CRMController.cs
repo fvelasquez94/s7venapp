@@ -806,7 +806,8 @@ namespace Realestate_portal.Controllers
                 List<Tb_Process> properties = (from a in db.Tb_Process.Where(a => a.ID_Customer == id) select a).ToList();
                 
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name", tb_Customers.ID_Company);
-                
+                var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company || o.Id_Company == null) select o).ToList();
+                ViewBag.lstSource = lstsource;
                 ViewBag.rol = "";
 
                 //Filtros SA

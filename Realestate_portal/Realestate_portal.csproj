@@ -193,6 +193,7 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\Sys_CompanyController.cs" />
     <Compile Include="Controllers\Tb_OptionsController.cs" />
+    <Compile Include="Controllers\Tb_SourceController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1818,6 +1819,11 @@
     <Content Include="Views\Users\Brokers.cshtml" />
     <Content Include="Views\CRM\CRMDashboardCopy.cshtml" />
     <Content Include="Views\Shared\PartialTables\DocumentsTemplate.cshtml" />
+    <Content Include="Views\Tb_Source\Create.cshtml" />
+    <Content Include="Views\Tb_Source\Delete.cshtml" />
+    <Content Include="Views\Tb_Source\Details.cshtml" />
+    <Content Include="Views\Tb_Source\Edit.cshtml" />
+    <Content Include="Views\Tb_Source\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

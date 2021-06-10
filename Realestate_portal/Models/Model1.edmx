@@ -409,6 +409,7 @@
           </Key>
           <Property Name="Id_Source" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Source_name" Type="varchar" MaxLength="20" />
+          <Property Name="Id_Company" Type="int" />
         </EntityType>
         <EntityType Name="Tb_Stage">
           <Key>
@@ -1944,6 +1945,7 @@
           </Key>
           <Property Name="Id_Source" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Source_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Company" Type="Int32" />
         </EntityType>
         <EntityType Name="Tb_Stage">
           <Key>
@@ -2471,6 +2473,7 @@
           <EntitySetMapping Name="Tb_Source">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Source">
               <MappingFragment StoreEntitySet="Tb_Source">
+                <ScalarProperty Name="Id_Company" ColumnName="Id_Company" />
                 <ScalarProperty Name="Source_name" ColumnName="Source_name" />
                 <ScalarProperty Name="Id_Source" ColumnName="Id_Source" />
               </MappingFragment>

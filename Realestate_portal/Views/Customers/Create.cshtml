@@ -145,7 +145,7 @@
                                 <option value="@item.Source_name">@item.Source_name</option>
                             }
                         </select>
-                        <a class="la la-plus-circle la-2x" href="#"></a>
+                        <a class="la la-plus-circle la-2x" href="#" data-toggle="modal" data-target="#sourceModal"></a>
                     </div>
                     <div class="col-md-6">
                         <label class="control-label">Agent Assigned</label>
@@ -197,7 +197,65 @@
     </div>
 
 </div>
-
 <!-- End Container -->
+<div class="modal" id="sourceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add source</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Source name:</label>
+                    <input type="text" class="form-control" id="sourceName" required/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="buttonNewSource">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+    document.getElementById("buttonNewSource").onclick = function () {
+        var sourceName = $("#sourceName").val();
+    
+        sourceName = sourceName.toUpperCase();
 
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateSource","Tb_Source")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                source: sourceName
+            }),
+            success: function (response) {
+                $('#selectSource').append($('<option>', {
+
+                    value: sourceName,
+                    text: sourceName
+                }));
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
+</script>

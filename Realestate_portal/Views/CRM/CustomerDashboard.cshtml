@@ -1,8 +1,9 @@
 ﻿@model Realestate_portal.Models.ViewModels.CRM.CustomerCRMDashboard
-
+@using Realestate_portal.Models
 @{
     ViewBag.Title = "Dashboard CRM";
     Layout = "~/Views/Shared/_CRM_new.cshtml";
+    List<Tb_Source> source = ViewBag.lstSource;
 
 }
 
@@ -24,7 +25,7 @@
                         }
                         else
                         {
-                           <h2 class="page-header-title">Lead dashboard</h2>
+                            <h2 class="page-header-title">Lead dashboard</h2>
                         }
                         @if (@TempData["exito"] != null)
                         {
@@ -83,7 +84,7 @@
                     <div class="tab-content d-flex align-items-center">
 
                         <!-- here start notes sections -->
-                        <div class="tab-pane fade show active" id="i-v-tab-1" style="width:100% !important; margin: auto !important" role="tabpanel" aria-labelledby="i-vert-tab-1">                                                
+                        <div class="tab-pane fade show active" id="i-v-tab-1" style="width:100% !important; margin: auto !important" role="tabpanel" aria-labelledby="i-vert-tab-1">
                             <div class="row pt-5 pl-3 pr-3 text-align-center">
                                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2"></div>
                                 <!-- here stars no note in tab menu section -->
@@ -103,7 +104,7 @@
                                     </div>
                                 </div>
                                 <!-- here ends no note in tab menu section -->
-                                <div id="notecard"  style="width:100%">
+                                <div id="notecard" style="width:100%">
                                     @if (Model.notes.Count() > 0)
                                     {
                                         int number = 1;
@@ -138,7 +139,7 @@
                                                         <br />
                                                         <div class="files-number">Last update : @item.Date.ToShortDateString()</div>
                                                         <br />
-                                                        <p class="files-title">@item.Text</p>  
+                                                        <p class="files-title">@item.Text</p>
                                                         <p style="float:right; font-size:10px" class="files-title"><label>Created by : </label><br /><label style="color: #2c9ad6"> @item.Created_By</label></p>
                                                     </div>
                                                 </div>
@@ -151,7 +152,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                     
+
                                             number++;
                                         }
                                     }
@@ -260,8 +261,7 @@
                                                                         <br />
                                                                         <div class="col-md-12">
                                                                             <label class="control-label">Purchase Price ($)</label>
-                                                                            <input type="number" step="0.01" name="Purchase_price" value="@item.Purchase_price" class="form-control" required
-                                                                                    />
+                                                                            <input type="number" step="0.01" name="Purchase_price" value="@item.Purchase_price" class="form-control" required />
                                                                         </div>
                                                                         <div class="col-md-12">
                                                                             <label class="control-label">Commission Amount ($)</label>
@@ -609,335 +609,313 @@
                                     {
                                         @Html.AntiForgeryToken()
 
-                                    <div class="form-horizontal edit-form">
-                                        <h4>EDIT CUSTOMER</h4>
-                                        <hr />
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        <input type="hidden" name="ID_Customer" value="@Model.customer.ID_Customer" />
+                                        <div class="form-horizontal edit-form">
+                                            <h4>EDIT CUSTOMER</h4>
+                                            <hr />
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <input type="hidden" name="ID_Customer" value="@Model.customer.ID_Customer" />
 
 
-                                        <div class="form-group">
-                                            <label class="control-label">First Name</label>
-                                            <div>
-                                                <input type="text" class="form-control" name="Name" value="@Model.customer.Name" />
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label ">Last Name</label>
-                                            <div>
-                                                <input class="form-control" type="text" name="LastName" value="@Model.customer.LastName" />
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" style="display:none;">
-                                            <label class="control-label">Gender</label>
-                                            <div>
-                                                <select name="Gender" id="Gender" class="form-control">
-
-                                                    <option selected>Male</option>
-
-                                                    @if (Model.customer.Gender == "Female")
-                                                    {
-                                                        <option>Female</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>Female</option>
-                                                    }
-                                                </select>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.customer.Birthday.ToString("yyyy-MM-dd")" />
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label">Status</label>
-                                            <div>
-                                                <select name="Marital_status" id="Marital_status" class="form-control">
-
-                                                    @if (Model.customer.Marital_status == "ACTIVE")
-                                                    {
-                                                        <option selected>ACTIVE</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>ACTIVE</option>
-                                                    }
-                                                    @if (Model.customer.Marital_status == "ON CONTRACT")
-                                                    {
-                                                        <option selected>ON CONTRACT</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>ON CONTRACT</option>
-                                                    }
-                                                    @if (Model.customer.Marital_status == "FOLLOW UP")
-                                                    {
-                                                        <option selected>FOLLOW UP</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>FOLLOW UP</option>
-                                                    }
-                                                    @if (Model.customer.Marital_status == "CLOSED")
-                                                    {
-                                                        <option selected>CLOSED</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>CLOSED</option>
-                                                    }
-                                                    @if (Model.customer.Marital_status == "DEAD")
-                                                    {
-                                                        <option selected>DEAD</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>DEAD</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <select class="form-control" id="Type" name="Type">
-                                                    <option>NOT ASSIGNED</option>
-                                                    @if (Model.customer.Type == "SELLER")
-                                                    {
-                                                        <option selected>SELLER</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>SELLER</option>
-                                                    }
-                                                    @if (Model.customer.Type == "BUYER")
-                                                    {
-                                                        <option selected>BUYER</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>BUYER</option>
-                                                    }
-                                                    @if (Model.customer.Type == "RENTAL")
-                                                    {
-                                                        <option selected>RENTAL</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>RENTAL</option>
-                                                    }
-                                                    @if (Model.customer.Type == "SHORT SALE")
-                                                    {
-                                                        <option selected>SHORT SALE</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>SHORT SALE</option>
-                                                    }
-                                                    @if (Model.customer.Type == "INVESTOR")
-                                                    {
-                                                        <option selected>INVESTOR</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>INVESTOR</option>
-                                                    }
-
-                                                    @if (Model.customer.Type == "TENANTS")
-                                                    {
-                                                        <option selected>TENANTS</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>INVESTENANTSTOR</option>
-                                                    }
-                                                    @if (Model.customer.Type == "LANDLORD")
-                                                    {
-                                                        <option selected>LANDLORD</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>LANDLORD</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="Email" value="@Model.customer.Email" />
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="Phone" value="@Model.customer.Phone" />
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" style="display:none;">
-                                            @Html.LabelFor(model => model.customer.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="Mobile" value="@Model.customer.Mobile" />
-
-                                            </div>
-                                        </div>
-
-                                        
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.State, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="State" value="@Model.customer.State" />
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="City" value="@Model.customer.City" />
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="Address" value="@Model.customer.Address" />
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.customer.Zipcode, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input class="form-control" type="text" name="Zipcode" value="@Model.customer.Zipcode" />
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"> Source</label>
-                                            <select class="form-control" name="Source">
-                                                @if (Model.customer.Source == "PERSONAL")
-                                                {
-                                                    <option selected>PERSONAL</option>
-                                                }
-                                                else
-                                                {
-                                                    <option>PERSONAL</option>
-                                                }
-                                                @if (Model.customer.Source == "PGR MARKETING")
-                                                {
-                                                    <option selected>PGR MARKETING</option>
-                                                }
-                                                else
-                                                {
-                                                    <option>PGR MARKETING</option>
-                                                }
-                                                @if (Model.customer.Source == "ZILLOW")
-                                                {
-                                                    <option selected>ZILLOW</option>
-                                                }
-                                                else
-                                                {
-                                                    <option>ZILLOW</option>
-                                                }
-                                                @if (Model.customer.Source == "REFERRAL")
-                                                {
-                                                    <option selected>REFERRAL</option>
-                                                }
-                                                else
-                                                {
-                                                    <option>REFERRAL</option>
-                                                }
-                                                @if (Model.customer.Source == "OTHER")
-                                                {
-                                            <option selected>OTHER</option>
-                                                }
-                                                else
-                                                {
-                                            <option>OTHER</option>
-                                                }                                               
-                                            </select>
-                                        </div>                                       
-                                        <div class="form-group">
-                                            <label class="control-label">Active customer?</label>
-                                            <div>
-
-
-                                                <div class="checkbox is-checked">
-                                                    @if (Model.customer.Active == true)
-                                                    {
-                                                        @Html.CheckBox("Active", true)
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.CheckBox("Active", false)
-                                                    }
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" style="display:none;">
-                                            @Html.LabelFor(model => model.customer.ID_Company, "ID_Company", htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div>
-                                                <input type="hidden" name="ID_Company" value="@Model.customer.ID_Company" />
-                                            </div>
-                                        </div>
-
-
-                                        @if (ViewBag.rol == "Agent")
-                                        {
-                                            <div class="form-group" style="display:none">
-                                                <label class="control-label">Assigned Agent</label>
+                                            <div class="form-group">
+                                                <label class="control-label">First Name</label>
                                                 <div>
-                                                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control", @value = @Model.customer.ID_User })
+                                                    <input type="text" class="form-control" name="Name" value="@Model.customer.Name" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label ">Last Name</label>
+                                                <div>
+                                                    <input class="form-control" type="text" name="LastName" value="@Model.customer.LastName" />
 
                                                 </div>
                                             </div>
+
                                             <div class="form-group" style="display:none;">
+                                                <label class="control-label">Gender</label>
                                                 <div>
-                                                    <input type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+                                                    <select name="Gender" id="Gender" class="form-control">
+
+                                                        <option selected>Male</option>
+
+                                                        @if (Model.customer.Gender == "Female")
+                                                        {
+                                                            <option>Female</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>Female</option>
+                                                        }
+                                                    </select>
+
                                                 </div>
-                                            </div> }
-                                        else
-                                        {
+                                            </div>
+
                                             <div class="form-group">
-                                                <label class="control-label">Assigned Agent</label>
+                                                @Html.LabelFor(model => model.customer.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div>
-                                                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control" })
+                                                    <input type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.customer.Birthday.ToString("yyyy-MM-dd")" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label">Status</label>
+                                                <div>
+                                                    <select name="Marital_status" id="Marital_status" class="form-control">
+
+                                                        @if (Model.customer.Marital_status == "ACTIVE")
+                                                        {
+                                                            <option selected>ACTIVE</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>ACTIVE</option>
+                                                        }
+                                                        @if (Model.customer.Marital_status == "ON CONTRACT")
+                                                        {
+                                                            <option selected>ON CONTRACT</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>ON CONTRACT</option>
+                                                        }
+                                                        @if (Model.customer.Marital_status == "FOLLOW UP")
+                                                        {
+                                                            <option selected>FOLLOW UP</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>FOLLOW UP</option>
+                                                        }
+                                                        @if (Model.customer.Marital_status == "CLOSED")
+                                                        {
+                                                            <option selected>CLOSED</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>CLOSED</option>
+                                                        }
+                                                        @if (Model.customer.Marital_status == "DEAD")
+                                                        {
+                                                            <option selected>DEAD</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>DEAD</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <select class="form-control" id="Type" name="Type">
+                                                        <option>NOT ASSIGNED</option>
+                                                        @if (Model.customer.Type == "SELLER")
+                                                        {
+                                                            <option selected>SELLER</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>SELLER</option>
+                                                        }
+                                                        @if (Model.customer.Type == "BUYER")
+                                                        {
+                                                            <option selected>BUYER</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>BUYER</option>
+                                                        }
+                                                        @if (Model.customer.Type == "RENTAL")
+                                                        {
+                                                            <option selected>RENTAL</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>RENTAL</option>
+                                                        }
+                                                        @if (Model.customer.Type == "SHORT SALE")
+                                                        {
+                                                            <option selected>SHORT SALE</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>SHORT SALE</option>
+                                                        }
+                                                        @if (Model.customer.Type == "INVESTOR")
+                                                        {
+                                                            <option selected>INVESTOR</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>INVESTOR</option>
+                                                        }
+
+                                                        @if (Model.customer.Type == "TENANTS")
+                                                        {
+                                                            <option selected>TENANTS</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>INVESTENANTSTOR</option>
+                                                        }
+                                                        @if (Model.customer.Type == "LANDLORD")
+                                                        {
+                                                            <option selected>LANDLORD</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>LANDLORD</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="Email" value="@Model.customer.Email" />
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="Phone" value="@Model.customer.Phone" />
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style="display:none;">
+                                                @Html.LabelFor(model => model.customer.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="Mobile" value="@Model.customer.Mobile" />
+
                                                 </div>
                                             </div>
 
 
+
                                             <div class="form-group">
-                                                <label class="control-label">Creation date</label>
+                                                @Html.LabelFor(model => model.customer.State, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <div>
-                                                    <input class="form-control" type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+                                                    <input class="form-control" type="text" name="State" value="@Model.customer.State" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="City" value="@Model.customer.City" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="Address" value="@Model.customer.Address" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.customer.Zipcode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input class="form-control" type="text" name="Zipcode" value="@Model.customer.Zipcode" />
 
                                                 </div>
-                                            </div>}
-                                        <input type="text" class="form-control" name="User_assigned" value="@Model.customer.User_assigned" id="User_assigned" hidden />
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2">
-                                                <input type="hidden" name="broker" value="@ViewBag.selbroker" />
-                                                <input type="submit" value="Save" class="btn btn-info" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> Source</label>
+                                                <select class="form-control" name="Source" id="selectSource">
+                                                    @foreach (var item in source)
+                                                    {
+                                                        if (Model.customer.Source.Contains(item.Source_name))
+                                                        {
+                                                            <option value="@item.Source_name" selected>@item.Source_name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Source_name">@item.Source_name</option>
+                                                        }
+
+                                                    }
+
+                                                </select>
+                                                @if (ViewBag.rol == "Admin")
+                                                {
+                                                    <a class="la la-plus-circle la-2x" href="#" data-toggle="modal" data-target="#sourceModal"></a>
+                                                }
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Active customer?</label>
+                                                <div>
+
+
+                                                    <div class="checkbox is-checked">
+                                                        @if (Model.customer.Active == true)
+                                                        {
+                                                            @Html.CheckBox("Active", true)
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.CheckBox("Active", false)
+                                                        }
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style="display:none;">
+                                                @Html.LabelFor(model => model.customer.ID_Company, "ID_Company", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div>
+                                                    <input type="hidden" name="ID_Company" value="@Model.customer.ID_Company" />
+                                                </div>
+                                            </div>
+
+
+                                            @if (ViewBag.rol == "Agent")
+                                            {
+                                                <div class="form-group" style="display:none">
+                                                    <label class="control-label">Assigned Agent</label>
+                                                    <div>
+                                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control", @value = @Model.customer.ID_User })
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none;">
+                                                    <div>
+                                                        <input type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+                                                    </div>
+                                                </div> }
+                                            else
+                                            {
+                                                <div class="form-group">
+                                                    <label class="control-label">Assigned Agent</label>
+                                                    <div>
+                                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label">Creation date</label>
+                                                    <div>
+                                                        <input class="form-control" type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+
+                                                    </div>
+                                                </div>}
+                                            <input type="text" class="form-control" name="User_assigned" value="@Model.customer.User_assigned" id="User_assigned" hidden />
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2">
+                                                    <input type="hidden" name="broker" value="@ViewBag.selbroker" />
+                                                    <input type="submit" value="Save" class="btn btn-info" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     }
                                     <!-- here finishes form tag edit-->
                                 </div>
@@ -1022,7 +1000,7 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label class="control-label"> Source</label>
-                                                    <input  name="Source" value="@Model.customer.Source" disabled class="form-control" />
+                                                    <input name="Source" value="@Model.customer.Source" disabled class="form-control" />
                                                 </div>
                                                 <br />
                                                 <div class="col-md-12">
@@ -1108,16 +1086,16 @@
                     <ul class="nav" role="tablist">
                         <button style="display:none" id="opendocument" data-toggle="modal" data-target="#adddocuments"></button>
                     </ul>
-                        <hr />
-                        }
+                    <hr />
+                }
 
-                        <i class="la la-2x la-area-chart primary-color d-inline-block"></i>
-                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>
+                <i class="la la-2x la-area-chart primary-color d-inline-block"></i>
+                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>
 
-                        <hr />
-                        <i class="la la-2x la-tachometer primary-color d-inline-block"></i>
-                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>
-                </nav>
+                <hr />
+                <i class="la la-2x la-tachometer primary-color d-inline-block"></i>
+                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>
+            </nav>
         </div>
     </div>
 </div>
@@ -1126,10 +1104,10 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 id="closewindow">Add documents for : <label style="color:#2c9ad6"><strong>@Model.customer.Name @Model.customer.LastName</strong> </label></h4>               
-                    <button class="close" id="closemodal" aria-label="Close" data-dismiss="modal">
-                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
-                    </button>                
+                <h4 id="closewindow">Add documents for : <label style="color:#2c9ad6"><strong>@Model.customer.Name @Model.customer.LastName</strong> </label></h4>
+                <button class="close" id="closemodal" aria-label="Close" data-dismiss="modal">
+                    <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                </button>
             </div>
             <div class="modal-body text-align-center">
                 <div class="row">
@@ -1185,39 +1163,39 @@
                                                 <div class="title">Document Package Details</div>
                                                 <div class="new-tasks"><label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
                                             </div><h2></h2>
-                                                  <div class="widget-options">
-                                                      @if (Model.pack_Det.Count > 0)
-                                                      {
-                                                          if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
-                                                          {
-                                                              <button class="btn btn-success" id="sendtobroker">Send package</button>
-                                                              <br />
-                                                              <br />
-                                                              <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" id="checkBroker" checked>
-                                                                  <label class="form-check-label">
+                                            <div class="widget-options">
+                                                @if (Model.pack_Det.Count > 0)
+                                                {
+                                                    if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
+                                                    {
+                                                        <button class="btn btn-success" id="sendtobroker">Send package</button>
+                                                        <br />
+                                                        <br />
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkBroker" checked>
+                                                            <label class="form-check-label">
 
-                                                                      Send to broker
-                                                                  </label>
+                                                                Send to broker
+                                                            </label>
 
-                                                              </div>
-                                                              <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" id="checkExtra">
-                                                                  <label class="form-check-label">
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkExtra">
+                                                            <label class="form-check-label">
 
-                                                                      Send to extra mail
-                                                                  </label>
+                                                                Send to extra mail
+                                                            </label>
 
-                                                              </div>
-                                                              <br />
-                                                              <label class="control-label">Add extra e-mail</label>
-                                                              <br />
-                                                              <input class="form-control" type="text" id="extraemail" />
-                                                          }
+                                                        </div>
+                                                        <br />
+                                                        <label class="control-label">Add extra e-mail</label>
+                                                        <br />
+                                                        <input class="form-control" type="text" id="extraemail" />
+                                                    }
 
-                                                      }
+                                                }
 
-                                                  </div>
+                                            </div>
                                         </div>
 
                                         <div class="widget-body">
@@ -1230,7 +1208,7 @@
                                                             <th>Required</th>
                                                             <th>Uploaded</th>
                                                             <th>Document</th>
-                                                            @if (ViewBag.rol == "Agent" || ViewBag.rol =="Admin")
+                                                            @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
                                                             {
                                                                 <th>Select a file</th>
                                                             }
@@ -1298,7 +1276,7 @@
                                                                         <label>-</label>
                                                                     }
                                                                 </td>
-                                                                @if (ViewBag.rol == "Agent" || ViewBag.rol=="Admin")
+                                                                @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
                                                                 {
                                                                     <td class="td-actions">
                                                                         <input type="file" class="form-control fileToUpload" id="file_@item.ID_Detail" />
@@ -1371,7 +1349,7 @@
                                 <option value="1">BUYER</option>
                                 <option value="2">SELLER</option>
                                 <option value="3">DUAL AGENCY</option>
-                                <option value="4">RENTAL LISTING</option>                               
+                                <option value="4">RENTAL LISTING</option>
                                 <option value="5">COMMERCIAL/INDUSTRIAL LISTING</option>
                                 <option value="6">LAND</option>
                             </select>
@@ -1388,8 +1366,66 @@
     </div>
 </div>
 <!-- here ends category package modal section -->
+<!--Modal source-->
+<div class="modal" id="sourceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add source</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Source name:</label>
+                    <input type="text" class="form-control" id="sourceName" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="buttonNewSource">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-   
+      document.getElementById("buttonNewSource").onclick = function () {
+        var sourceName = $("#sourceName").val();
+
+        sourceName = sourceName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateSource","Tb_Source")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                source: sourceName
+            }),
+            success: function (response) {
+                $('#selectSource').append($('<option>', {
+
+                    value: sourceName,
+                    text: sourceName
+                }));
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
     function closingAlert() {
         var con = confirm("Are you sure you wanna close?");
         if (con) {
@@ -1799,7 +1835,7 @@
 
 @if (Model.package != null)
 {
-<script>
+    <script>
 
         var broker = document.getElementById("sendtobroker");
         broker.onclick= function () {
@@ -1842,7 +1878,7 @@
                         setTimeout(function () {
                         }, 2000);
                     }
-                   
+
                 },
                 error: function (response) {
                     alert(response);
@@ -1903,12 +1939,12 @@
                                 }
 
     }
-</script>
+    </script>
 }
 
 @if (@Model.property != null)
 {
-<script>
+    <script>
         var submitbutton = document.getElementById("subbtnenviar");
         submitbutton.onclick = function () {
                                 $("#subbtnenviar").attr("disabled", true);
@@ -1925,7 +1961,7 @@
 
                                 $.ajax({
                                     type: "GET",
-                                    url: '/Portal/newPackage',                                                                     
+                                    url: '/Portal/newPackage',
                                     data:data,
                                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                                     processData: true,
@@ -1933,10 +1969,10 @@
                                         var closecategory = $("#closecategory");
                                         closecategory.trigger('click');
                                         var closebuttondocuments = $("#closemodal");
-                                        var adddocument = $("#opendocument");  
+                                        var adddocument = $("#opendocument");
                                         closebuttondocuments.trigger('click');
                                         filesection.html('');
-                                        filesection.html(response);   
+                                        filesection.html(response);
                                         var deletebutton = $("#delpackbutton");
                                         var packbutton = $("#docpackbutton");
                                         deletebutton.css('display', 'block');
@@ -1944,10 +1980,10 @@
 
                                         setTimeout(function () {
                                             adddocument.trigger('click');
-                                        }, 1000);              
-                                        
+                                        }, 1000);
+
                                         $("#preloader").hide();
-                                                                                
+
                                             $("#subbtnenviar").attr("disabled", false);
 
                                         new Noty({
@@ -1957,7 +1993,7 @@
                                                 progressBar: true,
                                                 timeout: 2500
                                             }).show()
-                                        setTimeout(function () {                                                                                                                                   
+                                        setTimeout(function () {
                                             }, 2000);
 
                                             },
@@ -2003,7 +2039,7 @@
         $.each(ids, (i, id) => {
             formData.append("ids", id);
         });
-        
+
 
                 $.ajax({
                     type: "POST",
@@ -2029,7 +2065,7 @@
                                 progressBar: true,
                                 timeout: 2500
                             }).show()
-                           
+
 
                         } else {
                             $("#loader_form").hide();
@@ -2047,13 +2083,15 @@
 
 
 
-</script>
-
+    </script>
+    <script type="text/javascript">
+      
+    </script>
 
     <script type="text/javascript">
         window.onload = function () {
             $("#tableresources").DataTable();
-        }       
+        }
     </script>
 
 
