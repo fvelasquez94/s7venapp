@@ -5,9 +5,10 @@
     Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
 
     List<Sys_Users> agents = ViewBag.userslist;
+    List<Tb_Source> source = ViewBag.lstSource;
 
 }
-
+<link rel="stylesheet" href="~/Content/assetsEditor/css/line-awesome.min.css">
 <div class="container-fluid">
     <!-- Begin Page Header-->
     <div class="row">
@@ -138,13 +139,13 @@
                     </div>
                     <div class="col-md-6">
                         <label class="control-label"> Source</label>
-                        <select class="form-control" name="Source">
-                            <option>PERSONAL</option>
-                            <option>PGR MARKETING</option>
-                            <option>ZILLOW</option>
-                            <option>REFERRAL</option>
-                            <option>OTHER</option>
+                        <select class="form-control" name="Source" id="selectSource">
+                            @foreach (var item in source)
+                            {
+                                <option value="@item.Source_name">@item.Source_name</option>
+                            }
                         </select>
+                        <a class="la la-plus-circle la-2x" href="#"></a>
                     </div>
                     <div class="col-md-6">
                         <label class="control-label">Agent Assigned</label>

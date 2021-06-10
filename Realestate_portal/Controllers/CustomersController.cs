@@ -63,7 +63,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.rol = "";
 
                 //Filtros SA
-
+                var lstsource = (from o in db.Tb_Source select o).ToList();
+                ViewBag.lstSource = lstsource;
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
 
