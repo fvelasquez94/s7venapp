@@ -2,33 +2,52 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_editor.cshtml";
+ 
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Stage_name)
-        </th>
-        <th></th>
-    </tr>
+<div class="container-fluid">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stage_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Status }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_Status }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Status })
-        </td>
-    </tr>
-}
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">STATUS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <div>
+        <p>
+            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#mstatusModal">Add Customer Status</a>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    <label>Customer Status</label>
+                </th>
+                <th></th>
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stage_name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id_Status }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id_Status })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

@@ -185,6 +185,17 @@
                                     <i class="la la-battery-empty"></i>  Categories
                                 </a>
                             </li>
+                            <li>
+                                <a href="@Url.Action("Index","Tb_Source", new { broker = ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                    <i class="la la-battery-full"></i>  Sources
+                                </a>
+                            </li>
+                            <li><br /></li>
+                            <li>
+                                <a href="@Url.Action("Index","Tb_Status", new { broker = ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                    <i class="la la-gear"></i>  Customer Status
+                                </a>
+                            </li>
                         }
 
                         <li><a rel="nofollow" href="@Url.Action("Log_out", "Portal")" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>

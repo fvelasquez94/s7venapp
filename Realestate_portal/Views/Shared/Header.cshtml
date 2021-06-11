@@ -127,66 +127,84 @@
                                                               <img src="@Url.Content(activeuser.Image)" alt="..." class="avatar rounded-circle">
                                }
                                 </a>
-                                <ul aria-labelledby="user" class="user-size dropdown-menu">    <li><br /></li>                                                                   
-                                    <li>
-                                     @if (ViewBag.rol != "SA")
-                                     {
-      <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile" })" class="dropdown-item no-padding-bottom"> 
-                                            <i class="la la-user"></i> My account
-                                        </a>
-                                     }
-                                     else {
-      <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile",broker=ViewBag.selbroker })" class="dropdown-item no-padding-bottom"> 
-                                            <i class="la la-user"></i> My account
-                                        </a>
-                                     }                                  
-                                    </li><li><br /></li>
-                                    @if (ViewBag.rol == "Admin")
-                                    {
-                                    <li>
-                                
-                                        <a href="@Url.Action("Index", "Users")" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
-                                    </li>
-                                    <li><br /></li>
+                                                          <ul aria-labelledby="user" class="user-size dropdown-menu">
+                                                              <li><br /></li>
+                                                              <li>
+                                                                  @if (ViewBag.rol != "SA")
+                                                                  {
+                                                                      <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile" })" class="dropdown-item no-padding-bottom">
+                                                                          <i class="la la-user"></i> My account
+                                                                      </a>
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      <a href="@Url.Action("Edit","Users", new { id = ViewBag.userID, modulo="profile",broker=ViewBag.selbroker })" class="dropdown-item no-padding-bottom">
+                                                                          <i class="la la-user"></i> My account
+                                                                      </a>
+                                                                  }
+                                                              </li>
+                                                              <li><br /></li>
+                                                              @if (ViewBag.rol == "Admin")
+                                                              {
+                                                                  <li>
 
-                                    <li class="#"></li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "Posts")" class="dropdown-item no-padding-top"> 
-                                            <i class="la la-globe"></i>  Broker Messages
-                                        </a>
-                                    </li>
-                                      <li><br /></li>
-                                            <li class="#"></li>                 
-                                    <li>
-                                        <a href="@Url.Action("Index", "Tb_Options")" class="dropdown-item no-padding-top"> 
-                                            <i class="la la-battery-empty"></i>  Categories
-                                        </a>
-                                    </li>
-                                    }
-                                    else if(ViewBag.rol=="SA"){ 
-                                    <li>
-                                
-                                        <a href="@Url.Action("Index","Users",new { broker=ViewBag.selbroker})" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
-                                    </li>
-                                    <li><br /></li>
+                                                                      <a href="@Url.Action("Index", "Users")" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
+                                                                  </li>
+                                                                  <li><br /></li>
 
-                                    <li class="#"></li>
-                                    <li>
-                                        <a href="@Url.Action("Index","Posts",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top"> 
-                                            <i class="la la-globe"></i>  Broker Messages
-                                        </a>
-                                    </li>
-                                      <li><br /></li>
-                                            <li class="#"></li>                 
-                                    <li>
-                                        <a href="@Url.Action("Index","Tb_Options",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top"> 
-                                            <i class="la la-battery-empty"></i>  Categories
-                                        </a>
-                                    </li>
-                                    }
+                                                                  <li class="#"></li>
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index", "Posts")" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-globe"></i>  Broker Messages
+                                                                      </a>
+                                                                  </li>
+                                                                  <li><br /></li>
+                                                                  <li class="#"></li>
 
-                                    <li><a rel="nofollow" href="@Url.Action("Log_out", "Portal")" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
-                                </ul>
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index", "Tb_Options")" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-battery-empty"></i>  Categories
+                                                                      </a>
+                                                                  </li>
+                                                              }
+                                                              else if (ViewBag.rol == "SA")
+                                                              {
+                                                                  <li>
+
+                                                                      <a href="@Url.Action("Index","Users",new { broker=ViewBag.selbroker})" class="dropdown-item"><i class="la la-user-secret"></i> Agents list</a>
+                                                                  </li>
+                                                                  <li><br /></li>
+
+                                                                  <li class="#"></li>
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index","Posts",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-globe"></i>  Broker Messages
+                                                                      </a>
+                                                                  </li>
+                                                                  <li><br /></li>
+                                                                  <li class="#"></li>
+
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index","Tb_Options",new { broker=ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-battery-empty"></i>  Categories
+                                                                      </a>
+                                                                  </li>
+                                                                  <li><br /></li>
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index","Tb_Source", new { broker = ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-battery-full"></i>  Sources
+                                                                      </a>
+                                                                  </li>
+                                                                  <li><br /></li>
+                                                                  <li>
+                                                                      <a href="@Url.Action("Index","Tb_Status", new { broker = ViewBag.selbroker})" class="dropdown-item no-padding-top">
+                                                                          <i class="la la-gear"></i>  Customer Status
+                                                                      </a>
+                                                                  </li>
+                                                              }
+
+                                                              <li><a rel="nofollow" href="@Url.Action("Log_out", "Portal")" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
+                                                          </ul>
                             </li>
                             <!-- End User -->
                             <!-- Begin Quick Actions -->

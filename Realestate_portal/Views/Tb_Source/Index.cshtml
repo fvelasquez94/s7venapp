@@ -2,39 +2,113 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_editor.cshtml";
+   
 }
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">SOURCES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <div class="row">
+        <p>
+            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#sourceModal">Add source</a>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    <label>Source</label>
+                </th>
 
-<h2>Index</h2>
+                <th></th>
+            </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Source_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Id_Company)
-        </th>
-        <th></th>
-    </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Source_name)
+                    </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Source_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id_Company)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Source }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_Source }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Source })
-        </td>
-    </tr>
-}
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id_Source }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id_Source })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+    </div>
+</div>
+<div class="modal" id="sourceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add source</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Source name:</label>
+                    <input type="text" class="form-control" id="sourceName" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="buttonNewSource">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     document.getElementById("buttonNewSource").onclick = function () {
+        var sourceName = $("#sourceName").val();
+
+        sourceName = sourceName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateSource","Tb_Source")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                source: sourceName
+            }),
+            success: function (response) {
+                $('#selectSource').append($('<option>', {
+
+                    value: sourceName,
+                    text: sourceName
+                }));
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+                window.location.reload();
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                window.location.reload();
+            }
+        });
+    }
+</script>
