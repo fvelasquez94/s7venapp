@@ -4,6 +4,7 @@
     ViewBag.Title = "Dashboard CRM";
     Layout = "~/Views/Shared/_CRM_new.cshtml";
     List<Tb_Source> source = ViewBag.lstSource;
+    List<Tb_Status> status = ViewBag.lstStatus;
 
 }
 
@@ -662,48 +663,24 @@
                                                 <label class="control-label">Status</label>
                                                 <div>
                                                     <select name="Marital_status" id="Marital_status" class="form-control">
+                                                        @foreach (var item in status)
+                                                        {
+                                                            if (Model.customer.Marital_status.Contains(item.Stage_name))
+                                                            {
+                                                                <option value="@item.Stage_name" selected>@item.Stage_name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Stage_name">@item.Stage_name</option>
+                                                            }
+                                                        }
+                                                       
 
-                                                        @if (Model.customer.Marital_status == "ACTIVE")
-                                                        {
-                                                            <option selected>ACTIVE</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option>ACTIVE</option>
-                                                        }
-                                                        @if (Model.customer.Marital_status == "ON CONTRACT")
-                                                        {
-                                                            <option selected>ON CONTRACT</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option>ON CONTRACT</option>
-                                                        }
-                                                        @if (Model.customer.Marital_status == "FOLLOW UP")
-                                                        {
-                                                            <option selected>FOLLOW UP</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option>FOLLOW UP</option>
-                                                        }
-                                                        @if (Model.customer.Marital_status == "CLOSED")
-                                                        {
-                                                            <option selected>CLOSED</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option>CLOSED</option>
-                                                        }
-                                                        @if (Model.customer.Marital_status == "DEAD")
-                                                        {
-                                                            <option selected>DEAD</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option>DEAD</option>
-                                                        }
                                                     </select>
+                                                    @if (ViewBag.rol == "Admin")
+                                                    {
+                                                        <a class="la la-plus-circle la-2x" href="#" data-toggle="modal" data-target="#mstatusModal"></a>
+                                                    }
                                                 </div>
                                             </div>
 
@@ -1389,6 +1366,28 @@
         </div>
     </div>
 </div>
+<div class="modal" id="mstatusModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Marital Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButtonStatus">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Status name:</label>
+                    <input type="text" class="form-control" id="statusName" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="buttonNewStatus">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
       document.getElementById("buttonNewSource").onclick = function () {
         var sourceName = $("#sourceName").val();
@@ -1409,6 +1408,42 @@
                     text: sourceName
                 }));
                 var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
+     document.getElementById("buttonNewStatus").onclick = function () {
+        var statusName = $("#statusName").val();
+
+        statusName = statusName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateStatus", "Tb_Status")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                mstatus: statusName
+            }),
+            success: function (response) {
+                $('#Marital_status').append($('<option>', {
+
+                    value: statusName,
+                    text: statusName
+                }));
+                var closeModal = $('#closeButtonStatus');
                 closeModal.trigger('click');
                 new Noty({
                     type: 'success',

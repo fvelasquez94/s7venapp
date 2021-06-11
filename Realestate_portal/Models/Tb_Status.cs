@@ -16,5 +16,6 @@ namespace Realestate_portal.Models
     {
         public int Id_Status { get; set; }
         public string Stage_name { get; set; }
+        public Nullable<int> Id_Company { get; set; }
     }
 }

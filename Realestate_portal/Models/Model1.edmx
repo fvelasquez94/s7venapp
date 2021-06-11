@@ -424,6 +424,7 @@
           </Key>
           <Property Name="Id_Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Stage_name" Type="varchar" MaxLength="20" />
+          <Property Name="Id_Company" Type="int" />
         </EntityType>
         <EntityType Name="Tb_TemplatesCatalogo">
           <Key>
@@ -1960,6 +1961,7 @@
           </Key>
           <Property Name="Id_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Company" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2490,6 +2492,7 @@
           <EntitySetMapping Name="Tb_Status">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Status">
               <MappingFragment StoreEntitySet="Tb_Status">
+                <ScalarProperty Name="Id_Company" ColumnName="Id_Company" />
                 <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
                 <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
               </MappingFragment>

@@ -808,6 +808,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name", tb_Customers.ID_Company);
                 var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company || o.Id_Company == null) select o).ToList();
                 ViewBag.lstSource = lstsource;
+                var lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company || t.Id_Company == null) select t).ToList();
+                ViewBag.lstStatus = lststatus;
                 ViewBag.rol = "";
 
                 //Filtros SA

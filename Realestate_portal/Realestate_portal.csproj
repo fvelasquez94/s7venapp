@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Sys_CompanyController.cs" />
     <Compile Include="Controllers\Tb_OptionsController.cs" />
     <Compile Include="Controllers\Tb_SourceController.cs" />
+    <Compile Include="Controllers\Tb_StatusController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1824,6 +1825,11 @@
     <Content Include="Views\Tb_Source\Details.cshtml" />
     <Content Include="Views\Tb_Source\Edit.cshtml" />
     <Content Include="Views\Tb_Source\Index.cshtml" />
+    <Content Include="Views\Tb_Status\Create.cshtml" />
+    <Content Include="Views\Tb_Status\Delete.cshtml" />
+    <Content Include="Views\Tb_Status\Details.cshtml" />
+    <Content Include="Views\Tb_Status\Edit.cshtml" />
+    <Content Include="Views\Tb_Status\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

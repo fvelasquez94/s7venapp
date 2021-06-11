@@ -1,4 +1,10 @@
 ﻿@model Realestate_portal.Models.ViewModels.CRM.CustomerCRMDashboard
+@using Realestate_portal.Models
+@{
+   
+    List<Tb_Status> m_status = ViewBag.lstStatus;
+
+}
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +34,7 @@
     <link rel="stylesheet" href="~/Content/assets/css/lity/lity.min.css">
     <link rel="stylesheet" href="~/Content/assets/css/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="~/Content/assets/css/owl-carousel/owl.theme.min.css">
+    <link rel="stylesheet" href="~/Content/assetsEditor/css/line-awesome.min.css">
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -110,71 +117,49 @@
                             <a href="#" class="primary-color"><strong>Stage : </strong></a>
                             <div>
                                 <select name="stage" id="stage" class="form-control select-crm">
+                                    @foreach (var item in m_status)
+                                    {
+                                        if (Model.customer.Marital_status.Contains(item.Stage_name))
+                                        {
+                                            <option value="@item.Stage_name" selected>@item.Stage_name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Stage_name">@item.Stage_name</option>
+                                        }
+                                    }
 
-                                    @if (Model.customer.Marital_status == "ACTIVE")
-                                    {
-                                        <option selected>ACTIVE</option>
-                                    }
-                                    else
-                                    {
-                                        <option>ACTIVE</option>
-                                    }
-                                    @if (Model.customer.Marital_status == "ON CONTRACT")
-                                    {
-                                        <option selected>ON CONTRACT</option>
-                                    }
-                                    else
-                                    {
-                                        <option>ON CONTRACT</option>
-                                    }
-                                    @if (Model.customer.Marital_status == "FOLLOW UP")
-                                    {
-                                        <option selected>FOLLOW UP</option>
-                                    }
-                                    else
-                                    {
-                                        <option>FOLLOW UP</option>
-                                    }
-                                    @if (Model.customer.Marital_status == "CLOSED")
-                                    {
-                                        <option selected>CLOSED</option>
-                                    }
-                                    else
-                                    {
-                                        <option>CLOSED</option>
-                                    }
-                                    @if (Model.customer.Marital_status == "DEAD")
-                                    {
-                                        <option selected>DEAD</option>
-                                    }
-                                    else
-                                    {
-                                        <option>DEAD</option>
-                                    }
                                 </select>
+                                @if (ViewBag.rol == "Admin")
+                                { 
+                                        <a class="la la-plus-circle la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="#" data-toggle="modal" data-target="#mstatusModal"></a>
+                                   
+                                }
+                                @if (Model.customer.Lead)
+                                {
+
+                                    <ul class="nav" role="tablist">
+                                        <li class="nav-link">
+                                            <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 15px 30px;" data-toggle="modal" data-target="#editcustomerwindow">Edit Lead</a>
+                                        </li>
+                                    </ul>
+                                    <a href="@Url.Action("Customers","CRM", new {broker=ViewBag.selbroker })" class="btn btn-back" style="max-width:100px;">Back</a>
+                                }
+                                else
+                                {
+
+                                    <ul class="nav" role="tablist">
+                                        <li class="nav-link">
+                                            <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 15px 30px;" data-toggle="modal" data-target="#editcustomerwindow">Edit Customer</a>
+                                        </li>
+                                        <li class="nav-link">
+                                            <a href="@Url.Action("Customers","CRM", new {broker=ViewBag.selbroker })" class="btn btn-back" style="max-width:100px;">Back</a>
+                                        </li>
+                                    </ul>
+                                }
                             </div>
-                            @if (Model.customer.Lead)
-                            {
-
-                                <ul class="nav" role="tablist">
-                                    <li class="nav-link">
-                                        <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 15px 30px;" data-toggle="modal" data-target="#editcustomerwindow">Edit Lead</a>
-                                    </li>
-                                </ul>
-                                <a href="@Url.Action("Customers","CRM", new {broker=ViewBag.selbroker })" class="btn btn-back" style="max-width:100px;">Back</a>
-                            }
-                            else
-                            {
-
-                                <ul class="nav" role="tablist">
-                                    <li class="nav-link">
-                                        <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 15px 30px;" data-toggle="modal" data-target="#editcustomerwindow">Edit Customer</a>
-                                    </li>
-                                    <li class="nav-link">
-                                        <a href="@Url.Action("Customers","CRM", new {broker=ViewBag.selbroker })" class="btn btn-back" style="max-width:100px;">Back</a>
-                                    </li>
-                                </ul>
-                            }
+                             
+                           
                         </div>
                     </div>
                     <br />
@@ -228,6 +213,28 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="mstatusModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Marital Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButtonStatus">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Status name:</label>
+                        <input type="text" class="form-control" id="statusName" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="buttonNewStatus">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Begin Vendor Js -->
 
     <script src="~/Content/assets/vendors/js/base/jquery.min.js"></script>
@@ -254,6 +261,43 @@
     <script src="~/Content/assets/js/pages/events.min.js"></script>
     <!-- End Page Snippets -->
     <script>
+
+         document.getElementById("buttonNewStatus").onclick = function () {
+        var statusName = $("#statusName").val();
+
+        statusName = statusName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateStatus", "Tb_Status")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                mstatus: statusName
+            }),
+            success: function (response) {
+                $('#Marital_status').append($('<option>', {
+
+                    value: statusName,
+                    text: statusName
+                }));
+                var closeModal = $('#closeButtonStatus');
+                closeModal.trigger('click');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
 
         window.onload = function () {
 
