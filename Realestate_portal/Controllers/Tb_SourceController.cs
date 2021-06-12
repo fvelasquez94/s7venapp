@@ -166,16 +166,52 @@ namespace Realestate_portal.Controllers
         // GET: Tb_Source/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (generalClass.checkSession())
+                {
+                    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+                    //HEADER
+                    //ACTIVE PAGES
+                    ViewData["Menu"] = "Portal";
+                    ViewData["Page"] = "Options";
+                    ViewBag.menunameid = "";
+                    ViewBag.submenunameid = "";
+                    List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+                    ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+                    List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+                    ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+                    //NOTIFICATIONS
+                    DateTime now = DateTime.Today;
+                    List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                    ViewBag.notifications = lstAlerts;
+                    ViewBag.userID = activeuser.ID_User;
+                    ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                    //FIN HEADER
+
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Tb_Source tb_Source = db.Tb_Source.Find(id);
+                    if (tb_Source == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(tb_Source);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Portal", new { access = false });
+                }
             }
-            Tb_Source tb_Source = db.Tb_Source.Find(id);
-            if (tb_Source == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return RedirectToAction("Login", "Portal", new { access = false });
             }
-            return View(tb_Source);
+            
         }
 
         // POST: Tb_Source/Edit/5
@@ -197,16 +233,52 @@ namespace Realestate_portal.Controllers
         // GET: Tb_Source/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (generalClass.checkSession())
+                {
+                    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+                    //HEADER
+                    //ACTIVE PAGES
+                    ViewData["Menu"] = "Portal";
+                    ViewData["Page"] = "Options";
+                    ViewBag.menunameid = "";
+                    ViewBag.submenunameid = "";
+                    List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+                    ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+                    List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+                    ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+                    //NOTIFICATIONS
+                    DateTime now = DateTime.Today;
+                    List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                    ViewBag.notifications = lstAlerts;
+                    ViewBag.userID = activeuser.ID_User;
+                    ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                    //FIN HEADER
+
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Tb_Source tb_Source = db.Tb_Source.Find(id);
+                    if (tb_Source == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(tb_Source);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Portal", new { access = false });
+                }
             }
-            Tb_Source tb_Source = db.Tb_Source.Find(id);
-            if (tb_Source == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return RedirectToAction("Login", "Portal", new { access = false });
             }
-            return View(tb_Source);
+
         }
 
         // POST: Tb_Source/Delete/5
