@@ -54,54 +54,71 @@ else if (ViewBag.rol == "SA")
 
                       </div>
             </div><br /><br />
-                      @foreach (var category in lstcategories)
-                      {
-            <label style="color:#265fa4;font-size:20px;font-weight:bold">@category.Description</label>
-            <div class="owl-carousel">
-                @if (Model.Where(a => a.Category == category.Description).Count() > 0)
-                {
-                    foreach (var item in Model.Where(a => a.Category == category.Description))
-                    {
-
-                <div class="item" style="margin-right:10px;">
-                    <div class="widget has-shadow">
-                        <figure class="img-hover-01" style="max-width:500px;max-height:250px;">
-                            <div style="top:0 !important">
-                                <span style="font-size:15px">@item.Name</span>
-
+                        <div>
+                            <div class="col-md-3">
+                                <label class="form-control-label">By Category</label>
+                                <select class="selectpicker show-menu-arrow" id="filterbycat" multiple>
+                                    @foreach (var item in lstcategories)
+                                    {
+                                        <option>@item.Description</option>
+                                    }
+                                </select>
                             </div>
-                            @{
-                                string imagen = "http://img.youtube.com/vi/" + item.Url + "/default.jpg";
-                            }
-                            <img src="@imagen" class="img-fluid" alt="...">
+                        </div>
+                        <div class="todo-list">
+                            <ul id="sortable" class="list">
+                                @foreach (var category in lstcategories)
+                                {
+                                <li>
+                                    <div id="@category.Description">
+                                        <label style="color:#265fa4;font-size:20px;font-weight:bold">@category.Description</label>
+                                        <div class="owl-carousel">
+                                            @if (Model.Where(a => a.Category == category.Description).Count() > 0)
+                                            {
+                                                foreach (var item in Model.Where(a => a.Category == category.Description))
+                                                {
+
+                                                    <div class="item" style="margin-right:10px;">
+                                                        <div class="widget has-shadow">
+                                                            <figure class="img-hover-01" style="max-width:500px;max-height:250px;">
+                                                                <div style="top:0 !important">
+                                                                    <span style="font-size:15px">@item.Name</span>
+
+                                                                </div>
+                                                                @{
+                                                                    string imagen = "http://img.youtube.com/vi/" + item.Url + "/default.jpg";
+                                                                }
+                                                                <img src="@imagen" class="img-fluid" alt="...">
 
 
-                            @{
-                                string url = "https://youtu.be/" + item.Url;
-                            }
-                            <div>
-                                <a href="@url" data-lity=""><span class="btn btn-info btn-sm">Watch now</span></a>
-                            </div>
-                        </figure>
-                    </div>
-                </div>
+                                                                @{
+                                                                    string url = "https://youtu.be/" + item.Url;
+                                                                }
+                                                                <div>
+                                                                    <a href="@url" data-lity=""><span class="btn btn-info btn-sm">Watch now</span></a>
+                                                                </div>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
 
-                    }
-                }
-                else
-                {
-        <div class="item" style="margin-right:10px;">
-            <label  style="color:white;">No data to show</label>
-        </div>
-                }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="item" style="margin-right:10px;">
+                                                    <label style="color:white;">No data to show</label>
+                                                </div>
+                                            }
 
 
-            </div>
+                                        </div>
 
-            <hr />
-                      }
-            
-
+                                        <hr />
+                                    </div>
+                                </li>
+                                }
+                            </ul>
+                        </div>
 
         </div>
         <!-- End Widget Body -->
@@ -238,5 +255,55 @@ else if (ViewBag.rol == "SA")
             });
         });
 
-    }
+
+        $(function () {
+            $('#filterbycat').change(function (e) {
+                var selected = $(e.target).val();
+                if (selected == "") {
+
+                } else {
+                    $("#myInput").val('');
+                }
+
+
+
+                filterbycategory(selected);
+            });
+        });
+    };
+    function filterbycategory(values) {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = values;
+        ul = document.getElementById("sortable");
+
+        if (ul == null) {
+
+        } else {
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("div")[0];
+                txtValue = a.id;
+
+                if (filter == "") {
+                    li[i].style.display = "";
+                } else {
+
+                    if (filter.indexOf(txtValue) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+
+
+            }
+        }
+
+
+    };
 </script>

@@ -74,7 +74,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:50%">
-                                    </div>          
+                                    </div>   
+                                    
                                     <div class="col-md-3">
                                         <label class="form-control-label">Date range</label>
                                         <select class="selectpicker show-menu-arrow" id="dateRange" style="width:60%">
@@ -102,9 +103,9 @@
                                                 <a href="@Url.Action("Package_details","Portal", new { idpackage=item.ID_docpackage})">
                                                     <div id="@item.Category" class="styled-checkbox">
                                                         @if (item.Finished && item.Sent)
-        {
+                                                {
                                                 <input type="checkbox" id="pack_@item.ID_docpackage" readonly checked>
-}
+                                                }
                                                    
                                                         <label class="text-primary" for="task-1">@item.Description | PROCESS ID: @item.ID_Process |CATEGORY: @item.Category </label><br />
                                                         <label class="badge-text-small">Last update: @Convert.ToDateTime(item.Last_update).ToShortDateString()</label> | <label class="badge-text-small">Total Documents (@item.Total_docsf/@item.Total_docs)</label>
