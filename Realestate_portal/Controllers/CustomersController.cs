@@ -285,7 +285,7 @@ namespace Realestate_portal.Controllers
                             emailtosend.leadname = newlead.Name + " " + newlead.LastName;
                             emailtosend.leademail = newlead.Email;
 
-                            emailtosend.subject = "Request information for property - PGR WEB";
+                            emailtosend.subject = "Request information for property - S7VEN WEB";
                             emailtosend.Send();
                         }
                         catch
@@ -391,7 +391,7 @@ namespace Realestate_portal.Controllers
                             emailtosend.leadname = firstname + " " + lastname;
                             emailtosend.leademail = email;
 
-                            emailtosend.subject = "New Appointment - PGR WEB";
+                            emailtosend.subject = "New Appointment - S7VEN WEB";
                             emailtosend.Send();
                         }
                         catch

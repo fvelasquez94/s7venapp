@@ -390,7 +390,7 @@ namespace Realestate_portal.Controllers
                             emailtosend.price = tb_Process.Purchase_price;
                             emailtosend.customerID = tb_Process.ID_Customer;
 
-                            emailtosend.subject = "New property assigned - PGR WEB";
+                            emailtosend.subject = "New property assigned - S7VEN WEB";
                             emailtosend.Send();
                         }
                         catch(Exception ex)
