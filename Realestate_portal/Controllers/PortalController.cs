@@ -79,26 +79,20 @@ namespace Realestate_portal.Controllers
 
                         var listdetais = (from a in db.Tb_Docpackages_details where (a.ID_docpackage == idpackage && a.URL != "") select a).ToList();
 
-                        zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
-                        if (!System.IO.File.Exists(zippackage))
-                        {
-                            using (ZipFile zip = new ZipFile())
-                            {
-                                foreach (var item in listdetais)
-                                {
-                                    // add this map file into the "images" directory in the zip archive
-                                    zip.AddFile(Server.MapPath(item.URL), "documents");
-                                }
+                        //zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
+                        //if (!System.IO.File.Exists(zippackage))
+                        //{
+                        //    using (ZipFile zip = new ZipFile())
+                        //    {
+                        //        foreach (var item in listdetais)
+                        //        {
+                        //            // add this map file into the "images" directory in the zip archive
+                        //            zip.AddFile(Server.MapPath(item.URL), "documents");
+                        //        }
 
-                                zip.Save(zippackage);
-                            }
-                        }
-                        else
-                        {
-
-                        }
-                    
-
+                        //        zip.Save(zippackage);
+                        //    }
+                        //}
                             var brokeremail = company_email;
                         try
                         {
@@ -112,7 +106,13 @@ namespace Realestate_portal.Controllers
                                 emailtosend.From = "support@s7ven.co";
                                 emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - S7VEN Agents Portal";
                                 emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
-                                emailtosend.Attach(new Attachment(zippackage));
+                                foreach (var item in listdetais)
+                                {
+                                    // add this map file into the "images" directory in the zip archive
+                                    emailtosend.Attach(new Attachment(Server.MapPath(item.URL)));
+                                }
+                              
+
                                 emailtosend.Send();
                                 result = "SUCCESS";
 
@@ -125,8 +125,14 @@ namespace Realestate_portal.Controllers
                                     emailtosendagent.From = "support@s7ven.co";
                                     emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - S7VEN Agents Portal";
                                     emailtosendagent.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
-                                    emailtosendagent.Attach(new Attachment(zippackage));
-                                    emailtosendagent.Send();
+
+                                    foreach (var item in listdetais)
+                                    {
+                                        // add this map file into the "images" directory in the zip archive
+                                        emailtosendagent.Attach(new Attachment(Server.MapPath(item.URL)));
+                                    }
+
+                                emailtosendagent.Send();
                                     result = "SUCCESS";
                             }
 

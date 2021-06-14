@@ -150,7 +150,8 @@
         <!-- End Container -->
 
 
-    }<script>
+    }
+    <script>
 
 
         //here we extract all the elements with the class specified
@@ -175,8 +176,8 @@
 
 
 
-        uploadall.onclick = function () {
-
+        document.getElementById("uploadall").onclick = function () {
+            console.log("Wea");
             $("#preloader").show();
             var formData = new FormData();
 
@@ -224,52 +225,6 @@
                 }
             });
         }
-            function deletePack()
-                {
-                    var con = confirm("Are you sure you want to delete this document package?");
-                    if (con)
-                    {
-                        $("#preloader").show();
-                        var url = "@Url.Action("DeletePackage","Portal")";
-                        var data = { id:@Model.package.ID_docpackage, iduser: @Model.customer.ID_Customer, broker: @ViewBag.selbroker};
-                        $.ajax({
-                                    type: "POST",
-                            url: url,
-                            data: data,
-                            dataType: 'json',
-                            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                            processData: true,
-                            success: function(response) {
-                                            if (response == "SUCCESS")
-                                            {
-                                    $("#preloader").hide();
-                                    $("#subbtnenviar").attr("disabled", false);
-                                                new Noty({
-                                                    type: 'success',
-                                                    layout: 'topRight',
-                                                    text: 'Document Package removed successfully',
-                                                    progressBar: true,
-                                                    timeout: 2500
-                                                }).show()
-                                                      setTimeout(function() {
-                                                    window.location.reload(true);
-                                                }, 2000);
-                                            }
-                                            else
-                                            {
-                                    $("#preloader").hide();
-                                    $("#subbtnenviar").attr("disabled", false);
-                                                alert(response);
-                                            }
-                                        },
-                            error: function(error) {
-                                $("#preloader").hide();
-                                $("#subbtnenviar").attr("disabled", false);
-                                            alert("Error removing package");
-                                        }
-                                    });
 
-                                }
-
-    }
+        
 </script>
