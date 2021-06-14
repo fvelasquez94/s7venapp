@@ -131,9 +131,9 @@
 
                                 </select>
                                 @if (ViewBag.rol == "Admin")
-                                { 
-                                        <a class="la la-plus-circle la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="#" data-toggle="modal" data-target="#mstatusModal"></a>
-                                   
+                                {
+                                    <a class="la la-plus-circle la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="#" data-toggle="modal" data-target="#mstatusModal"></a>
+
                                 }
                                 @if (Model.customer.Lead)
                                 {
@@ -158,8 +158,8 @@
                                     </ul>
                                 }
                             </div>
-                             
-                           
+
+
                         </div>
                     </div>
                     <br />
@@ -363,6 +363,7 @@
 
     <!-- Tooltip Initialisation -->
     <script src="~/Content/assets/vendors/js/datatables/datatables.min.js"></script>
+    <script src="~/Content/assets/vendors/js/datatables/buttons.colVis.min.js"></script>
     <script src="~/Content/assets/vendors/js/noty/noty.min.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
     @if (ViewBag.Title == "New Agent")

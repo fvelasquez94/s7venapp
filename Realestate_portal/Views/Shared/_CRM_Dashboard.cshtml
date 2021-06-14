@@ -64,13 +64,15 @@
                         }
                         @if (ViewBag.rol == "Admin")
                         {
-                            <li class="inline"><a class="primary-color" href="@Url.Action("Customers","CRM")"><i class="la la-users primary-color"></i>Leads</a></li>                           
+                            <li class="inline"><a class="primary-color" href="@Url.Action("Customers","CRM")"><i class="la la-users primary-color"></i>Leads</a></li>
+
                             <li class="inline"><a class="primary-color" href="@Url.Action("Index","Users",new { broker=ViewBag.selbroker})"><i class="la la-group primary-color"></i>Agents</a></li>
 
                         }
                         @if (ViewBag.rol == "SA")
                         {
-                            <li class="inline"><a class="primary-color" href="@Url.Action("Customers","CRM")"><i class="la la-users primary-color"></i>Leads</a></li>                          
+                            <li class="inline"><a class="primary-color" href="@Url.Action("Customers","CRM")"><i class="la la-users primary-color"></i>Leads</a></li>
+
                             <li class="inline"><a class="primary-color" href="@Url.Action("Index","Users",new { broker=ViewBag.selbroker})"><i class="la la-group primary-color"></i>Agents</a></li>
                             <li class="inline"><a class="primary-color" href="@Url.Action("Index","Sys_company",new { broker=ViewBag.selbroker})"><i class="la la-group primary-color"></i>Brokers</a></li>
                         }
@@ -175,6 +177,7 @@
 
     <!-- Tooltip Initialisation -->
     <script src="~/Content/assets/vendors/js/datatables/datatables.min.js"></script>
+    <script src="~/Content/assets/vendors/js/datatables/buttons.colVis.min.js"></script>
     <script src="~/Content/assets/vendors/js/noty/noty.min.js"></script>
     @if (ViewBag.Title == "New Agent")
     {

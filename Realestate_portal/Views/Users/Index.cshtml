@@ -170,7 +170,16 @@
 <!-- End Container -->
 <script type="text/javascript">
         window.onload = function () {
-            $("#tableresources").DataTable();
+            $("#tableresources").DataTable(
+                {
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'colvis',
+                        collectionLayout: 'fixed two-column'
+                    }
+                    ]
+                }
+            );
             $("#tableHeader").find('*').css({ "color": 'white' });
         }
 
