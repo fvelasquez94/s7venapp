@@ -810,6 +810,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstSource = lstsource;
                 var lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company || t.Id_Company == null) select t).ToList();
                 ViewBag.lstStatus = lststatus;
+                var lstLeadDocs = (from doc in db.Tb_LeadDocs where (doc.Id_Customer == id) select doc).ToList();
+                ViewBag.leadDocs = lstLeadDocs;
                 ViewBag.rol = "";
 
                 //Filtros SA

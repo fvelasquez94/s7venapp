@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_CRM_new.cshtml";
     List<Tb_Source> source = ViewBag.lstSource;
     List<Tb_Status> status = ViewBag.lstStatus;
+    List<Tb_LeadDocs> docs = ViewBag.leadDocs;
 
 }
 
@@ -1072,6 +1073,9 @@
                 <hr />
                 <i class="la la-2x la-tachometer primary-color d-inline-block"></i>
                 <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>
+                <hr />
+                <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
+                <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#leadDocuments">Other Documents</a>
             </nav>
         </div>
     </div>
@@ -1307,6 +1311,150 @@
     </div>
 </div>
 <!-- here ends edit customer form modal section -->
+<!--Here starts Modal other documents-->
+<div aria-hidden="true" id="leadDocuments" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="closewindow">Add documents for : <label style="color:#2c9ad6"><strong>@Model.customer.Name @Model.customer.LastName</strong> </label></h4>
+                <button class="close" id="closemodal" aria-label="Close" data-dismiss="modal">
+                    <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-align-center">
+                <div class="row">
+                    <div class="container-fluid">
+                        <!-- Begin Widget 08 -->
+                        <div class="widget widget-08" style="width: 100%;background-color:transparent">
+                            <div class="widget-header bordered d-flex align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="today">
+                                        <div class="title">UPLOAD</div>
+                                        <div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="filesection" style="width: 100%">
+                    @if (docs.Count > 0)
+                    {
+                        var title = Model.package;
+                        var property = Model.property;
+                        var customer = Model.customer;
+                        var modelcount = Model.pack_Det.Where(a => a.mandatory == true).Count();
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <!-- Sorting -->
+                                    <div class="widget has-shadow">
+                                        <div class="widget-header bordered no-actions d-flex align-items-center">
+                                            <div class="today">
+                                                <div class="title">Document Package Details</div>
+                                                <div class="new-tasks"><label class="text-primary" for="task-1">CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() </label><br /> </div>
+                                            </div><h2></h2>
+
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="table-responsive">
+                                                <table id="tableDocuments" class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Document ID</th>
+                                                            <th>Title</th>
+                                                            <th></th>
+                                                            <th>Date</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in docs)
+                                                        {
+                                                            <tr>
+                                                                <td><span class="text-primary">@item.Id_Document</span></td>
+                                                                <td><span class="text-primary">@item.Title</span></td>
+                                                                <td>
+
+                                                                    @if (item.Extension == ".pdf")
+                                                                    {
+                                                                        <a href="@Url.Action("Showpdf_docspackage","Portal", new { id=item.Id_Document})" target="_blank">
+                                                                            <div class="c-icon">
+                                                                                <i class="la la-file-pdf-o"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="@Url.Action("DownloadDocPackage","Portal", new { id=item.Id_Document})">
+                                                                            <div class="c-icon">
+
+                                                                                <i class="la la-file-word-o"></i>
+
+                                                                            </div>
+                                                                        </a>
+                                                                    }
+
+                                                                </td>
+                                                                <td><span class="text-primary">@item.Upload_Date</span></td>
+                                                            </tr>
+
+
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- End Sorting -->
+
+                                </div>
+                            </div>
+                            <!-- End Row -->
+                        </div>
+                        <!-- End Container -->
+
+
+                    }
+                </div>
+                    <div>
+                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                        {
+                            <div class="row">
+                                <div class="col-12" style="margin:auto">
+                                    <input type="file" class="form-control fileUpload" id="newFile" />
+                                    <button id="uploadall" class="btn btn-info">Upload file</button>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+            </div>
+            <div class="modal-footer">
+                @if (ViewBag.rol == "Agent")
+                {
+                    <button style="display:none" id="closebuttondocuments" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                }
+                else
+                {
+                    <button class="btn" style="background-color:#E74C3C" type="button" data-dismiss="modal">Close</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--Her ends modal other documents-->
 <!-- here starts category package modal section -->
 <div aria-hidden="true" id="modalNewwebinar" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
     <div class="modal-dialog" role="document">
@@ -1868,11 +2016,13 @@
 
 
 </script>
-
+<script>
+               
+</script>
 
 @if (Model.package != null)
 {
-    <script>
+<script>
 
         var broker = document.getElementById("sendtobroker");
         broker.onclick= function () {
@@ -1924,12 +2074,8 @@
 
         }
 
-
-
-
-
-                function deletePack()
-                {
+         function deletePack()
+                 {
                     var con = confirm("Are you sure you want to delete this document package?");
                     if (con)
                     {
@@ -1975,8 +2121,9 @@
 
                                 }
 
-    }
-    </script>
+                }
+
+</script>
 }
 
 @if (@Model.property != null)

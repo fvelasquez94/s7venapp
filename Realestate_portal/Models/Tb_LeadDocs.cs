@@ -12,9 +12,16 @@ namespace Realestate_portal.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tb_Stage
+    public partial class Tb_LeadDocs
     {
-        public int Id_Stage { get; set; }
-        public string Stage_name { get; set; }
+        public int Id_Document { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public string Size { get; set; }
+        public Nullable<int> Id_Customer { get; set; }
+        public string Extension { get; set; }
+        public Nullable<System.DateTime> Upload_Date { get; set; }
+    
+        public virtual Tb_Customers Tb_Customers { get; set; }
     }
 }

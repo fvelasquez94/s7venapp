@@ -238,6 +238,18 @@
           <Property Name="mandatory" Type="bit" Nullable="false" />
           <Property Name="ID_docpackage" Type="int" />
         </EntityType>
+        <EntityType Name="Tb_LeadDocs">
+          <Key>
+            <PropertyRef Name="Id_Document" />
+          </Key>
+          <Property Name="Id_Document" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="Url" Type="varchar(max)" />
+          <Property Name="Size" Type="varchar" MaxLength="50" />
+          <Property Name="Id_Customer" Type="int" />
+          <Property Name="Extension" Type="varchar" MaxLength="15" />
+          <Property Name="Upload_Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tb_Marketing">
           <Key>
             <PropertyRef Name="ID_marketing" />
@@ -411,13 +423,6 @@
           <Property Name="Source_name" Type="varchar" MaxLength="20" />
           <Property Name="Id_Company" Type="int" />
         </EntityType>
-        <EntityType Name="Tb_Stage">
-          <Key>
-            <PropertyRef Name="Id_Stage" />
-          </Key>
-          <Property Name="Id_Stage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Stage_name" Type="varchar" MaxLength="20" />
-        </EntityType>
         <EntityType Name="Tb_Status">
           <Key>
             <PropertyRef Name="Id_Status" />
@@ -514,6 +519,18 @@
             </Principal>
             <Dependent Role="crTb_Orders">
               <PropertyRef Name="ID_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerDoc">
+          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="0..1" />
+          <End Role="Tb_LeadDocs" Type="Self.Tb_LeadDocs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Customers">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="Tb_LeadDocs">
+              <PropertyRef Name="Id_Customer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -835,6 +852,7 @@
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_LeadDocs" EntityType="Self.Tb_LeadDocs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Marketing" EntityType="Self.Tb_Marketing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Message" EntityType="Self.Tb_Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Network" EntityType="Self.Tb_Network" Schema="dbo" store:Type="Tables" />
@@ -847,7 +865,6 @@
           <EntitySet Name="Tb_Resources" EntityType="Self.Tb_Resources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Reviews" EntityType="Self.Tb_Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Source" EntityType="Self.Tb_Source" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tb_Stage" EntityType="Self.Tb_Stage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Status" EntityType="Self.Tb_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_TemplatesCatalogo" EntityType="Self.Tb_TemplatesCatalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Videos" EntityType="Self.Tb_Videos" Schema="dbo" store:Type="Tables" />
@@ -863,6 +880,10 @@
           <AssociationSet Name="FK_crTb_Orders_Sys_Company" Association="Self.FK_crTb_Orders_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="crTb_Orders" EntitySet="crTb_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerDoc" Association="Self.FK_CustomerDoc">
+            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+            <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Tb_Data_Sys_Users" Association="Self.FK_dbo_Tb_Data_Sys_Users">
             <End Role="Sys_Users" EntitySet="Sys_Users" />
@@ -1148,6 +1169,7 @@
           <NavigationProperty Name="Tb_Data" Relationship="Self.FK_dbo_Tb_Data_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Data" />
           <NavigationProperty Name="Tb_Process" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
           <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Tb_LeadDocs" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
         </EntityType>
         <EntityType Name="Tb_Data">
           <Key>
@@ -1890,8 +1912,12 @@
             <End Role="Tb_Reviews" EntitySet="Tb_Reviews" />
           </AssociationSet>
           <EntitySet Name="Tb_Source" EntityType="Realstate_agentsModel.Tb_Source" />
-          <EntitySet Name="Tb_Stage" EntityType="Realstate_agentsModel.Tb_Stage" />
           <EntitySet Name="Tb_Status" EntityType="Realstate_agentsModel.Tb_Status" />
+          <EntitySet Name="Tb_LeadDocs" EntityType="Realstate_agentsModel.Tb_LeadDocs" />
+          <AssociationSet Name="FK_CustomerDoc" Association="Realstate_agentsModel.FK_CustomerDoc">
+            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+            <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1948,13 +1974,6 @@
           <Property Name="Source_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Id_Company" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tb_Stage">
-          <Key>
-            <PropertyRef Name="Id_Stage" />
-          </Key>
-          <Property Name="Id_Stage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Tb_Status">
           <Key>
             <PropertyRef Name="Id_Status" />
@@ -1963,6 +1982,31 @@
           <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Id_Company" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tb_LeadDocs">
+          <Key>
+            <PropertyRef Name="Id_Document" />
+          </Key>
+          <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Customer" Type="Int32" />
+          <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_LeadDocs" ToRole="Tb_Customers" />
+          <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_CustomerDoc">
+          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="0..1" />
+          <End Type="Realstate_agentsModel.Tb_LeadDocs" Role="Tb_LeadDocs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Customers">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="Tb_LeadDocs">
+              <PropertyRef Name="Id_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2481,20 +2525,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Stage">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Stage">
-              <MappingFragment StoreEntitySet="Tb_Stage">
-                <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
-                <ScalarProperty Name="Id_Stage" ColumnName="Id_Stage" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tb_Status">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Status">
               <MappingFragment StoreEntitySet="Tb_Status">
                 <ScalarProperty Name="Id_Company" ColumnName="Id_Company" />
                 <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
                 <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_LeadDocs">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_LeadDocs">
+              <MappingFragment StoreEntitySet="Tb_LeadDocs">
+                <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

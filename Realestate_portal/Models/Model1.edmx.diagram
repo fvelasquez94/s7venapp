@@ -58,8 +58,9 @@
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Reviews" Width="1.5" PointX="5.125" PointY="51.75" />
         <AssociationConnector Association="Realstate_agentsModel.FK_Network" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Source" Width="1.5" PointX="11.5" PointY="0.5" />
-        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Stage" Width="1.5" PointX="13.125" PointY="0.5" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Status" Width="1.5" PointX="9.75" PointY="0.5" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_LeadDocs" Width="1.5" PointX="5.125" PointY="46.75" />
+        <AssociationConnector Association="Realstate_agentsModel.FK_CustomerDoc" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
