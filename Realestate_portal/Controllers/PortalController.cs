@@ -2736,6 +2736,80 @@ namespace Realestate_portal.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult Uploadleadfile(int[] ids)
+        {
+            var path = "";
+            var fileName = "";
+            string extension = "";
+            string size = "";
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    for (int x = 0; x < ids.Length; x++)
+                    {
+                        var id = ids[x];
+                        var doclead = (from a in db.Tb_LeadDocs where (a.Id_Document == id) select a).FirstOrDefault();
+
+                       
+                            string fullPath = Request.MapPath(doclead.Url);
+                            if (System.IO.File.Exists(fullPath))
+                            {
+                                System.IO.File.Delete(fullPath);
+                            }
+                           
+                            doclead.Extension = "";
+                            doclead.Size = "";
+                            doclead.Upload_Date = DateTime.UtcNow;
+                        
+                        Random rnd = new Random();
+
+                        var file = Request.Files[x];
+                        extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
+                        size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
+                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day.ToString() + rnd.Next(3981).ToString() + x.ToString() + DateTime.Now.Millisecond.ToString() + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
+
+
+
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsLead/"), fileName);
+                        file.SaveAs(path);
+
+
+                        doclead.Url = "~/Content/Uploads/DocumentsLead/" + fileName;
+                        doclead.Extension = extension;
+                        doclead.Size = size;
+                        doclead.Upload_Date = DateTime.UtcNow;
+                        
+                        db.Entry(doclead).State = EntityState.Modified;
+                      
+                        db.SaveChanges();
+                    }
+                    var result = "SUCCESS";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+
+
+                else
+                {
+                    var result = "NO DATA";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
         public ActionResult Video_watch(int id, int broker = 0)
         {
             if (generalClass.checkSession())
