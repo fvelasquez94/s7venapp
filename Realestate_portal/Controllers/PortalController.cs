@@ -3976,10 +3976,15 @@ namespace Realestate_portal.Controllers
 
         }
         public ActionResult DeleteLeadDoc(int id) {
-          
+         
             try
             {
                 Tb_LeadDocs tb_LeadDocs = db.Tb_LeadDocs.Find(id);
+                var mapPath = tb_LeadDocs.Url;
+                if (System.IO.File.Exists(Server.MapPath(mapPath)))
+                {
+                    System.IO.File.Delete(Server.MapPath(tb_LeadDocs.Url));
+                }
                 var customer = tb_LeadDocs.Id_Customer;
                 db.Tb_LeadDocs.Remove(tb_LeadDocs);
                 db.SaveChanges();
