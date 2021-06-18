@@ -1833,6 +1833,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Uploads\DocumentsLead\" />
     <Folder Include="Content\Uploads\DocumentsPackages\" />
     <Folder Include="Content\Uploads\Images\logos\" />
     <Folder Include="Content\Uploads\Images\Marketing_img\" />

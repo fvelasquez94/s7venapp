@@ -1075,7 +1075,7 @@
                 <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>
                 <hr />
                 <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
-                <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#leadDocuments">Other Documents</a>
+                <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#leadDocuments" id="buttonDocuments">Other Documents</a>
             </nav>
         </div>
     </div>
@@ -1312,7 +1312,7 @@
 </div>
 <!-- here ends edit customer form modal section -->
 <!--Here starts Modal other documents-->
-<div aria-hidden="true" id="leadDocuments" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+<div aria-hidden="true" id="leadDocuments" tabindex="-1" role="dialog" aria-labelledby="closewindow" data-backdrop="static" class="modal fade">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1354,7 +1354,7 @@
                                     <div class="widget has-shadow">
                                         <div class="widget-header bordered no-actions d-flex align-items-center">
                                             <div class="today">
-                                                <div class="title">Document Package Details</div>
+                                                <div class="title">Document Package </div>
                                                 <div class="new-tasks"><label class="text-primary" for="task-1">CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() </label><br /> </div>
                                             </div><h2></h2>
 
@@ -1365,10 +1365,11 @@
                                                 <table id="tableDocuments" class="table mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th>Document ID</th>
+                                                            
                                                             <th>Title</th>
-                                                            <th></th>
+                                                            <th>Document</th>
                                                             <th>Date</th>
+                                                            <th></th>
 
                                                         </tr>
                                                     </thead>
@@ -1376,13 +1377,13 @@
                                                         @foreach (var item in docs)
                                                         {
                                                             <tr>
-                                                                <td><span class="text-primary">@item.Id_Document</span></td>
+                                                           
                                                                 <td><span class="text-primary">@item.Title</span></td>
                                                                 <td>
 
                                                                     @if (item.Extension == ".pdf")
                                                                     {
-                                                                        <a href="@Url.Action("Showpdf_docspackage","Portal", new { id=item.Id_Document})" target="_blank">
+                                                                        <a href="@Url.Action("Showpdf_docs","Portal", new { id=item.Id_Document})" target="_blank">
                                                                             <div class="c-icon">
                                                                                 <i class="la la-file-pdf-o"></i>
                                                                             </div>
@@ -1390,7 +1391,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <a href="@Url.Action("DownloadDocPackage","Portal", new { id=item.Id_Document})">
+                                                                        <a href="@Url.Action("DownloadLeadDoc","Portal", new { id=item.Id_Document})">
                                                                             <div class="c-icon">
 
                                                                                 <i class="la la-file-word-o"></i>
@@ -1401,6 +1402,7 @@
 
                                                                 </td>
                                                                 <td><span class="text-primary">@item.Upload_Date</span></td>
+                                                                <td><a href="@Url.Action("DeleteLeadDoc","Portal", new { id= item.Id_Document})">Delete</td>
                                                             </tr>
 
 
@@ -1428,7 +1430,7 @@
                         {
                             <div class="row">
                                 <div class="col-12" style="margin:auto">
-                                    <input type="file" class="form-control fileUpload" id="newFile" />
+                                    <input type="file" class="form-control fileToUpload" id="file" />
                                     <button id="uploadall" class="btn btn-info">Upload file</button>
                                 </div>
 
@@ -2017,7 +2019,98 @@
 
 </script>
 <script>
-               
+   
+    //here we extract all the elements with the class specified
+    var uploadfile = document.querySelectorAll(".fileToUpload");
+
+    //here we listen for the even on every html element
+    for (const file of uploadfile) {
+        file.addEventListener('change', handleChange);
+    }
+    //variables to store the file and id arrays
+    var files = [];
+    var ids = [];
+
+
+    //we capture the data we need from the html attribute
+    function handleChange(e) {
+        var id = $(this).attr("id");
+        var idtosave = id.substring(5);
+        console.log(files.length);
+        if (files.length > 0) {
+            files.pop(files[0]);
+            files.push(e.target.files[0]);
+            ids.pop(ids[0]);
+            ids.push(idtosave);
+        }
+        else {
+            files.push(e.target.files[0]);
+            ids.push(idtosave);
+
+        }
+        
+       
+    }
+
+
+    uploadall.onclick = function () {
+
+        var formData = new FormData();
+
+        $.each(files, (i, file) => {
+            formData.append("imageUploadForm", file);
+        });
+
+        $.each(ids, (i, id) => {
+            formData.append("ids", id);
+            formData.append("idcustomer", @Model.customer.ID_Customer)
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Uploadleadfile',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log(response);
+                if (response == "SUCCESS") {
+                    
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Files uploaded successfully',
+                        progressBar: true,
+                        timeout: 3000
+                    }).show();
+                    setTimeout(function () {
+                        window.location.reload(true);
+              
+                    }, 1000);
+                    setTimeout(function () {
+                      
+                        var modaldoc = $("#buttonDocuments");
+                        modaldoc.trigger('click');
+                        console.log(response);
+                    }, 1000);
+                    
+                     console.log(response);
+                } else {
+                    $("#loader_form").hide();
+
+                    alert(response);
+                }
+            },
+            error: function (error) {
+                $("#loader_form").hide();
+
+                alert("Error uploading file");
+            }
+        });
+    }
+
 </script>
 
 @if (Model.package != null)

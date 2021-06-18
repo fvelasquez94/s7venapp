@@ -2738,12 +2738,14 @@ namespace Realestate_portal.Controllers
 
 
         [HttpPost]
-        public ActionResult Uploadleadfile(int[] ids)
+        public ActionResult Uploadleadfile(int[] ids, int idcustomer)
         {
             var path = "";
             var fileName = "";
             string extension = "";
             string size = "";
+            
+                  Tb_LeadDocs doclead = new Tb_LeadDocs();
             try
             {
                 if (Request.Files.Count > 0)
@@ -2751,15 +2753,7 @@ namespace Realestate_portal.Controllers
                     for (int x = 0; x < ids.Length; x++)
                     {
                         var id = ids[x];
-                        var doclead = (from a in db.Tb_LeadDocs where (a.Id_Document == id) select a).FirstOrDefault();
-
-                       
-                            string fullPath = Request.MapPath(doclead.Url);
-                            if (System.IO.File.Exists(fullPath))
-                            {
-                                System.IO.File.Delete(fullPath);
-                            }
-                           
+                     
                             doclead.Extension = "";
                             doclead.Size = "";
                             doclead.Upload_Date = DateTime.UtcNow;
@@ -2767,22 +2761,24 @@ namespace Realestate_portal.Controllers
                         Random rnd = new Random();
 
                         var file = Request.Files[x];
+                       
                         extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
+                        fileName = Path.GetFileNameWithoutExtension(Request.Files[x].FileName).ToLower();
                         size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
-                        fileName = DateTime.Now.Hour.ToString() + rnd.Next(52).ToString() + DateTime.Now.Day.ToString() + rnd.Next(3981).ToString() + x.ToString() + DateTime.Now.Millisecond.ToString() + extension;     // creates a number between 0 and 51;//Path.GetFileName(file.FileName);
-
-
+                        fileName =  DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Millisecond.ToString() + rnd.Next(1000) + fileName + extension;     // creates a number between 0 and 1000;//Path.GetFileName(file.FileName);
 
                         path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsLead/"), fileName);
                         file.SaveAs(path);
 
 
                         doclead.Url = "~/Content/Uploads/DocumentsLead/" + fileName;
+                        doclead.Title = fileName;
+                        doclead.Id_Customer = idcustomer;
                         doclead.Extension = extension;
                         doclead.Size = size;
                         doclead.Upload_Date = DateTime.UtcNow;
-                        
-                        db.Entry(doclead).State = EntityState.Modified;
+                        db.Tb_LeadDocs.Add(doclead);
+                       
                       
                         db.SaveChanges();
                     }
@@ -3917,6 +3913,17 @@ namespace Realestate_portal.Controllers
             return File(file, "application/pdf");
 
         }
+        public ActionResult Showpdf_docs(int id)
+        {
+
+            var fileDB = (from a in db.Tb_LeadDocs where (a.Id_Document == id) select a).FirstOrDefault();
+
+            var path = fileDB.Url;
+            var file = Server.MapPath(path);
+
+            return File(file, "application/pdf");
+
+        }
 
         //Delete section
 
@@ -3967,6 +3974,24 @@ namespace Realestate_portal.Controllers
             }
 
 
+        }
+        public ActionResult DeleteLeadDoc(int id) {
+          
+            try
+            {
+                Tb_LeadDocs tb_LeadDocs = db.Tb_LeadDocs.Find(id);
+                var customer = tb_LeadDocs.Id_Customer;
+                db.Tb_LeadDocs.Remove(tb_LeadDocs);
+                db.SaveChanges();
+                TempData["exito"] = "Document deleted successfully.";
+                return RedirectToAction("CustomerDashboard", "CRM", new { id = customer});
+            }
+            catch (Exception ex)
+            {
+
+                TempData["advertencia"] = "Something went wrong." + ex.Message;
+                return RedirectToAction("CustomerDashboard", "CRM");
+            }
         }
         public ActionResult DeleteVideoBroker(int id)
         {
@@ -4113,6 +4138,18 @@ namespace Realestate_portal.Controllers
             var fileDB = (from a in db.Tb_Docpackages_details where (a.ID_Detail == id) select a).FirstOrDefault();
 
             var path = fileDB.URL;
+            var file = Server.MapPath(path);
+
+            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Title + fileDB.Extension);
+
+        }
+        public ActionResult DownloadLeadDoc(int id)
+        {
+
+
+            var fileDB = (from a in db.Tb_LeadDocs where (a.Id_Document == id) select a).FirstOrDefault();
+
+            var path = fileDB.Url;
             var file = Server.MapPath(path);
 
             return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Title + fileDB.Extension);
