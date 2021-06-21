@@ -238,6 +238,18 @@
           <Property Name="mandatory" Type="bit" Nullable="false" />
           <Property Name="ID_docpackage" Type="int" />
         </EntityType>
+        <EntityType Name="Tb_DocuAgent">
+          <Key>
+            <PropertyRef Name="Id_Document" />
+          </Key>
+          <Property Name="Id_Document" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Doc_Name" Type="varchar" MaxLength="250" />
+          <Property Name="Url" Type="varchar(max)" />
+          <Property Name="Size" Type="varchar" MaxLength="50" />
+          <Property Name="Upload_Date" Type="datetime" />
+          <Property Name="Id_User" Type="int" />
+          <Property Name="Extension" Type="varchar" MaxLength="15" />
+        </EntityType>
         <EntityType Name="Tb_LeadDocs">
           <Key>
             <PropertyRef Name="Id_Document" />
@@ -806,6 +818,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_usersdoc">
+          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
+          <End Role="Tb_DocuAgent" Type="Self.Tb_DocuAgent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Tb_DocuAgent">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -852,6 +876,7 @@
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_DocuAgent" EntityType="Self.Tb_DocuAgent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_LeadDocs" EntityType="Self.Tb_LeadDocs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Marketing" EntityType="Self.Tb_Marketing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Message" EntityType="Self.Tb_Message" Schema="dbo" store:Type="Tables" />
@@ -964,6 +989,10 @@
           <AssociationSet Name="FK_Tb_Webinars_Sys_Company" Association="Self.FK_Tb_Webinars_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Webinars" EntitySet="Tb_Webinars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usersdoc" Association="Self.fk_usersdoc">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1101,6 +1130,7 @@
           <NavigationProperty Name="Tb_Data" Relationship="Self.FK_dbo_Tb_Data_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Data" />
           <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
           <NavigationProperty Name="Tb_Notes" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Notes" />
+          <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1918,6 +1948,11 @@
             <End Role="Tb_Customers" EntitySet="Tb_Customers" />
             <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
           </AssociationSet>
+          <EntitySet Name="Tb_DocuAgent" EntityType="Realstate_agentsModel.Tb_DocuAgent" />
+          <AssociationSet Name="fk_usersdoc" Association="Realstate_agentsModel.fk_usersdoc">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2004,6 +2039,31 @@
             </Principal>
             <Dependent Role="Tb_LeadDocs">
               <PropertyRef Name="Id_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tb_DocuAgent">
+          <Key>
+            <PropertyRef Name="Id_Document" />
+          </Key>
+          <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Doc_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+          <Property Name="Id_User" Type="Int32" />
+          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Tb_DocuAgent" ToRole="Sys_Users" />
+          <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="fk_usersdoc">
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="0..1" />
+          <End Type="Realstate_agentsModel.Tb_DocuAgent" Role="Tb_DocuAgent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Tb_DocuAgent">
+              <PropertyRef Name="Id_User" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2543,6 +2603,19 @@
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_DocuAgent">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_DocuAgent">
+              <MappingFragment StoreEntitySet="Tb_DocuAgent">
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Doc_Name" ColumnName="Doc_Name" />
                 <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
               </MappingFragment>
             </EntityTypeMapping>

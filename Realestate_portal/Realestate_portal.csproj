@@ -263,6 +263,9 @@
     <Compile Include="Models\Tb_Docpackages_details.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tb_DocuAgent.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tb_LeadDocs.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

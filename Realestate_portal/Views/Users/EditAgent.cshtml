@@ -1,9 +1,10 @@
 ﻿@model Realestate_portal.Models.Sys_Users
-
+@using Realestate_portal.Models
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
     Realestate_portal.Models.Sys_Users activeusr= (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
+    List<Tb_DocuAgent> documents = ViewBag.docsAgent;
 }
 
 <div class="container-fluid">
@@ -52,25 +53,31 @@
     {
                   @Html.AntiForgeryToken()
 
-                  <ul class="nav nav-tabs" id="example-one" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="base-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Basic Information</a>
-                      </li>
-                      @if (ViewBag.rol == "Admin")
-    {
-                  <li class="nav-item">
-                      <a class="nav-link" id="base-tab-4" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Broker Information</a>
-                  </li>
-}
+                      <ul class="nav nav-tabs" id="example-one" role="tablist">
+                          <li class="nav-item">
+                              <a class="nav-link active" id="base-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Basic Information</a>
+                          </li>
+                          @if (ViewBag.rol == "Admin")
+                          {
+                              <li class="nav-item">
+                                  <a class="nav-link" id="base-tab-4" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Broker Information</a>
+                              </li>
+                          }
 
-                      <li class="nav-item">
-                          <a class="nav-link" id="base-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Social Networks</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="base-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Payment Settings</a>
-                      </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="base-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Social Networks</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="base-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Payment Settings</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="base-tab-5" data-toggle="tab" href="#tab-5" role="tab" aria-controls="tab-5" aria-selected="false">Documents</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="base-tab-6" data-toggle="tab" href="#tab-6" role="tab" aria-controls="tab-6" aria-selected="false">Notes</a>
+                          </li>
 
-                  </ul>
+                      </ul>
                   @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                   @Html.HiddenFor(model => model.ID_User)
 
@@ -147,7 +154,7 @@
                                   @Html.ValidationMessageFor(model => model.Last_login, "", new { @class = "text-danger" })
                               </div>
                           </div>
-                        
+
                           <div class="form-group">
                               @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
                               <div class="col-md-10">
@@ -214,29 +221,29 @@
                               </div>
                           </div>
                           @if (ViewBag.rol == "Admin")
-    {
-                      <div class="form-group">
-                          <label class="control-label col-md-2">Active user?</label>
-                          <div class="col-md-10">
-                              <div class="checkbox">
-                                  @Html.EditorFor(model => model.Active)
-                                  @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                          {
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Active user?</label>
+                                  <div class="col-md-10">
+                                      <div class="checkbox">
+                                          @Html.EditorFor(model => model.Active)
+                                          @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                      </div>
+                                  </div>
                               </div>
-                          </div>
-                      </div>
-}
-else
-{
-                      <div class="form-group" style="display:none">
-                          <label class="control-label col-md-2">Active user?</label>
-                          <div class="col-md-10">
-                              <div class="checkbox">
-                                  @Html.EditorFor(model => model.Active)
-                                  @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                          }
+                          else
+                          {
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Active user?</label>
+                                  <div class="col-md-10">
+                                      <div class="checkbox">
+                                          @Html.EditorFor(model => model.Active)
+                                          @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                      </div>
+                                  </div>
                               </div>
-                          </div>
-                      </div>
-}
+                          }
                           <div class="form-group" style="display:none;">
                               @Html.LabelFor(model => model.Email_active, htmlAttributes: new { @class = "control-label col-md-2" })
                               <div class="col-md-10">
@@ -365,116 +372,174 @@ else
                       </div>
                       <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="base-tab-4">
 
-<br />
+                          <br />
                           @if (ViewBag.rol == "Admin")
-        {
-                  <div class="form-group">
-                      <label class="control-label col-md-2">Brokerage Name</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Brokerage_name" value="@activeusr.Name" readonly />
-                          @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                          {
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Brokerage Name</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Brokerage_name" value="@activeusr.Name" readonly />
+                                      @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group">
-                      <label class="control-label col-md-2">Brokerage Address</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
-                          @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Brokerage Address</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
+                                      @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group">
-                      <label class="control-label col-md-2">Broker Contact</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Broker_Contact" value="@activeusr.Broker_Contact" readonly />
-                          @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Broker Contact</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Broker_Contact" value="@activeusr.Broker_Contact" readonly />
+                                      @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group">
-                      <label class="control-label col-md-2">Broker License</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Broker_License" value="@activeusr.Broker_License" readonly />
-                          @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Broker License</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Broker_License" value="@activeusr.Broker_License" readonly />
+                                      @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group">
-                      <label class="control-label col-md-2">Agent License</label>
-                      <div class="col-md-10">
-                          @Html.EditorFor(model => model.My_License, new { htmlAttributes = new { @class = "form-control" } })
-                          @Html.ValidationMessageFor(model => model.My_License, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group">
+                                  <label class="control-label col-md-2">Agent License</label>
+                                  <div class="col-md-10">
+                                      @Html.EditorFor(model => model.My_License, new { htmlAttributes = new { @class = "form-control" } })
+                                      @Html.ValidationMessageFor(model => model.My_License, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Member since</label>
-                      <div class="col-md-10">
-                          @Html.EditorFor(model => model.Member_since, new { htmlAttributes = new { @class = "form-control" } })
-                          @Html.ValidationMessageFor(model => model.Member_since, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
-}
-else
-{
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Brokerage Name</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
-                          @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Member since</label>
+                                  <div class="col-md-10">
+                                      @Html.EditorFor(model => model.Member_since, new { htmlAttributes = new { @class = "form-control" } })
+                                      @Html.ValidationMessageFor(model => model.Member_since, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
+                          }
+                          else
+                          {
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Brokerage Name</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
+                                      @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Brokerage Address</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
-                          @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Brokerage Address</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Brokerage_address" value="@activeusr.Brokerage_address" readonly />
+                                      @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Broker Contact</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Broker_Contact" value="@activeusr.Broker_Contact" readonly />
-                          @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Broker Contact</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Broker_Contact" value="@activeusr.Broker_Contact" readonly />
+                                      @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Broker License</label>
-                      <div class="col-md-10">
-                          <input type="text" class="form-control" name="Broker_License" value="@activeusr.Broker_License" readonly />
-                          @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Broker License</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" name="Broker_License" value="@activeusr.Broker_License" readonly />
+                                      @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">My License</label>
-                      <div class="col-md-10">
-                          @Html.EditorFor(model => model.My_License, new { htmlAttributes = new { @class = "form-control" } })
-                          @Html.ValidationMessageFor(model => model.My_License, "", new { @class = "text-danger" })
-                      </div>
-                  </div>
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">My License</label>
+                                  <div class="col-md-10">
+                                      @Html.EditorFor(model => model.My_License, new { htmlAttributes = new { @class = "form-control" } })
+                                      @Html.ValidationMessageFor(model => model.My_License, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
 
-                  <div class="form-group" style="display:none">
-                      <label class="control-label col-md-2">Member since</label>
-                      <div class="col-md-10">
-                          @Html.EditorFor(model => model.Member_since, new { htmlAttributes = new { @class = "form-control" } })
-                          @Html.ValidationMessageFor(model => model.Member_since, "", new { @class = "text-danger" })
+                              <div class="form-group" style="display:none">
+                                  <label class="control-label col-md-2">Member since</label>
+                                  <div class="col-md-10">
+                                      @Html.EditorFor(model => model.Member_since, new { htmlAttributes = new { @class = "form-control" } })
+                                      @Html.ValidationMessageFor(model => model.Member_since, "", new { @class = "text-danger" })
+                                  </div>
+                              </div>
+                          }
                       </div>
-                  </div>
-}
-                      </div>
-                  </div>
 
-                  <div class="form-group">
-                      <div class="col-md-offset-2 col-md-10">
-                          <input type="submit" value="Save" class="btn btn-default" />
+                      <div class="tab-pane fade" id="tab-5" role="tabpanel" aria-labelledby="base-tab-5">
+                          <br />
+                          <label class="control-label col-md-2">Documents</label>
+                          <table>
+                              <thead>
+                                  <tr>
+                                      <th>Title</th>
+                                      <th>Document</th>
+                                      <th>Upload date</th>
+                                      <th></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach (var item in documents)
+                                  {
+                                  <tr>
+                                      <td><span class="text-primary">@item.Doc_Name</span></td>
+                                      <td>
+
+                                          @if (item.Extension == ".pdf")
+                                          {
+                                              <a href="@Url.Action("Showpdf_docs","Portal", new { id=item.Id_Document})" target="_blank">
+                                                  <div class="c-icon">
+                                                      <i class="la la-file-pdf-o"></i>
+                                                  </div>
+                                              </a>
+                                          }
+                                          else
+                                          {
+                                              <a href="@Url.Action("DownloadLeadDoc","Portal", new { id=item.Id_Document})">
+                                                  <div class="c-icon">
+
+                                                      <i class="la la-file-word-o"></i>
+
+                                                  </div>
+                                              </a>
+                                          }
+                                      </td>
+                                      <td><span class="text-primary">@item.Upload_Date</span></td>
+                                      <td><a href="@Url.Action("DeleteLeadDoc","Portal", new { id= item.Id_Document})">Delete</td>
+                                    
+
+                                  </tr>
+                                  }
+
+                              </tbody>
+                          </table>
+                          <div class="row">
+                                <div class="col-12" style="margin:auto">
+                                    <input type="file" class="form-control fileToUpload" id="file" />
+                                    <button id="uploadall" class="btn btn-info">Upload file</button>
+                                </div>
+
+                           </div>
                       </div>
-                  </div>
-}
+
+
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-md-offset-2 col-md-10">
+                              <input type="submit" value="Save" class="btn btn-default" />
+                          </div>
+                      </div>
+                      }
 
                   </div>
               </div>

@@ -405,7 +405,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.notifications = lstAlerts;
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-
+                var lstDocsAgent = (from d in db.Tb_DocuAgent where (d.Id_User == id) select d).ToList();
+                ViewBag.docsAgent = lstDocsAgent;
 
                 ViewBag.rol = "";
                 ViewBag.modulo = modulo;
