@@ -2805,6 +2805,75 @@ namespace Realestate_portal.Controllers
 
 
         }
+        
+        [HttpPost]
+        public ActionResult Uploadagentfile(int[] ids, int idagent)
+        {
+            var path = "";
+            var fileName = "";
+            string extension = "";
+            string size = "";
+
+            Tb_DocuAgent docAgent = new Tb_DocuAgent();
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    for (int x = 0; x < ids.Length; x++)
+                    {
+                        var id = ids[x];
+
+                        docAgent.Extension = "";
+                        docAgent.Size = "";
+                        docAgent.Upload_Date = DateTime.UtcNow;
+
+                        Random rnd = new Random();
+
+                        var file = Request.Files[x];
+
+                        extension = Path.GetExtension(Request.Files[x].FileName).ToLower();
+                        fileName = Path.GetFileNameWithoutExtension(Request.Files[x].FileName).ToLower();
+                        size = ConvertBytesToMegabytes(Request.Files[x].ContentLength).ToString("0.00");
+                        fileName = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Millisecond.ToString() + rnd.Next(1000) + fileName + extension;     // creates a number between 0 and 1000;//Path.GetFileName(file.FileName);
+
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsAgent/"), fileName);
+                        file.SaveAs(path);
+
+
+                        docAgent.Url = "~/Content/Uploads/DocumentsAgent/" + fileName;
+                        docAgent.Doc_Name = fileName;
+                        docAgent.Id_User = idagent;
+                        docAgent.Extension = extension;
+                        docAgent.Size = size;
+                        docAgent.Upload_Date = DateTime.UtcNow;
+                        db.Tb_DocuAgent.Add(docAgent);
+
+
+                        db.SaveChanges();
+                    }
+                    var result = "SUCCESS";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+
+
+                else
+                {
+                    var result = "NO DATA";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
 
         public ActionResult Video_watch(int id, int broker = 0)
         {
@@ -3853,6 +3922,18 @@ namespace Realestate_portal.Controllers
             return File(file, "application/pdf");
      
         }
+        public ActionResult ShowAgentpdf(int id)
+        {
+
+            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_User == id) select a).FirstOrDefault();
+
+            var path = fileDB.Url;
+            var file = Server.MapPath(path);
+
+
+            return File(file, "application/pdf");
+
+        }
 
 
 
@@ -3996,6 +4077,31 @@ namespace Realestate_portal.Controllers
 
                 TempData["advertencia"] = "Something went wrong." + ex.Message;
                 return RedirectToAction("CustomerDashboard", "CRM");
+            }
+        }
+
+        public ActionResult DeleteAgentDoc(int id)
+        {
+
+            try
+            {
+                Tb_DocuAgent doc = db.Tb_DocuAgent.Find(id);
+                var mapPath = doc.Url;
+                if (System.IO.File.Exists(Server.MapPath(mapPath)))
+                {
+                    System.IO.File.Delete(Server.MapPath(doc.Url));
+                }
+                var agent = doc.Id_User;
+                db.Tb_DocuAgent.Remove(doc);
+                db.SaveChanges();
+                TempData["exito"] = "Document deleted successfully.";
+                return RedirectToAction("EditAgent", "Users", new { id = agent });
+            }
+            catch (Exception ex)
+            {
+
+                TempData["advertencia"] = "Something went wrong." + ex.Message;
+                return RedirectToAction("EditAgent", "Users");
             }
         }
         public ActionResult DeleteVideoBroker(int id)
@@ -4160,7 +4266,18 @@ namespace Realestate_portal.Controllers
             return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Title + fileDB.Extension);
 
         }
+        public ActionResult DownloadAgentDoc(int id)
+        {
 
+
+            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_User == id) select a).FirstOrDefault();
+
+            var path = fileDB.Url;
+            var file = Server.MapPath(path);
+
+            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Doc_Name + fileDB.Extension);
+
+        }
 
         public class Routes_calendar
         {

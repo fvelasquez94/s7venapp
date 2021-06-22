@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
     Realestate_portal.Models.Sys_Users activeusr = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
     List<Tb_DocuAgent> documents = ViewBag.docsAgent;
+    List<Tb_Notes> notes = ViewBag.lstNotes;
 }
 
 <div class="container-fluid">
@@ -496,7 +497,7 @@
 
                                                 @if (item.Extension == ".pdf")
                                                 {
-                                                    <a href="@Url.Action("Showpdf_docs","Portal", new { id=item.Id_Document})" target="_blank">
+                                                    <a href="@Url.Action("ShowAgentpdf","Portal", new { id=item.Id_Document})" target="_blank">
                                                         <div class="c-icon">
                                                             <i class="la la-file-pdf-o"></i>
                                                         </div>
@@ -504,7 +505,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href="@Url.Action("DownloadLeadDoc","Portal", new { id=item.Id_Document})">
+                                                    <a href="@Url.Action("DownloadAgentDoc","Portal", new { id=item.Id_Document})">
                                                         <div class="c-icon">
 
                                                             <i class="la la-file-word-o"></i>
@@ -514,7 +515,7 @@
                                                 }
                                             </td>
                                             <td><span class="text-primary">@item.Upload_Date</span></td>
-                                            <td><a href="@Url.Action("DeleteLeadDoc","Portal", new { id= item.Id_Document})">Delete</td>
+                                            <td><a href="@Url.Action("DeleteAgentDoc","Portal", new { id= item.Id_Document})">Delete</td>
 
 
                                         </tr>
@@ -533,27 +534,35 @@
 
                         <div class="tab-pane fade" id="tab-6" role="tabpanel" aria-labelledby="base-tab-6">
                             <br/>
+                            <form id="noteForm" class="media-body align-self-center text-align-center">
+                                <h4>Write your note...</h4>
+                                <br />
+                                <textarea class="form-control-lg align-self-center" style="width: 100%" id="noteComment" cols="50" rows="5" placeholder="Write your note..."></textarea>
+                                <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addNote">Add Note</a>
+                            </form>
+                            <br/>
                             <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5>
-                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">
-                                                NOMBRE
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
-                                            @*AQUI VA EL TEXT AREA CON LA WEA*@
+                                @foreach (var item in notes)
+                                {
+                                    <div class="card">
+                                        <div class="card-header" id="heading_@item.ID_note">
+                                            <h5 class="mb-0">
+                                                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse_@item.ID_note" aria-expanded="false" aria-controls="collapse_@item.ID_note">
+                                                    Note @item.Date
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapse_@item.ID_note" class="collapse" aria-labelledby="heading_@item.ID_note" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <textarea class="form-control-lg align-self-center" style="width: 100%" id="noteComment" cols="50" rows="5" disabled>@item.Text</textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                                
                             </div>
                         </div>
-
-
-
-                    </div>
+                     </div>
                     <br/>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
@@ -570,4 +579,141 @@
         window.onload = function () {
             $("#tableresources").DataTable();
         }
+
+    //here we extract all the elements with the class specified
+    var uploadfile = document.querySelectorAll(".fileToUpload");
+
+    //here we listen for the even on every html element
+    for (const file of uploadfile) {
+        file.addEventListener('change', handleChange);
+    }
+    //variables to store the file and id arrays
+    var files = [];
+    var ids = [];
+
+
+    //we capture the data we need from the html attribute
+    function handleChange(e) {
+        var id = $(this).attr("id");
+        var idtosave = id.substring(5);
+        console.log(files.length);
+        if (files.length > 0) {
+            files.pop(files[0]);
+            files.push(e.target.files[0]);
+            ids.pop(ids[0]);
+            ids.push(idtosave);
+        }
+        else {
+            files.push(e.target.files[0]);
+            ids.push(idtosave);
+
+        }
+
+
+    }
+
+
+    uploadall.onclick = function () {
+
+        var formData = new FormData();
+
+        $.each(files, (i, file) => {
+            formData.append("imageUploadForm", file);
+        });
+
+        $.each(ids, (i, id) => {
+            formData.append("ids", id);
+            formData.append("idagent", @Model.ID_User)
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Uploadagentfile',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log(response);
+                if (response == "SUCCESS") {
+
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'File uploaded successfully',
+                        progressBar: true,
+                        timeout: 3000
+                    }).show();
+                    setTimeout(function () {
+                        window.location.reload(true);
+
+                    }, 1000);
+                    var tab = document.getElementById("tab-5");
+                    tab.click();
+                     console.log(response);
+                } else {
+                    $("#loader_form").hide();
+
+                    alert(response);
+                }
+            },
+            error: function (error) {
+                $("#loader_form").hide();
+
+                alert("Error uploading file");
+            }
+        });
+    }
+
+    document.getElementById('addNote').onclick = function () {
+        
+
+            var formData = new FormData();
+
+        var content = $("#noteComment").val();
+        var agent = '@Model.ID_User';
+
+            formData.append("content", content);
+            formData.append("agent", agent);
+            
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Notes/AddAgentnote',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+
+                            window.location.reload(true);
+                            var tab = document.getElementById("tab-6");
+                            tab.click();
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        
+
+
+
+
+
+
+    }
 </script>

@@ -154,6 +154,35 @@ namespace Realestate_portal.Controllers
             }
 
         }
+        public ActionResult AddAgentnote(string content, int agent)
+        {
+
+        
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                Tb_Notes newnote = new Tb_Notes();
+                newnote.Date = DateTime.UtcNow;
+                newnote.ID_Customer = 0;
+                newnote.ID_Property = 0;
+                newnote.ID_User = agent;
+                newnote.Text = content;
+                newnote.Created_By = activeuser.Name + " " + activeuser.LastName;
+                db.Tb_Notes.Add(newnote);
+                db.SaveChanges();
+
+                var result = "SUCCESS";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
         // GET: Notes/Details/5
         public ActionResult Details(int? id)
         {

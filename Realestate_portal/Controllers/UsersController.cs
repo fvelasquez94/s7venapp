@@ -407,7 +407,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 var lstDocsAgent = (from d in db.Tb_DocuAgent where (d.Id_User == id) select d).ToList();
                 ViewBag.docsAgent = lstDocsAgent;
-
+                var notes = (from n in db.Tb_Notes where (n.ID_Customer == 0 && n.ID_Property == 0 && n.ID_User == id) select n).ToList();
+                ViewBag.lstNotes = notes;
                 ViewBag.rol = "";
                 ViewBag.modulo = modulo;
 
