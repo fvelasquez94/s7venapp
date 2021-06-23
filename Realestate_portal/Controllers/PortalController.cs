@@ -332,26 +332,30 @@ namespace Realestate_portal.Controllers
 
                 }
 
+                activeuser.Last_login = DateTime.UtcNow;
+                db.Entry(activeuser).State = EntityState.Modified;
+                db.SaveChanges();
 
                 if (activeuser.Roles.Contains("SA"))
                 {
                     ViewBag.rol = "SA";
                     return RedirectToAction("Dashboard", "Portal", new { broker = 1 });
                 }
-                else if (activeuser.Roles.Contains("Admin"))
+                if (activeuser.Roles.Contains("Admin"))
                 {
                     ViewBag.rol = "Admin";
 
                     return RedirectToAction("Dashboard", "Portal", null);
                 }
-                else if (activeuser.Roles.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
 
                     return RedirectToAction("Dashboard", "Portal", null);
                 }
+                
 
-
+               
 
 
 
