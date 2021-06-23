@@ -72,7 +72,7 @@
                                             <option>LAND</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:50%">
                                     </div>   
                                     
@@ -88,6 +88,19 @@
                                         </select>
                                         <button type="button" class="btn btn-shadow" id="searchByDate" value="submit">Search</button>
                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">From</span>
+                                            </div>
+                                            <input type="date" id="startDate" class="form-control" value="01-01-2018" />
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon2">To</span>
+                                            </div>
+                                            <input type="date" id="endDate" class="form-control" value="23-6-2021" />
+                                        </div>
+                                        <button type="button" class="btn btn-shadow" id="searchRangeDate" value="submit">Search</button>
                                     </div>
                                 </div>
                      
