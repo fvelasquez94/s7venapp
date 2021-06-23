@@ -499,7 +499,7 @@ namespace Realestate_portal.Controllers
             }
         }
 
-                public ActionResult LeadsAjax(string status, int broker = 0)
+        public ActionResult LeadsAjax(string status, int broker = 0)
         {
             if (generalClass.checkSession())
             {

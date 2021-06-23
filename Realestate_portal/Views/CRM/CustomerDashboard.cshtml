@@ -1431,7 +1431,7 @@
                             <div class="row">
                                 <div class="col-12" style="margin:auto">
                                     <input type="file" class="form-control fileToUpload" id="file" />
-                                    <button id="uploadall" class="btn btn-info">Upload file</button>
+                                    <button id="uploadFile" class="btn btn-info">Upload file</button>
                                 </div>
 
                             </div>
@@ -2052,8 +2052,9 @@
        
     }
 
+    var uploadFile = document.getElementById("uploadFile");
 
-    uploadall.onclick = function () {
+    uploadFile.onclick = function () {
 
         var formData = new FormData();
 
@@ -2304,7 +2305,7 @@
         ids.push(idtosave);
     }
 
-
+        var uploadall = document.getElementById("uploadall");
     uploadall.onclick = function () {
 
         var formData = new FormData();
