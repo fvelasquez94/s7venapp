@@ -2754,8 +2754,7 @@ namespace Realestate_portal.Controllers
             {
                 if (Request.Files.Count > 0)
                 {
-                    for (int x = 0; x < ids.Length; x++)
-                    {
+                        var x = ids.Length - 1;
                         var id = ids[x];
                      
                             doclead.Extension = "";
@@ -2785,7 +2784,7 @@ namespace Realestate_portal.Controllers
                        
                       
                         db.SaveChanges();
-                    }
+                    
                     var result = "SUCCESS";
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }

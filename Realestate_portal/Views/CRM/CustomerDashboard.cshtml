@@ -1144,7 +1144,7 @@
                                                 <div class="title">Document Package Details</div>
                                                 <div class="new-tasks"><label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
                                             </div><h2></h2>
-                                            <div class="widget-options">
+                                            <div class="widget-options" id="emailsection">
                                                 @if (Model.pack_Det.Count > 0)
                                                 {
                                                     if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
@@ -1354,7 +1354,7 @@
                                     <div class="widget has-shadow">
                                         <div class="widget-header bordered no-actions d-flex align-items-center">
                                             <div class="today">
-                                                <div class="title">Document Package </div>
+                                                <div class="title">Document</div>
                                                 <div class="new-tasks"><label class="text-primary" for="task-1">CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() </label><br /> </div>
                                             </div><h2></h2>
 
@@ -1430,7 +1430,7 @@
                         {
                             <div class="row">
                                 <div class="col-12" style="margin:auto">
-                                    <input type="file" class="form-control fileToUpload" id="file" />
+                                    <input type="file" class="form-control fileUpload" id="file" />
                                     <button id="uploadFile" class="btn btn-info">Upload file</button>
                                 </div>
 
@@ -2021,48 +2021,43 @@
 <script>
    
     //here we extract all the elements with the class specified
-    var uploadfile = document.querySelectorAll(".fileToUpload");
+    var uploadfile = document.querySelectorAll(".fileUpload");
 
     //here we listen for the even on every html element
     for (const file of uploadfile) {
         file.addEventListener('change', handleChange);
+       
     }
     //variables to store the file and id arrays
-    var files = [];
-    var ids = [];
+    var filesLead = [];
+    var vids = [];
 
 
     //we capture the data we need from the html attribute
     function handleChange(e) {
         var id = $(this).attr("id");
         var idtosave = id.substring(5);
-        console.log(files.length);
-        if (files.length > 0) {
-            files.pop(files[0]);
-            files.push(e.target.files[0]);
-            ids.pop(ids[0]);
-            ids.push(idtosave);
-        }
-        else {
-            files.push(e.target.files[0]);
-            ids.push(idtosave);
-
-        }
-        
+            filesLead.push(e.target.files[0]);
+            vids.push(idtosave);
+       
+        console.log(filesLead);
+        console.log(id);
+        console.log(idtosave);
+        console.log(vids);
        
     }
 
     var uploadFile = document.getElementById("uploadFile");
 
     uploadFile.onclick = function () {
-
+      
         var formData = new FormData();
 
-        $.each(files, (i, file) => {
+        $.each(filesLead, (i, file) => {
             formData.append("imageUploadForm", file);
         });
 
-        $.each(ids, (i, id) => {
+        $.each(vids, (i, id) => {
             formData.append("ids", id);
             formData.append("idcustomer", @Model.customer.ID_Customer)
         });
@@ -2303,11 +2298,12 @@
         var idtosave = id.substring(5);
         files.push(e.target.files[0]);
         ids.push(idtosave);
+       
     }
 
-        var uploadall = document.getElementById("uploadall");
+    var uploadall = document.getElementById("uploadall");
     uploadall.onclick = function () {
-
+        var checkboxes = $("#emailsection");
         var formData = new FormData();
 
         $.each(files, (i, file) => {
@@ -2343,7 +2339,7 @@
                                 progressBar: true,
                                 timeout: 2500
                             }).show()
-
+                            window.location.reload(true);
 
                         } else {
                             $("#loader_form").hide();
