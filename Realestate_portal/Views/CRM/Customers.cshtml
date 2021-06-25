@@ -61,18 +61,17 @@
                                 <th>
                                     Last Activity
                                 </th>
-                                <th>
-                                    City
-                                </th>
+                              
                                 @if (ViewBag.rol != "Agent" && ViewBag.rol != "SA")
                                 {
-                                    <th>                                 
+                                    <th>  
+                                        -
                                     </th>
                                 }                                
                             </tr>
                         </thead>
                     </table>
-                </div>
+                </div> 
             </div>
         </div>
         <!-- End Widget -->
@@ -174,7 +173,7 @@
             var columns;
             var masterColumn;
             if ("@ViewBag.rol" != "SA" && "@ViewBag.rol" != "Agent") {
-                masterColumn = 8;
+                masterColumn = 7;
                 columns = [
                     { "data": { "Id": "Id", "Name" : "Name" }, "name": "Name", "autoWidth": true },
                     { "data": "Phone", "name": "Phone", "autoWidth": true },
@@ -183,7 +182,6 @@
                     { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
                     { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
                     { "data": "DateString", "name": "DateString", "autoWidth": true },
-                    { "data": "City", "name": "City", "autoWidth": true },
                     { "data": { "Id": "Id" }, "name": "Name", "autoWidth": true }
                 ]
             } else {
@@ -195,9 +193,8 @@
                     { "data": "Type", "name": "Type", "autoWidth": true },
                     { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
                     { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
-                    { "data": "DateString", "name": "DateString", "autoWidth": true },
-                    { "data": "City", "name": "City", "autoWidth": true }
-                ]
+                    { "data": "DateString", "name": "DateString", "autoWidth": true }
+                 ]
             }
 
 

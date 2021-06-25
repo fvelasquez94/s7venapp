@@ -34,7 +34,6 @@ namespace Realestate_portal.Models
         public System.DateTime Creation_date { get; set; }
         public System.DateTime Last_update { get; set; }
         public System.DateTime Last_login { get; set; }
-        public string City { get; set; }
         public string State { get; set; }
         public string Address { get; set; }
         public string Main_telephone { get; set; }

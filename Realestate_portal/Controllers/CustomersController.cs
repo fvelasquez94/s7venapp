@@ -134,7 +134,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,City,Address,Zipcode,Lead,ID_User,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Create([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,ID_User,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             if (tb_Customers.Birthday == null) { tb_Customers.Birthday = DateTime.UtcNow; }
@@ -196,7 +196,6 @@ namespace Realestate_portal.Controllers
                 newlead.ID_User = 4;
                 newlead.User_assigned = "Not Assigned";
                 newlead.State = "";
-                newlead.City = "";
                 newlead.Lead = true;
                 newlead.ID_Company = 1;
                 newlead.Zipcode = ""; 
@@ -588,14 +587,13 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,City,Address,Zipcode,Lead,ID_User,User_assigned,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,ID_User,User_assigned,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
         {
             try
             {               
                 if (tb_Customers.Zipcode == null) { tb_Customers.Zipcode = ""; }
                 if (tb_Customers.Mobile == null) { tb_Customers.Mobile = ""; }
                 if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
-                if (tb_Customers.City == null) { tb_Customers.City = ""; }
                 if (tb_Customers.State == null) { tb_Customers.State = ""; }
                 if (tb_Customers.Type == null) { tb_Customers.Type = ""; }
                 tb_Customers.Creation_date = DateTime.UtcNow;

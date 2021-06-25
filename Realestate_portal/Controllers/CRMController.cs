@@ -322,7 +322,6 @@ namespace Realestate_portal.Controllers
                                                             Type = a.Type,
                                                             Email = a.Email,
                                                             Phone = a.Phone,
-                                                            City = a.City, 
                                                             User_assigned = a.User_assigned,
                                                             Creation_date = a.Creation_date,
                                                             ID_Company=a.ID_Company,
@@ -343,8 +342,7 @@ namespace Realestate_portal.Controllers
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     query = query.Where(a => a.Name.Contains(searchValue) || a.Phone.Contains(searchValue) || a.Email.Contains(searchValue)
-                   || a.Type.Contains(searchValue) || a.Marital_status.Contains(searchValue) || a.User_assigned.Contains(searchValue) ||
-                   a.City.Contains(searchValue)
+                   || a.Type.Contains(searchValue) || a.Marital_status.Contains(searchValue) || a.User_assigned.Contains(searchValue)
                    );
                 }
 
@@ -546,7 +544,6 @@ namespace Realestate_portal.Controllers
                                                                 Type = a.Type,
                                                                 Email = a.Email,
                                                                 Phone = a.Phone,
-                                                                City = a.City,
                                                                 User_assigned = a.User_assigned,
                                                                 Creation_date = a.Creation_date,
                                                                 ID_Company = a.ID_Company,
@@ -567,8 +564,7 @@ namespace Realestate_portal.Controllers
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     query = query.Where(a => a.Name.Contains(searchValue) || a.Phone.Contains(searchValue) || a.Email.Contains(searchValue)
-                   || a.Type.Contains(searchValue) || a.Marital_status.Contains(searchValue) || a.User_assigned.Contains(searchValue) ||
-                   a.City.Contains(searchValue)
+                   || a.Type.Contains(searchValue) || a.Marital_status.Contains(searchValue) || a.User_assigned.Contains(searchValue) 
                    );
                 }
 

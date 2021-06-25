@@ -82,7 +82,6 @@
           <Property Name="Creation_date" Type="datetime" Nullable="false" />
           <Property Name="Last_update" Type="datetime" Nullable="false" />
           <Property Name="Last_login" Type="datetime" Nullable="false" />
-          <Property Name="City" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Main_telephone" Type="varchar" MaxLength="50" Nullable="false" />
@@ -165,7 +164,6 @@
           <Property Name="Phone" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Mobile" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="City" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Zipcode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Lead" Type="bit" Nullable="false" />
@@ -1094,7 +1092,6 @@
           <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Last_login" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Main_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1186,7 +1183,6 @@
           <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Mobile" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Lead" Type="Boolean" Nullable="false" />
@@ -2154,7 +2150,6 @@
                 <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
                 <ScalarProperty Name="Last_update" ColumnName="Last_update" />
                 <ScalarProperty Name="Last_login" ColumnName="Last_login" />
-                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Main_telephone" ColumnName="Main_telephone" />
@@ -2242,7 +2237,6 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
                 <ScalarProperty Name="Lead" ColumnName="Lead" />

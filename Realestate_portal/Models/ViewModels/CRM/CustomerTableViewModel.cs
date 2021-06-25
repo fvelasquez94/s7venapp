@@ -16,7 +16,6 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public string Type { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string City { get; set; }
         public bool Lead { get; set; }
         public string User_assigned { get; set; }
         public System.DateTime Creation_date { get; set; }
