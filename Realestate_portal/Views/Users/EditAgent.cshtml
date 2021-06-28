@@ -514,8 +514,11 @@
                                                 }
                                             </td>
                                             <td><span class="text-primary">@item.Upload_Date</span></td>
-                                            <td><a href="@Url.Action("DeleteAgentDoc", "Portal", new { id = item.Id_Document })">Delete</td>
+                                            @if (ViewBag.rol == "Admin")
+                                            {
 
+                                                <td><a href="@Url.Action("DeleteAgentDoc", "Portal", new { id = item.Id_Document })">Delete</td>
+                                            }
 
                                         </tr>
                                     }
