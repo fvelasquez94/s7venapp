@@ -3498,7 +3498,7 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
 
-                            lstresourcesBroker = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type == "Documents Broker" || a.Type == "Scripts Broker" || a.Type == "Email Campaign Broker" || a.Type == "Text Campaign Broker")) select a).ToList();
+                            lstresourcesBroker = (from a in db.Tb_Resources where ((a.Type == "Documents Broker" || a.Type == "Scripts Broker" || a.Type == "Email Campaign Broker" || a.Type == "Text Campaign Broker")) select a).ToList();
                         }
                         else
                         {

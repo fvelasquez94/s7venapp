@@ -1,9 +1,9 @@
 ﻿@model Realestate_portal.Models.ViewModels.CRM.CustomerCRMDashboard
 @using Realestate_portal.Models
 @{
-   
-    List<Tb_Status> m_status = ViewBag.lstStatus;
 
+    List<Tb_Status> m_status = ViewBag.lstStatus;
+    List<Sys_Users> agents = ViewBag.userslist;
 }
 
 <!DOCTYPE html>
@@ -95,24 +95,46 @@
                     <a href="#" class="primary-color"><strong>Source: </strong><br />@Model.customer.Source </a>
                     <br />
                     <div class="row" style="margin:auto">
-                        @if (ViewBag.rol == "Admin")
-                        {
-                            <div class="form-group">
-                                <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                                <div style="margin-left: 10px;">
-                                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
+                        @*@if (ViewBag.rol == "Admin")
+                            {
+                                <div class="form-group">
+                                    <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
+                                    <div style="margin-left: 10px;">
+                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div style="display:none; position: relative; left: 15px;" class="form-group">
-                                <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                                <div>
-                                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
+                            }
+                            else
+                            {
+                                <div style="display:none; position: relative; left: 15px;" class="form-group">
+                                    <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
+                                    <div>
+                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }*@
+                        <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
+                        <div style="margin-left: 10px;">
+                            <select class="form-control select-crm-agent" id="assignagent">
+
+                                @if (ViewBag.rol == "Agent")
+                                {
+                                    foreach (var item in agents)
+                                    {
+                                        <option value="@item.ID_User">@item.LastName @item.Name</option>
+                                    }
+                                }
+                                else
+                                {
+
+                                    foreach (var item in agents)
+                                    {
+                                        <option value="@item.ID_User">@item.LastName @item.Name</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
                         <div class="form-group">
                             <a href="#" class="primary-color"><strong>Stage : </strong></a>
                             <div>
@@ -301,7 +323,12 @@
 
         window.onload = function () {
 
-
+             var options = document.getElementById("assignagent").options;
+                for (var option of options) {
+                    if (option.text === "@Model.customer.User_assigned") {
+                        option.selected = true;
+                    }
+                }
         $("#assignagent").change(function () {
              var broker = @ViewBag.selbroker;
             var id_customer =@Model.customer.ID_Customer;
@@ -322,6 +349,7 @@
             } else {
                 var options = document.getElementById("assignagent").options;
                 for (var option of options) {
+                    console.log(option);
                     if (option.text === "@Model.customer.User_assigned") {
                         option.selected = true;
                     }
