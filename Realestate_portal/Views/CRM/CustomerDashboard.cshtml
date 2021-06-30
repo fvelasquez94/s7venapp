@@ -1032,19 +1032,20 @@
         <!-- here starts notes right side bard for full screen-->
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
             <nav class="side-navbar right-side-navigation box-scroll sidebar-scroll">
-                <i class="la la-2x la-tasks primary-color d-inline-block"></i>
-                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Task</a>
-                <i class="la la-2x la-plus-circle primary-color d-inline-block ml-5"></i>
-                <ul>
-                    <li>No upcoming task</li>
-                </ul>
+                @*<i class="la la-2x la-tasks primary-color d-inline-block"></i>
+        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Task</a>
+        <i class="la la-2x la-plus-circle primary-color d-inline-block ml-5"></i>*@
+                @*<ul>
+            <li>No upcoming task</li>
+        </ul>*@
 
-                <hr />
-                <i class="la la-2x la-share-alt-square primary-color d-inline-block"></i>
-                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Campaigns</a>
+                @*<hr />*@
+                <br />
+                @*<i class="la la-2x la-share-alt-square primary-color d-inline-block"></i>
+        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Campaigns</a>*@
 
-                <hr />
-
+                @*<hr />*@
+                <br />
                 @if (!Model.customer.Lead && Model.property != null)
                 {
                     <ul class="nav" role="tablist">
@@ -1058,15 +1059,19 @@
                         <button style="display:none" id="opendocument" data-toggle="modal" data-target="#adddocuments"></button>
                     </ul>
                     <hr />
+
                 }
 
-                <i class="la la-2x la-area-chart primary-color d-inline-block"></i>
-                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>
+                @*<i class="la la-2x la-area-chart primary-color d-inline-block"></i>
+        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>*@
 
-                <hr />
-                <i class="la la-2x la-tachometer primary-color d-inline-block"></i>
-                <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>
-                <hr />
+                @*<hr />*@
+                <br />
+                <br />
+                @*<i class="la la-2x la-tachometer primary-color d-inline-block"></i>
+        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>*@
+                @*<hr />*@
+                <br />
                 <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
                 <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#leadDocuments" id="buttonDocuments">Other Documents</a>
             </nav>
