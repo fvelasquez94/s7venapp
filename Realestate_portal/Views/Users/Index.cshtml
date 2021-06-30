@@ -74,6 +74,9 @@
                                 <th>
                                     Member since
                                 </th>
+                                <th>
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,12 +101,12 @@
                                                     {
                                                         @last[0];
                                                     }
-                                                    
+
 
 
                                                 </span> &nbsp;
 
-                                                @item.Name @item.LastName
+                                                @item.LastName @item.Name
                                             </a>
 
                                         </td>
@@ -140,7 +143,11 @@
                                         </td>
                                         <td>
                                             @item.Member_since.ToShortDateString()
-                                        </td>                                       
+                                        </td>
+                                        <td>
+                                            <a class="btn" onclick="DeleteUser(@item.ID_User)">Delete</a>
+                                           
+                                        </td>
                                     </tr>
                                 }
                             }
@@ -176,5 +183,38 @@
             );
             $("#tableHeader").find('*').css({ "color": 'white' });
         }
+    function DeleteUser(userId) {
+        var user = userId;
+        $.ajax({
+            type: 'POST',
+            url: '/Users/Delete',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id: user
+            }),
+            success: function (response) {
+                if (response == "SUCCESS") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Information deleted successfully',
+                        progressBar: true,
+                        timeout: 2500
+                    }).show()
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 2000);
+                }
+                else {
+                    alert(response);
+                    window.location.reload(true);
+                }
+            },
+            error: function (error) {
 
+                alert("Error" + error + " " + response);
+                window.location.reload(true);
+            }
+        });
+    }
 </script>

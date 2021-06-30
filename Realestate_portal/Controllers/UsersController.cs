@@ -113,13 +113,13 @@ namespace Realestate_portal.Controllers
                     if (broker == 0)
                     {
                         // se utiliza id = 4 para registros no asignados
-                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).Include(t => t.Sys_Company).ToList();
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
                     }
                     else
                     {
                         // se utiliza id = 4 para registros no asignados
                         ViewBag.rol = "SA";
-                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin")).Include(t => t.Sys_Company).ToList();
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin")).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
 
                     }
                   
@@ -200,7 +200,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";                       
                     }
                     // se utiliza id = 4 para registros no asignados
-                    lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).Include(t => t.Sys_Company).ToList();
+                    lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
 
                 }
 
@@ -380,6 +380,7 @@ namespace Realestate_portal.Controllers
 
 
         }
+        
         // GET: Users/Edit/5
         public ActionResult EditAgent(int? id, string modulo, int broker=0)
         {
@@ -786,78 +787,146 @@ namespace Realestate_portal.Controllers
      
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (generalClass.checkSession())
-            {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "CRM";
-                ViewData["Page"] = "Users";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
-                //NOTIFICATIONS
-                DateTime now = DateTime.Today;
-                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                ViewBag.rol = "";
-
-
-                if (r.Contains("Agent"))
-                {
-                    ViewBag.rol = "Agent";
-
-                }
-                else
-                {
-                    ViewBag.rol = "Admin";
-
-
-                }
-
-
-                Sys_Users sys_Users = db.Sys_Users.Find(id);
-
-                return View(sys_Users);
-
-            }
-            else
-            {
-
-                return RedirectToAction("Login", "Portal", new { access = false });
-
-            }
-
-        }
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
-            Sys_Users activeUser = Session["activeUser"] as Sys_Users;
-            var companybroker = (from a in db.Sys_Users where (a.ID_Company == activeUser.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
-            var leadlist = (from l in db.Tb_Customers where (l.ID_User == activeUser.ID_User) select l).ToList();
-            foreach (var item in leadlist)
+            try
             {
-                item.ID_User = companybroker.ID_User;
-                item.User_assigned = companybroker.Name + " " + companybroker.LastName;
-                db.Entry(item).State = EntityState.Modified;
+
+            
+                Sys_Users activeUser = Session["activeUser"] as Sys_Users;
+
+                SetToBroker(activeUser, id);
+                DeleteData(id);
+                Sys_Users sys_Users = db.Sys_Users.Find(id);
+                db.Sys_Users.Remove(sys_Users);
                 db.SaveChanges();
+
+                var result = "SUCCESS";
+                 return Json(result);
             }
-            Sys_Users sys_Users = db.Sys_Users.Find(id);
-            db.Sys_Users.Remove(sys_Users);
-            db.SaveChanges();
-            return RedirectToAction("Users", "CRM");
+            catch (Exception ex)
+            {
+
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public void SetToBroker(Sys_Users activeUser, int id) {
+            try
+            {
+                var companybroker = (from b in db.Sys_Users where (b.ID_Company == activeUser.ID_Company && b.Roles == "Admin") select b).FirstOrDefault();
+
+                var posts = (from p in db.Tb_Posts where (p.ID_User == id) select p).ToList();
+                    foreach (var item in posts)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var appointment = (from a in db.Tb_Appointments where (a.ID_User == id) select a).ToList();
+                    foreach (var item in appointment)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var data = (from d in db.Tb_Data where (d.ID_user == id) select d).ToList();
+                    foreach (var item in data)
+                    {
+                        item.ID_user = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var message = (from m in db.Tb_Message where (m.User_ID == id) select m).ToList();
+                    foreach (var item in message)
+                    {
+                        item.User_ID = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var leadlist = (from l in db.Tb_Customers where (l.ID_User == id) select l).ToList();
+                    foreach (var item in leadlist)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        item.User_assigned = companybroker.Name + " " + companybroker.LastName;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var process = (from s in db.Tb_Process where (s.ID_User == id) select s).ToList();
+                    foreach (var item in process)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                var docPack = (from g in db.Tb_Docpackages where (g.ID_User == id) select g).ToList();
+                    foreach (var item in docPack)
+                    {
+                        item.ID_User = companybroker.ID_User;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public void DeleteData(int id) {
+            try
+            {
+                var docagent = (from d in db.Tb_DocuAgent where (d.Id_User == id) select d).ToList();
+                    foreach (var item in docagent)
+                    {
+                        Tb_DocuAgent docuAgent = db.Tb_DocuAgent.Find(item.Id_Document);
+                        db.Tb_DocuAgent.Remove(docuAgent);
+                        db.SaveChanges();
+                    }
+
+                var notes = (from n in db.Tb_Notes where (n.ID_User == id) select n).ToList();
+                    foreach (var item in notes)
+                    {
+                        Tb_Notes note = db.Tb_Notes.Find(item.ID_note);
+                        db.Tb_Notes.Remove(note);
+                        db.SaveChanges();
+                    }
+
+                var notifications = (from f in db.Sys_Notifications where (f.ID_user == id) select f).ToList();
+                    foreach (var item in notifications)
+                    {
+                        Sys_Notifications noti = db.Sys_Notifications.Find(item.ID_notification);
+                        db.Sys_Notifications.Remove(noti);
+                        db.SaveChanges();
+                    }
+
+                var reminders = (from r in db.Tb_Reminders where (r.ID_User == id) select r).ToList();
+                    foreach (var item in reminders)
+                    {
+                        Tb_Reminders reminder = db.Tb_Reminders.Find(item.ID_Reminder);
+                        db.Tb_Reminders.Remove(reminder);
+                        db.SaveChanges();
+                    }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         protected override void Dispose(bool disposing)

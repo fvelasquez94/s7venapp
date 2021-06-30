@@ -569,7 +569,14 @@ namespace Realestate_portal.Controllers
 
             }
 
-        }   
+        }
+
+        public void DeleteNote(int id) {
+            
+            Tb_Notes tb_Notes = db.Tb_Notes.Find(id);
+            db.Tb_Notes.Remove(tb_Notes);
+            db.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

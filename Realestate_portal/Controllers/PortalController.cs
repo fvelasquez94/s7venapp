@@ -4278,11 +4278,18 @@ namespace Realestate_portal.Controllers
         {
             try
             {
+                var reviews = (from a in db.Tb_Reviews where (a.Id_Network == id) select a).ToList();
+                foreach (var item in reviews)
+                {
+                    Tb_Reviews tb_Reviews = db.Tb_Reviews.Find(item.Id_Review);
+                    db.Tb_Reviews.Remove(tb_Reviews);
+                    db.SaveChanges();
+                }
                 Tb_Network tb_network = db.Tb_Network.Find(id);
                 db.Tb_Network.Remove(tb_network);
                 db.SaveChanges();
 
-                TempData["exito"] = "PGR Network deleted successfully.";
+                TempData["exito"] = "S7VEN Network deleted successfully.";
                 return RedirectToAction("PGR_network_management", "Portal");
             }
             catch (Exception ex)

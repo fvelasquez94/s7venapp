@@ -313,11 +313,11 @@ namespace Realestate_portal.Controllers
                 int pageSize, skip, recordsTotal;
 
                 List<CustomerTableViewModel> tb_Customers;
-            IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers
+            IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers orderby a.LastName ascending
                                                         select new CustomerTableViewModel
                                                         {
                                                             Id = a.ID_Customer,
-                                                            Name = a.Name +" "+ a.LastName,
+                                                            Name = a.LastName +" "+ a.Name,
                                                             Marital_status = a.Marital_status,
                                                             Type = a.Type,
                                                             Email = a.Email,
@@ -355,7 +355,7 @@ namespace Realestate_portal.Controllers
            
                 if (r.Contains("Agent"))
                 {
-                    query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false);
+                    query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false).OrderBy(l => l.Name);
 
                     var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
                     var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
@@ -535,11 +535,11 @@ namespace Realestate_portal.Controllers
                 int pageSize, skip, recordsTotal;
                 List<CustomerTableViewModel> tb_Customers;
                 CustomerViewModel custVM = new CustomerViewModel();
-                IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers
+                IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers orderby a.LastName ascending
                                                             select new CustomerTableViewModel
                                                             {
                                                                 Id = a.ID_Customer,
-                                                                Name = a.Name + " " + a.LastName,
+                                                                Name = a.LastName + " " + a.Name,
                                                                 Marital_status = a.Marital_status,
                                                                 Type = a.Type,
                                                                 Email = a.Email,
@@ -597,7 +597,7 @@ namespace Realestate_portal.Controllers
                 {
                     if (broker == 0)
                     {
-                        query = query.Where(a => a.Lead == true && a.ID_Company == activeuser.ID_Company);
+                        query = query.Where(a => a.Lead == true && a.ID_Company == activeuser.ID_Company).OrderBy(l => l.Name);
                         var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
 
                         decimal comission = 0;
