@@ -798,7 +798,7 @@ namespace Realestate_portal.Controllers
             
                 Sys_Users activeUser = Session["activeUser"] as Sys_Users;
 
-                SetToBroker(activeUser, id);
+                SetToBroker(id);
                 DeleteData(id);
                 Sys_Users sys_Users = db.Sys_Users.Find(id);
                 db.Sys_Users.Remove(sys_Users);
@@ -815,10 +815,11 @@ namespace Realestate_portal.Controllers
             }
         }
 
-        public void SetToBroker(Sys_Users activeUser, int id) {
+        public void SetToBroker(int id) {
             try
             {
-                var companybroker = (from b in db.Sys_Users where (b.ID_Company == activeUser.ID_Company && b.Roles == "Admin") select b).FirstOrDefault();
+                var user = (from u in db.Sys_Users where u.ID_User == id select u).FirstOrDefault();
+                var companybroker = (from b in db.Sys_Users where (b.ID_Company == user.ID_Company && b.Roles == "Admin") select b).FirstOrDefault();
 
                 var posts = (from p in db.Tb_Posts where (p.ID_User == id) select p).ToList();
                     foreach (var item in posts)
