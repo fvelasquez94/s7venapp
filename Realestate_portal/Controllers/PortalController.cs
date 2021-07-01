@@ -2292,7 +2292,7 @@ namespace Realestate_portal.Controllers
                     size = ConvertBytesToMegabytes(Request.Files[i].ContentLength).ToString("0.00");
                     fileName = Path.GetFileName(file.FileName);
 
-                    if (type == "Documents")
+                    if (type == "Documents" || type == "Documents Agent")
                     {
                         path = Path.Combine(Server.MapPath("~/Content/Uploads/Resources/Documents/"), fileName);
                     }
@@ -2316,7 +2316,7 @@ namespace Realestate_portal.Controllers
                 Tb_Resources newresource = new Tb_Resources();
                 newresource.Name = title;
                 newresource.Description = "";
-                if (type == "Documents")
+                if (type == "Documents" || type == "Documents Agent")
                 {
                     newresource.Url = "~/Content/Uploads/Resources/Documents/" + fileName;
                 }
@@ -3443,7 +3443,7 @@ namespace Realestate_portal.Controllers
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstresources = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
+                    lstresources = (from a in db.Tb_Resources where ((a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker"))||(a.Type == "Documents Agent" || a.Type == "Scripts Agent" || a.Type == "Email campaign agent" || a.Type == "Text campaign agent")) select a).ToList();
 
                 }
                 else
@@ -3463,7 +3463,7 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
 
-                            lstresources = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
+                            lstresources = (from a in db.Tb_Resources where ((a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) || (a.Type == "Documents Agent" || a.Type == "Scripts Agent" || a.Type == "Email campaign agent" || a.Type == "Text campaign agent")) select a).ToList();
                         }
                         else
                         {

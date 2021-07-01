@@ -119,9 +119,9 @@ else if (ViewBag.rol == "SA")
                                                 </div>
 
                                                 <div class="row mt-5 mr-0 ml-0">
-                                                    @if (Model.Where(a => a.Type == "Documents").Count() > 0)
+                                                    @if (Model.Where(a => a.Type == "Documents" || a.Type == "Documents Agent").Count() > 0)
                             {
-                                foreach (var item in Model.Where(a => a.Type == "Documents"))
+                                foreach (var item in Model.Where(a => a.Type == "Documents" || a.Type == "Documents Agent"))
                                 {
                                     <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
                                         <div class="media w-100">
@@ -195,9 +195,9 @@ else
                                                     </div>
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
-                                                    @if (Model.Where(a => a.Type == "Scripts").Count() > 0)
+                                                    @if (Model.Where(a => a.Type == "Scripts" || a.Type == "Scripts Agent").Count() > 0)
                             {
-                                foreach (var item in Model.Where(a => a.Type == "Scripts"))
+                                foreach (var item in Model.Where(a => a.Type == "Scripts" || a.Type == "Scripts Agent"))
                                 {
                                     <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
                                         <div class="media w-100">
@@ -262,9 +262,9 @@ else
 
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
-                                                    @if (Model.Where(a => a.Type == "EMAIL CAMPAIGN").Count() > 0)
+                                                    @if (Model.Where(a => a.Type == "EMAIL CAMPAIGN" || a.Type == "Email campaign agent").Count() > 0)
                             {
-                                foreach (var item in Model.Where(a => a.Type == "EMAIL CAMPAIGN"))
+                                foreach (var item in Model.Where(a => a.Type == "EMAIL CAMPAIGN" || a.Type == "Email campaign agent"))
                                 {
                                     <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
                                         <div class="media w-100">
@@ -317,10 +317,10 @@ else
 
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
-                                                    @if (Model.Where(a => a.Type == "TEXT CAMPAIGN").Count() > 0)
-                            {
-                                foreach (var item in Model.Where(a => a.Type == "TEXT CAMPAIGN"))
-                                {
+                                                    @if (Model.Where(a => a.Type == "TEXT CAMPAIGN" || a.Type == "Text campaign agent").Count() > 0)
+                                                    {
+                                                        foreach (var item in Model.Where(a => a.Type == "TEXT CAMPAIGN" || a.Type == "Text campaign agent"))
+                                                        {
                                     <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
                                         <div class="media w-100">
                                             <div class="align-self-center mr-2">
@@ -698,8 +698,17 @@ else
                             <div class="form-group">
                                 <label>Type *</label>
                                 <select id="typevideo" class="form-control" required>
-                                    <option value="Documents">DOCUMENT</option>
-                                    <option value="Scripts">SCRIPT</option>
+                                    @if (ViewBag.rol == "SA")
+                                    {
+                                        <option value="Documents Agent">DOCUMENT</option>
+                                        <option value="Scripts Agent">SCRIPT</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Documents">DOCUMENT</option>
+                                        <option value="Scripts">SCRIPT</option>
+                                    }
+
                                 </select>
                             </div>
                         </div>
@@ -756,8 +765,17 @@ else
                             <div class="form-group">
                                 <label>Type *</label>
                                 <select id="typecampaign" class="form-control" required>
-                                    <option>EMAIL CAMPAIGN</option>
-                                    <option>TEXT CAMPAIGN</option>
+
+                                    @if (ViewBag.rol == "SA")
+                                    {
+                                        <option value="Email campaign agent">EMAIL CAMPAIGN</option>
+                                        <option value="Text campaign agent">TEXT CAMPAIGN</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="EMAIL CAMPAIGN">EMAIL CAMPAIGN</option>
+                                        <option value="TEXT CAMPAIGN">TEXT CAMPAIGN</option>
+                                    }
                                 </select>
                             </div>
                         </div>
