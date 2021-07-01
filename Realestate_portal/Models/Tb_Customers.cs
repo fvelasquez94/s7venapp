@@ -17,7 +17,6 @@ namespace Realestate_portal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tb_Customers()
         {
-            this.Tb_Data = new HashSet<Tb_Data>();
             this.Tb_Process = new HashSet<Tb_Process>();
             this.Tb_LeadDocs = new HashSet<Tb_LeadDocs>();
         }
@@ -44,8 +43,6 @@ namespace Realestate_portal.Models
         public string Source { get; set; }
     
         public virtual Sys_Company Sys_Company { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Data> Tb_Data { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Process> Tb_Process { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

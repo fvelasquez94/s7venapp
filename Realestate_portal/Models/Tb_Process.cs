@@ -14,12 +14,6 @@ namespace Realestate_portal.Models
     
     public partial class Tb_Process
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tb_Process()
-        {
-            this.Tb_Data = new HashSet<Tb_Data>();
-        }
-    
         public int ID_Process { get; set; }
         public string Description { get; set; }
         public int ID_User { get; set; }
@@ -46,7 +40,5 @@ namespace Realestate_portal.Models
         public string Attorneys_tel { get; set; }
     
         public virtual Tb_Customers Tb_Customers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Data> Tb_Data { get; set; }
     }
 }

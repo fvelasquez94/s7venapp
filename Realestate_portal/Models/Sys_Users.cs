@@ -18,7 +18,6 @@ namespace Realestate_portal.Models
         public Sys_Users()
         {
             this.Sys_Notifications = new HashSet<Sys_Notifications>();
-            this.Tb_Data = new HashSet<Tb_Data>();
             this.Tb_Reminders = new HashSet<Tb_Reminders>();
             this.Tb_Notes = new HashSet<Tb_Notes>();
             this.Tb_DocuAgent = new HashSet<Tb_DocuAgent>();
@@ -68,8 +67,6 @@ namespace Realestate_portal.Models
         public virtual Sys_Company Sys_Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sys_Notifications> Sys_Notifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Data> Tb_Data { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Reminders> Tb_Reminders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

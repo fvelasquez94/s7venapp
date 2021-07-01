@@ -37,7 +37,6 @@ namespace Realestate_portal.Models
         public virtual DbSet<Tb_Appointments> Tb_Appointments { get; set; }
         public virtual DbSet<Tb_Conversation> Tb_Conversation { get; set; }
         public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
-        public virtual DbSet<Tb_Data> Tb_Data { get; set; }
         public virtual DbSet<Tb_docCategies> Tb_docCategies { get; set; }
         public virtual DbSet<Tb_Docpackages> Tb_Docpackages { get; set; }
         public virtual DbSet<Tb_Docpackages_details> Tb_Docpackages_details { get; set; }

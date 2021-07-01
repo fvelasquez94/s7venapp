@@ -174,21 +174,6 @@
           <Property Name="Creation_date" Type="datetime" Nullable="false" />
           <Property Name="Source" Type="nchar" MaxLength="30" />
         </EntityType>
-        <EntityType Name="Tb_Data">
-          <Key>
-            <PropertyRef Name="Id_file" />
-          </Key>
-          <Property Name="Id_file" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-          <Property Name="Extension" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FileName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Uploaded" Type="bit" Nullable="false" />
-          <Property Name="ID_customer" Type="int" Nullable="false" />
-          <Property Name="ID_user" Type="int" Nullable="false" />
-          <Property Name="ID_process" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tb_docCategies">
           <Key>
             <PropertyRef Name="ID" />
@@ -544,42 +529,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Tb_Data_Sys_Users">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Tb_Data_Tb_Customers">
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Tb_Data_Tb_Process">
-          <End Role="Tb_Process" Type="Self.Tb_Process" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Process">
-              <PropertyRef Name="ID_Process" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_process" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Network">
           <End Role="Tb_Network" Type="Self.Tb_Network" Multiplicity="1" />
           <End Role="Tb_Reviews" Type="Self.Tb_Reviews" Multiplicity="*" />
@@ -870,7 +819,6 @@
           <EntitySet Name="Tb_Appointments" EntityType="Self.Tb_Appointments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Conversation" EntityType="Self.Tb_Conversation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Customers" EntityType="Self.Tb_Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tb_Data" EntityType="Self.Tb_Data" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" Schema="dbo" store:Type="Tables" />
@@ -907,18 +855,6 @@
           <AssociationSet Name="FK_CustomerDoc" Association="Self.FK_CustomerDoc">
             <End Role="Tb_Customers" EntitySet="Tb_Customers" />
             <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Sys_Users" Association="Self.FK_dbo_Tb_Data_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Tb_Customers" Association="Self.FK_dbo_Tb_Data_Tb_Customers">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Tb_Process" Association="Self.FK_dbo_Tb_Data_Tb_Process">
-            <End Role="Tb_Process" EntitySet="Tb_Process" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
           </AssociationSet>
           <AssociationSet Name="FK_Network" Association="Self.FK_Network">
             <End Role="Tb_Network" EntitySet="Tb_Network" />
@@ -1124,7 +1060,6 @@
           <Property Name="Credit_year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Sys_Users_Sys_Company" FromRole="Sys_Users" ToRole="Sys_Company" />
           <NavigationProperty Name="Sys_Notifications" Relationship="Self.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Users" ToRole="Sys_Notifications" />
-          <NavigationProperty Name="Tb_Data" Relationship="Self.FK_dbo_Tb_Data_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Data" />
           <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
           <NavigationProperty Name="Tb_Notes" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Notes" />
           <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
@@ -1192,28 +1127,9 @@
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
           <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Customers_Sys_Company" FromRole="Tb_Customers" ToRole="Sys_Company" />
-          <NavigationProperty Name="Tb_Data" Relationship="Self.FK_dbo_Tb_Data_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Data" />
           <NavigationProperty Name="Tb_Process" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
           <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Tb_LeadDocs" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
-        </EntityType>
-        <EntityType Name="Tb_Data">
-          <Key>
-            <PropertyRef Name="Id_file" />
-          </Key>
-          <Property Name="Id_file" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Uploaded" Type="Boolean" Nullable="false" />
-          <Property Name="ID_customer" Type="Int32" Nullable="false" />
-          <Property Name="ID_user" Type="Int32" Nullable="false" />
-          <Property Name="ID_process" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_dbo_Tb_Data_Sys_Users" FromRole="Tb_Data" ToRole="Sys_Users" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_dbo_Tb_Data_Tb_Customers" FromRole="Tb_Data" ToRole="Tb_Customers" />
-          <NavigationProperty Name="Tb_Process" Relationship="Self.FK_dbo_Tb_Data_Tb_Process" FromRole="Tb_Data" ToRole="Tb_Process" />
         </EntityType>
         <EntityType Name="Tb_docCategies">
           <Key>
@@ -1390,7 +1306,6 @@
           <Property Name="Loan_Officer_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Attorneys_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Process" ToRole="Tb_Customers" />
-          <NavigationProperty Name="Tb_Data" Relationship="Self.FK_dbo_Tb_Data_Tb_Process" FromRole="Tb_Process" ToRole="Tb_Data" />
         </EntityType>
         <EntityType Name="Tb_Quotes">
           <Key>
@@ -1690,18 +1605,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Tb_Data_Sys_Users">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tb_Reminders_Sys_Users">
           <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1730,18 +1633,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Tb_Data_Tb_Customers">
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tb_Process_Tb_Customers">
           <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1753,18 +1644,6 @@
             </Principal>
             <Dependent Role="Tb_Process">
               <PropertyRef Name="ID_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Tb_Data_Tb_Process">
-          <End Role="Tb_Process" Type="Self.Tb_Process" Multiplicity="1" />
-          <End Role="Tb_Data" Type="Self.Tb_Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Process">
-              <PropertyRef Name="ID_Process" />
-            </Principal>
-            <Dependent Role="Tb_Data">
-              <PropertyRef Name="ID_process" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1793,7 +1672,6 @@
           <EntitySet Name="Tb_Appointments" EntityType="Self.Tb_Appointments" />
           <EntitySet Name="Tb_Conversation" EntityType="Self.Tb_Conversation" />
           <EntitySet Name="Tb_Customers" EntityType="Self.Tb_Customers" />
-          <EntitySet Name="Tb_Data" EntityType="Self.Tb_Data" />
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" />
           <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" />
@@ -1870,10 +1748,6 @@
             <End Role="Sys_Users" EntitySet="Sys_Users" />
             <End Role="Sys_Notifications" EntitySet="Sys_Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Sys_Users" Association="Self.FK_dbo_Tb_Data_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tb_Reminders_Sys_Users" Association="Self.FK_Tb_Reminders_Sys_Users">
             <End Role="Sys_Users" EntitySet="Sys_Users" />
             <End Role="Tb_Reminders" EntitySet="Tb_Reminders" />
@@ -1882,17 +1756,9 @@
             <End Role="Tb_Conversation" EntitySet="Tb_Conversation" />
             <End Role="Tb_Message" EntitySet="Tb_Message" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Tb_Customers" Association="Self.FK_dbo_Tb_Data_Tb_Customers">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tb_Process_Tb_Customers" Association="Self.FK_Tb_Process_Tb_Customers">
             <End Role="Tb_Customers" EntitySet="Tb_Customers" />
             <End Role="Tb_Process" EntitySet="Tb_Process" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Tb_Data_Tb_Process" Association="Self.FK_dbo_Tb_Data_Tb_Process">
-            <End Role="Tb_Process" EntitySet="Tb_Process" />
-            <End Role="Tb_Data" EntitySet="Tb_Data" />
           </AssociationSet>
           <AssociationSet Name="FK_Tb_Docpackages_details_Tb_Docpackages" Association="Self.FK_Tb_Docpackages_details_Tb_Docpackages">
             <End Role="Tb_Docpackages" EntitySet="Tb_Docpackages" />
@@ -2245,22 +2111,6 @@
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
                 <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Data">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Data">
-              <MappingFragment StoreEntitySet="Tb_Data">
-                <ScalarProperty Name="Id_file" ColumnName="Id_file" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="Extension" ColumnName="Extension" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
-                <ScalarProperty Name="ID_customer" ColumnName="ID_customer" />
-                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
-                <ScalarProperty Name="ID_process" ColumnName="ID_process" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

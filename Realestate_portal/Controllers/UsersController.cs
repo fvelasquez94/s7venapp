@@ -113,7 +113,7 @@ namespace Realestate_portal.Controllers
                     if (broker == 0)
                     {
                         // se utiliza id = 4 para registros no asignados
-                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && !t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company && !t.Roles.Contains("SA")).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
                     }
                     else
                     {
@@ -833,14 +833,6 @@ namespace Realestate_portal.Controllers
                     foreach (var item in appointment)
                     {
                         item.ID_User = companybroker.ID_User;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
-                var data = (from d in db.Tb_Data where (d.ID_user == id) select d).ToList();
-                    foreach (var item in data)
-                    {
-                        item.ID_user = companybroker.ID_User;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
