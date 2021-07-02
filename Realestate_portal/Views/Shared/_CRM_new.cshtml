@@ -129,7 +129,15 @@
 
                                     foreach (var item in agents)
                                     {
-                                        <option value="@item.ID_User">@item.LastName @item.Name</option>
+                                        if (Model.customer.User_assigned.Equals(item.LastName + " " + item.Name))
+                                        {
+                                            <option value="@item.ID_User" selected>@item.LastName @item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID_User">@item.LastName @item.Name</option>
+                                        }
+
                                     }
                                 }
 
