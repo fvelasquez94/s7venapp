@@ -325,7 +325,7 @@
 
              var options = document.getElementById("assignagent").options;
             for (var option of options) {
-                if (option.text == ("@Model.customer.LastName" + " " + "@Model.customer.Name")) {
+                if (option.text === ("@Model.customer.User_assigned")) {
                         option.selected = true;
                     }
                 }
@@ -350,7 +350,7 @@
                 var options = document.getElementById("assignagent").options;
                 for (var option of options) {
                     console.log(option);
-                    if (option.text == ("@Model.customer.LastName" + " " + "@Model.customer.Name")) {
+                    if (option.text === ("@Model.customer.User_assigned")) {
                         option.selected = true;
                     }
                 }
