@@ -324,8 +324,8 @@
         window.onload = function () {
 
              var options = document.getElementById("assignagent").options;
-                for (var option of options) {
-                    if (option.text === "@Model.customer.User_assigned") {
+            for (var option of options) {
+                if (option.text == ("@Model.customer.LastName" + " " + "@Model.customer.Name")) {
                         option.selected = true;
                     }
                 }
@@ -350,7 +350,7 @@
                 var options = document.getElementById("assignagent").options;
                 for (var option of options) {
                     console.log(option);
-                    if (option.text === "@Model.customer.User_assigned") {
+                    if (option.text == ("@Model.customer.LastName" + " " + "@Model.customer.Name")) {
                         option.selected = true;
                     }
                 }
