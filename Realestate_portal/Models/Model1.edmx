@@ -112,6 +112,8 @@
           <Property Name="Credit_classification" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Credit_month" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Credit_year" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Team_Leader" Type="bit" />
+          <Property Name="Id_Leader" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1063,6 +1065,8 @@
           <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
           <NavigationProperty Name="Tb_Notes" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Notes" />
           <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
+          <Property Name="Team_Leader" Type="Boolean" />
+          <Property Name="Id_Leader" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -2006,6 +2010,8 @@
           <EntitySetMapping Name="Sys_Users">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Users">
               <MappingFragment StoreEntitySet="Sys_Users">
+                <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
+                <ScalarProperty Name="Team_Leader" ColumnName="Team_Leader" />
                 <ScalarProperty Name="ID_User" ColumnName="ID_User" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
