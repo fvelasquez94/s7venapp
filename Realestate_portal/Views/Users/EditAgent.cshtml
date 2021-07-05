@@ -6,6 +6,7 @@
     Realestate_portal.Models.Sys_Users activeusr = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
     List<Tb_DocuAgent> documents = ViewBag.docsAgent;
     List<Tb_Notes> notes = ViewBag.lstNotes;
+    List<Sys_Users> leaders = ViewBag.leaders;
 }
 
 <div class="container-fluid">
@@ -186,6 +187,29 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Team leader</label>
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Team_Leader)
+                                @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Team leader assign</label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="Id_Leader" id="Id_Leader">
+                                @foreach (var item in leaders)
+                                {
+                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+
                     <div class="form-group" style="display:none;">
                         <label class="control-label col-md-2">Mobile</label>
                         <div class="col-md-10">
@@ -216,6 +240,9 @@
                     </div>
                     @if (ViewBag.rol == "Admin")
                     {
+
+
+
                         <div class="form-group">
                             <label class="control-label col-md-2">Active user?</label>
                             <div class="col-md-10">
@@ -225,6 +252,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                     }
                     else
                     {

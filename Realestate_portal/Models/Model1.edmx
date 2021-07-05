@@ -112,7 +112,7 @@
           <Property Name="Credit_classification" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Credit_month" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Credit_year" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Team_Leader" Type="bit" />
+          <Property Name="Team_Leader" Type="bit" Nullable="false" />
           <Property Name="Id_Leader" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -1065,7 +1065,7 @@
           <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
           <NavigationProperty Name="Tb_Notes" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Notes" />
           <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
-          <Property Name="Team_Leader" Type="Boolean" />
+          <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
           <Property Name="Id_Leader" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">

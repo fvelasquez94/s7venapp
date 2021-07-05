@@ -63,7 +63,7 @@ namespace Realestate_portal.Models
         public string Credit_classification { get; set; }
         public string Credit_month { get; set; }
         public string Credit_year { get; set; }
-        public Nullable<bool> Team_Leader { get; set; }
+        public bool Team_Leader { get; set; }
         public Nullable<int> Id_Leader { get; set; }
     
         public virtual Sys_Company Sys_Company { get; set; }

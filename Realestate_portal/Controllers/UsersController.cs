@@ -411,6 +411,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstNotes = notes;
                 ViewBag.rol = "";
                 ViewBag.modulo = modulo;
+                var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) select l).ToList();
+                ViewBag.leaders = leaders;
 
                 if (r.Contains("Agent"))
                 {
@@ -451,7 +453,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year")] Sys_Users sys_Users)
+        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader")] Sys_Users sys_Users)
         {
             try
             {
@@ -482,6 +484,7 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
+                if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; } 
                 if (sys_Users.Active == false)
                 {
                     var companybroker = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
