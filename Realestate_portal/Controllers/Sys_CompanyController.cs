@@ -212,6 +212,8 @@ namespace Realestate_portal.Controllers
                 nuevoUsuario.Credit_classification = "";
                 nuevoUsuario.Credit_month = "";
                 nuevoUsuario.Credit_year = "";
+                nuevoUsuario.Team_Leader = false;
+                nuevoUsuario.Id_Leader = 0;
                 db.Sys_Users.Add(nuevoUsuario); 
                 db.SaveChanges();
 
