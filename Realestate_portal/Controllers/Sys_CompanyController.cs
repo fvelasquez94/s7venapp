@@ -131,7 +131,7 @@ namespace Realestate_portal.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID_Company,Name,Web,ShortName")] Sys_Company sys_Company, HttpPostedFileBase logo, string email, string information)
         {
-            sys_Company.Logo = "";
+            
             if (sys_Company.Web == null) { sys_Company.Web = ""; }
             if (sys_Company.ShortName == null) { sys_Company.ShortName = ""; }
             if (ModelState.IsValid)
