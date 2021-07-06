@@ -190,16 +190,19 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Team leader</label>
                         <div class="col-md-10">
-                          
+
                             <div class="checkbox" onclick="hideDropDown()">
-                              
+
                                 @Html.EditorFor(model => model.Team_Leader)
                                 @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
                             </div>
 
                         </div>
                     </div>
+                    @if (leaders.Count > 0)
+                    {
 
+                   
                     <div class="form-group">
                         <label class="control-label col-md-2">Team leader assignation</label>
                         <div class="col-md-10">
@@ -222,7 +225,7 @@
 
                         </div>
                     </div>
-
+                    }
                     <div class="form-group" style="display:none;">
                         <label class="control-label col-md-2">Mobile</label>
                         <div class="col-md-10">

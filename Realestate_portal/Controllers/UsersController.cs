@@ -269,7 +269,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
-
+                var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) orderby l.LastName ascending select l).ToList();
+                ViewBag.leaders = leaders;
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
@@ -346,10 +347,12 @@ namespace Realestate_portal.Controllers
             if (sys_Users.Department == null) { sys_Users.Department = ""; }
             if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
             if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
-            if (sys_Users.Position == null) { sys_Users.Position = ""; }
+            if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
+            if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
+            if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
 
-                db.Sys_Users.Add(sys_Users);
-                db.SaveChanges();
+            db.Sys_Users.Add(sys_Users);
+            db.SaveChanges();
 
 
                 try
@@ -490,10 +493,17 @@ namespace Realestate_portal.Controllers
                 {
                     var companybroker = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
                     var leadlist = (from l in db.Tb_Customers where (l.ID_User == sys_Users.ID_User) select l).ToList();
+                    var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                     foreach (var item in leadlist)
                     {
                         item.ID_User = companybroker.ID_User;
-                        item.User_assigned = companybroker.Name + " " + companybroker.LastName;
+                        item.User_assigned = companybroker.LastName + " " +  companybroker.Name ;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    foreach (var item in team)
+                    {
+                        item.Id_Leader = 0;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -915,6 +925,13 @@ namespace Realestate_portal.Controllers
                     {
                         Tb_Reminders reminder = db.Tb_Reminders.Find(item.ID_Reminder);
                         db.Tb_Reminders.Remove(reminder);
+                        db.SaveChanges();
+                    }
+                var team = (from t in db.Sys_Users where (t.Id_Leader == id) select t).ToList();
+                    foreach (var item in team)
+                    {
+                        item.Id_Leader = 0;
+                        db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
 
