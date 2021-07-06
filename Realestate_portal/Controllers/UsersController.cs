@@ -411,7 +411,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstNotes = notes;
                 ViewBag.rol = "";
                 ViewBag.modulo = modulo;
-                var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) select l).ToList();
+                var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) orderby l.LastName ascending select l).ToList();
                 ViewBag.leaders = leaders;
 
                 if (r.Contains("Agent"))
@@ -484,6 +484,7 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
+                if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; } 
                 if (sys_Users.Active == false)
                 {

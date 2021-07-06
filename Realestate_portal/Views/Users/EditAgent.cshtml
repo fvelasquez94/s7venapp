@@ -190,20 +190,33 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Team leader</label>
                         <div class="col-md-10">
-                            <div class="checkbox">
+                          
+                            <div class="checkbox" onclick="hideDropDown()">
+                              
                                 @Html.EditorFor(model => model.Team_Leader)
                                 @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
                             </div>
+
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2">Team leader assign</label>
+                        <label class="control-label col-md-2">Team leader assignation</label>
                         <div class="col-md-10">
                             <select class="form-control" name="Id_Leader" id="Id_Leader">
+                                <option></option>
+
                                 @foreach (var item in leaders)
                                 {
-                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                    if (Model.Id_Leader == item.ID_User)
+                                    {
+                                        <option value="@item.ID_User" selected>@item.LastName @item.Name </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID_User">@item.LastName @item.Name </option>
+                                    }
+
                                 }
                             </select>
 
@@ -603,8 +616,36 @@
     </div>
 </div>
 <script type="text/javascript">
+
+
+    function hideDropDown() {
+        var checkBox = document.getElementById('Team_Leader');
+        var dropLeader = document.getElementById('Id_Leader');
+
+        if (checkBox.checked == true) {
+            dropLeader.style.display = "none";
+           
+        }
+        else {
+            dropLeader.style.display = "block";
+        }
+
+        console.log(checkBox.checked);
+    }
         window.onload = function () {
             $("#tableresources").DataTable();
+
+            var checkBox = document.getElementById('Team_Leader');
+            var dropLeader = document.getElementById('Id_Leader');
+
+            if (checkBox.checked == true) {
+                dropLeader.style.display = "none";
+            }
+            else {
+                
+                dropLeader.style.display = "block";
+            }
+            
     }
     document.getElementById('base-tab-1').onclick = function () { showButton() };
     document.getElementById('base-tab-2').onclick = function () { showButton() };
