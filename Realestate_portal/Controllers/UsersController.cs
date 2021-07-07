@@ -110,7 +110,7 @@ namespace Realestate_portal.Controllers
 
                     if (activeuser.Team_Leader == true)
                     {
-                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company && t.Id_Leader == activeuser.Id_Leader).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company && t.Id_Leader == activeuser.ID_User).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
                     }
                 }
                 else
@@ -494,12 +494,14 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
                 if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
-                if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; } 
+                if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
+
+                var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
+
                 if (sys_Users.Active == false)
                 {
                     var companybroker = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
                     var leadlist = (from l in db.Tb_Customers where (l.ID_User == sys_Users.ID_User) select l).ToList();
-                    var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                     foreach (var item in leadlist)
                     {
                         item.ID_User = companybroker.ID_User;
@@ -507,6 +509,15 @@ namespace Realestate_portal.Controllers
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
+                    foreach (var item in team)
+                    {
+                        item.Id_Leader = 0;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                if (sys_Users.Team_Leader == false)
+                {
                     foreach (var item in team)
                     {
                         item.Id_Leader = 0;

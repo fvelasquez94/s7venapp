@@ -90,24 +90,40 @@
                                     char[] last = item.LastName.ToCharArray();
 
                                     <tr>
-                                        <td>                                                                                          
-                                            <a href="@Url.Action("EditAgent", "Users", new { id = item.ID_User, module = "agents", broker=ViewBag.selbroker })">
-                                                <span style="text-align:center; border-radius:50%; background-color:#c9c9c9; width:30px; padding:5px 0; text-transform:uppercase; color: white;" class="mg-fluid ">
-                                                    @if (name.Length > 0)
-                                                    {
-                                                        @name[0];
-                                                    }
-                                                    @if (last.Length > 0)
-                                                    {
-                                                        @last[0];
-                                                    }
+                                        <td>
+                                            @if (ViewBag.rol != "Agent")
+                                            {
+                                                <a href="@Url.Action("EditAgent", "Users", new { id = item.ID_User, module = "agents", broker=ViewBag.selbroker })">
+                                                    <span style="text-align:center; border-radius:50%; background-color:#c9c9c9; width:30px; padding:5px 0; text-transform:uppercase; color: white;" class="mg-fluid ">
+                                                        @if (name.Length > 0)
+                                                        {
+                                                            @name[0];
+                                                        }
+                                                        @if (last.Length > 0)
+                                                        {
+                                                            @last[0];
+                                                        }
+                                                    </span> &nbsp;
+                                                    @item.LastName @item.Name
+                                                </a>
+                                            }
+                                            else
+                                            { 
+                                                <strong>
+                                                    <span style="text-align:center; border-radius:50%; background-color:#c9c9c9; width:30px; padding:5px 0; text-transform:uppercase; color: white;" class="mg-fluid ">
+                                                        @if (name.Length > 0)
+                                                        {
+                                                            @name[0];
+                                                        }
+                                                        @if (last.Length > 0)
+                                                        {
+                                                            @last[0];
+                                                        }
+                                                    </span> &nbsp;
+                                                    @item.LastName @item.Name
+                                              </strong>
+                                            }
 
-
-
-                                                </span> &nbsp;
-
-                                                @item.LastName @item.Name
-                                            </a>
 
                                         </td>
 
@@ -145,8 +161,12 @@
                                             @item.Member_since.ToShortDateString()
                                         </td>
                                         <td>
-                                            <a class="btn" onclick="DeleteUser(@item.ID_User)">Delete</a>
-                                           
+                                            @if (ViewBag.rol != "Agent")
+                                            {
+                                                <a class="btn" onclick="DeleteUser(@item.ID_User)">Delete</a>
+                                            }
+
+
                                         </td>
                                     </tr>
                                 }
