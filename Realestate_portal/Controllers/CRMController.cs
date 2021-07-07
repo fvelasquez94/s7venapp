@@ -355,7 +355,15 @@ namespace Realestate_portal.Controllers
            
                 if (r.Contains("Agent"))
                 {
-                    query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false).OrderBy(l => l.Name);
+                    if (activeuser.Team_Leader == true)
+                    {
+                        query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false).OrderBy(l => l.Name);
+                    }
+                    else
+                    {
+                        query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false).OrderBy(l => l.Name);
+                    }
+                        
 
                     var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
                     var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();

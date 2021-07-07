@@ -61,6 +61,10 @@
                         @if (ViewBag.rol == "Agent")
                         {
                             <li class="inline"><a class="primary-color" href="@Url.Action("Customers","CRM")"><i class="la la-user-times primary-color"></i>Leads</a></li>
+                            if (ViewBag.teamleader == true)
+                            {
+                                <li class="inline"><a class="primary-color" href="@Url.Action("Index","Users")"><i class="la la-group primary-color"></i>Team Agents</a></li>
+                            }
                         }
                         @if (ViewBag.rol == "Admin")
                         {
