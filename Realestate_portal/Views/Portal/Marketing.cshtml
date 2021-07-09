@@ -36,7 +36,7 @@
                     <div class="new-tasks">ALL THE AVAILABLES IMAGES FOR MARKETING </div>
                 </div><h2></h2>
                 <div class="widget-options">
-                    @if (ViewBag.rol == "Admin")
+                    @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
                     {
                         <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Image</a>
                         <a class="btn btn-shadow" href="@Url.Action("Marketing_management", "Portal")">Management</a>
