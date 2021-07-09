@@ -500,15 +500,8 @@ namespace Realestate_portal.Controllers
 
                 if (sys_Users.Active == false)
                 {
-                    var companybroker = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles == "Admin") select a).FirstOrDefault();
-                    var leadlist = (from l in db.Tb_Customers where (l.ID_User == sys_Users.ID_User) select l).ToList();
-                    foreach (var item in leadlist)
-                    {
-                        item.ID_User = companybroker.ID_User;
-                        item.User_assigned = companybroker.LastName + " " +  companybroker.Name ;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
+               
+                    SetToBroker(sys_Users.ID_User);
                     foreach (var item in team)
                     {
                         item.Id_Leader = 0;
@@ -765,6 +758,7 @@ namespace Realestate_portal.Controllers
         {
             try
             {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
@@ -792,13 +786,15 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
                 if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
+                if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
+                if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
 
              
                     db.Entry(sys_Users).State = EntityState.Modified;
                     db.SaveChanges();
 
                 try {
-                    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                   
                     Session["activeUser"] = (from a in db.Sys_Users where (a.Email == activeuser.Email && a.Password == activeuser.Password) select a).FirstOrDefault();
                 }
                 catch {
