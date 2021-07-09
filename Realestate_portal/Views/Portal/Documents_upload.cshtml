@@ -227,12 +227,24 @@
 
                 var startDate = $('#startDate').val();
                 var endDate = $('#endDate').val();
-                var url = '@Url.Action("Documents_uploadCopy", "Portal")';
-                url += '?dateOpen=' + startDate + '&dateClose=' + endDate;
-                console.log(url);
-                window.location.href = url;
+                
+                if (startDate == "" || endDate == "") {
+                    alert("Please select a date.");
+                }
+                else {
+                    if (startDate > endDate) {
+                        alert("Please select a correct date.");
+                    }
+                    else {
+                        var url = '@Url.Action("Documents_uploadCopy", "Portal")';
+                        url += '?dateOpen=' + startDate + '&dateClose=' + endDate;
+                        console.log(url);
+                        window.location.href = url;
+                    }
+
+                }
             }
-       
+
         window.onload = function () {
                     $('#htmlform').on('submit', function (event) {
                         $("#subbtnenviar").attr("disabled", true);
@@ -312,8 +324,8 @@
                         });
                     });
 
-  
-                
+
+
                 };
 
 
@@ -324,7 +336,7 @@
                 $('#filterbycat').val(-1).trigger("change");
             }
 
-         
+
 
             var input, filter, ul, li, a, i, txtValue;
             input = document.getElementById('myInput');

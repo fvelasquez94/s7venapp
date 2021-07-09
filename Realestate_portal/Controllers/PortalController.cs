@@ -939,9 +939,8 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
                 List<Tb_Docpackages> lstpackages = new List<Tb_Docpackages>();
-            
 
-               
+
 
                 if (r.Contains("Agent"))
                 {
