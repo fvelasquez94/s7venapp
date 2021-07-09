@@ -221,6 +221,7 @@ namespace Realestate_portal.Controllers
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.selbroker = 0;
+                    ViewBag.teamleader = activeuser.Team_Leader;
 
                     var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
                     var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
@@ -314,22 +315,22 @@ namespace Realestate_portal.Controllers
 
                 List<CustomerTableViewModel> tb_Customers;
 
-                IQueryable<CustomerTableViewModel> query2 = (from c in db.Tb_Customers join u in db.Sys_Users on c.ID_User equals u.ID_User where(u.Id_Leader == activeuser.ID_User || c.ID_User == activeuser.ID_User)
-                                                             select new CustomerTableViewModel
-                                                             {
-                                                                 Id = c.ID_Customer,
-                                                                 Name = c.LastName + " " + c.Name,
-                                                                 Marital_status = c.Marital_status,
-                                                                 Type = c.Type,
-                                                                 Email = c.Email,
-                                                                 Phone = c.Phone,
-                                                                 User_assigned = c.User_assigned,
-                                                                 Creation_date = c.Creation_date,
-                                                                 ID_Company = c.ID_Company,
-                                                                 Lead = c.Lead,
-                                                                 ID_User = c.ID_User,
-                                                                 DateString = "",
-                                                             });
+            IQueryable<CustomerTableViewModel> query2 = (from c in db.Tb_Customers join u in db.Sys_Users on c.ID_User equals u.ID_User where(u.Id_Leader == activeuser.ID_User || c.ID_User == activeuser.ID_User)
+                                                        orderby c.LastName ascending select new CustomerTableViewModel
+                                                        {
+                                                            Id = c.ID_Customer,
+                                                            Name = c.LastName + " " + c.Name,
+                                                            Marital_status = c.Marital_status,
+                                                            Type = c.Type,
+                                                            Email = c.Email,
+                                                            Phone = c.Phone,
+                                                            User_assigned = c.User_assigned,
+                                                            Creation_date = c.Creation_date,
+                                                            ID_Company = c.ID_Company,
+                                                            Lead = c.Lead,
+                                                            ID_User = c.ID_User,
+                                                            DateString = "",
+                                                        });
             IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers orderby a.LastName ascending
                                                         select new CustomerTableViewModel
                                                         {
@@ -374,13 +375,8 @@ namespace Realestate_portal.Controllers
                 {
                     if (activeuser.Team_Leader == true)
                     {
-                        //var team = (from t in db.Sys_Users where (t.ID_User == activeuser.ID_User || t.Id_Leader == activeuser.ID_User) select t).ToList();
-
-                        //query = query.Join(db.Sys_Users, c => c.ID_User, u => u.Id_Leader, (c , u) => c).Where(a => a.ID_User == );
-                        query = query.Where(a => a.ID_User == activeuser.ID_User && a.Lead == false).OrderBy(l => l.Name);
-
-
-
+                   
+                        query = query2.Where(a => a.Lead == false).OrderBy(l => l.Name);
 
                     }
                   
@@ -858,7 +854,18 @@ namespace Realestate_portal.Controllers
                                                           FullName = t.Name + " " + t.LastName
                                                       }), "ID", "FullName", tb_Customers.ID_User);
 
-                    ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
+                    
+
+                    if (activeuser.Team_Leader == true)
+                    {
+                        ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.ID_User == activeuser.ID_User || u.Id_Leader == activeuser.ID_User) && u.Active == true) orderby u.LastName ascending select u).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
+
+                    }
+
                     var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
                     var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
                     var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
