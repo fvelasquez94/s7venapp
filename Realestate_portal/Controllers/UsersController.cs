@@ -496,11 +496,12 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
 
+                db.Entry(sys_Users).State = EntityState.Modified;
+                db.SaveChanges();
                 var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
-
                 if (sys_Users.Active == false)
                 {
-               
+                    
                     SetToBroker(sys_Users.ID_User);
                     foreach (var item in team)
                     {
@@ -518,8 +519,7 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
                 }
-                db.Entry(sys_Users).State = EntityState.Modified;
-                db.SaveChanges();
+                
                 try
                 {
                     Sys_Users activeuser = Session["activeUser"] as Sys_Users;
