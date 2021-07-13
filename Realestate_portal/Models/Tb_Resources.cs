@@ -25,6 +25,7 @@ namespace Realestate_portal.Models
         public int Times_downloaded { get; set; }
         public int ID_Company { get; set; }
         public string Extension_file { get; set; }
+        public Nullable<int> Id_Leader { get; set; }
     
         public virtual Sys_Company Sys_Company { get; set; }
     }

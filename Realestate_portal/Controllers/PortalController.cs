@@ -2324,7 +2324,14 @@ namespace Realestate_portal.Controllers
                 }
 
                 newresource.Type = type;
-
+                if (activeuser.Team_Leader == true)
+                {
+                    newresource.Id_Leader = activeuser.ID_User;
+                }
+                else
+                {
+                    newresource.Id_Leader = 0;
+                }
 
                 newresource.Size = size + " MB";
                 newresource.Times_downloaded = 0;
@@ -2374,7 +2381,14 @@ namespace Realestate_portal.Controllers
                 newresource.Url = modelhtml.htmlformat;
 
                 newresource.Type = modelhtml.type;
-
+                if (activeuser.Team_Leader == true)
+                {
+                    newresource.Id_Leader = activeuser.Id_Leader;
+                }
+                else
+                {
+                    newresource.Id_Leader = 0;
+                }
 
                 newresource.Size = "";
                 newresource.Times_downloaded = 0;
@@ -3437,12 +3451,13 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
                 List<Tb_Resources> lstresources = new List<Tb_Resources>();
-
+            
                 //RESOURCE TYPE: 1-Documents | 2- Scripts
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    lstresources = (from a in db.Tb_Resources where ((a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker"))||(a.Type == "Documents Agent" || a.Type == "Scripts Agent" || a.Type == "Email campaign agent" || a.Type == "Text campaign agent")) select a).ToList();
+                    ViewBag.leader = activeuser.Team_Leader;
+                    lstresources = (from a in db.Tb_Resources where ((a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker") && a.Id_Leader == 0)||(a.Type == "Documents Agent" || a.Type == "Scripts Agent" || a.Type == "Email campaign agent" || a.Type == "Text campaign agent")) select a).ToList();
 
                 }
                 else
@@ -3511,6 +3526,14 @@ namespace Realestate_portal.Controllers
                 ViewBag.resourcesbroker = lstresourcesBroker;
                 ////
 
+                //Resources team leader
+                List<Tb_Resources> lstdocTeam = new List<Tb_Resources>();
+                if (r.Contains("Agent"))
+                {
+                   lstdocTeam = (from a in db.Tb_Resources where a.Id_Leader == activeuser.Id_Leader select a).ToList();
+                }
+
+                ViewBag.teamdocuments = lstdocTeam;
                 ViewBag.selbroker = broker;
 
                 var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();

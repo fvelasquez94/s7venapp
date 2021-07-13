@@ -400,6 +400,7 @@
           <Property Name="Times_downloaded" Type="int" Nullable="false" />
           <Property Name="ID_Company" Type="int" Nullable="false" />
           <Property Name="Extension_file" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Id_Leader" Type="int" />
         </EntityType>
         <EntityType Name="Tb_Reviews">
           <Key>
@@ -1346,6 +1347,7 @@
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
           <Property Name="Extension_file" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Resources_Sys_Company" FromRole="Tb_Resources" ToRole="Sys_Company" />
+          <Property Name="Id_Leader" Type="Int32" />
         </EntityType>
         <EntityType Name="Tb_TemplatesCatalogo">
           <Key>
@@ -2320,6 +2322,7 @@
           <EntitySetMapping Name="Tb_Resources">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Resources">
               <MappingFragment StoreEntitySet="Tb_Resources">
+                <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
                 <ScalarProperty Name="ID_Resource" ColumnName="ID_Resource" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

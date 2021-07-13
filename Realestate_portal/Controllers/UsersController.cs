@@ -897,6 +897,14 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
 
+                var resources = (from r in db.Tb_Resources where (r.Id_Leader == id) select r).ToList();
+                    foreach (var item in resources)
+                    {
+                        item.Id_Leader = 0;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
 
             }
             catch (Exception ex)
