@@ -3530,7 +3530,7 @@ namespace Realestate_portal.Controllers
                 List<Tb_Resources> lstdocTeam = new List<Tb_Resources>();
                 if (r.Contains("Agent"))
                 {
-                   lstdocTeam = (from a in db.Tb_Resources where a.Id_Leader == activeuser.Id_Leader select a).ToList();
+                   lstdocTeam = (from a in db.Tb_Resources where (a.Id_Leader == activeuser.Id_Leader && a.Id_Leader != 0) select a).ToList();
                 }
 
                 ViewBag.teamdocuments = lstdocTeam;
