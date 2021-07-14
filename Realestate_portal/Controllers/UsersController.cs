@@ -380,7 +380,30 @@ namespace Realestate_portal.Controllers
                         return RedirectToAction("Index");
                     }
 
+                    //Sys_Notifications newnotification = new Sys_Notifications();
+                    //if (sys_Users.Team_Leader == true)
+                    //{
+                        
+                    //    newnotification.Active = true;
+                    //    newnotification.Date = DateTime.UtcNow;
+                    //    newnotification.Title = "You've been assigned as a team leader.";
+                    //    newnotification.Description = "Team leader: "+ sys_Users.LastName + " " + sys_Users.Name;
+                    //    newnotification.ID_user = sys_Users.ID_User;
+                     
+                    //}
+                    //if (sys_Users.Id_Leader != 0)
+                    //{
+                    //var leader = (from l in db.Sys_Users where l.ID_User == sys_Users.Id_Leader select l).FirstOrDefault();
+                    //    newnotification.Active = true;
+                    //    newnotification.Date = DateTime.UtcNow;
+                    //    newnotification.Title = "You're now part of the team team of "+ leader.LastName + " " +leader.Name;
+                    //    newnotification.Description = "Team assignment" + sys_Users.LastName + " " + sys_Users.Name;
+                    //    newnotification.ID_user = sys_Users.ID_User;
+                    //}
+                   
 
+                    //db.Sys_Notifications.Add(newnotification);
+                    //db.SaveChanges();
                 }
                 catch (Exception ex)
                 {

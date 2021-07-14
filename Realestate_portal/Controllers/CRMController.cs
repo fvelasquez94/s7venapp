@@ -376,8 +376,12 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Team_Leader == true)
                     {
                    
-                        query = query2.Where(a => a.Lead == false).OrderBy(l => l.Name);
+                        query = query2.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company).OrderBy(l => l.Name);
 
+                    }
+                    else
+                    {
+                        query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.ID_User == activeuser.ID_User).OrderBy(l => l.Name);
                     }
                   
                         
