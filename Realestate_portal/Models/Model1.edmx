@@ -114,6 +114,7 @@
           <Property Name="Credit_year" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Team_Leader" Type="bit" Nullable="false" />
           <Property Name="Id_Leader" Type="int" />
+          <Property Name="Leader_Name" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1068,6 +1069,7 @@
           <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
           <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
           <Property Name="Id_Leader" Type="Int32" />
+          <Property Name="Leader_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -2012,6 +2014,7 @@
           <EntitySetMapping Name="Sys_Users">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Users">
               <MappingFragment StoreEntitySet="Sys_Users">
+                <ScalarProperty Name="Leader_Name" ColumnName="Leader_Name" />
                 <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
                 <ScalarProperty Name="Team_Leader" ColumnName="Team_Leader" />
                 <ScalarProperty Name="ID_User" ColumnName="ID_User" />

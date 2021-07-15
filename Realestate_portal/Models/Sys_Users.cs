@@ -65,6 +65,7 @@ namespace Realestate_portal.Models
         public string Credit_year { get; set; }
         public bool Team_Leader { get; set; }
         public Nullable<int> Id_Leader { get; set; }
+        public string Leader_Name { get; set; }
     
         public virtual Sys_Company Sys_Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
