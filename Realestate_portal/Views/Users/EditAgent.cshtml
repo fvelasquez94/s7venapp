@@ -115,10 +115,18 @@
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group" style="display:none">
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <input type="text" value="Real Estate Salesperson" name="Position" id="Position" />
+                            @if (Model.Team_Leader == true)
+                            {
+                                <input type="text" value="Team leader" name="Position" id="Position" class="form-control" readonly/>
+                            }
+                            else
+                            {
+                                <input type="text" value="Real Estate Salesperson" name="Position" id="Position" class="form-control" readonly/>
+                            }
+
                             @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -206,7 +214,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Team leader assignation</label>
                         <div class="col-md-10">
-                            <select class="form-control" name="Id_Leader" id="Id_Leader">
+                            <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
                                 <option></option>
 
                                 @foreach (var item in leaders)
@@ -624,16 +632,27 @@
     function hideDropDown() {
         var checkBox = document.getElementById('Team_Leader');
         var dropLeader = document.getElementById('Id_Leader');
+        var position = document.getElementById('Position');
 
         if (checkBox.checked == true) {
             dropLeader.style.display = "none";
+            position.value = "Team Leader";
            
         }
         else {
             dropLeader.style.display = "block";
+            position.value = "Real Estate Salesperson";
         }
 
         console.log(checkBox.checked);
+    }
+
+    function teamLeader() {
+        var dropLeader = document.getElementById('Id_Leader');
+
+        console.log(dropLeader.value);
+        console.log(dropLeader.options[dropLeader.selectedIndex].text);
+
     }
         window.onload = function () {
             $("#tableresources").DataTable();

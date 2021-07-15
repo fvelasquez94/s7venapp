@@ -96,7 +96,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="Position" value="Real Estate Salesperson" readonly />
+                            <input type="text" class="form-control" name="Position" id="Position" value="Real Estate Salesperson" readonly />
                             @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -191,13 +191,16 @@
     function hideDropDown() {
         var checkBox = document.getElementById('Team_Leader');
         var dropLeader = document.getElementById('Id_Leader');
+        var position = document.getElementById('Position');
 
         if (checkBox.checked == true) {
             dropLeader.style.display = "none";
+            position.value = "Team Leader";
 
         }
         else {
             dropLeader.style.display = "block";
+            position.value = "Real Estate Salesperson";
         }
 
         console.log(checkBox.checked);
