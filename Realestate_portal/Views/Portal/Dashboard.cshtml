@@ -54,6 +54,14 @@
                                         @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
                                         {
                                             <p>Brokerage Name: @company.Name</p>
+                                            if(user.Team_Leader == true)
+                                            {
+                                                <p>Team leader</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Team name: @user.Leader_Name</p>
+                                            }
                                             <p>Address: @userBroker.Brokerage_address</p>
                                             <p>Broker Contact: @userBroker.Broker_Contact</p>
                                             <p>Broker License: @userBroker.Broker_License</p>

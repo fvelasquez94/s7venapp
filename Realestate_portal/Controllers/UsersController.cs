@@ -251,7 +251,7 @@ namespace Realestate_portal.Controllers
         }
 
         // GET: Users/Create
-        public ActionResult Create(int broker=0)
+        public ActionResult Create(int broker=0, bool leader = false)
         {
 
             if (generalClass.checkSession())
@@ -295,6 +295,7 @@ namespace Realestate_portal.Controllers
 
                 ViewBag.activeuser = activeuser;
                 ViewBag.selbroker = broker;
+                ViewBag.leader = leader;
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name");
                 return View();
             }
@@ -313,7 +314,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader")] Sys_Users sys_Users)
+        public ActionResult Create([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader,Leader_Name")] Sys_Users sys_Users)
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             sys_Users.Birth = DateTime.UtcNow;
@@ -354,8 +355,13 @@ namespace Realestate_portal.Controllers
             if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
             if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
             if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
-            if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
+            if (sys_Users.Team_Leader == true) 
+            {   
+                sys_Users.Id_Leader = 0;
+                sys_Users.Leader_Name = "";
+            }
             if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
+            if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
 
             db.Sys_Users.Add(sys_Users);
             db.SaveChanges();
@@ -485,7 +491,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader")] Sys_Users sys_Users)
+        public ActionResult EditAgent([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader,Leader_Name")] Sys_Users sys_Users)
         {
             try
             {
@@ -516,8 +522,13 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
-                if (sys_Users.Team_Leader == true) { sys_Users.Id_Leader = 0; }
+                if (sys_Users.Team_Leader == true) 
+                { 
+                    sys_Users.Id_Leader = 0;
+                    sys_Users.Leader_Name = "";
+                }
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
+                if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = ""; }
 
                 db.Entry(sys_Users).State = EntityState.Modified;
                 db.SaveChanges();
@@ -777,7 +788,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader")] Sys_Users sys_Users)
+        public ActionResult Edit([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader,Leader_Name")] Sys_Users sys_Users)
         {
             try
             {
@@ -811,6 +822,7 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
                 if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
+                if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
 
              
                     db.Entry(sys_Users).State = EntityState.Modified;
