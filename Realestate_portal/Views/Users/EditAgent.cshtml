@@ -118,18 +118,31 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @if (Model.Team_Leader == true)
-                            {
-                                <input type="text" value="Team leader" name="Position" id="Position" class="form-control" readonly/>
-                            }
-                            else
-                            {
-                                <input type="text" value="Real Estate Salesperson" name="Position" id="Position" class="form-control" readonly/>
-                            }
+                            <select class="form-control" name="Position" id="Position" onchange="teamChange()">
+                                <option value="Real Estate Salesperson">Real Estate Salesperson</option>
+                                @if (Model.Team_Leader == true)
+                                {
+                                    <option value="Team leader" selected>Team leader</option>
+                                }
+                                else
+                                {
+                                    <option value="Team leader">Team leader</option>
+                                }
+
+                            </select>
 
                             @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Team Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="Leader_Name" id="Leader_Name" value="@Model.Leader_Name" />
+                        </div>
+
+                    </div>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -151,13 +164,7 @@
                             @Html.ValidationMessageFor(model => model.Creation_date, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group" style="display:none">
-                        <label class="control-label col-md-2">Leader Name</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="Leader_Name" id="Leader_Name" />
-                        </div>
 
-                    </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Last_update, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -217,29 +224,29 @@
                     @if (leaders.Count > 0)
                     {
 
-                   
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Team leader assignation</label>
-                        <div class="col-md-10">
-                            <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
-                                <option></option>
 
-                                @foreach (var item in leaders)
-                                {
-                                    if (Model.Id_Leader == item.ID_User)
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Team leader assignation</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
+                                    <option></option>
+
+                                    @foreach (var item in leaders)
                                     {
-                                        <option value="@item.ID_User" selected>@item.LastName @item.Name </option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.ID_User">@item.LastName @item.Name </option>
-                                    }
+                                        if (Model.Id_Leader == item.ID_User)
+                                        {
+                                            <option value="@item.ID_User" selected>@item.Leader_Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID_User">@item.Leader_Name</option>
+                                        }
 
-                                }
-                            </select>
+                                    }
+                                </select>
 
+                            </div>
                         </div>
-                    </div>
                     }
                     <div class="form-group" style="display:none;">
                         <label class="control-label col-md-2">Mobile</label>
@@ -640,15 +647,20 @@
         var checkBox = document.getElementById('Team_Leader');
         var dropLeader = document.getElementById('Id_Leader');
         var position = document.getElementById('Position');
+        var teamName = document.getElementById('Leader_Name');
 
         if (checkBox.checked == true) {
             dropLeader.style.display = "none";
             position.value = "Team Leader";
+            teamName.style.display = "block"
+            teamName.value = "";
            
         }
         else {
             dropLeader.style.display = "block";
             position.value = "Real Estate Salesperson";
+            teamName.style.display = "none";
+            teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
         }
 
         console.log(checkBox.checked);
@@ -656,12 +668,34 @@
 
     function teamLeader() {
         var dropLeader = document.getElementById('Id_Leader');
-        var input = document.getElementById('Leader_Name');
+        var teamName = document.getElementById('Leader_Name');
 
-        input.value = dropLeader.options[dropLeader.selectedIndex].text;
+        teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
         console.log(dropLeader.value);
         console.log(dropLeader.options[dropLeader.selectedIndex].text);
 
+
+    }
+
+    function teamChange() {
+        var checkBox = document.getElementById('Team_Leader');
+        var dropLeader = document.getElementById('Id_Leader');
+        var position = document.getElementById('Position');
+        var teamName = document.getElementById('Leader_Name');
+
+
+        if (position.value === 'Team leader') {
+            checkBox.checked = true;
+            dropLeader.style.display = "none";
+            teamName.style.display = "block";
+            teamName.value = "";
+        }
+        else {
+            checkBox.checked = false;
+            dropLeader.style.display = "block";
+            teamName.style.display = "none";
+            teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
+        }
 
     }
         window.onload = function () {
@@ -669,16 +703,19 @@
 
             var checkBox = document.getElementById('Team_Leader');
             var dropLeader = document.getElementById('Id_Leader');
-            var input = document.getElementById('Leader_Name');
+            var teamName = document.getElementById('Leader_Name');
 
             if (checkBox.checked == true) {
                 dropLeader.style.display = "none";
+                teamName.style.display = "block"
                
             }
             else {
                 
                 dropLeader.style.display = "block";
-                input.value = dropLeader.options[dropLeader.selectedIndex].text;
+                teamName.style.display = "none"
+                teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
+            
             }
             
     }

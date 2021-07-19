@@ -1830,6 +1830,7 @@
     <Content Include="Views\Tb_Status\Details.cshtml" />
     <Content Include="Views\Tb_Status\Edit.cshtml" />
     <Content Include="Views\Tb_Status\Index.cshtml" />
+    <Content Include="Views\Users\TeamList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

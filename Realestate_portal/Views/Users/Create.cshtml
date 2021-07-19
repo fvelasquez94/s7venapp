@@ -46,155 +46,163 @@
                 {
                     @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
+                <div class="form-horizontal">
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Last Name</label>
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="email" name="Email" id="Emailconst" class="form-control" required />
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group" style="display:none">
-                            <label class="control-label col-md-2">Leader Name</label>
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="Leader_Name" id="Leader_Name" />
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Telephone</label>
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Main_telephone, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Main_telephone, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="Position" id="Position" value="Real Estate Salesperson" readonly />
-                                @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Brokerage Name</label>
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="Brokerage_name" value="@activeus.Name" readonly />
-                                @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-12">Brokerage Address</label>
-                            <div class="col-md-10">
-
-                                <input type="text" class="form-control" name="Brokerage_address" value="@activeus.Brokerage_address" readonly />
-                                @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-12">Broker Contact</label>
-                            <div class="col-md-10">
-
-                                <input type="text" class="form-control" name="Broker_Contact" value="@activeus.Broker_Contact" readonly />
-                                @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-12">Broker License</label>
-                            <div class="col-md-10">
-
-                                <input type="text" class="form-control" name="Broker_License" value="@activeus.Broker_License" readonly />
-                                @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" id="lblteamleader">Team leader</label>
-                            <div class="col-md-1">
-                                <div class="checkbox" onclick="hideDropDown()">
-
-                                    @Html.EditorFor(model => model.Team_Leader, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                        </div>
-                        @if (leaders.Count > 0)
-                        {
-
-
-                            <div class="form-group">
-                                <label class="control-label col-md-2" id="lblteamassignation">Team leader assignation</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
-                                        <option></option>
-
-                                        @foreach (var item in leaders)
-                                        {
-
-                                            <option value="@item.ID_User">@item.LastName @item.Name </option>
-
-
-                                        }
-                                    </select>
-
-                                </div>
-                            </div>
-                        }
-
-
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" id="submitbuttoncreate" class="btn btn-default" />
-                            </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Last Name</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="email" name="Email" id="Emailconst" class="form-control" required />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Telephone</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Main_telephone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Main_telephone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*<input type="text" class="form-control" name="Position" id="Position" value="Real Estate Salesperson" readonly />*@
+                            <select class="form-control" name="Position" id="Position" onchange="teamChange()">
+                                <option value="Real Estate Salesperson">Real Estate Salesperson</option>
+                                @if (ViewBag.leader == true)
+                                {
+                                    <option value="Team leader" selected>Team leader</option>
+                                }
+                                else
+                                {
+                                    <option value="Team leader">Team leader</option>
+                                }
+
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Team Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="Leader_Name" id="Leader_Name" />
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Brokerage Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="Brokerage_name" value="@activeus.Name" readonly />
+                            @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Brokerage Address</label>
+                        <div class="col-md-10">
+
+                            <input type="text" class="form-control" name="Brokerage_address" value="@activeus.Brokerage_address" readonly />
+                            @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Broker Contact</label>
+                        <div class="col-md-10">
+
+                            <input type="text" class="form-control" name="Broker_Contact" value="@activeus.Broker_Contact" readonly />
+                            @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Broker License</label>
+                        <div class="col-md-10">
+
+                            <input type="text" class="form-control" name="Broker_License" value="@activeus.Broker_License" readonly />
+                            @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" id="lblteamleader">Team leader</label>
+                        <div class="col-md-1">
+                            <div class="checkbox" onclick="hideDropDown()">
+
+                                @Html.EditorFor(model => model.Team_Leader, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    @if (leaders.Count > 0)
+                    {
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" id="lblteamassignation">Team leader assignation</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
+                                    <option></option>
+
+                                    @foreach (var item in leaders)
+                                    {
+
+                                        <option value="@item.ID_User">@item.Leader_Name</option>
+
+
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" id="submitbuttoncreate" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
                 }
 
                 <input type="hidden" id="checkemail" />
@@ -207,15 +215,18 @@
         var checkBox = document.getElementById('Team_Leader');
         var dropLeader = document.getElementById('Id_Leader');
         var position = document.getElementById('Position');
+        var teamName = document.getElementById('Leader_Name');
 
         if (checkBox.checked == true) {
             dropLeader.style.display = "none";
-            position.value = "Team Leader";
+            teamName.style.display = "block"
+            position.value = 'Team leader';
 
         }
         else {
             dropLeader.style.display = "block";
-            position.value = "Real Estate Salesperson";
+            teamName.style.display = "none";
+            position.value ='Real Estate Salesperson';
         }
 
         console.log(checkBox.checked);
@@ -223,12 +234,33 @@
 
     function teamLeader() {
         var dropLeader = document.getElementById('Id_Leader');
-        var input = document.getElementById('Leader_Name');
+        var teamName = document.getElementById('Leader_Name');
 
-        input.value = dropLeader.options[dropLeader.selectedIndex].text;
+        teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
         console.log(dropLeader.value);
         console.log(dropLeader.options[dropLeader.selectedIndex].text);
 
+
+    }
+
+    function teamChange() {
+        var checkBox = document.getElementById('Team_Leader');
+        var dropLeader = document.getElementById('Id_Leader');
+        var position = document.getElementById('Position');
+        var teamName = document.getElementById('Leader_Name');
+
+        if (position.value === 'Team leader') {
+            checkBox.checked = true;
+            dropLeader.style.display = "none";
+            teamName.style.display = "block"
+            teamName.value = "";
+        }
+        else {
+            checkBox.checked = false;
+            dropLeader.style.display = "block";
+            teamName.style.display = "none";
+            teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
+        }
 
     }
 
@@ -243,12 +275,13 @@
             var position = document.getElementById('Position');
             var label1 = document.getElementById('lblteamleader');
             var label2 = document.getElementById('lblteamassignation');
+            var teamName = document.getElementById('Leader_Name');
 
             dropLeader.style.display = "none";
             checkBox.checked = true;
           
             position.value = "Team Leader";
-
+            teamName.style.display = "block"
             checkBox.style.display = "none"
             label1.style.display = "none";
             label2.style.display = "none";
