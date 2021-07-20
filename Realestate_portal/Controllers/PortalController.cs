@@ -4106,7 +4106,7 @@ namespace Realestate_portal.Controllers
         public ActionResult ShowAgentpdf(int id)
         {
 
-            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_User == id) select a).FirstOrDefault();
+            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_Document == id) select a).FirstOrDefault();
 
             var path = fileDB.Url;
             var file = Server.MapPath(path);
