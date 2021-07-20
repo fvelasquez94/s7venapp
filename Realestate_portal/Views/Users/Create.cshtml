@@ -264,6 +264,11 @@
 
     }
 
+    window.onload = function () {
+        var teamName = document.getElementById('Leader_Name');
+        teamName.style.display = "none";
+    }
+
     
 </script>
 @if (ViewBag.leader == true)
@@ -279,9 +284,8 @@
 
             dropLeader.style.display = "none";
             checkBox.checked = true;
-          
-            position.value = "Team Leader";
-            teamName.style.display = "block"
+            teamName.style.display = "block";
+            position.value = "Team leader";
             checkBox.style.display = "none"
             label1.style.display = "none";
             label2.style.display = "none";

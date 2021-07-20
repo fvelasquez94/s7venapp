@@ -329,9 +329,10 @@ namespace Realestate_portal.Controllers
                                                             ID_Company = c.ID_Company,
                                                             Lead = c.Lead,
                                                             ID_User = c.ID_User,
+                                                            Team = u.Leader_Name,
                                                             DateString = "",
                                                         });
-            IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers orderby a.LastName ascending
+            IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers join u in db.Sys_Users on a.ID_User equals u.ID_User orderby a.LastName ascending
                                                         select new CustomerTableViewModel
                                                         {
                                                             Id = a.ID_Customer,
@@ -345,7 +346,8 @@ namespace Realestate_portal.Controllers
                                                             ID_Company=a.ID_Company,
                                                             Lead=a.Lead,
                                                             ID_User=a.ID_User,
-                                                            DateString="",
+                                                            Team = u.Leader_Name,
+                                                            DateString ="",
                                                         }) ;
 
             pageSize = !length.Equals("") ? Convert.ToInt32(length) : 0;

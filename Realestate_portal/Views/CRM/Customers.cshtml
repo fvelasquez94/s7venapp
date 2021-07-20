@@ -52,6 +52,9 @@
                                 <th>
                                     Status
                                 </th>
+                                <th>
+                                    Team
+                                </th>
                                 @if (ViewBag.rol != "SA")
                                 {
                                     <th>
@@ -173,13 +176,14 @@
             var columns;
             var masterColumn;
             if ("@ViewBag.rol" != "SA" && "@ViewBag.rol" != "Agent") {
-                masterColumn = 7;
+                masterColumn = 8;
                 columns = [
                     { "data": { "Id": "Id", "Name" : "Name" }, "name": "Name", "autoWidth": true },
                     { "data": "Phone", "name": "Phone", "autoWidth": true },
                     { "data": "Email", "name": "Email", "autoWidth": true },
                     { "data": "Type", "name": "Type", "autoWidth": true },
                     { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
+                    { "data": "Team", "name": "Team", "autoWidth": true },
                     { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
                     { "data": "DateString", "name": "DateString", "autoWidth": true },
                     { "data": { "Id": "Id" }, "name": "Name", "autoWidth": true }
@@ -192,6 +196,7 @@
                     { "data": "Email", "name": "Email", "autoWidth": true },
                     { "data": "Type", "name": "Type", "autoWidth": true },
                     { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
+                    { "data": "Team", "name": "Team", "autoWidth": true },
                     { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
                     { "data": "DateString", "name": "DateString", "autoWidth": true }
                  ]

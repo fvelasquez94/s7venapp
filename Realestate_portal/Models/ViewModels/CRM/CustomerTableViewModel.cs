@@ -14,6 +14,7 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public string Name { get; set; }
         public string Marital_status { get; set; }
         public string Type { get; set; }
+        public string Team { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public bool Lead { get; set; }
