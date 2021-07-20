@@ -580,7 +580,7 @@ namespace Realestate_portal.Controllers
         {
             try
             {
-
+                var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
@@ -614,13 +614,20 @@ namespace Realestate_portal.Controllers
                     {
                         sys_Users.Leader_Name = "Team " + sys_Users.Name + " " + sys_Users.LastName;
                     }
+                    foreach (var item in team)
+                    {
+                        item.Leader_Name = sys_Users.Leader_Name;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = ""; }
 
                 db.Entry(sys_Users).State = EntityState.Modified;
                 db.SaveChanges();
-                var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
+                
+                
                 if (sys_Users.Active == false)
                 {
                     
@@ -902,12 +909,22 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Department == null) { sys_Users.Department = ""; }
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
-                if (sys_Users.Position == null) { sys_Users.Position = ""; }
+                if (sys_Users.Position == null) { sys_Users.Position = activeuser.Position; }
                 if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
                 if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
 
+                var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
+                if (sys_Users.Team_Leader == true)
+                {
+                    foreach (var item in team)
+                    {
+                        item.Leader_Name = sys_Users.Leader_Name;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
              
                     db.Entry(sys_Users).State = EntityState.Modified;
                     db.SaveChanges();
