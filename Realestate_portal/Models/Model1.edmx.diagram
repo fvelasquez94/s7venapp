@@ -59,6 +59,9 @@
         <AssociationConnector Association="Realstate_agentsModel.FK_CustomerDoc" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_DocuAgent" Width="1.5" PointX="5.125" PointY="18.875" />
         <AssociationConnector Association="Realstate_agentsModel.fk_usersdoc" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Customers_Users" Width="1.5" PointX="8.125" PointY="30.875" />
+        <AssociationConnector Association="Realstate_agentsModel.Fk_usercustomer" />
+        <AssociationConnector Association="Realstate_agentsModel.Fk_customeruser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

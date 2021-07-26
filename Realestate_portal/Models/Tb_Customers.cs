@@ -19,6 +19,7 @@ namespace Realestate_portal.Models
         {
             this.Tb_Process = new HashSet<Tb_Process>();
             this.Tb_LeadDocs = new HashSet<Tb_LeadDocs>();
+            this.Tb_Customers_Users = new HashSet<Tb_Customers_Users>();
         }
     
         public int ID_Customer { get; set; }
@@ -35,7 +36,6 @@ namespace Realestate_portal.Models
         public string Address { get; set; }
         public string Zipcode { get; set; }
         public bool Lead { get; set; }
-        public int ID_User { get; set; }
         public string User_assigned { get; set; }
         public bool Active { get; set; }
         public int ID_Company { get; set; }
@@ -47,5 +47,7 @@ namespace Realestate_portal.Models
         public virtual ICollection<Tb_Process> Tb_Process { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_LeadDocs> Tb_LeadDocs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tb_Customers_Users> Tb_Customers_Users { get; set; }
     }
 }
