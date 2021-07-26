@@ -170,19 +170,12 @@
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Zipcode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Lead" Type="bit" Nullable="false" />
+          <Property Name="ID_User" Type="int" Nullable="false" />
           <Property Name="User_assigned" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="ID_Company" Type="int" Nullable="false" />
           <Property Name="Creation_date" Type="datetime" Nullable="false" />
           <Property Name="Source" Type="nchar" MaxLength="30" />
-        </EntityType>
-        <EntityType Name="Tb_Customers_Users">
-          <Key>
-            <PropertyRef Name="Id_Customer_User" />
-          </Key>
-          <Property Name="Id_Customer_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id_User" Type="int" Nullable="false" />
-          <Property Name="Id_Customer" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tb_docCategies">
           <Key>
@@ -540,18 +533,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_customeruser">
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1" />
-          <End Role="Tb_Customers_Users" Type="Self.Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Network">
           <End Role="Tb_Network" Type="Self.Tb_Network" Multiplicity="1" />
           <End Role="Tb_Reviews" Type="Self.Tb_Reviews" Multiplicity="*" />
@@ -788,18 +769,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_usercustomer">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
-          <End Role="Tb_Customers_Users" Type="Self.Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_usersdoc">
           <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
           <End Role="Tb_DocuAgent" Type="Self.Tb_DocuAgent" Multiplicity="*" />
@@ -854,7 +823,6 @@
           <EntitySet Name="Tb_Appointments" EntityType="Self.Tb_Appointments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Conversation" EntityType="Self.Tb_Conversation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Customers" EntityType="Self.Tb_Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tb_Customers_Users" EntityType="Self.Tb_Customers_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" Schema="dbo" store:Type="Tables" />
@@ -891,10 +859,6 @@
           <AssociationSet Name="FK_CustomerDoc" Association="Self.FK_CustomerDoc">
             <End Role="Tb_Customers" EntitySet="Tb_Customers" />
             <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_customeruser" Association="Self.Fk_customeruser">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Network" Association="Self.FK_Network">
             <End Role="Tb_Network" EntitySet="Tb_Network" />
@@ -963,10 +927,6 @@
           <AssociationSet Name="FK_Tb_Webinars_Sys_Company" Association="Self.FK_Tb_Webinars_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Webinars" EntitySet="Tb_Webinars" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_usercustomer" Association="Self.Fk_usercustomer">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
           </AssociationSet>
           <AssociationSet Name="fk_usersdoc" Association="Self.fk_usersdoc">
             <End Role="Sys_Users" EntitySet="Sys_Users" />
@@ -1110,7 +1070,6 @@
           <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
           <Property Name="Id_Leader" Type="Int32" />
           <Property Name="Leader_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tb_Customers_Users" Relationship="Realstate_agentsModel.Fk_usercustomer" FromRole="Sys_Users" ToRole="Tb_Customers_Users" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1169,6 +1128,7 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Lead" Type="Boolean" Nullable="false" />
+          <Property Name="ID_User" Type="Int32" Nullable="false" />
           <Property Name="User_assigned" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
@@ -1177,7 +1137,6 @@
           <NavigationProperty Name="Tb_Process" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
           <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Tb_LeadDocs" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
-          <NavigationProperty Name="Tb_Customers_Users" Relationship="Realstate_agentsModel.Fk_customeruser" FromRole="Tb_Customers" ToRole="Tb_Customers_Users" />
         </EntityType>
         <EntityType Name="Tb_docCategies">
           <Key>
@@ -1864,15 +1823,6 @@
             <End Role="Sys_Users" EntitySet="Sys_Users" />
             <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
           </AssociationSet>
-          <EntitySet Name="Tb_Customers_Users" EntityType="Realstate_agentsModel.Tb_Customers_Users" />
-          <AssociationSet Name="Fk_usercustomer" Association="Realstate_agentsModel.Fk_usercustomer">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_customeruser" Association="Realstate_agentsModel.Fk_customeruser">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1984,40 +1934,6 @@
             </Principal>
             <Dependent Role="Tb_DocuAgent">
               <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Tb_Customers_Users">
-          <Key>
-            <PropertyRef Name="Id_Customer_User" />
-          </Key>
-          <Property Name="Id_Customer_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_User" Type="Int32" Nullable="false" />
-          <Property Name="Id_Customer" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.Fk_usercustomer" FromRole="Tb_Customers_Users" ToRole="Sys_Users" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.Fk_customeruser" FromRole="Tb_Customers_Users" ToRole="Tb_Customers" />
-        </EntityType>
-        <Association Name="Fk_usercustomer">
-          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1" />
-          <End Type="Realstate_agentsModel.Tb_Customers_Users" Role="Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_customeruser">
-          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="1" />
-          <End Type="Realstate_agentsModel.Tb_Customers_Users" Role="Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_Customer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2201,6 +2117,7 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
                 <ScalarProperty Name="Lead" ColumnName="Lead" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
                 <ScalarProperty Name="User_assigned" ColumnName="User_assigned" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
@@ -2556,15 +2473,6 @@
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Doc_Name" ColumnName="Doc_Name" />
                 <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Customers_Users">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers_Users">
-              <MappingFragment StoreEntitySet="Tb_Customers_Users">
-                <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
-                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
-                <ScalarProperty Name="Id_Customer_User" ColumnName="Id_Customer_User" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
