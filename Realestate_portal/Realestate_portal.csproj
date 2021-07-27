@@ -192,6 +192,7 @@
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\Sys_CompanyController.cs" />
+    <Compile Include="Controllers\Tb_Customers_UsersController.cs" />
     <Compile Include="Controllers\Tb_OptionsController.cs" />
     <Compile Include="Controllers\Tb_SourceController.cs" />
     <Compile Include="Controllers\Tb_StatusController.cs" />
@@ -1834,6 +1835,7 @@
     <Content Include="Views\Tb_Status\Edit.cshtml" />
     <Content Include="Views\Tb_Status\Index.cshtml" />
     <Content Include="Views\Users\TeamList.cshtml" />
+    <Content Include="Views\Tb_Customers_Users\AssignList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

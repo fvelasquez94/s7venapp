@@ -170,7 +170,7 @@ namespace Realestate_portal.Controllers
             db.SaveChanges();
 
 
-            return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Customers.ID_Customer, broker = 0});
+            return RedirectToAction("AssignList", "Tb_Customers_Users", new { id = tb_Customers.ID_Customer, broker = 0});
             
                 
             
