@@ -251,6 +251,9 @@
     <Compile Include="Models\Tb_Customers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tb_Customers_Users.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tb_docCategies.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

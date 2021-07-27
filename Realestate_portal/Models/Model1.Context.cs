@@ -58,6 +58,7 @@ namespace Realestate_portal.Models
         public virtual DbSet<Tb_Status> Tb_Status { get; set; }
         public virtual DbSet<Tb_LeadDocs> Tb_LeadDocs { get; set; }
         public virtual DbSet<Tb_DocuAgent> Tb_DocuAgent { get; set; }
+        public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
