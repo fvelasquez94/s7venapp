@@ -126,16 +126,16 @@ namespace Realestate_portal.Controllers
                     db.SaveChanges();
                 }
                 result = "SUCCESS";
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { result = "Redirect", url = Url.Action("CustomerDashboard", "CRM", new { id = idCustomer, broker = 0 }) });
             }
             catch (Exception)
             {
 
                 result = "ERROR";
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { result = "Error", url = Url.Action("Customers", "CRM") });
             }
             
-            //return RedirectToAction("CustomerDashboard", "CRM", new { id = idCustomer, broker = 0 });
+           
         }
     }
 }

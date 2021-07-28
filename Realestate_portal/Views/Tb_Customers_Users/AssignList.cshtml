@@ -202,12 +202,12 @@
                     progressBar: true,
                     timeout: 2500
                 }).show()
-                window.location.href = @Url.Action("CustomerDashboard", "CRM", new { id = ViewBag.customer, broker = 0 });
+                window.location = response.url;
             },
             error: function (error) {
 
-                alert("Error" + error + " " + response);
-                window.location.href = @Url.Action("Customers", "CRM");
+                alert("Error" + error + " " + response.result);
+                window.location = response.url;
             }
 
         });
