@@ -1836,6 +1836,7 @@
     <Content Include="Views\Tb_Status\Index.cshtml" />
     <Content Include="Views\Users\TeamList.cshtml" />
     <Content Include="Views\Tb_Customers_Users\AssignList.cshtml" />
+    <Content Include="Views\Tb_Customers_Users\AssignEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

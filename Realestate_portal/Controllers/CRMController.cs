@@ -840,7 +840,7 @@ namespace Realestate_portal.Controllers
                 var lstLeadDocs = (from doc in db.Tb_LeadDocs where (doc.Id_Customer == id) select doc).ToList();
                 ViewBag.leadDocs = lstLeadDocs;
                 ViewBag.rol = "";
-
+                ViewBag.customer = id;
                 //Filtros SA
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();

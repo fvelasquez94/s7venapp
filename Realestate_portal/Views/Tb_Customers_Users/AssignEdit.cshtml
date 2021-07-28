@@ -1,8 +1,9 @@
 ﻿@using Realestate_portal.Models
 @{
-    ViewBag.Title = "AssignList";
+    ViewBag.Title = "AssignEdit";
     Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
     List<Sys_Users> agents = ViewBag.userslist;
+    List<Tb_Customers_Users> customers_Users = ViewBag.assignedUsers;
 }
 
 <div class="container-fluid">
@@ -44,7 +45,7 @@
                                 <th>
                                     Team name
                                 </th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +54,7 @@
                                 foreach (var item in agents)
 
                                 {
-                                    
+
                                     char[] name = item.Name.ToCharArray();
                                     char[] last = item.LastName.ToCharArray();
 
@@ -61,15 +62,24 @@
                                         <td>
                                             @if (item.Roles == "Admin")
                                             {
-                                                <input type="checkbox" value=@item.ID_User id="checkId" disabled="disabled" onchange="checkGetId(@item.ID_User)" on checked />
-                                            }
-                                            else if (item.ID_User == ViewBag.userID)
-                                            {
                                                 <input type="checkbox" value=@item.ID_User id="checkId" disabled="disabled" onchange="checkGetId(@item.ID_User)" checked />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" value=@item.ID_User id="checkId_@item.ID_User" onchange="checkGetId(@item.ID_User)"/>
+                                                int aux = 0;
+                                                foreach (var users in customers_Users)
+                                                {
+                                                    if (users.Id_User == item.ID_User)
+                                                    {
+                                                        <input type="checkbox" value=@item.ID_User id="checkId_@item.ID_User" onchange="checkGetId(@item.ID_User)" checked />
+                                                        aux = 1;
+                                                    }
+                                                }
+                                                if (aux == 0)
+                                                {
+                                                    <input type="checkbox" value=@item.ID_User id="checkId_@item.ID_User" onchange="checkGetId(@item.ID_User)" />
+                                                }
+
                                             }
 
                                         </td>
@@ -114,8 +124,8 @@
 
                                         <td>
                                             @item.Email
-                                        </td> 
-                                      
+                                        </td>
+
                                         <td>
                                             @item.Main_telephone
                                         </td>
@@ -125,7 +135,7 @@
                                         <td>
                                             @item.Leader_Name
                                         </td>
-                                       
+
                                     </tr>
                                 }
                             }
@@ -134,7 +144,7 @@
 
                     </table>
                     <div>
-                        <button type="button" class="btn btn-primary" id="buttonAssign" onclick="addAssigned(@ViewBag.customer)">Assign agents</button>
+                        @*<button type="button" class="btn btn-primary" id="buttonAssign" onclick="addAssigned(@ViewBag.customer)">Assign agents</button>*@
                     </div>
                 </div>
             </div>
@@ -155,15 +165,18 @@
         $("#tableresources").DataTable();
         $("#tableHeader").find('*').css({ "color": 'white' });
 
-        var checkId = document.getElementById('checkId');
-
-        if (checkId.checked === true) {
-            console.log(checkId.checked);
-            console.log(checkId.value);
-            ids.push(checkId.value);
-
+        @foreach (var item in customers_Users)
+        {
+            <text>
+                ids.push(@item.Id_User)
+            </text>
         }
+      
         console.log(@ViewBag.customer);
+    }
+
+    function getIdOnLoad(id) {
+        ids.push(id);
     }
 
     function checkGetId(id) {
@@ -194,7 +207,7 @@
                 agentsId: ids
             }),
             success: function (response) {
-                
+
                 new Noty({
                     type: 'success',
                     layout: 'topRight',
