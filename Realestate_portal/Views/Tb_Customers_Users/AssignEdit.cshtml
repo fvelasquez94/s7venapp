@@ -144,7 +144,7 @@
 
                     </table>
                     <div>
-                        @*<button type="button" class="btn btn-primary" id="buttonAssign" onclick="addAssigned(@ViewBag.customer)">Assign agents</button>*@
+                        <button type="button" class="btn btn-primary" id="buttonAssign" onclick="editAssigned(@ViewBag.customer)">Assign agents</button>
                     </div>
                 </div>
             </div>
@@ -197,10 +197,10 @@
         console.log(ids);
     }
 
-    function addAssigned(idcustomer) {
+    function editAssigned(idcustomer) {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Create","Tb_Customers_Users")',
+            url: '@Url.Action("Edit","Tb_Customers_Users")',
             contentType: 'application/json',
             data: JSON.stringify({
                 idCustomer: idcustomer,

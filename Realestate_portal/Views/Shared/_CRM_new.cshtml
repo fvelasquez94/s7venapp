@@ -114,7 +114,11 @@
             </div>
         }*@
                         <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                        <a class="la la-users la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})"></a>
+                        @if (ViewBag.rol != "Agent")
+                        {
+                            <a class="la la-users la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})"></a>
+                        }
+
                         <div style="margin-left: 10px;">
                             <select class="form-control select-crm-agent" id="assignagent">
 

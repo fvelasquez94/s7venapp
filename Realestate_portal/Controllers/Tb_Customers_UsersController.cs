@@ -221,5 +221,39 @@ namespace Realestate_portal.Controllers
             
            
         }
+
+        [HttpPost]
+
+        public ActionResult Edit(int idCustomer, int[] agentsId) 
+        {
+
+            try
+            {
+                var agents = (from a in db.Tb_Customers_Users where (a.Id_Customer == idCustomer) select a).ToList();
+                foreach (var item in agents)
+                {
+                    Tb_Customers_Users tb_Customers_Users = db.Tb_Customers_Users.Find(item.Id_Customer_User);
+                    db.Tb_Customers_Users.Remove(tb_Customers_Users);
+                    db.SaveChanges();
+                }
+
+                Tb_Customers_Users customers_Users = new Tb_Customers_Users();
+                foreach (var item in agentsId)
+                {
+                    customers_Users.Id_Customer = idCustomer;
+                    customers_Users.Id_User = item;
+                    db.Tb_Customers_Users.Add(customers_Users);
+                    db.SaveChanges();
+
+                }
+                return Json(new { result = "Redirect", url = Url.Action("CustomerDashboard", "CRM", new { id = idCustomer, broker = 0 }) });
+            }
+            catch (Exception)
+            {
+
+                return Json(new { result = "Error", url = Url.Action("Customers", "CRM") });
+            }
+           
+        }
     }
 }
