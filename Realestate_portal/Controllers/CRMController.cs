@@ -332,25 +332,48 @@ namespace Realestate_portal.Controllers
                                                             Team = u.Leader_Name,
                                                             DateString = "",
                                                         });
-            IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers join u in db.Sys_Users on a.ID_User equals u.ID_User orderby a.LastName ascending
-                                                        select new CustomerTableViewModel
-                                                        {
-                                                            Id = a.ID_Customer,
-                                                            Name = a.LastName +" "+ a.Name,
-                                                            Marital_status = a.Marital_status,
-                                                            Type = a.Type,
-                                                            Email = a.Email,
-                                                            Phone = a.Phone,
-                                                            User_assigned = a.User_assigned,
-                                                            Creation_date = a.Creation_date,
-                                                            ID_Company=a.ID_Company,
-                                                            Lead=a.Lead,
-                                                            ID_User=a.ID_User,
-                                                            Team = u.Leader_Name,
-                                                            DateString ="",
-                                                        }) ;
+            //IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers join u in db.Sys_Users on a.ID_User equals u.ID_User orderby a.LastName ascending
+            //                                            select new CustomerTableViewModel
+            //                                            {
+            //                                                Id = a.ID_Customer,
+            //                                                Name = a.LastName +" "+ a.Name,
+            //                                                Marital_status = a.Marital_status,
+            //                                                Type = a.Type,
+            //                                                Email = a.Email,
+            //                                                Phone = a.Phone,
+            //                                                User_assigned = a.User_assigned,
+            //                                                Creation_date = a.Creation_date,
+            //                                                ID_Company=a.ID_Company,
+            //                                                Lead=a.Lead,
+            //                                                ID_User=a.ID_User,
+            //                                                Team = u.Leader_Name,
+            //                                                DateString ="",
+            //                                            }) ;
 
-            pageSize = !length.Equals("") ? Convert.ToInt32(length) : 0;
+                IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers
+                                                            join c in db.Tb_Customers_Users on a.ID_Customer equals c.Id_Customer
+                                                            join u in db.Sys_Users on c.Id_User equals u.ID_User
+                                                            orderby a.LastName ascending
+                                                            select new CustomerTableViewModel
+                                                            {
+                                                                Id = a.ID_Customer,
+                                                                Name = a.LastName + " " + a.Name,
+                                                                Marital_status = a.Marital_status,
+                                                                Type = a.Type,
+                                                                Email = a.Email,
+                                                                Phone = a.Phone,
+                                                                User_assigned = u.LastName + " " + u.Name,
+                                                                Creation_date = a.Creation_date,
+                                                                ID_Company = a.ID_Company,
+                                                                Lead = a.Lead,
+                                                                ID_User = u.ID_User,
+                                                                Team = u.Leader_Name,
+                                                                DateString = "",
+                                                            });
+
+                IQueryable<CustomerTableViewModel> queryBroker;
+
+                pageSize = !length.Equals("") ? Convert.ToInt32(length) : 0;
             skip = !start.Equals("") ? Convert.ToInt32(start) : 0;
             recordsTotal = 0;
 
@@ -378,7 +401,7 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Team_Leader == true)
                     {
                    
-                        query = query2.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company).OrderBy(l => l.Name);
+                        query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.Team == activeuser.Leader_Name).OrderBy(l => l.Name);
 
                     }
                     else
@@ -406,7 +429,8 @@ namespace Realestate_portal.Controllers
                     if (broker == 0)
                     {
                         query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company);
-
+                        //TO DO CONSULTA PARA MOSTRAR LISTA DE AGENTES ASIGNADOS Y EL POPOVER
+                       
                         var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
 
                         decimal comission = 0;
