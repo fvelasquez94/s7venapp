@@ -255,5 +255,34 @@ namespace Realestate_portal.Controllers
             }
            
         }
+
+        public bool Delete(int id) {
+
+            try
+            {
+                var customer = (from c in db.Tb_Customers_Users where (c.Id_Customer == id) select c).ToList();
+                if (customer != null)
+                {
+                    foreach (var item in customer)
+                    {
+                        Tb_Customers_Users tb_Customers_Users = db.Tb_Customers_Users.Find(item.Id_Customer_User);
+                        db.Tb_Customers_Users.Remove(tb_Customers_Users);
+                        db.SaveChanges();
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+           
+        }
     }
 }

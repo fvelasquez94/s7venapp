@@ -315,7 +315,7 @@ namespace Realestate_portal.Controllers
 
                 List<CustomerTableViewModel> tb_Customers;
 
-            IQueryable<CustomerTableViewModel> query2 = (from c in db.Tb_Customers join u in db.Sys_Users on c.ID_User equals u.ID_User where(u.Id_Leader == activeuser.ID_User || c.ID_User == activeuser.ID_User)
+            IQueryable<CustomerTableViewModel> query = (from c in db.Tb_Customers
                                                         orderby c.LastName ascending select new CustomerTableViewModel
                                                         {
                                                             Id = c.ID_Customer,
@@ -324,12 +324,12 @@ namespace Realestate_portal.Controllers
                                                             Type = c.Type,
                                                             Email = c.Email,
                                                             Phone = c.Phone,
-                                                            User_assigned = c.User_assigned,
+                                                            User_assigned = "",
                                                             Creation_date = c.Creation_date,
                                                             ID_Company = c.ID_Company,
                                                             Lead = c.Lead,
                                                             ID_User = c.ID_User,
-                                                            Team = u.Leader_Name,
+                                                            Team = "",
                                                             DateString = "",
                                                         });
             //IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers join u in db.Sys_Users on a.ID_User equals u.ID_User orderby a.LastName ascending
@@ -350,7 +350,7 @@ namespace Realestate_portal.Controllers
             //                                                DateString ="",
             //                                            }) ;
 
-                IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers
+                IQueryable<CustomerTableViewModel> query2 = (from a in db.Tb_Customers
                                                             join c in db.Tb_Customers_Users on a.ID_Customer equals c.Id_Customer
                                                             join u in db.Sys_Users on c.Id_User equals u.ID_User
                                                             orderby a.LastName ascending
@@ -371,7 +371,7 @@ namespace Realestate_portal.Controllers
                                                                 DateString = "",
                                                             });
 
-                IQueryable<CustomerTableViewModel> queryBroker;
+              
 
                 pageSize = !length.Equals("") ? Convert.ToInt32(length) : 0;
             skip = !start.Equals("") ? Convert.ToInt32(start) : 0;
@@ -401,12 +401,12 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Team_Leader == true)
                     {
                    
-                        query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.Team == activeuser.Leader_Name).OrderBy(l => l.Name);
+                        query = query2.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.Team == activeuser.Leader_Name).OrderBy(l => l.Name);
 
                     }
                     else
                     {
-                        query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.ID_User == activeuser.ID_User).OrderBy(l => l.Name);
+                        query = query2.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company && a.ID_User == activeuser.ID_User).OrderBy(l => l.Name);
                     }
                   
                         
@@ -430,7 +430,7 @@ namespace Realestate_portal.Controllers
                     {
                         query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company);
                         //TO DO CONSULTA PARA MOSTRAR LISTA DE AGENTES ASIGNADOS Y EL POPOVER
-                       
+                        
                         var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
 
                         decimal comission = 0;
@@ -459,7 +459,23 @@ namespace Realestate_portal.Controllers
                 tb_Customers = query.Skip(skip).Take(pageSize).ToList();
                 foreach (var cus in tb_Customers)
                 {
+
+
+                    var user_assigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == cus.Id) select c).ToList();
+
+                    foreach (var user in user_assigned)
+                    {
+                        var ua = (from u in db.Sys_Users where (u.ID_User == user.Id_User) select u).FirstOrDefault();
+                        if (ua != null)
+                        {
+                            cus.User_assigned = cus.User_assigned + "\n" + ua.LastName + " " + ua.Name;
+                            cus.Team = cus.Team + "\n" + ua.Leader_Name;
+                        }
+                       
+                    }
                     cus.DateString = cus.Creation_date.ToShortDateString();
+
+
                 }
               
 

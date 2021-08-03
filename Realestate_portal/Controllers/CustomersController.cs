@@ -19,6 +19,8 @@ namespace Realestate_portal.Controllers
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
         private Cls_GoogleCalendar cls_GoogleCalendar = new Cls_GoogleCalendar();
+      
+
         // GET: Tb_Customers/Details/5
         public ActionResult Details(int? id)
         {
@@ -143,9 +145,9 @@ namespace Realestate_portal.Controllers
             if (birthdemo < theDate) {
                 tb_Customers.Birthday = DateTime.UtcNow;
             }
-            var user_assigned = (from u in db.Sys_Users where (u.ID_User == tb_Customers.ID_User && u.Active == true) orderby u.LastName ascending select u).FirstOrDefault();
+            var user_assigned = "";
         
-            tb_Customers.User_assigned = user_assigned.Name + " " + user_assigned.LastName;
+            tb_Customers.User_assigned = "";
             tb_Customers.ID_Company = activeuser.ID_Company;
             tb_Customers.Lead = false;
             if (tb_Customers.Zipcode == null) { tb_Customers.Zipcode = ""; }
@@ -160,14 +162,14 @@ namespace Realestate_portal.Controllers
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
 
-            Sys_Notifications newnotification = new Sys_Notifications();
-            newnotification.Active = true;
-            newnotification.Date = DateTime.UtcNow;
-            newnotification.Title = "New Customer assigned.";
-            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-            newnotification.ID_user = user_assigned.ID_User;
-            db.Sys_Notifications.Add(newnotification);
-            db.SaveChanges();
+            //Sys_Notifications newnotification = new Sys_Notifications();
+            //newnotification.Active = true;
+            //newnotification.Date = DateTime.UtcNow;
+            //newnotification.Title = "New Customer assigned.";
+            //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+            //newnotification.ID_user = user_assigned.ID_User;
+            //db.Sys_Notifications.Add(newnotification);
+            //db.SaveChanges();
 
 
             return RedirectToAction("AssignList", "Tb_Customers_Users", new { id = tb_Customers.ID_Customer, broker = 0});
@@ -746,11 +748,24 @@ namespace Realestate_portal.Controllers
             var result="";
             try
             {
-                Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
-                db.Tb_Customers.Remove(tb_Customers);
-                db.SaveChanges();
+            
+               
+                Tb_Customers_UsersController tb_Customers_Users = new Tb_Customers_UsersController();
+                var delete_Custo = tb_Customers_Users.Delete(id);
+                if (delete_Custo)
+                {
+                    Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
+                    db.Tb_Customers.Remove(tb_Customers);
+                    db.SaveChanges();
 
-                 result = "SUCCESS";
+                    result = "SUCCESS";
+                }
+                else {
+
+                    result = "ERROR";
+                }
+                
+                
             }
             catch(Exception EX)
             {
