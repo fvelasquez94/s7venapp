@@ -453,7 +453,7 @@ namespace Realestate_portal.Controllers
                             var ua = (from u in db.Sys_Users where (u.ID_User == user.Id_User) select u).FirstOrDefault();
                             if (ua != null)
                             {
-                                cus.User_assigned = cus.User_assigned + " " + ua.LastName + " " + ua.Name;
+                                cus.User_assigned = cus.User_assigned + " -- " + ua.LastName + " " + ua.Name;
                                 cus.Team = cus.Team + " " + ua.Leader_Name;
                             }
 
@@ -463,6 +463,10 @@ namespace Realestate_portal.Controllers
                     cus.DateString = cus.Creation_date.ToShortDateString();
 
 
+                }
+                if (activeuser.Team_Leader == true)
+                {
+                    tb_Customers = GetTeamLeads(tb_Customers);
                 }
               
 
@@ -478,6 +482,39 @@ namespace Realestate_portal.Controllers
                 return RedirectToAction("Login", "Portal", new { access = false });
 
             }
+        }
+
+        public List<CustomerTableViewModel> GetTeamLeads(List<CustomerTableViewModel> tb_Customers) 
+        {
+            List<CustomerTableViewModel> teamLeads = new List<CustomerTableViewModel>() ;
+            int last_id = 0;
+            string user_assigned = "";
+
+            foreach (var item in tb_Customers)
+            {
+                if (last_id != item.Id)
+                {
+                    user_assigned = "";
+                    teamLeads.Add(item);
+                   
+                    user_assigned = item.User_assigned;
+                }
+                else
+                {
+                    user_assigned = user_assigned + " -- " + item.User_assigned;
+
+                    foreach (var leads in teamLeads)
+                    {
+                        if (leads.Id == item.Id)
+                        {
+                            leads.User_assigned = user_assigned;
+                        }
+                    }
+
+                }
+                last_id = item.Id;
+            }
+            return teamLeads;
         }
 
 
