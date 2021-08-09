@@ -245,30 +245,7 @@ namespace Realestate_portal.Controllers
                     
                 }
 
-                //try {
-                //    if (information == "Yes") {
-                //        var videos = (from a in db.Tb_Videos where (a.ID_Company == 1) select a).ToList();
-                //        videos.Select(c => { c.ID_Company = sys_Company.ID_Company; return c; }).ToList();
-                //        db.Tb_Videos.AddRange(videos);
-                //        db.SaveChanges();
-
-
-                //        var marketing = (from a in db.Tb_Marketing where (a.ID_Company == 1) select a).ToList();
-                //        marketing.Select(c => { c.ID_Company = sys_Company.ID_Company; return c; }).ToList();
-                //        db.Tb_Marketing.AddRange(marketing);
-                //        db.SaveChanges();
-
-                //        var network = (from a in db.Tb_Network where (a.ID_Company == 1) select a).ToList();
-                //        network.Select(c => { c.ID_Company = sys_Company.ID_Company; return c; }).ToList();
-                //        db.Tb_Network.AddRange(network);
-                //        db.SaveChanges();
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-
-
-                //}
+                
 
 
                 return RedirectToAction("Index", "Sys_Company");
