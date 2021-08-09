@@ -1092,6 +1092,13 @@ namespace Realestate_portal.Controllers
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
+                var customer = (from c in db.Tb_Customers_Users where (c.Id_User == id) select c).ToList();
+                    foreach (var item in customer)
+                    {
+                        Tb_Customers_Users customers_Users = db.Tb_Customers_Users.Find(item.Id_Customer_User);
+                        db.Tb_Customers_Users.Remove(customers_Users);
+                        db.SaveChanges();
+                    }
 
             }
             catch (Exception ex)

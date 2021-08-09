@@ -350,7 +350,7 @@ namespace Realestate_portal.Controllers
                                                                 Creation_date = a.Creation_date,
                                                                 ID_Company = a.ID_Company,
                                                                 Lead = a.Lead,
-                                                                ID_User = 0,
+                                                                ID_User = c.Id_User,
                                                                 Team = u.Leader_Name,
                                                                 DateString = "",
                                                             });
@@ -413,7 +413,7 @@ namespace Realestate_portal.Controllers
                     if (broker == 0)
                     {
                         query = query.Where(a => a.Lead == false && a.ID_Company == activeuser.ID_Company);
-                        //TO DO CONSULTA PARA MOSTRAR LISTA DE AGENTES ASIGNADOS Y EL POPOVER
+                      
                         
                         var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
 
@@ -444,19 +444,22 @@ namespace Realestate_portal.Controllers
                 foreach (var cus in tb_Customers)
                 {
 
-
-                    var user_assigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == cus.Id) select c).ToList();
-
-                    foreach (var user in user_assigned)
+                    if (!r.Contains("Agent"))
                     {
-                        var ua = (from u in db.Sys_Users where (u.ID_User == user.Id_User) select u).FirstOrDefault();
-                        if (ua != null)
+                        var user_assigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == cus.Id) select c).ToList();
+
+                        foreach (var user in user_assigned)
                         {
-                            cus.User_assigned = cus.User_assigned + "\n" + ua.LastName + " " + ua.Name;
-                            cus.Team = cus.Team + "\n" + ua.Leader_Name;
+                            var ua = (from u in db.Sys_Users where (u.ID_User == user.Id_User) select u).FirstOrDefault();
+                            if (ua != null)
+                            {
+                                cus.User_assigned = cus.User_assigned + " " + ua.LastName + " " + ua.Name;
+                                cus.Team = cus.Team + " " + ua.Leader_Name;
+                            }
+
                         }
-                       
                     }
+                    
                     cus.DateString = cus.Creation_date.ToShortDateString();
 
 
