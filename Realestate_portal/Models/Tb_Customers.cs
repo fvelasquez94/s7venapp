@@ -36,8 +36,6 @@ namespace Realestate_portal.Models
         public string Address { get; set; }
         public string Zipcode { get; set; }
         public bool Lead { get; set; }
-        public int ID_User { get; set; }
-        public string User_assigned { get; set; }
         public bool Active { get; set; }
         public int ID_Company { get; set; }
         public System.DateTime Creation_date { get; set; }

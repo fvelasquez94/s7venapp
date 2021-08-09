@@ -170,8 +170,6 @@
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Zipcode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Lead" Type="bit" Nullable="false" />
-          <Property Name="ID_User" Type="int" Nullable="false" />
-          <Property Name="User_assigned" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="ID_Company" Type="int" Nullable="false" />
           <Property Name="Creation_date" Type="datetime" Nullable="false" />
@@ -1170,8 +1168,6 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Lead" Type="Boolean" Nullable="false" />
-          <Property Name="ID_User" Type="Int32" Nullable="false" />
-          <Property Name="User_assigned" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
           <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -2203,8 +2199,6 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
                 <ScalarProperty Name="Lead" ColumnName="Lead" />
-                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
-                <ScalarProperty Name="User_assigned" ColumnName="User_assigned" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
                 <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
