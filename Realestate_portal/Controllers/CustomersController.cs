@@ -136,7 +136,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,ID_User,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Create([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             if (tb_Customers.Birthday == null) { tb_Customers.Birthday = DateTime.UtcNow; }
@@ -145,9 +145,9 @@ namespace Realestate_portal.Controllers
             if (birthdemo < theDate) {
                 tb_Customers.Birthday = DateTime.UtcNow;
             }
-            var user_assigned = "";
+            
         
-            tb_Customers.User_assigned = "";
+           
             tb_Customers.ID_Company = activeuser.ID_Company;
             tb_Customers.Lead = false;
             if (tb_Customers.Zipcode == null) { tb_Customers.Zipcode = ""; }
@@ -195,8 +195,6 @@ namespace Realestate_portal.Controllers
                 newlead.Birthday = DateTime.UtcNow;
                 newlead.Marital_status = "";
                 newlead.Type = "";
-                newlead.ID_User = 4;
-                newlead.User_assigned = "Not Assigned";
                 newlead.State = "";
                 newlead.Lead = true;
                 newlead.ID_Company = 1;
@@ -443,7 +441,7 @@ namespace Realestate_portal.Controllers
         {
             var customer = (from a in db.Tb_Customers where (a.ID_Customer == id) select a).Include(f=> f.Sys_Company).FirstOrDefault();
 
-            var result = new { id = customer.ID_Customer, Name = customer.Name,Phone=customer.Phone, LastName = customer.LastName, Email = customer.Email, User = customer.User_assigned, DateCreated = customer.Creation_date };
+            var result = new { id = customer.ID_Customer, Name = customer.Name,Phone=customer.Phone, LastName = customer.LastName, Email = customer.Email, DateCreated = customer.Creation_date };
             
             return Json( result , JsonRequestBehavior.AllowGet);
         }
@@ -511,7 +509,7 @@ namespace Realestate_portal.Controllers
                                                       {
                                                           ID = t.ID_User,
                                                           FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName", tb_Customers.ID_User);
+                                                      }), "ID", "FullName");
                 }
                 else
                 {
@@ -527,7 +525,7 @@ namespace Realestate_portal.Controllers
                                                           {
                                                               ID = t.ID_User,
                                                               FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName", tb_Customers.ID_User);
+                                                          }), "ID", "FullName");
                     }
                     else
                     {
@@ -540,7 +538,7 @@ namespace Realestate_portal.Controllers
                                                               {
                                                                   ID = t.ID_User,
                                                                   FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName", tb_Customers.ID_User);
+                                                              }), "ID", "FullName");
                         }
                         else
                         {
@@ -589,7 +587,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,ID_User,User_assigned,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
         {
             try
             {               
@@ -602,40 +600,24 @@ namespace Realestate_portal.Controllers
                 Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
                 tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);
                 tb_Customers.Tb_Process = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
-                var usuarioantes = db.Tb_Customers.Where(c => c.ID_Customer == tb_Customers.ID_Customer).Select(c => c.ID_User).FirstOrDefault();
+               
 
                 db.Entry(tb_Customers).State=EntityState.Modified;
                 db.SaveChanges();
                 TempData["exito"] = "Customer info updated successfully.";
 
-                if (usuarioantes != tb_Customers.ID_User)
-                {
-                    var customerislead = (from h in db.Tb_Customers where (h.ID_Customer == tb_Customers.ID_Customer) select h).FirstOrDefault();
-
-                    if (tb_Customers.ID_User == 4)
-                    {
-                        customerislead.Lead = true;
-                        db.Entry(customerislead).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                    else {
-                        if (customerislead.Lead == true)
-                        {
-                            customerislead.Lead = false;
-                            db.Entry(customerislead).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
+              
+                       
            
-                    Sys_Notifications newnotification = new Sys_Notifications();
-                    newnotification.Active = true;
-                    newnotification.Date = DateTime.UtcNow;
-                    newnotification.Title = "New Customer assigned.";
-                    newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-                    newnotification.ID_user = tb_Customers.ID_User;
-                    db.Sys_Notifications.Add(newnotification);
-                    db.SaveChanges();                                       
-                }
+                    //Sys_Notifications newnotification = new Sys_Notifications();
+                    //newnotification.Active = true;
+                    //newnotification.Date = DateTime.UtcNow;
+                    //newnotification.Title = "New Customer assigned.";
+                    //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                    //newnotification.ID_user = tb_Customers.ID_User;
+                    //db.Sys_Notifications.Add(newnotification);
+                    //db.SaveChanges();                                       
+               
 
                 return RedirectToAction("CustomerDashboard", "CRM", new {id=tb_Customers.ID_Customer, broker= 0 });
             }

@@ -328,27 +328,11 @@ namespace Realestate_portal.Controllers
                                                             Creation_date = c.Creation_date,
                                                             ID_Company = c.ID_Company,
                                                             Lead = c.Lead,
-                                                            ID_User = c.ID_User,
+                                                            ID_User = 0,
                                                             Team = "",
                                                             DateString = "",
                                                         });
-            //IQueryable<CustomerTableViewModel> query = (from a in db.Tb_Customers join u in db.Sys_Users on a.ID_User equals u.ID_User orderby a.LastName ascending
-            //                                            select new CustomerTableViewModel
-            //                                            {
-            //                                                Id = a.ID_Customer,
-            //                                                Name = a.LastName +" "+ a.Name,
-            //                                                Marital_status = a.Marital_status,
-            //                                                Type = a.Type,
-            //                                                Email = a.Email,
-            //                                                Phone = a.Phone,
-            //                                                User_assigned = a.User_assigned,
-            //                                                Creation_date = a.Creation_date,
-            //                                                ID_Company=a.ID_Company,
-            //                                                Lead=a.Lead,
-            //                                                ID_User=a.ID_User,
-            //                                                Team = u.Leader_Name,
-            //                                                DateString ="",
-            //                                            }) ;
+           
 
                 IQueryable<CustomerTableViewModel> query2 = (from a in db.Tb_Customers
                                                             join c in db.Tb_Customers_Users on a.ID_Customer equals c.Id_Customer
@@ -366,7 +350,7 @@ namespace Realestate_portal.Controllers
                                                                 Creation_date = a.Creation_date,
                                                                 ID_Company = a.ID_Company,
                                                                 Lead = a.Lead,
-                                                                ID_User = u.ID_User,
+                                                                ID_User = 0,
                                                                 Team = u.Leader_Name,
                                                                 DateString = "",
                                                             });
@@ -615,11 +599,11 @@ namespace Realestate_portal.Controllers
                                                                 Type = a.Type,
                                                                 Email = a.Email,
                                                                 Phone = a.Phone,
-                                                                User_assigned = a.User_assigned,
+                                                                User_assigned = "",
                                                                 Creation_date = a.Creation_date,
                                                                 ID_Company = a.ID_Company,
                                                                 Lead = a.Lead,
-                                                                ID_User = a.ID_User,
+                                                                ID_User = 0,
                                                                 DateString = "",
                                                             });
 
@@ -821,26 +805,26 @@ namespace Realestate_portal.Controllers
             }
         }
         [HttpPost]
-        public ActionResult UpdateByAjaxSideBard(int? id,int broker, int UserID,string UserName, string stage)
+        public ActionResult UpdateByAjaxSideBard(int? id,int broker, string stage)
         {
             Tb_Customers tb_Customers =(from a in db.Tb_Customers.Where(a=> a.ID_Customer==id) select a).AsNoTracking().FirstOrDefault();
-            tb_Customers.ID_User =UserID;
+       
             tb_Customers.Marital_status = stage;
-            tb_Customers.User_assigned = UserName;
+         
 
             db.Entry(tb_Customers).State = EntityState.Modified;
             db.SaveChanges();
 
             
 
-            Sys_Notifications newnotification = new Sys_Notifications();
-            newnotification.Active = true;
-            newnotification.Date = DateTime.UtcNow;
-            newnotification.Title = "New Customer assigned.";
-            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-            newnotification.ID_user = UserID;
-            db.Sys_Notifications.Add(newnotification);
-            db.SaveChanges();
+            //Sys_Notifications newnotification = new Sys_Notifications();
+            //newnotification.Active = true;
+            //newnotification.Date = DateTime.UtcNow;
+            //newnotification.Title = "New Customer assigned.";
+            //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+            //newnotification.ID_user = UserID;
+            //db.Sys_Notifications.Add(newnotification);
+            //db.SaveChanges();
 
             return null;
         }
@@ -898,7 +882,7 @@ namespace Realestate_portal.Controllers
                                                       {
                                                           ID = t.ID_User,
                                                           FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName", tb_Customers.ID_User);
+                                                      }), "ID", "FullName");
 
                     
 
@@ -942,7 +926,7 @@ namespace Realestate_portal.Controllers
                                                           {
                                                               ID = t.ID_User,
                                                               FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName", tb_Customers.ID_User);
+                                                          }), "ID", "FullName");
                     }
                     else
                     {
@@ -956,7 +940,7 @@ namespace Realestate_portal.Controllers
                                                               {
                                                                   ID = t.ID_User,
                                                                   FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName", tb_Customers.ID_User);
+                                                              }), "ID", "FullName");
 
                             var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
 

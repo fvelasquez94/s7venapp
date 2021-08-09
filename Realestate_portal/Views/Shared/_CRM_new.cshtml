@@ -95,24 +95,7 @@
                     <a href="#" class="primary-color"><strong>Source: </strong><br />@Model.customer.Source </a>
                     <br />
                     <div class="row" style="margin:auto">
-                        @*@if (ViewBag.rol == "Admin")
-        {
-            <div class="form-group">
-                <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                <div style="margin-left: 10px;">
-                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
-                </div>
-            </div>
-        }
-        else
-        {
-            <div style="display:none; position: relative; left: 15px;" class="form-group">
-                <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                <div>
-                    @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
-                </div>
-            </div>
-        }*@
+        
                         <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
                        
 
@@ -130,9 +113,9 @@
                             }
                             else
                             {
-                                @if (ViewBag.rol != "Agent")
+                                if (ViewBag.rol != "Agent")
                                 {
-                                    <a class="la la-users la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})">Agents assigned</a>
+                                    <a class="la la-users la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})"><strong>User list</strong></a>
                                 }
                             }
 
@@ -326,7 +309,7 @@
 
         window.onload = function () {
 
-             var options = document.getElementById("assignagent").options;
+             @*var options = document.getElementById("assignagent").options;
             for (var option of options) {
                 if (option.text === ("@Model.customer.User_assigned")) {
                         option.selected = true;
@@ -359,7 +342,7 @@
                 }
             }
 
-    });
+    });*@
 
 
 
