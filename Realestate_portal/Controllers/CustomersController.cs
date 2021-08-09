@@ -162,14 +162,7 @@ namespace Realestate_portal.Controllers
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
 
-            //Sys_Notifications newnotification = new Sys_Notifications();
-            //newnotification.Active = true;
-            //newnotification.Date = DateTime.UtcNow;
-            //newnotification.Title = "New Customer assigned.";
-            //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-            //newnotification.ID_user = user_assigned.ID_User;
-            //db.Sys_Notifications.Add(newnotification);
-            //db.SaveChanges();
+           
 
 
             return RedirectToAction("AssignList", "Tb_Customers_Users", new { id = tb_Customers.ID_Customer, broker = 0});

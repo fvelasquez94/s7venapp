@@ -201,12 +201,22 @@ namespace Realestate_portal.Controllers
             try
             {
                 Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+                var customer_name = (from c in db.Tb_Customers where (c.ID_Customer == idCustomer) select c).FirstOrDefault();
 
                 foreach (var item in agentsId)
                 {
                     customerUsers.Id_Customer = idCustomer;
                     customerUsers.Id_User = item;
                     db.Tb_Customers_Users.Add(customerUsers);
+                    db.SaveChanges();
+
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "Customer assigned.";
+                    newnotification.Description = "Customer: " + customer_name.Name + " " + customer_name.LastName + ".";
+                    newnotification.ID_user = item;
+                    db.Sys_Notifications.Add(newnotification);
                     db.SaveChanges();
                 }
                 result = "SUCCESS";
@@ -230,6 +240,7 @@ namespace Realestate_portal.Controllers
             try
             {
                 var agents = (from a in db.Tb_Customers_Users where (a.Id_Customer == idCustomer) select a).ToList();
+                var customer_name = (from c in db.Tb_Customers where (c.ID_Customer == idCustomer) select c).FirstOrDefault();
                 foreach (var item in agents)
                 {
                     Tb_Customers_Users tb_Customers_Users = db.Tb_Customers_Users.Find(item.Id_Customer_User);
@@ -243,6 +254,15 @@ namespace Realestate_portal.Controllers
                     customers_Users.Id_Customer = idCustomer;
                     customers_Users.Id_User = item;
                     db.Tb_Customers_Users.Add(customers_Users);
+                    db.SaveChanges();
+
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "Customer assigned.";
+                    newnotification.Description = "Customer: " + customer_name.Name + " " + customer_name.LastName + ".";
+                    newnotification.ID_user = item;
+                    db.Sys_Notifications.Add(newnotification);
                     db.SaveChanges();
 
                 }
