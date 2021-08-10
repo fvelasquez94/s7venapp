@@ -453,8 +453,8 @@ namespace Realestate_portal.Controllers
                             var ua = (from u in db.Sys_Users where (u.ID_User == user.Id_User) select u).FirstOrDefault();
                             if (ua != null)
                             {
-                                cus.User_assigned = cus.User_assigned + " -- " + ua.LastName + " " + ua.Name;
-                                cus.Team = cus.Team + " " + ua.Leader_Name;
+                                cus.User_assigned = cus.User_assigned + "   " + ua.LastName + " " + ua.Name;
+                                cus.Team = cus.Team + "   " + ua.Leader_Name;
                             }
 
                         }
