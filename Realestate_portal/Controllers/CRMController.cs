@@ -501,7 +501,7 @@ namespace Realestate_portal.Controllers
                 }
                 else
                 {
-                    user_assigned = user_assigned + " -- " + item.User_assigned;
+                    user_assigned = user_assigned + "    " + item.User_assigned;
 
                     foreach (var leads in teamLeads)
                     {
@@ -1029,7 +1029,7 @@ namespace Realestate_portal.Controllers
 
                 dcustomer.pack_Det = lstpackages;
                 dcustomer.package = Id_doc;
-                return View(  "CustomerDashboard", dcustomer);
+                return View("CustomerDashboard", dcustomer);
 
             }
             else
