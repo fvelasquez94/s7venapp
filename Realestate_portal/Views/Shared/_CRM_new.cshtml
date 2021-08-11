@@ -96,7 +96,7 @@
                     <br />
                     <div class="row" style="margin:auto">
         
-                        <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
+                        <a href="#" class="primary-color"><strong>Assigned Agent :</strong></a>
                        
 
                         <div style="margin-left: 10px;">
@@ -115,11 +115,11 @@
                             {
                                 if (ViewBag.rol != "Agent")
                                 {
-                                    <a class="la la-users la-2x" style="color:#2c9ad6; padding: 15px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})"></a>
+                                    <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 10px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})">Agent assign</a>
                                 }
                             }
 
-
+                            </br>
                         </div>
                         <div class="form-group">
                             <a href="#" class="primary-color"><strong>Stage : </strong></a>
