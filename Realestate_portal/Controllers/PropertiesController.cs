@@ -82,7 +82,7 @@ namespace Realestate_portal.Controllers
                                                       }), "ID", "FullName");
 
                     ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
-                                                          where (t.Lead == false && t.ID_User==activeuser.ID_User)
+                                                          where (t.Lead == false)
                                                           select new
                                                           {
                                                               ID = t.ID_Customer,
@@ -250,7 +250,7 @@ namespace Realestate_portal.Controllers
                                                       }), "ID", "FullName");
 
                     ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
-                                                          where (t.Lead == false && t.ID_User == activeuser.ID_User)
+                                                          where (t.Lead == false)
                                                           select new
                                                           {
                                                               ID = t.ID_Customer,

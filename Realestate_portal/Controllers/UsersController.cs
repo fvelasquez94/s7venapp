@@ -1008,15 +1008,6 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
 
-                var leadlist = (from l in db.Tb_Customers where (l.ID_User == id) select l).ToList();
-                    foreach (var item in leadlist)
-                    {
-                        item.ID_User = companybroker.ID_User;
-                        item.User_assigned = companybroker.Name + " " + companybroker.LastName;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
                 var process = (from s in db.Tb_Process where (s.ID_User == id) select s).ToList();
                     foreach (var item in process)
                     {
@@ -1099,6 +1090,13 @@ namespace Realestate_portal.Controllers
                     {
                         item.Id_Leader = 0;
                         db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                var customer = (from c in db.Tb_Customers_Users where (c.Id_User == id) select c).ToList();
+                    foreach (var item in customer)
+                    {
+                        Tb_Customers_Users customers_Users = db.Tb_Customers_Users.Find(item.Id_Customer_User);
+                        db.Tb_Customers_Users.Remove(customers_Users);
                         db.SaveChanges();
                     }
 

@@ -95,53 +95,31 @@
                     <a href="#" class="primary-color"><strong>Source: </strong><br />@Model.customer.Source </a>
                     <br />
                     <div class="row" style="margin:auto">
-                        @*@if (ViewBag.rol == "Admin")
+        
+                        <a href="#" class="primary-color"><strong>Assigned Agent :</strong></a>
+                       
+
+                        <div style="margin-left: 10px;">
+
+
+
+                            @if (ViewBag.rol == "Agent")
                             {
-                                <div class="form-group">
-                                    <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                                    <div style="margin-left: 10px;">
-                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
-                                    </div>
-                                </div>
+                                foreach (var item in agents)
+                                {
+                                    <p>@item.LastName @item.Name</p>
+
+                                }
                             }
                             else
                             {
-                                <div style="display:none; position: relative; left: 15px;" class="form-group">
-                                    <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                                    <div>
-                                        @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control select-crm-agent", @id = "assignagent" })
-                                    </div>
-                                </div>
-                            }*@
-                        <a href="#" class="primary-color" style="position:relative; right:20px;"><strong>Assigned Agent : </strong></a>
-                        <div style="margin-left: 10px;">
-                            <select class="form-control select-crm-agent" id="assignagent">
-
-                                @if (ViewBag.rol == "Agent")
+                                if (ViewBag.rol != "Agent")
                                 {
-                                    foreach (var item in agents)
-                                    {
-                                        <option value="@item.ID_User">@item.LastName @item.Name</option>
-                                    }
+                                    <a class="btn" style="background:#f4f4f4; color:#2c9ad6; padding: 10px 30px;" href="@Url.Action("AssignEdit", "Tb_Customers_Users", new { id = ViewBag.customer, broker = 0})">Agent assign</a>
                                 }
-                                else
-                                {
+                            }
 
-                                    foreach (var item in agents)
-                                    {
-                                        if (Model.customer.User_assigned.Equals(item.LastName + " " + item.Name))
-                                        {
-                                            <option value="@item.ID_User" selected>@item.LastName @item.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.ID_User">@item.LastName @item.Name</option>
-                                        }
-
-                                    }
-                                }
-
-                            </select>
+                            </br>
                         </div>
                         <div class="form-group">
                             <a href="#" class="primary-color"><strong>Stage : </strong></a>
@@ -331,7 +309,7 @@
 
         window.onload = function () {
 
-             var options = document.getElementById("assignagent").options;
+             @*var options = document.getElementById("assignagent").options;
             for (var option of options) {
                 if (option.text === ("@Model.customer.User_assigned")) {
                         option.selected = true;
@@ -364,7 +342,7 @@
                 }
             }
 
-    });
+    });*@
 
 
 

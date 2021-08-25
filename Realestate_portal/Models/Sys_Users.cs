@@ -21,6 +21,7 @@ namespace Realestate_portal.Models
             this.Tb_Reminders = new HashSet<Tb_Reminders>();
             this.Tb_Notes = new HashSet<Tb_Notes>();
             this.Tb_DocuAgent = new HashSet<Tb_DocuAgent>();
+            this.Tb_Customers_Users = new HashSet<Tb_Customers_Users>();
         }
     
         public int ID_User { get; set; }
@@ -76,5 +77,7 @@ namespace Realestate_portal.Models
         public virtual ICollection<Tb_Notes> Tb_Notes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_DocuAgent> Tb_DocuAgent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tb_Customers_Users> Tb_Customers_Users { get; set; }
     }
 }
