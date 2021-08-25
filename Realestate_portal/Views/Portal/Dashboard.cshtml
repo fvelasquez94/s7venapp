@@ -54,7 +54,7 @@
                                         @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
                                         {
                                             <p>Brokerage Name: @company.Name</p>
-                                            if(user.Team_Leader == true)
+                                            if (user.Team_Leader == true)
                                             {
                                                 <p>Team name: @user.Leader_Name</p>
                                             }
@@ -515,12 +515,12 @@
 
                                         @if (ViewBag.rol == "SA")
                                         {
-                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal", new { broker=ViewBag.selbroker})">Documents Upload</a></h4>
+                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal", new { broker=ViewBag.selbroker})">Documents History</a></h4>
                                         }
                                         else
                                         {
 
-                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal")">Documents Upload</a></h4>
+                                            <h4 class="name"><a href="@Url.Action("Documents_upload","Portal")">Documents History</a></h4>
                                         }
 
 
@@ -779,6 +779,86 @@
                                 </div>
                                 <!-- End Card -->
                             </div>}
+
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-list-ul"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+
+                                        <h4 class="name"><a href="https://www.lirealtor.com/" target="_blank">YOUR MLS</a></h4>
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            MLS
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
+                            <!-- Begin Card -->
+                            <div class="widget-image has-shadow">
+                                <div class="contact-card">
+                                    <!-- Begin Widget Image -->
+                                    <div class="cover-image mx-auto">
+
+                                        <div class="c-icon">
+                                            <i class="la la-home"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Begin Widget Body -->
+                                    <div class="widget-body">
+
+
+                                        <h4 class="name"><a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank">Comparative Market Analysis</a></h4>
+
+
+
+                                        <div class="item">
+                                            <div class="quick-about">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12">
+
+                                                        <p>
+                                                            Realtor property resource RPR
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- End Widget Body -->
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
                     </div>
 
                 </div>
