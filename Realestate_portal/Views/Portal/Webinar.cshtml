@@ -1,268 +1,33 @@
 ﻿@model List<Realestate_portal.Models.Tb_Webinars>
 @{
-    ViewBag.Title = "Premium Group Realty | Webinar";
+    ViewBag.Title = "Premium Group Realty - Webinar";
 }
+<div class="grid grid-cols-12 gap-6 mt-8">
+    <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+        <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+            WEBINARS
+        </h2>
+        <!-- BEGIN: File Manager Menu -->
+        <div class="intro-y box p-5 mt-6">
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">AVAILABLES WEBINAR</li>
-                    </ul>
-                </div>
-            </div>
+            <iframe src="https://calendar.google.com/calendar/b/4/embed?height=400&amp;wkst=1&amp;bgcolor=%23A79B8E&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showNav=0&amp;showTitle=0&amp;showTabs=0&amp;showCalendars=0&amp;showDate=1&amp;mode=AGENDA&amp;showPrint=0&amp;showTz=0" style="border:solid 1px #777" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+
+
         </div>
+        <!-- END: File Manager Menu -->
     </div>
-    <!-- End Page Header -->
-    <!-- Begin Row -->
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+        <!-- BEGIN: File Manager Filter -->
+        <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
+           
 
+                <iframe src="https://calendar.google.com/calendar/b/4/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=1" style="width:100%;height:950px" frameborder="0" scrolling="no"></iframe>
 
-    <div class="row">
-
-
-        <!-- Begin Widget Header -->
-        <!-- End Widget Header -->
-        <!-- Begin Widget Body -->
-        <div class="widget-body" style="width:100%;">
-            <div class="widget-header bordered d-flex align-items-center">
-                <div class="today">
-                    <div class="title">CHECK</div>
-                    <div class="new-tasks">ALL THE AVAILABLES WEBINARS </div>
-                </div><h2></h2>
-                      <div class="widget-options">
-
-                      </div>
-            </div><br />
-                  <div class="row">
-                      <!-- Begin Events -->
-                
-                      <div class="col-md-2">
-                    
-                              <h5>Coming soon events</h5>
-                         
-                          <iframe src="https://calendar.google.com/calendar/b/4/embed?height=400&amp;wkst=1&amp;bgcolor=%23A79B8E&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showNav=0&amp;showTitle=0&amp;showTabs=0&amp;showCalendars=0&amp;showDate=1&amp;mode=AGENDA&amp;showPrint=0&amp;showTz=0" style="border:solid 1px #777" width="220" height="400" frameborder="0" scrolling="no"></iframe>
-                      </div>
-                      <div class="col-md-9">
-                          <iframe src="https://calendar.google.com/calendar/b/4/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=1" style="width:100%;height:950px" frameborder="0" scrolling="no"></iframe>
-                      </div>
-                      <div class="col-md-1"></div>
-                      @*<div class="col-xl-3">
-                            <div class="widget-32 widget-image bg-image" style="display:none;">
-                                <div class="overlay"></div>
-                                <div class="content">
-                                    <div id="events-day"></div>
-                                    <div id="events-date"></div>
-                                    <div id="events-year"></div>
-                                </div>
-                                <div class="real-time">
-                                    <div id="events-time"></div>
-                                </div>
-                            </div>
-
-                            <div class="widget has-shadow">
-                                <div class="widget-header bordered no-actions">
-                                    <h5>Month's  Webinars</h5>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget widget-14 has-shadow">
-                                        <ul class="list-group w-100 mt-3" id="webinarlist">
-                                            @if (Model.Count() > 0)
-                                            {
-                                                foreach (var item in Model) {
-                                            <li class="list-group-item">
-                                                <div class="media">
-                                                    <div class="event-date align-self-center mr-3">
-                                                        @item.Date.Day
-                                                    </div>
-                                                    <div class="media-body align-self-center">
-                                                        @if (item.Category == "Meeting")
-            {
-                                                    <div class="event-title text-secondary">@item.Title.ToUpper()</div>
-        }
-        else
-        {
-                                                    <div class="event-title text-info">@item.Title.ToUpper()</div>
-        }
-                                                        <div class="event-desc mr-3">
-                                                            <i class="la la-calendar"></i>
-                                                            <span>@item.Date.ToShortTimeString()</span>
-                                                        </div>
-                                                        <div class="event-desc">
-
-                                                            <a href="@item.Url"target="_blank" style="font-size:12px;" class="badge badge-info">Go to webinar</a>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </li>
-                                                }
-
-                                            }
-                                            else {
-                                             <li class="list-group-item">No data to show</li>
-                                            }
-
-                                        </ul>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- End Events -->
-                        <div class="col-xl-9">
-                            <!-- Begin Widget -->
-                            <div class="widget has-shadow">
-
-                                <!-- End Widget Header -->
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-                                    <!-- Begin Calendar -->
-                                    <div id="calendar-container">
-                                        <div id="fullcalendar"></div>
-                                    </div>
-                                    <!-- End Calendar -->
-                                </div>
-                                <!-- End Calendar -->
-                            </div>
-                            <!-- End Widget -->
-                        </div>*@
-                  </div>
-
+           
         </div>
-        <!-- End Widget Body -->
-
-
-    </div>
-    <!-- End Row -->
-
-</div>
-<!-- End Container -->
+        <!-- END: File Manager Filter -->
 
 
 
-<div id="modalNewwebinar" class="modal fade">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Webinar</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">close</span>
-                </button>
-            </div>
-            <form id="htmlform" method="post">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="form-group">
-                                <label>Title *</label>
-                                <input type="text" class="form-control" id="title" required />
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="form-group">
-                                <label>Date and Time *</label>
-                                <input type="datetime-local" class="form-control" id="date" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label>URL (From Zoom App) *</label>
-                                <input type="text" id="url" class="form-control" required />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea id="description" class="form-control"></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
-                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    window.onload = function () {
-        $('#htmlform').on('submit', function (event) {
-            $("#subbtnenviar").attr("disabled", true);
-            event.preventDefault();
-
-            $("#preloader").show();
-
-
-            var formData = new FormData();
-
-            var title = $("#title").val();
-            var category = "";
-            var description = $.trim($("#description").val());
-            var url = $("#url").val();
-            var date = $("#date").val();
-
-
-            $.ajax({
-                type: "POST",
-                url: '/Portal/UploadWebinar',
-                data: JSON.stringify({
-                    title: title,
-                    url: url,
-                    date: date,
-                    description: description,
-                    category: category
-                }),
-                datatype: 'application/json',
-                contentType: 'application/json',
-                processData: false,
-                success: function (response) {
-                    if (response == "SUCCESS") {
-                        $("#loader_form").hide();
-                        $("#subbtnenviar").attr("disabled", false);
-
-                        new Noty({
-                            type: 'success',
-                            layout: 'topRight',
-                            text: 'Webinar added successfully',
-                            progressBar: true,
-                            timeout: 2500
-                        }).show()
-                        setTimeout(function () {
-                            window.location.reload(true);
-                        }, 2000);
-
-                    } else {
-                        $("#loader_form").hide();
-                        $("#subbtnenviar").attr("disabled", false);
-                        alert(response);
-                    }
-                },
-                error: function (error) {
-                    $("#loader_form").hide();
-                    $("#subbtnenviar").attr("disabled", false);
-                    alert("Error uploading video");
-                }
-            });
-        });
-
-    }
-</script>

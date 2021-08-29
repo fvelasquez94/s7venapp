@@ -1,0 +1,200 @@
+﻿
+@{
+    Layout = null;
+}
+
+<nav class="top-nav">
+    <ul>
+        <li>
+            <a href="@Url.Action("Dashboard", "Portal")" class="top-menu top-menu--active">
+                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                <div class="top-menu__title"> Dashboard  </div>
+            </a>
+
+        </li>
+        <li>
+            @if (ViewBag.rol == "SA")
+            {
+      <a href="@Url.Action("CRMDashboard", "CRM", new { broker = ViewBag.selbroker })" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="users"></i> </div>
+            <div class="top-menu__title"> CRM </div>
+        </a>
+            }
+            else
+            {
+                      <a href="@Url.Action("CRMDashboard", "CRM")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="users"></i> </div>
+            <div class="top-menu__title"> CRM </div>
+        </a>
+            }
+                      <ul class="">
+                          <li>
+                              <a href="top-menu-dark-wysiwyg-editor-classic.html" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Leads</div>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="top-menu-dark-wysiwyg-editor-inline.html" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Task management</div>
+                              </a>
+                          </li>
+                      </ul>
+        </li>
+        <li>
+            @if (ViewBag.rol == "SA")
+            {
+                            <a href="@Url.Action("PGR_network", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="share-2"></i> </div>
+                <div class="top-menu__title"> Network </div>
+            </a>
+            }
+            else
+            {
+                            <a href="@Url.Action("PGR_network", "Portal")" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="share-2"></i> </div>
+                <div class="top-menu__title"> Network </div>
+            </a>
+            }
+
+
+        </li>
+        @*<li>
+            <a href="javascript:;" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="activity"></i> </div>
+                <div class="top-menu__title"> Market </div>
+            </a>
+
+        </li>*@
+        <li>
+            @if (ViewBag.rol == "SA")
+                {
+                      <a href="@Url.Action("Documents_upload", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="box"></i> </div>
+            <div class="top-menu__title"> Documents History </div>
+        </a>
+                }
+            else{
+                      <a href="@Url.Action("Documents_upload", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="box"></i> </div>
+            <div class="top-menu__title"> Documents History </div>
+        </a>
+            }
+  
+
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="archive"></i> </div>
+                <div class="top-menu__title"> General Resources </div>
+            </a>
+
+            <ul class="top-menu__sub-open">
+                <li>
+                    @if (ViewBag.rol == "SA")
+        {
+            <a href="@Url.Action("Resouces", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                <div class="top-menu__title">Resources</div>
+            </a>
+}
+else
+{
+            <a href="@Url.Action("Resources", "Portal")" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                <div class="top-menu__title">Resources</div>
+            </a>
+}
+
+                </li>
+                @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                {
+                <li>
+                    @if (ViewBag.rol == "SA")
+                    {
+            <a href="@Url.Action("Resouces_broker", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                <div class="top-menu__title">Broker Resources</div>
+            </a>
+                    }
+                    else
+                    {
+            <a href="@Url.Action("Resources_broker", "Portal")" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                <div class="top-menu__title">Broker Resources</div>
+            </a>
+                    }
+
+                </li>}
+            </ul>
+
+        </li>
+        <li>
+            @if (ViewBag.rol == "SA")
+    {
+        <a href="@Url.Action("Videos", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="tv"></i> </div>
+            <div class="top-menu__title"> Videos </div>
+        </a>
+}
+else
+{
+        <a href="@Url.Action("Videos", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="tv"></i> </div>
+            <div class="top-menu__title"> Videos </div>
+        </a>
+}
+
+
+        </li>
+        <li>
+            @if (ViewBag.rol == "SA")
+    {
+        <a href="@Url.Action("Marketing", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
+            <div class="top-menu__title"> Marketing Resources </div>
+        </a>
+}
+else
+{
+        <a href="@Url.Action("Marketing", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
+            <div class="top-menu__title"> Marketing </div>
+        </a>
+}
+
+
+        </li>
+        <li>
+            @if (ViewBag.rol == "SA")
+    {
+        <a href="@Url.Action("Webinar", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="calendar"></i> </div>
+            <div class="top-menu__title"> Webinars </div>
+        </a>
+}
+else
+{ 
+                <a href="@Url.Action("Webinar", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="calendar"></i> </div>
+            <div class="top-menu__title"> Webinars </div>
+        </a>
+
+}
+
+        </li>
+        <li>
+            <a href="https://www.lirealtor.com/" target="_blank" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                <div class="top-menu__title"> Your MLS </div>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank"  class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="activity"></i> </div>
+                <div class="top-menu__title"> Your CMA </div>
+            </a>
+        </li>
+    </ul>
+</nav>

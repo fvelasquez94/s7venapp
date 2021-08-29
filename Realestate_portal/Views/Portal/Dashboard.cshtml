@@ -7,861 +7,328 @@
     Sys_Company company = (Sys_Company)ViewBag.company;
 }
 
-<div class="container-fluid newsfeed">
-    <div class="row justify-content-center">
-        <div class="col-xl-11">
-            <div class="row">
-                <div class="col-xl-4 column">
-                    <!-- Begin Groups -->
-                    <div class="widget widget-13 has-shadow">
-                        <div class="widget-body p-0">
-
-                            <div class="author-avatar" id="OpenImgUpload" style="cursor:pointer">
-
-                                @if (user.Image == "")
-                                {
-                                    <img src="~/Content/assets/img/avatar/avatar-04.jpg" alt="..." class="img-fluid rounded-circle" style="width:100px !important;height:100px !important;">
-                                }
-                                else
-                                {
-                                    <img src="@Url.Content(user.Image)" alt="..." class="img-fluid rounded-circle" style="width:100px !important;height:100px !important;">
-                                }
-                                <i class="la la-rotate-right"></i>
-
+<div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 2xl:col-span-9">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- BEGIN: Notification -->
+            @*<div class="col-span-12 mt-6 -mb-6 intro-y">
+                <div class="alert alert-dismissible show box bg-theme-25 text-white flex items-center mb-6" role="alert">
+                    <span>Introducing new dashboard!<a href="#" class="underline ml-1" target="blank">themeforest.net</a>.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <i data-feather="x" class="w-4 h-4"></i> </button>
+                </div>
+            </div>*@
+            <!-- BEGIN: Notification -->
+            <!-- BEGIN: General Report -->
+            <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-2">
+                <div class="intro-y block sm:flex items-center h-10">
+                    <h2 class="text-lg font-medium truncate mr-5">
+                        Dashboard
+                    </h2>
+   
+                </div>
+                <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                    <div class="box sm:flex">
+                        <div class="px-8 py-12 flex flex-col justify-center flex-1">
+                            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+                                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                                    @if (user.Image == "")
+            {
+                        <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-6.jpg">
+}
+else
+{
+                        <img src="@Url.Content(user.Image)" alt="S7VEN" class="rounded-full">
+}
+                                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                                </div>
+                                <div class="ml-5">
+                                    <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">@user.Name @user.LastName</div>
+                                    <div class="text-gray-600">
+                                        @if (ViewBag.rol == "Agent")
+                {
+                        <span>Real Estate Agent</span>
+}
+else if (ViewBag.rol == "Admin")
+{ <span>Broker</span>}
+else if (ViewBag.rol == "SA")
+{ <span>Super Administrator</span>}
+                                    </div>
+                                </div>
+                                <input type="file" id="imgupload" style="display:none" />
 
 
 
                             </div>
-
-                            <div class="author-name">
-                                <br />
-                                @user.Name @user.LastName
-                                @if (ViewBag.rol == "Agent")
-                                {
-                                    <span>Real Estate Agent</span>
-                                }
-                                else if (ViewBag.rol == "Admin")
-                                { <span>Broker</span>}
-                                else if (ViewBag.rol == "SA")
-                                { <span>Super Administrator</span>}
-
-                            </div>
-                            <input type="file" id="imgupload" style="display:none" />
                             <br /><br />
-                            <div class="social-stats " style="margin-left:20px;margin-top:10px">
-                                <div class="row">
-                                    <div class="col-12">
-                                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-                                        {
-                                            <p>Brokerage Name: @company.Name</p>
-                                            if (user.Team_Leader == true)
-                                            {
-                                                <p>Team name: @user.Leader_Name</p>
-                                            }
-                                            else
-                                            {
-                                                <p>Team name: @user.Leader_Name</p>
-                                            }
-                                            <p>Address: @userBroker.Brokerage_address</p>
-                                            <p>Broker Contact: @userBroker.Broker_Contact</p>
-                                            <p>Broker License: @userBroker.Broker_License</p>
-                                            <p>My License #: @user.My_License </p>
-                                            <p>Member Since: @user.Member_since.ToShortDateString()</p>
-                                        }
-                                        else if (ViewBag.rol == "SA")
-                                        { }
+                                  <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
 
+                                      <p><strong>Brokerage Name:</strong> @company.Name</p><br />
+                                      <img alt="S7VEN" style="width:150px" src="~/Content/dist/images/profile-6.jpg">
+                                  </div>
+                         
 
-
-                                    </div>
-
-                                </div>
+                        </div>
+                        <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-gray-300 dark:border-dark-5 border-dashed">
+                            <div class="text-gray-600 dark:text-gray-600 text-xs">LISTINGS</div>
+                            <div class="mt-1.5 flex items-center">
+                                <div class="text-base">0</div>
+                                <div class="text-theme-21 flex text-xs font-medium tooltip cursor-pointer ml-2" title="2% Lower than last month"> 0% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
-                            <div class="shape-container">
-                                <svg class="wavy" viewbox="00 0 85 25">
-                                    <path fill="#e4e8f0" d="M0 30 V15 Q30 3 60 15 V30z" />
-                                    <path fill="#265fa4" d="M0 30 V5 Q30 20 55 12 T100 11 V30z" />
-                                </svg>
+                            <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">PROJECTIN GAINS</div>
+                            <div class="mt-1.5 flex items-center">
+                                <div class="text-base">$0.00</div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="49% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                            </div>
+                            <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">EARNINGS</div>
+                            <div class="mt-1.5 flex items-center">
+                                <div class="text-base">$0.00</div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="52% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                            </div>
+                            <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">NEW CUSTOMERS</div>
+                            <div class="mt-1.5 flex items-center">
+                                <div class="text-base">0</div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="52% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Begin Widget -->
-                    <div class="widget has-shadow">
-                        <!-- End Widget Header -->
-                        <!-- Begin Widget Body -->
-                        <!-- Begin Comments -->
-                        <div class="comments">
-                            <div class="comments-header d-flex align-items-center">
-                                <div class="d-flex flex-column mr-auto">
-                                    <div class="title">
-                                        <span class="username">Quote of the day</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="comments-body">
-                                <p>
-                                    "@ViewBag.quote"
-                                </p>
-                            </div>
-                            <div class="comments-footer d-flex align-items-center">
-                                <div class="meta">
-                                    -@ViewBag.author
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Comments -->
-
-
-                    </div>
-                    <!-- End Groups -->
-
-                </div>
-                <!-- End Col -->
-                <!-- Begin Timeline -->
-                <div class="col-xl-8">
-                    @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-                    {
-                        if (Model.Count > 0)
-                        {
-                            foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
-                            {
-                                <!-- Begin Widget -->
-                                <div class="widget has-shadow">
-                                    <!-- Begin Widget Header -->
-                                    <div class="widget-header d-flex align-items-center">
-                                        <div class="user-image">
-                                            @*<img class="rounded-circle" src="~/Content/assets/img/avatar/avatar-09.jpg" alt="...">*@
-                                        </div>
-                                        <div class="d-flex flex-column mr-auto">
-                                            <div class="title">
-                                                <span class="username" style="color:#4f3a58">News Feed</span>
-                                            </div>
-                                            <div class="time">Broker message: @item.Title</div>
-                                        </div>
-
-                                    </div>
-                                    <!-- End Widget Header -->
-                                    <!-- Begin Widget Body -->
-                                    <div class="widget-body">
-                                        <p>
-                                            @item.Content_post
-                                        </p>
-                                    </div>
-                                    <!-- End Widget Body -->
-                                    <!-- Begin Widget Footer -->
-                                    <div class="widget-footer d-flex align-items-center">
-                                        <div class="col no-padding d-flex justify-content-start">
-                                            <div class="users-like">
-                                                @*<a href="javascript:void(0);">
-                                                        <img src="~/Content/assets/img/avatar/avatar-03.jpg" class="img-fluid rounded-circle" alt="...">
-                                                    </a>
-                                                    <a href="javascript:void(0);">
-                                                        <img src="~/Content/assets/img/avatar/avatar-05.jpg" class="img-fluid rounded-circle" alt="...">
-                                                    </a>
-                                                    <a href="javascript:void(0);">
-                                                        <img src="~/Content/assets/img/avatar/avatar-07.jpg" class="img-fluid rounded-circle" alt="...">
-                                                    </a>
-                                                    <a href="javascript:void(0);">
-                                                        <img src="~/Content/assets/img/avatar/avatar-04.jpg" class="img-fluid rounded-circle" alt="...">
-                                                    </a>*@
-                                                @if (ViewBag.likepost == 1)
-                                                {
-                                                    <label id="textlike">You like this post.</label>
-                                                }
-                                                else
-                                                {
-                                                    <label id="textlike" style="display:none;">You like this post.</label>
-                                                }
-                                            </div>
-                                        </div>
-                                        <div class="col no-padding d-flex justify-content-end">
-                                            <div class="meta">
-                                                <ul>
-                                                    <li>
-                                                        <a style="color:#5d5386 !important" href="javascript:void(0);" onclick="showcomments();">
-                                                            <i class="la la-comment"></i><span class="numb" id="numcomments">@item.Comments</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a style="color:#5d5386 !important" href="javascript:void(0);" onclick="likepost();">
-                                                            @if (ViewBag.likepost == 1)
-                                                            {
-                                                                <i class="la la-heart" id="likeposticon"></i><span class="numb" id="numlikes">@item.Likes</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <i class="la la-heart-o" id="likeposticon"></i><span class="numb" id="numlikes">@item.Likes</span>
-                                                            }
-
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Widget Footer -->
-                                    <!--POSTS-->
-                                    @if (Model.Where(c => c.Active == true && c.Post_type == 2).Count() > 0)
-                                    {
-                                        <div id="commentshide" style="display:none;">
-                                            <div class="basic-scroll pr-2 pl-2" style="height: 350px; overflow: hidden; outline: none; touch-action: none;" tabindex="3">
-                                                @foreach (var item2 in Model.Where(c => c.Active == true && c.Post_type == 2))
-                                                {
-
-                                                    <div class="reply" style="background-color:white !important">
-                                                        <div class="reply-header d-flex align-items-center">
-                                                            <div class="d-flex flex-column mr-auto">
-                                                                <div class="title">
-                                                                    <span class="username">@item2.Username</span>
-                                                                </div>
-                                                                <div class="time">@item2.created_at</div>
-                                                            </div>
-                                                            <div class="widget-options">
-                                                                @if (user.Roles.Contains("SA"))
-                                                                {
-                                                                    <a class="btn btn-shadow" href="@Url.Action("DelPostcomment", "Portal", new { idparent = item2.Post_parent, idpost=item2.ID_Post })">X</a>
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (user.ID_User == item2.ID_User)
-                                                                    {
-
-                                                                        <a class="btn btn-shadow" href="@Url.Action("DelPostcomment", "Portal", new { idparent = item2.Post_parent, idpost=item2.ID_Post })">X </a>
-                                                                    }
-                                                                }
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="reply-body">
-                                                            <p>
-                                                                @item2.Content_post
-                                                            </p>
-                                                        </div>
-                                                        <div class="reply-footer d-flex align-items-center">
-                                                            <div class="meta">
-                                                                @* <ul>
-                                                                        <li>
-                                                                            <a href="javascript:void(0);">
-                                                                                <i class="la la-heart-o"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="javascript:void(0);">
-                                                                                <span class="rep">Like</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>*@
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                }
-                                            </div>
-
-
-                                            <!-- Begin Publisher -->
-                                            <div class="publisher publisher-multi">
-
-                                                <div data-emojiarea
-                                                     data-type="image"
-                                                     data-global-picker="false">
-                                                    <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
-                                                    <textarea id="commentposttext" class="publisher-input" rows="1"></textarea>
-                                                </div>
-                                                @*<textarea id="commentposttext" class="publisher-input" rows="1"></textarea>*@
-                                                <div class="publisher-bottom d-flex justify-content-end">
-                                                    @*<a class="publisher-btn" href="javascript:void(0);"><i class="la la-smile-o"></i></a>
-                                                        <a class="publisher-btn" href="javascript:void(0);"><i class="la la-camera"></i></a>*@
-                                                    <button class="btn btn-gradient-01" id="btnpostcomment" onclick="saveComment()">Post Comment</button>
-                                                </div>
-                                            </div>
-                                            <!-- End Publisher -->
-
-                                        </div>
-
-                                    }
-                                    else
-                                    {
-
-                                        <div id="commentshide" style="display:none;">
-
-                                            <!-- Begin Publisher -->
-                                            <div class="publisher publisher-multi">
-
-                                                <div data-emojiarea
-                                                     data-type="image"
-                                                     data-global-picker="false">
-                                                    <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
-                                                    <textarea id="commentposttext" class="publisher-input" rows="1"></textarea>
-                                                </div>
-                                                @*<textarea id="commentposttext" class="publisher-input" rows="1"></textarea>*@
-                                                <div class="publisher-bottom d-flex justify-content-end">
-                                                    @*<a class="publisher-btn" href="javascript:void(0);"><i class="la la-smile-o"></i></a>
-                                                        <a class="publisher-btn" href="javascript:void(0);"><i class="la la-camera"></i></a>*@
-                                                    <button class="btn btn-gradient-01" id="btnpostcomment" onclick="saveComment()">Post Comment</button>
-                                                </div>
-                                            </div>
-                                            <!-- End Publisher -->
-
-                                        </div>
-                                    }
-
-
-
-
-
-                                </div>
-                                <!-- End Widget -->
-                            }
-
-                        }
-                        else
-                        {
-                            <!-- Begin Widget -->
-                            <div class="widget has-shadow">
-                                <!-- Begin Widget Header -->
-                                <div class="widget-header d-flex align-items-center">
-                                    <div class="user-image">
-                                        <img class="rounded-circle" src="~/Content/assets/img/avatar/avatar-09.jpg" alt="...">
-                                    </div>
-                                    <div class="d-flex flex-column mr-auto">
-                                        <div class="title">
-                                            <span class="username"></span>
-                                        </div>
-                                        <div class="time">Broker Message</div>
-                                    </div>
-
-                                </div>
-                                <!-- End Widget Header -->
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-                                    <p>
-                                        No message from Broker
-                                    </p>
-                                </div>
-                                <!-- End Widget Body -->
-                                <!-- Begin Widget Footer -->
-                                <!-- End Widget Footer -->
-                                <!-- Begin Publisher -->
-                                <!-- End Publisher -->
-
-
-                            </div>
-                            <!-- End Widget -->
-                        }
-                    }
-                    else if (ViewBag.rol == "SA")
-                    {
-
-                    }
-
-
-
-                <div class="row">
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-group"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("CRMDashboard","CRM", new { broker=ViewBag.selbroker})">CRM</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("CRMDashboard","CRM")">CRM</a></h4>
-                                    }
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Customer Relationship Manager. Manage your customer Data
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-share-alt"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("PGR_network","Portal", new { broker=ViewBag.selbroker})">Network</a></h4>
-                                    }
-                                    else
-                                    {
-
-                                        <h4 class="name"><a href="@Url.Action("PGR_network","Portal")">Network</a></h4>
-                                    }
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Find and Connect with Professionals for a smother transaction.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-shopping-cart"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("PGR_market","Portal", new { broker=ViewBag.selbroker})">Market</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("PGR_market","Portal")">Market</a></h4>
-
-                                    }
-
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        All approved designs ready for you to order.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-cloud-upload"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-
-
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Upload all your transaction documents.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-archive"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Resources","Portal", new { broker=ViewBag.selbroker})">Resources</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Resources","Portal")">Resources</a></h4>
-
-                                    }
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Access to all MLS forms, Scripts and more.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-youtube-play"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-                                    @if (ViewBag.rol == "SA")
-                                    {
-
-                                        <h4 class="name"><a href="@Url.Action("Videos","Portal",new { broker=ViewBag.selbroker})">Videos</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Videos","Portal")">Videos</a></h4>
-                                    }
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Training videos.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-image"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Marketing","Portal", new { broker=ViewBag.selbroker})">Marketing</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Marketing","Portal")">Marketing</a></h4>
-                                    }
-
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Images for your social networks.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-calendar-o"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-                                    @if (ViewBag.rol == "SA")
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Webinar","Portal", new { broker=ViewBag.selbroker})">Webinars</a></h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 class="name"><a href="@Url.Action("Webinar","Portal")">Webinars</a></h4>
-
-                                    }
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Stay up to date with all 7 events and access to live trainings.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-                    @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin")
-                    {
-                        <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                            <!-- Begin Card -->
-                            <div class="widget-image has-shadow">
-                                <div class="contact-card">
-                                    <!-- Begin Widget Image -->
-                                    <div class="cover-image mx-auto">
-
-                                        <div class="c-icon">
-                                            <i class="la la-calendar-o"></i>
-                                        </div>
-                                    </div>
-                                    <!-- Begin Widget Body -->
-                                    <div class="widget-body">
-
-                                        @if (ViewBag.rol == "SA")
-                                        {
-                                            <h4 class="name"><a href="@Url.Action("Reservations","Portal", new { broker=ViewBag.selbroker})">Bookings</a></h4>
-                                        }
-                                        else
-                                        {
-                                            <h4 class="name"><a href="@Url.Action("Reservations","Portal")">Bookings</a></h4>
-
-                                        }
-
-
-                                        <div class="item">
-                                            <div class="quick-about">
-                                                <div class="row d-flex align-items-center">
-                                                    <div class="col-12">
-
-                                                        <p>
-                                                            Bookings.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <!-- End Widget Body -->
-                                </div>
-                            </div>
-                            <!-- End Card -->
-                        </div>}
-
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-list-ul"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-
-                                    <h4 class="name"><a href="https://www.lirealtor.com/" target="_blank">YOUR MLS</a></h4>
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        MLS
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- End Widget Body -->
-                            </div>
-                        </div>
-                        <!-- End Card -->
-                    </div>
-
-                    <div class="col-xl-4 col-md-4 col-sm-6 col-remove">
-                        <!-- Begin Card -->
-                        <div class="widget-image has-shadow">
-                            <div class="contact-card">
-                                <!-- Begin Widget Image -->
-                                <div class="cover-image mx-auto">
-
-                                    <div class="c-icon">
-                                        <i class="la la-home"></i>
-                                    </div>
-                                </div>
-                                <!-- Begin Widget Body -->
-                                <div class="widget-body">
-
-
-                                    <h4 class="name"><a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank">Comparative Market Analysis</a></h4>
-
-
-
-                                    <div class="item">
-                                        <div class="quick-about">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12">
-
-                                                    <p>
-                                                        Realtor property resource RPR
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
                     </div>
                 </div>
-
-                </div>
-                <!-- End Timeline -->
-                <!-- Begin Column -->
-                <!-- End Column -->
             </div>
-            <!-- End Row -->
+            <!-- END: General Report -->
+            <!-- BEGIN: Visitors -->
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-4 mt-2">
+                <div class="intro-y flex items-center h-10">
+                  
+                 
+                </div>
+                <div class="report-box-2 intro-y mt-5">
+                    <div class="box p-5">
+    
+                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+    {
+             
+if (user.Team_Leader == true)
+{
+                    <p>Team name: @user.Leader_Name</p>
+}
+else
+{
+                    <p>Team name: @user.Leader_Name</p>
+}
+                    <p>Address: @userBroker.Brokerage_address</p>
+                    <p>Broker Contact: @userBroker.Broker_Contact</p>
+                    <p>Broker License: @userBroker.Broker_License</p>
+                    <p>My License #: @user.My_License </p>
+                    <p>Member Since: @user.Member_since.ToShortDateString()</p>
+}
+else if (ViewBag.rol == "SA")
+{ }
+                        <button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My profile</button>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Visitors -->
+            <!-- BEGIN: Users By Age -->
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-2 mt-2 lg:mt-6 xl:mt-2">
+                <div class="intro-y flex items-center h-10">
+              
+              
+                </div>
+                <div class="report-box-2 intro-y mt-5">
+                    <div class="box p-5">
+                        <div class="boxed-tabs nav nav-tabs justify-center w-4/5 bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-500 rounded-md mx-auto" role="tablist"> <a data-toggle="tab" data-target="#active-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2 active" id="active-users-tab" role="tab" aria-controls="active-users" aria-selected="true">Customers</a> 
+                        <a data-toggle="tab" data-target="#inactive-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2" id="inactive-users-tab" role="tab" aria-selected="false">Leads</a> </div>
+                        <div class="tab-content mt-6">
+                            <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                                <div class="relative">
+                                    <canvas class="mt-3" id="report-donut-chart" height="300"></canvas>
+                                    <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                        <div class="text-2xl font-medium">2.501</div>
+                                        <div class="text-gray-600 dark:text-gray-600 mt-0.5">Customers</div>
+                                    </div>
+                                </div>
+                                <div class="mt-5">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                                        <span class="truncate">17 - 30 Years old</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="font-medium xl:ml-auto">62%</span>
+                                    </div>
+                                    <div class="flex items-center mt-4">
+                                        <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                                        <span class="truncate">31 - 50 Years old</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="font-medium xl:ml-auto">33%</span>
+                                    </div>
+                                    <div class="flex items-center mt-4">
+                                        <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+                                        <span class="truncate">>= 50 Years old</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="font-medium xl:ml-auto">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Users By Age -->
+    
+                <!-- BEGIN: Item List -->
+                <div class="intro-y col-span-12 lg:col-span-12">
+                    <div class="lg:flex intro-y">
+                      
+                            <h2 class="text-lg font-medium truncate mr-5">
+                                Modules
+                            </h2>
+
+                      
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+
+                            <div class="font-medium text-center">      <i data-feather="users"></i> <br /><br />CRM</div>
+                            <div class="text-center">Customer Relationship Manager. Manage your customer data.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="globe"></i> <br /><br />Networking</div>
+                            <div class="text-center">Find and Connect with Professionals for a smother transaction.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="archive"></i> <br /><br />Documents History</div>
+                            <div class="text-center">Upload all your transaction documents.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="box"></i> <br /><br />General Resources</div>
+                            <div class="text-center">Access to all MLS forms, Scripts and more.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="tv"></i> <br /><br />Videos</div>
+                            <div class="text-center">Training videos.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="briefcase"></i> <br /><br />Marketing Resources</div>
+                            <div class="text-center">Images for your social networks.</div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <div class="font-medium text-center">      <i data-feather="calendar"></i> <br /><br />Webinars</div>
+                            <div class="text-center">Stay up to date with all 7 events and access to live trainings.</div>
+                        </div>
+                 
+                    </div>
+              
+                </div>
+                <!-- END: Item List -->
+              
+                <!-- BEGIN: Official Store -->
+                <!-- END: Official Store -->
+                <!-- BEGIN: Weekly Best Sellers -->
+                <!-- END: Weekly Best Sellers -->
+                <!-- BEGIN: Ads 1 -->
+                <div class="col-span-12 lg:col-span-6 mt-6">
+                    <div class="ads-box box p-8 relative overflow-hidden bg-theme-24 intro-y">
+                        <div class="ads-box__title w-full sm:w-72 text-white text-xl -mt-3">One of the largest and most accurate multiple listing service in New York State</div>
+                        <div class="w-full sm:w-72 leading-relaxed text-white text-opacity-70 dark:text-gray-600 dark:text-opacity-100 mt-3"></div>
+                        <a href="https://www.lirealtor.com/" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your MLS</a>
+                        <img class="hidden sm:block absolute top-0 right-0 w-2/5 -mt-3 mr-2" alt="S7VEN" src="~/Content/dist/images/woman-illustration.svg">
+                    </div>
+                </div>
+                <!-- END: Ads 1 -->
+                <!-- BEGIN: Ads 2 -->
+                <div class="col-span-12 lg:col-span-6 mt-6">
+                    <div class="ads-box box p-8 relative overflow-hidden intro-y">
+                        <div class="ads-box__title w-full sm:w-52 text-theme-24 dark:text-white text-xl -mt-3">Take a look at our <span class="font-medium">Comparative Market Analysis</span> Partner</div>
+                        <div class="w-full sm:w-72 leading-relaxed text-gray-600 mt-3"></div>
+                        <a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your CMA</a>
+
+                        <img class="hidden sm:block absolute top-0 right-0 w-1/2 mt-1 -mr-12" alt="S7VEN" src="~/Content/dist/images/phone-illustration.svg">
+                    </div>
+                </div>
+                <!-- END: Ads 2 -->
+                <!-- BEGIN: Weekly Top Products -->
+                
+                <!-- END: Weekly Top Products -->
+            </div>
         </div>
-        <!-- End Col -->
+    <div class="col-span-12 2xl:col-span-3">
+        <div class="2xl:border-l border-theme-31 -mb-10 pb-10">
+            <div class="2xl:pl-6 grid grid-cols-12 gap-6">
+                <!-- BEGIN: Important Notes -->
+                <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
+                    <div class="intro-x flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-auto">
+                            News Feed
+                        </h2>
+                        <button data-carousel="important-notes" data-target="prev" class="tiny-slider-navigator btn px-2 border-gray-400 text-gray-700 dark:text-gray-300 mr-2"> <i data-feather="chevron-left" class="w-4 h-4"></i> </button>
+                        <button data-carousel="important-notes" data-target="next" class="tiny-slider-navigator btn px-2 border-gray-400 text-gray-700 dark:text-gray-300 mr-2"> <i data-feather="chevron-right" class="w-4 h-4"></i> </button>
+                    </div>
+                    <div class="mt-5 intro-x">
+                        <div class="box zoom-in">
+                            <div class="tiny-slider" id="important-notes">
+                                <div class="p-5">
+                                    <div class="text-base font-medium truncate">Quote of the day</div>
+
+                                    <div class="text-gray-600 text-justify mt-1">"@ViewBag.quote"</div>
+                                    <div class="text-gray-500 mt-1">-@ViewBag.author</div>
+                                </div>
+                                <div class="p-5">
+                                    @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+    {
+        if (Model.Count > 0)
+        {
+            foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
+            {
+
+                                    <div class="text-base font-medium truncate">Broker message: @item.Title</div>
+                                <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
+                                <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
+                                <div class="font-medium flex mt-5">
+                                    <button type="button" class="btn btn-secondary py-1 px-2">View more</button>
+
+                                </div>
+
+
+}
+
+}
+else
+{
+                                <div class="text-base font-medium truncate">Broker message</div>
+                                <div class="text-gray-500 mt-1"></div>
+                                <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
+
+}
+}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Important Notes -->
+
+                <!-- BEGIN: Schedules -->
+                <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
+                    <div class="intro-x flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Coming soon Webinars
+                        </h2>
+                        @*<a href="#" class="ml-auto text-theme-30 dark:text-theme-25 truncate flex items-center"> <i data-feather="plus" class="w-4 h-4 mr-1"></i> Add New Event </a>*@
+                    </div>
+                    <div class="mt-5">
+                        <div class="intro-x box">
+                            <div class="border-t border-gray-200 p-5">
+                                <iframe src="https://calendar.google.com/calendar/b/4/embed?height=400&amp;wkst=1&amp;bgcolor=%23A79B8E&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showNav=0&amp;showTitle=0&amp;showTabs=0&amp;showCalendars=0&amp;showDate=1&amp;mode=AGENDA&amp;showPrint=0&amp;showTz=0" style="border:solid 1px #777" width="100%" id="iframe" height="400" frameborder="0" scrolling="no"></iframe>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Schedules -->
+            </div>
+        </div>
     </div>
-    <!-- End Row -->
 </div>
-<!-- End Container -->
+
 
 <script type="text/javascript">
 

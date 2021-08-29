@@ -6,7 +6,223 @@
     List<Realestate_portal.Models.Tb_Resources> teamDoc = (List<Realestate_portal.Models.Tb_Resources>)ViewBag.teamdocuments;
 }
 
+<div class="grid grid-cols-12 gap-6 mt-8">
+    <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+        <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+            Resources
+        </h2>
+        <!-- BEGIN: File Manager Menu -->
+        <div class="intro-y box p-5 mt-6">
+            <div class="mt-1">
 
+                <div class="pricing-tabs nav nav-tabs box rounded-full overflow-hidden" role="tablist"> 
+                <a id="layout-1-monthly-fees-tab" data-toggle="tab" data-target="#resourcesindividual" href="javascript:;" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center active" role="tab" aria-controls="layout-1-monthly-fees" aria-selected="true"> Resources</a>
+                <a id="layout-1-annual-fees-tab" data-toggle="tab" data-target="#resourcesteam" href="javascript:;" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center" role="tab" aria-controls="layout-1-annual-fees" aria-selected="false"> Team Resources</a>
+                </div>
+
+            </div>
+            <div class="border-t border-gray-200 dark:border-dark-5 mt-4 pt-4">
+                <a href="" class="flex items-center px-3 py-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
+                    Documents
+                </a>
+                <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                    Scripts
+                </a>
+                <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+                    Email Campaigns
+                </a>
+                <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                    Text Campaigns
+                </a>
+
+                @*<a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2" data-feather="plus"></i> Add New Category </a>*@
+            </div>
+        </div>
+        <!-- END: File Manager Menu -->
+    </div>
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+        <!-- BEGIN: File Manager Filter -->
+        <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
+            <select class="form-select mt-2 sm:mr-2" id="filterbycatDocs" multiple>
+                <option>Buying</option>
+                <option>Brokerage</option>
+                <option>Commercial</option>
+                <option>Land</option>
+                <option>MLS</option>
+                <option>Rental</option>
+                <option>Selling</option>
+            </select>
+            <div class="w-full sm:w-auto relative mr-auto mt-3 sm:mt-0">
+                <i class="w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700 dark:text-gray-300" data-feather="search"></i>
+                <input type="text" id="myInputDocs" onkeyup="searchin_li()" class="form-control w-full sm:w-64 box px-10 text-gray-700 dark:text-gray-300 placeholder-theme-13" placeholder="Search files">
+
+            </div>
+            <div class="w-full sm:w-auto flex">
+                if (ViewBag.rol == "Admin")
+                {
+                <a class="btn btn-primary shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+                <a class="btn btn-primary shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
+                <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("Resources_management", "Portal")">Management</a>
+
+
+                }
+
+                else if (ViewBag.rol == "SA")
+                {
+                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
+                <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("Resources_management", "Portal")">Management</a>
+                <a class="btn btn-primary shadow-md mr-2" href="@Url.Action("Resources_broker", "Portal", new { broker=ViewBag.selbroker})">Resources for brokers</a>
+                }
+                if (ViewBag.rol == "Agent" && ViewBag.leader == true)
+                {
+                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add team Document</a>
+                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewText">Add team Campaign</a>
+                }
+
+
+            </div>
+        </div>
+        <!-- END: File Manager Filter -->
+
+    
+            <div class="tab-content">
+                <div id="resourcesindividual" class="tab-pane flex flex-col lg:flex-row active" role="tabpanel" aria-labelledby="resourcesindividual">
+                    <!-- BEGIN: Directory & Files -->
+                    <div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                    <div id="id_@item.ID_Resource" class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2 sortableDocs">
+                        <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                            <div class="absolute left-0 top-0 mt-3 ml-3">
+                                @if (item.Type == "Documents" || item.Type == "Documents Agent")
+    {<a href="javascript:void(0)" class="flex items-center px-3 py-2 rounded-md">
+                                <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
+
+                            </a>}
+else if (item.Type == "Scripts" || item.Type == "Scripts Agent")
+{
+                            <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+
+                            </a>
+}
+else if (item.Type == "EMAIL CAMPAIGN" || item.Type == "Email campaign agent")
+{
+                            <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+
+                            </a>
+}
+else if (item.Type == "TEXT CAMPAIGN" || item.Type == "Text campaign agent")
+{
+                            <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+
+                            </a>
+}
+else
+{
+                            <label>@item.Type</label>
+}
+                            </div>
+                            <a href="" class="w-3/5 file__icon file__icon--image mx-auto">
+                                <div class="file__icon--image__preview image-fit">
+                                    <img alt="Tinker Tailwind HTML Admin Template" src="~/Content/dist/images/preview-8.jpg">
+                                </div>
+                            </a>
+                            @if (item.Extension_file == ".pdf")
+                            {
+                            <a href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" class="block font-medium mt-4 text-center truncate">@(item.Name + "" + item.Extension_file)</a>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })" class="block font-medium mt-4 text-center truncate">@(item.Name + "" + item.Extension_file)</a>
+                            }
+                           
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Size</div>
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Last_update.ToShortDateString()</div>
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Doc_type</div>
+              
+                        </div>
+                    </div>
+
+                    }
+}
+else
+{
+                    <label>No documents to show</label>
+                    <br />
+
+}
+
+
+
+
+                    </div>
+                    <!-- END: Directory & Files -->
+                </div>
+                <div id="resourcesteam" class="tab-pane flex flex-col lg:flex-row" role="tabpanel" aria-labelledby="resourcesteam">
+                    <!-- BEGIN: Directory & Files -->
+                    <div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
+                        <div class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2">
+                            <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                                <div class="absolute left-0 top-0 mt-3 ml-3">
+                                    <input class="form-check-input border border-gray-500" type="checkbox">
+                                </div>
+                                <a href="" class="w-3/5 file__icon file__icon--image mx-auto">
+                                    <div class="file__icon--image__preview image-fit">
+                                        <img alt="Tinker Tailwind HTML Admin Template" src="~/Content/dist/images/preview-8.jpg">
+                                    </div>
+                                </a>
+                                <a href="" class="block font-medium mt-4 text-center truncate">preview-8.jpg</a>
+                                <div class="text-gray-600 text-xs text-center mt-0.5">1 MB</div>
+                                <div class="absolute top-0 right-0 mr-2 mt-2 dropdown ml-auto">
+                                    <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-vertical" class="w-5 h-5 text-gray-600"></i> </a>
+                                    <div class="dropdown-menu w-40">
+                                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Share File </a>
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2">
+                            <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                                <div class="absolute left-0 top-0 mt-3 ml-3">
+                                    <input class="form-check-input border border-gray-500" type="checkbox">
+                                </div>
+                                <a href="" class="w-3/5 file__icon file__icon--directory mx-auto"></a> <a href="" class="block font-medium mt-4 text-center truncate">Dota 2</a>
+                                <div class="text-gray-600 text-xs text-center mt-0.5">112 GB</div>
+                                <div class="absolute top-0 right-0 mr-2 mt-2 dropdown ml-auto">
+                                    <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-vertical" class="w-5 h-5 text-gray-600"></i> </a>
+                                    <div class="dropdown-menu w-40">
+                                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Share File </a>
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- END: Directory & Files -->
+                </div>
+            </div>
+  
+
+
+    </div>
+</div>
 <div class="container-fluid">
     <!-- Begin Page Header-->
     <div class="row">
@@ -38,31 +254,31 @@
                     <div class="title">CHECK</div>
                     <div class="new-tasks">ALL RESOURCES TO HELP YOU  </div>
                 </div><h2></h2>
-                      <div class="widget-options">
-                          @if (ViewBag.rol == "Admin")
-                          {
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
-                              <a class="btn btn-shadow" href="@Url.Action("Resources_management", "Portal")">Management</a>
+                <div class="widget-options">
+                    @if (ViewBag.rol == "Admin")
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
+                        <a class="btn btn-shadow" href="@Url.Action("Resources_management", "Portal")">Management</a>
 
 
-                          }
+                    }
 
-                          else if (ViewBag.rol == "SA")
-                          {
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
-                              <a class="btn btn-shadow" href="@Url.Action("Resources_management", "Portal")">Management</a>
-                              <a class="btn btn-shadow" href="@Url.Action("Resources_broker", "Portal", new { broker=ViewBag.selbroker})">Resources for brokers</a>
-                          }
-                          @if (ViewBag.rol == "Agent" && ViewBag.leader == true)
-                          {
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add team Document</a>
-                              <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add team Campaign</a>
-                          }
+                    else if (ViewBag.rol == "SA")
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
+                        <a class="btn btn-shadow" href="@Url.Action("Resources_management", "Portal")">Management</a>
+                        <a class="btn btn-shadow" href="@Url.Action("Resources_broker", "Portal", new { broker=ViewBag.selbroker})">Resources for brokers</a>
+                    }
+                    @if (ViewBag.rol == "Agent" && ViewBag.leader == true)
+                    {
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add team Document</a>
+                        <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add team Campaign</a>
+                    }
 
 
-                      </div>
+                </div>
             </div><br />
 
             <!-- Begin Events -->
@@ -73,15 +289,15 @@
                     </li>
                     @if (ViewBag.rol == "Agent")
                     {
-                    <li class="nav-item">
-                        <a class="nav-link" id="i-vert-tab-5" data-toggle="tab" href="#i-v-tab-5" role="tab" aria-controls="i-v-tab-5" aria-selected="true">Team Resources</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="i-vert-tab-5" data-toggle="tab" href="#i-v-tab-5" role="tab" aria-controls="i-v-tab-5" aria-selected="true">Team Resources</a>
+                        </li>
                     }
-                   @if (ViewBag.rol == "Admin")
+                    @if (ViewBag.rol == "Admin")
                     {
-                    <li class="nav-item">
-                        <a class="nav-link" id="i-vert-tab-7" data-toggle="tab" href="#i-v-tab-7" role="tab" aria-controls="i-v-tab-7" aria-selected="false">Resources for Brokers</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="i-vert-tab-7" data-toggle="tab" href="#i-v-tab-7" role="tab" aria-controls="i-v-tab-7" aria-selected="false">Resources for Brokers</a>
+                        </li>
                     }
                 </ul>
                 <div class="tab-content d-flex align-items-center">
@@ -89,7 +305,7 @@
                     <div class="tab-pane fade show active" style="width:100% !important" id="i-v-tab-6" role="tabpanel" aria-labelledby="i-vert-tab-1">
                         <div class="widget widget-20">
                             <!-- Begin Widget Header -->
-                        <br /><br />
+                            <br /><br />
 
                             <!-- Begin Events -->
                             <div class="col-md-12" style="background-color:white">
@@ -111,7 +327,6 @@
                                     <div class="tab-pane fade show active" style="width:100% !important" id="i-v-tab-1" role="tabpanel" aria-labelledby="i-vert-tab-1">
                                         <div class="widget widget-20">
                                             <!-- Begin Widget Header -->
-                                          
                                             <!-- End Widget Header -->
                                             <div class="widget-body">
 
@@ -134,53 +349,46 @@
 
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (Model.Where(a => a.Type == "Documents" || a.Type == "Documents Agent").Count() > 0)
-                            {
-                                foreach (var item in Model.Where(a => a.Type == "Documents" || a.Type == "Documents Agent"))
-                                {
-                                    <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
-                                        <div class="media w-100">
+                                                    {
+                                                        foreach (var item in Model.Where(a => a.Type == "Documents" || a.Type == "Documents Agent"))
+                                                        {
+                                                            <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
+                                                                <div class="media w-100">
 
-                                            @if (item.Extension_file == ".pdf")
-                    {
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
-else
-{
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
 
-}
-                                            <div class="value-progress text-info">
-                                                <label class="badge badgeDocstype">@item.Doc_type</label>
-                                            </div>
-                                        </div>
-                                    </div>
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                                    }
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeDocstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                         
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -189,7 +397,7 @@ else
                                         <div class="widget widget-20">
                                             <!-- Begin Widget Header -->
                                             <div class="widget-header bordered d-flex align-items-center">
-                                              
+
                                             </div>
                                             <!-- End Widget Header -->
                                             <div class="widget-body">
@@ -210,56 +418,56 @@ else
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (Model.Where(a => a.Type == "Scripts" || a.Type == "Scripts Agent").Count() > 0)
-                            {
-                                foreach (var item in Model.Where(a => a.Type == "Scripts" || a.Type == "Scripts Agent"))
-                                {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
-                                            @if (item.Extension_file == ".pdf")
-                    {
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
+                                                    {
+                                                        foreach (var item in Model.Where(a => a.Type == "Scripts" || a.Type == "Scripts Agent"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
 
 
-                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
-else
-{
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
 
-                                            <div class="value-progress text-info">
-                                                <label class="badge badgeScriptstype">@item.Doc_type</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeScriptstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -268,7 +476,7 @@ else
                                         <div class="widget widget-20">
                                             <!-- Begin Widget Header -->
                                             <div class="widget-header bordered d-flex align-items-center">
-                                              
+
                                             </div>
                                             <!-- End Widget Header -->
                                             <div class="widget-body">
@@ -277,43 +485,43 @@ else
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (Model.Where(a => a.Type == "EMAIL CAMPAIGN" || a.Type == "Email campaign agent").Count() > 0)
-                            {
-                                foreach (var item in Model.Where(a => a.Type == "EMAIL CAMPAIGN" || a.Type == "Email campaign agent"))
-                                {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
+                                                    {
+                                                        foreach (var item in Model.Where(a => a.Type == "EMAIL CAMPAIGN" || a.Type == "Email campaign agent"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
 
-                                            <div class="align-self-center mr-2">
-                                                <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
-                                            </div>
-                                            <div class="media-body align-self-center">
-
-
-                                                <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-
-                                                <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
-                                            </div>
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
 
 
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                        </div>
-                                    </div>
+                                                                        <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
 
-        }
-    }
-    else
-    {
-                        <label>No campaigns to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No campaigns to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -323,7 +531,7 @@ else
                                         <div class="widget widget-20">
                                             <!-- Begin Widget Header -->
                                             <div class="widget-header bordered d-flex align-items-center">
-                                            
+
                                             </div>
                                             <!-- End Widget Header -->
                                             <div class="widget-body">
@@ -335,39 +543,39 @@ else
                                                     {
                                                         foreach (var item in Model.Where(a => a.Type == "TEXT CAMPAIGN" || a.Type == "Text campaign agent"))
                                                         {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
-                                            <div class="align-self-center mr-2">
-                                                <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
-                                            </div>
-                                            <div class="media-body align-self-center">
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
 
 
-                                                <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                                <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
-                                            </div>
+                                                                        <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
 
 
 
-                                        </div>
-                                    </div>
+                                                                </div>
+                                                            </div>
 
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -381,281 +589,281 @@ else
                     <div class="tab-pane fade" id="i-v-tab-5" role="tabpanel" aria-labelledby="i-vert-tab-5">
                         <div class="widget widget-20">
                             <br /><br />
-                                  <div class="col-md-12" style="background-color:white">
-                                      <ul class="nav nav-tabs" role="tablist">
-                                          <li class="nav-item">
-                                              <a class="nav-link active" id="i-vert-tab-20" data-toggle="tab" href="#i-v-tab-20" role="tab" aria-controls="i-v-tab-20" aria-selected="true"><i class="la la-file-text" style="font-size: 50px;color:brown"></i>Documents</a>
-                                          </li>
-                                          <li class="nav-item">
-                                              <a class="nav-link" id="i-vert-tab-21" data-toggle="tab" href="#i-v-tab-21" role="tab" aria-controls="i-v-tab-21" aria-selected="false"><i class="la la-weixin" style="font-size: 50px;color:coral"></i>Scripts</a>
-                                          </li>
-                                          <li class="nav-item">
-                                              <a class="nav-link" id="i-vert-tab-22" data-toggle="tab" href="#i-v-tab-22" role="tab" aria-controls="i-v-tab-22" aria-selected="false"><i class="la la-envelope" style="font-size: 50px;color:cornflowerblue"></i>Email Campaigns</a>
-                                          </li>
-                                          <li class="nav-item">
-                                              <a class="nav-link" id="i-vert-tab-23" data-toggle="tab" href="#i-v-tab-23" role="tab" aria-controls="i-v-tab-23" aria-selected="false"><i class="la la-book" style="font-size: 50px;color:forestgreen"></i>Text Campaigns</a>
-                                          </li>
-                                      </ul>
-                                      <div class="tab-content d-flex align-items-center">
-                                          <div class="tab-pane fade show active" style="width:100% !important" id="i-v-tab-20" role="tabpanel" aria-labelledby="i-vert-tab-20">
-                                              <div class="widget widget-20">
-                                                  <div class="widget body">
+                            <div class="col-md-12" style="background-color:white">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="i-vert-tab-20" data-toggle="tab" href="#i-v-tab-20" role="tab" aria-controls="i-v-tab-20" aria-selected="true"><i class="la la-file-text" style="font-size: 50px;color:brown"></i>Documents</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="i-vert-tab-21" data-toggle="tab" href="#i-v-tab-21" role="tab" aria-controls="i-v-tab-21" aria-selected="false"><i class="la la-weixin" style="font-size: 50px;color:coral"></i>Scripts</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="i-vert-tab-22" data-toggle="tab" href="#i-v-tab-22" role="tab" aria-controls="i-v-tab-22" aria-selected="false"><i class="la la-envelope" style="font-size: 50px;color:cornflowerblue"></i>Email Campaigns</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="i-vert-tab-23" data-toggle="tab" href="#i-v-tab-23" role="tab" aria-controls="i-v-tab-23" aria-selected="false"><i class="la la-book" style="font-size: 50px;color:forestgreen"></i>Text Campaigns</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content d-flex align-items-center">
+                                    <div class="tab-pane fade show active" style="width:100% !important" id="i-v-tab-20" role="tabpanel" aria-labelledby="i-vert-tab-20">
+                                        <div class="widget widget-20">
+                                            <div class="widget body">
 
-                                                      <div class="form-group row d-flex align-items-center mt-3 mb-5">
-                                                          <label class="form-control-label">By Category</label>
-                                                          <select class="selectpicker show-menu-arrow" id="filterbycatDocs" multiple>
-                                                              <option>Buying</option>
-                                                              <option>Brokerage</option>
-                                                              <option>Commercial</option>
-                                                              <option>Land</option>
-                                                              <option>MLS</option>
-                                                              <option>Rental</option>
-                                                              <option>Selling</option>
-                                                          </select>
+                                                <div class="form-group row d-flex align-items-center mt-3 mb-5">
+                                                    <label class="form-control-label">By Category</label>
+                                                    <select class="selectpicker show-menu-arrow" id="filterbycatDocs" multiple>
+                                                        <option>Buying</option>
+                                                        <option>Brokerage</option>
+                                                        <option>Commercial</option>
+                                                        <option>Land</option>
+                                                        <option>MLS</option>
+                                                        <option>Rental</option>
+                                                        <option>Selling</option>
+                                                    </select>
 
-                                                          <div class="col-md-6">
-                                                              <input type="text" id="myInputDocs2" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:100%">
-                                                          </div>
-                                                      </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" id="myInputDocs2" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:100%">
+                                                    </div>
+                                                </div>
 
-                                                      <div class="row mt-5 mr-0 ml-0">
-                                                          @if (teamDoc.Where(a => a.Type == "Documents").Count() > 0)
-                                                          {
-                                                              foreach (var item in teamDoc.Where(a => a.Type == "Documents"))
-                                                              {
-                                                                  <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
-                                                                      <div class="media w-100">
+                                                <div class="row mt-5 mr-0 ml-0">
+                                                    @if (teamDoc.Where(a => a.Type == "Documents").Count() > 0)
+                                                    {
+                                                        foreach (var item in teamDoc.Where(a => a.Type == "Documents"))
+                                                        {
+                                                            <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
+                                                                <div class="media w-100">
 
-                                                                          @if (item.Extension_file == ".pdf")
-                                                                          {
-                                                                              <div class="align-self-center mr-2">
-                                                                                  <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                                                                              </div>
-                                                                              <div class="media-body align-self-center">
-                                                                                  <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-                                                                                  <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                                                                              </div>
-                                                                          }
-                                                                          else
-                                                                          {
-                                                                              <div class="align-self-center mr-2">
-                                                                                  <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                                                                              </div>
-                                                                              <div class="media-body align-self-center">
-                                                                                  <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
-                                                                                  <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                                                                              </div>
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
 
-                                                                          }
-                                                                          <div class="value-progress text-info">
-                                                                              <label class="badge badgeDocstype">@item.Doc_type</label>
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-                                                              }
+                                                                    }
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeDocstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
 
-                                                          }
-                                                          else
-                                                          {
-                                                              <label>No documents to show</label>
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br /> <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                          }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
 
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-21" role="tabpanel" aria-labelledby="i-vert-tab-21">
-                                              <div class="widget widget-20">
-                                                  <div class="widget-header bordered d-flex align-items-center">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-21" role="tabpanel" aria-labelledby="i-vert-tab-21">
+                                        <div class="widget widget-20">
+                                            <div class="widget-header bordered d-flex align-items-center">
 
-                                                  </div>
-                                                  <div class="widget-body">
-                                                      <div class="form-group row d-flex align-items-center mt-3 mb-5">
-                                                          <label class="form-control-label">By Category</label>
-                                                          <select class="selectpicker show-menu-arrow" id="filterbycatScripts" multiple>
-                                                              <option>Buying</option>
-                                                              <option>Brokerage</option>
-                                                              <option>Commercial</option>
-                                                              <option>Land</option>
-                                                              <option>MLS</option>
-                                                              <option>Rental</option>
-                                                              <option>Selling</option>
-                                                          </select>
-                                                          <div class="col-md-6">
-                                                              <input type="text" id="myInputScripts2" class="form-control" onkeyup="searchin_liScripts()" placeholder="Type here to search" style="width:100%">
-                                                          </div>
-                                                      </div>
-                                                      <div class="row mt-5 mr-0 ml-0">
-                                                          @if (teamDoc.Where(a => a.Type == "Scripts").Count() > 0)
-                                                          {
-                                                              foreach (var item in teamDoc.Where(a => a.Type == "Scripts"))
-                                                              {
-                                                                  <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                                                      <div class="media w-100">
-                                                                          @if (item.Extension_file == ".pdf")
-                                                                          {
-                                                                              <div class="align-self-center mr-2">
-                                                                                  <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                                                                              </div>
-                                                                              <div class="media-body align-self-center">
-
-
-                                                                                  <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-
-                                                                                  <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                                                                              </div>
-                                                                          }
-                                                                          else
-                                                                          {
-                                                                              <div class="align-self-center mr-2">
-                                                                                  <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                                                                              </div>
-                                                                              <div class="media-body align-self-center">
-                                                                                  <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
-                                                                                  <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                                                                              </div>
-                                                                          }
-
-                                                                          <div class="value-progress text-info">
-                                                                              <label class="badge badgeScriptstype">@item.Doc_type</label>
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-
-                                                              }
-                                                          }
-                                                          else
-                                                          {
-                                                              <label>No documents to show</label>
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br /> <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                          }
-                                                      </div>
-                                                  </div>
-
-                                              </div>
-                                          </div>
-                                          <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-22" role="tabpanel" aria-labelledby="i-vert-tab-22">
-                                              <div class="widget widget-20">
-                                                  <div class="widget-header bordered d-flex align-items-center">
-
-                                                  </div>
-                                                  <div class="widget-body">
-                                                      <div class="form-group row d-flex align-items-center mt-3 mb-5">
-
-                                                      </div>
-                                                      <div class="row mt-5 mr-0 ml-0">
-                                                          @if (teamDoc.Where(a => a.Type == "EMAIL CAMPAIGN").Count() > 0)
-                                                          {
-                                                              foreach (var item in teamDoc.Where(a => a.Type == "EMAIL CAMPAIGN"))
-                                                              {
-                                                                  <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                                                      <div class="media w-100">
-
-                                                                          <div class="align-self-center mr-2">
-                                                                              <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
-                                                                          </div>
-                                                                          <div class="media-body align-self-center">
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="form-group row d-flex align-items-center mt-3 mb-5">
+                                                    <label class="form-control-label">By Category</label>
+                                                    <select class="selectpicker show-menu-arrow" id="filterbycatScripts" multiple>
+                                                        <option>Buying</option>
+                                                        <option>Brokerage</option>
+                                                        <option>Commercial</option>
+                                                        <option>Land</option>
+                                                        <option>MLS</option>
+                                                        <option>Rental</option>
+                                                        <option>Selling</option>
+                                                    </select>
+                                                    <div class="col-md-6">
+                                                        <input type="text" id="myInputScripts2" class="form-control" onkeyup="searchin_liScripts()" placeholder="Type here to search" style="width:100%">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-5 mr-0 ml-0">
+                                                    @if (teamDoc.Where(a => a.Type == "Scripts").Count() > 0)
+                                                    {
+                                                        foreach (var item in teamDoc.Where(a => a.Type == "Scripts"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
 
 
-                                                                              <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                                                              <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
-                                                                          </div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeScriptstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-22" role="tabpanel" aria-labelledby="i-vert-tab-22">
+                                        <div class="widget widget-20">
+                                            <div class="widget-header bordered d-flex align-items-center">
+
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="form-group row d-flex align-items-center mt-3 mb-5">
+
+                                                </div>
+                                                <div class="row mt-5 mr-0 ml-0">
+                                                    @if (teamDoc.Where(a => a.Type == "EMAIL CAMPAIGN").Count() > 0)
+                                                    {
+                                                        foreach (var item in teamDoc.Where(a => a.Type == "EMAIL CAMPAIGN"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
 
 
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                                                      </div>
-                                                                  </div>
-
-                                                              }
-                                                          }
-                                                          else
-                                                          {
-                                                              <label>No campaigns to show</label>
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br /> <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                          }
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-23" role="tabpanel" aria-labelledby="i-vert-tab-23">
-                                              <div class="widget widget-20">
-                                                  <div class="widget-header bordered d-flex align-items-center">
-
-                                                  </div>
-                                                  <div class="widget-body">
-                                                      <div class="form-group row d-flex align-items-center mt-3 mb-5">
-
-                                                      </div>
-                                                      <div class="row mt-5 mr-0 ml-0">
-                                                          @if (teamDoc.Where(a => a.Type == "TEXT CAMPAIGN").Count() > 0)
-                                                          {
-                                                              foreach (var item in teamDoc.Where(a => a.Type == "TEXT CAMPAIGN"))
-                                                              {
-                                                                  <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                                                      <div class="media w-100">
-                                                                          <div class="align-self-center mr-2">
-                                                                              <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
-                                                                          </div>
-                                                                          <div class="media-body align-self-center">
-
-
-                                                                              <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-
-                                                                              <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
-                                                                          </div>
+                                                                        <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
 
 
 
-                                                                      </div>
-                                                                  </div>
+                                                                </div>
+                                                            </div>
 
-                                                              }
-                                                          }
-                                                          else
-                                                          {
-                                                              <label>No documents to show</label>
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br /> <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                              <br />
-                                                          }
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No campaigns to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" style="width:100% !important" id="i-v-tab-23" role="tabpanel" aria-labelledby="i-vert-tab-23">
+                                        <div class="widget widget-20">
+                                            <div class="widget-header bordered d-flex align-items-center">
+
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="form-group row d-flex align-items-center mt-3 mb-5">
+
+                                                </div>
+                                                <div class="row mt-5 mr-0 ml-0">
+                                                    @if (teamDoc.Where(a => a.Type == "TEXT CAMPAIGN").Count() > 0)
+                                                    {
+                                                        foreach (var item in teamDoc.Where(a => a.Type == "TEXT CAMPAIGN"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
+
+
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+
+                                                                        <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -709,53 +917,53 @@ else
 
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (resourcesBroker.Where(a => a.Type == "Documents Broker").Count() > 0)
-                            {
-                                foreach (var item in resourcesBroker.Where(a => a.Type == "Documents Broker"))
-                                {
-                                    <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
-                                        <div class="media w-100">
+                                                    {
+                                                        foreach (var item in resourcesBroker.Where(a => a.Type == "Documents Broker"))
+                                                        {
+                                                            <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
+                                                                <div class="media w-100">
 
-                                            @if (item.Extension_file == ".pdf")
-                    {
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
-else
-{
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
 
-}
-                                            <div class="value-progress text-info">
-                                                <label class="badge badgeDocstype">@item.Doc_type</label>
-                                            </div>
-                                        </div>
-                                    </div>
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                                    }
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeDocstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -785,56 +993,56 @@ else
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (resourcesBroker.Where(a => a.Type == "Scripts Broker").Count() > 0)
-                            {
-                                foreach (var item in resourcesBroker.Where(a => a.Type == "Scripts Broker"))
-                                {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
-                                            @if (item.Extension_file == ".pdf")
-                    {
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
+                                                    {
+                                                        foreach (var item in resourcesBroker.Where(a => a.Type == "Scripts Broker"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    @if (item.Extension_file == ".pdf")
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
 
 
-                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
-else
-{
-                        <div class="align-self-center mr-2">
-                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
-                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
-                        </div>
-}
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="align-self-center mr-2">
+                                                                            <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                                                                        </div>
+                                                                        <div class="media-body align-self-center">
+                                                                            <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                            <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                        </div>
+                                                                    }
 
-                                            <div class="value-progress text-info">
-                                                <label class="badge badgeScriptstype">@item.Doc_type</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                                    <div class="value-progress text-info">
+                                                                        <label class="badge badgeScriptstype">@item.Doc_type</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -852,43 +1060,43 @@ else
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (resourcesBroker.Where(a => a.Type == "Email Campaign Broker").Count() > 0)
-                            {
-                                foreach (var item in resourcesBroker.Where(a => a.Type == "Email Campaign Broker"))
-                                {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
+                                                    {
+                                                        foreach (var item in resourcesBroker.Where(a => a.Type == "Email Campaign Broker"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
 
-                                            <div class="align-self-center mr-2">
-                                                <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
-                                            </div>
-                                            <div class="media-body align-self-center">
-
-
-                                                <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
-
-                                                <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
-                                            </div>
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
 
 
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                        </div>
-                                    </div>
+                                                                        <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
 
-        }
-    }
-    else
-    {
-                        <label>No campaigns to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No campaigns to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -907,42 +1115,42 @@ else
                                                 </div>
                                                 <div class="row mt-5 mr-0 ml-0">
                                                     @if (resourcesBroker.Where(a => a.Type == "Text Campaign Broker").Count() > 0)
-                            {
-                                foreach (var item in resourcesBroker.Where(a => a.Type == "Text Campaign Broker"))
-                                {
-                                    <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
-                                        <div class="media w-100">
-                                            <div class="align-self-center mr-2">
-                                                <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
-                                            </div>
-                                            <div class="media-body align-self-center">
+                                                    {
+                                                        foreach (var item in resourcesBroker.Where(a => a.Type == "Text Campaign Broker"))
+                                                        {
+                                                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                                                <div class="media w-100">
+                                                                    <div class="align-self-center mr-2">
+                                                                        <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
+                                                                    </div>
+                                                                    <div class="media-body align-self-center">
 
 
-                                                <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                                                                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
 
-                                                <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
-                                            </div>
+                                                                        <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
+                                                                    </div>
 
 
 
-                                        </div>
-                                    </div>
+                                                                </div>
+                                                            </div>
 
-        }
-    }
-    else
-    {
-                        <label>No documents to show</label>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br /> <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-}
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>No documents to show</label>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br /> <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -1017,8 +1225,9 @@ else
                             <div class="form-group">
                                 <label>Category *</label>
                                 <select id="categoryvideo" class="form-control" required>
-                              @foreach (var item in lstcategories) {
-                                    <option value="@item.Description">@item.Description</option>
+                                    @foreach (var item in lstcategories)
+                                    {
+                                        <option value="@item.Description">@item.Description</option>
                                     }
                                 </select>
                             </div>
@@ -1080,9 +1289,9 @@ else
                     </div>
                     <div class="row">
                         <div class="col-12">
-                          
-                                <textarea id="summernote" name="editordata"></textarea>
-                         
+
+                            <textarea id="summernote" name="editordata"></textarea>
+
                         </div>
 
                     </div>
@@ -1100,7 +1309,8 @@ else
     window.onload = function () {
 
         $('#summernote').summernote({
-            minHeight: 400});
+            minHeight: 400
+        });
 
         $('#htmlform').on('submit', function (event) {
             $("#subbtnenviar").attr("disabled", true);
@@ -1164,7 +1374,7 @@ else
             $("#subbtnenviarText").attr("disabled", true);
             event.preventDefault();
 
-         
+
             var myHtml = $('#summernote').summernote('code');
             var formData = new FormData();
             var title = $("#titlecampaign").val();
@@ -1225,7 +1435,7 @@ else
                     $("#myInputDocs").val('');
                 }
 
-                
+
 
                 filterbycategory(selected);
             });
@@ -1289,8 +1499,8 @@ else
 
 
         }
-        
-        
+
+
 
 
     }
@@ -1310,18 +1520,18 @@ else
         for (i = 0; i < li.length; i++) {
             a = li[i];
             txtValue = a.innerHTML;
-   
+
             if (filter == "") {
                 $(li[i].closest("div.sortableDocs")).css('display', 'flex');
             } else {
 
                 if (filter.indexOf(txtValue) > -1) {
                     var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
-          
+
                     $(iddiv).css('display', 'flex');
                 } else {
                     var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
-           
+
                     $(iddiv).css('display', 'none');
                 }
             }
@@ -1329,7 +1539,7 @@ else
 
         }
     }
-      
+
     function filterbycategoryScript(values) {
 
         // Declare variables
@@ -1407,5 +1617,5 @@ else
 
     }
 
- 
+
 </script>
