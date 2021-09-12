@@ -594,6 +594,9 @@ namespace Realestate_portal.Controllers
                 ViewBag.notifications = lstAlerts;
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADING
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c=>c.ID_Company==activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
 
                 //Filtros SA

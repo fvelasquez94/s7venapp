@@ -40,7 +40,7 @@
         <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
             <div class="w-full sm:w-auto flex">
 
-                if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
                 {
                 <a class="btn btn-shadow btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Image</a>
                 <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("Marketing_management", "Portal")">Management</a>

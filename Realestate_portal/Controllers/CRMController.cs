@@ -145,6 +145,11 @@ namespace Realestate_portal.Controllers
 
                 ViewBag.rol = "";
 
+                int totalagents = 0;
+                int totalteams = 0;
+                int totaltasks = 0;
+              
+
                 if (r.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
@@ -153,13 +158,15 @@ namespace Realestate_portal.Controllers
                      var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
                     var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
                     var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
+                    var totalLeads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && f.Lead) select f).Count();
 
                     decimal totalprojectedgains = 0;
                     decimal totalgains = 0;
                     if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
                     if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
 
-                    ViewBag.totalcustomers = totalproperties;
+                    ViewBag.totallistings = totalproperties;
+                    ViewBag.totalleads = totalLeads;
                     ViewBag.totalgainsprojected = totalprojectedgains.ToString("N2");
                     ViewBag.totalgains = totalgains.ToString("N2");
 
@@ -173,7 +180,13 @@ namespace Realestate_portal.Controllers
 
                         decimal comission = 0;
                         decimal gains = 0;
-                        int totalcustomer = 0;
+                        int totalproperties = 0;
+                        int totalleads = 0;
+                       
+                        totalleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && f.Lead) select f).Count();
+
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).Count();
+                        totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company) select f).Count();
 
                         foreach (var user in companyusers)
                         {
@@ -182,17 +195,21 @@ namespace Realestate_portal.Controllers
 
                             var listgains = (from f in db.Tb_Process where (f.ID_User == user.ID_User && f.Stage == "CLOSED") select f).ToList();
                             if (listgains.Count > 0) { gains += listgains.Select(c => c.Commission_amount).Sum(); }
-                            totalcustomer += (from f in db.Tb_Process where (f.ID_User == user.ID_User) select f).Count();
+                            totalproperties += (from f in db.Tb_Process where (f.ID_User == user.ID_User) select f).Count();
                         }
                         ViewBag.totalgainsprojected = comission.ToString("N2");
                         ViewBag.totalgains = gains.ToString("N2");
-                        ViewBag.totalcustomers = totalcustomer;
+                        ViewBag.totallistings = totalproperties;
+                        ViewBag.totalleads = totalleads;
                     }
                     else
                     {
                         ViewBag.rol = "SA";
                     }
                 }
+                ViewBag.totalagents = totalagents;
+                ViewBag.totalteams = totalteams;
+                ViewBag.totaltasks = totaltasks;
 
                 ViewBag.selbroker = broker;
                 return View();
@@ -203,7 +220,53 @@ namespace Realestate_portal.Controllers
             }
         }
 
+        public ActionResult Tasks(int broker = 0, string token="")
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
+                //HEADER
+                //ACTIVE PAGES
+                ViewData["Menu"] = "CRM";
+                ViewData["Page"] = "Tasks";
+                ViewBag.menunameid = "";
+                ViewBag.submenunameid = "";
+                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                ViewBag.userID = activeuser.ID_User;
+                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //FIN HEADER
+
+                ViewBag.rol = "";
+                ViewBag.token = token;
+
+                List<Tb_Tasks> lst_tasks = new List<Tb_Tasks>();
+
+                if (r.Contains("Agent"))
+                {
+                    lst_tasks = (from a in db.Tb_Tasks where (a.ID_User == activeuser.ID_User) select a).ToList();
+
+                }
+                else
+                {
+                    lst_tasks = (from a in db.Tb_Tasks where (a.ID_User == activeuser.ID_User) select a).ToList();
+                }
+
+                ViewBag.selbroker = broker;
+                return View(lst_tasks);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Portal", new { access = false });
+            }
+        }
         public ActionResult Customers()
         {
             if (generalClass.checkSession())
@@ -522,69 +585,116 @@ namespace Realestate_portal.Controllers
         {
             if (generalClass.checkSession())
             {
-                //mover al login
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
                 //NOTIFICATIONS
-                DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                //ROLES
                 if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.selbroker = 0;
-
-                    var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
-                    var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
-                    var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
-
-                    decimal totalprojectedgains = 0;
-                    decimal totalgains = 0;
-                    if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
-                    if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
-
-                    ViewBag.totalcustomers = totalproperties;
-                    ViewBag.totalgainsprojected = totalprojectedgains.ToString("N2");
-                    ViewBag.totalgains = totalgains.ToString("N2");
-
                 }
                 else if (activeuser.Roles.Contains("SA"))
                 {
                     ViewBag.rol = "SA";
                     ViewBag.selbroker = 1;
-
-
                 }
                 else if (activeuser.Roles.Contains("Admin"))
                 {
                     ViewBag.rol = "Admin";
                     ViewBag.selbroker = 0;
-                    var companyusers = (from c in db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company) select c).ToList();
-
-                    decimal comission = 0;
-                    decimal gains = 0;
-                    int totalcustomer = 0;
-
-                    foreach (var user in companyusers)
-                    {
-                        var listComission = (from f in db.Tb_Process.Where(f => f.ID_User == user.ID_User && f.Stage == "ON CONTRACT") select f).ToList();
-                        if (listComission.Count > 0) { comission += listComission.Select(c => c.Commission_amount).Sum(); }
-
-                        var listgains = (from f in db.Tb_Process where (f.ID_User == user.ID_User && f.Stage == "CLOSED") select f).ToList();
-                        if (listgains.Count > 0) { gains += listgains.Select(c => c.Commission_amount).Sum(); }
-                        totalcustomer += (from f in db.Tb_Process where (f.ID_User == user.ID_User) select f).Count();
-                    }
-                    ViewBag.totalgainsprojected = comission.ToString("N2");
-                    ViewBag.totalgains = gains.ToString("N2");
-                    ViewBag.totalcustomers = totalcustomer;
                 }
-               
+                List<CustomerTableViewModel> leads = new List<CustomerTableViewModel>();
 
-               
-                return View();
+
+
+
+                leads = (from a in db.Tb_Customers
+                         join c in db.Tb_Customers_Users on a.ID_Customer equals c.Id_Customer
+                         join u in db.Sys_Users on c.Id_User equals u.ID_User
+                         where (a.Lead == true)
+                         orderby a.LastName ascending
+                         select new CustomerTableViewModel
+                         {
+                             Id = a.ID_Customer,
+                             Name = a.LastName + " " + a.Name,
+                             Marital_status = a.Marital_status,
+                             Type = a.Type,
+                             Email = a.Email,
+                             Phone = a.Phone,
+                             User_assigned = u.LastName + " " + u.Name,
+                             Creation_date = a.Creation_date,
+                             ID_Company = a.ID_Company,
+                             Lead = a.Lead,
+                             ID_User = c.Id_User,
+                             Team = u.Leader_Name,
+                             DateString = "",
+                         }).ToList();
+
+                return View(leads);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Portal", new { access = false });
+            }
+        }
+
+
+        public ActionResult Teams()
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                //ROLES
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+                    ViewBag.selbroker = 0;
+                }
+                else if (activeuser.Roles.Contains("SA"))
+                {
+                    ViewBag.rol = "SA";
+                    ViewBag.selbroker = 1;
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+                    ViewBag.selbroker = 0;
+                }
+
+
+                List<TeamsModel> teams = new List<TeamsModel>();
+
+                teams = (from a in db.Tb_WorkTeams
+                         //join c in db.Tb_Customers_Users on a.ID_team equals c.ID_team //si es directo a usuario
+                         select new TeamsModel
+                         {
+                             ID_team = a.ID_team,
+                             Name=a.Name,
+                             Active=a.Active,
+                             Creation_date=a.Creation_date,
+                             Last_update=a.Last_update,
+                             Description=a.Description,
+                             ID_Company=a.ID_Company,
+                             Users=(from u in db.Tb_Customers_Users join d in db.Sys_Users on u.Id_User equals d.ID_User where(u.ID_team==a.ID_team) select new TeamsModel_Users {
+                                 Name=d.Name + " " + d.LastName, Id_User=u.Id_User, Email=d.Email, Url_image=d.Image
+                             }).ToList()
+                           
+
+                         }).ToList();
+
+                return View(teams);
             }
             else
             {

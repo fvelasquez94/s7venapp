@@ -1,12 +1,14 @@
 ﻿
 @{
     Layout = null;
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
+    Realestate_portal.Models.Sys_Company company = (Realestate_portal.Models.Sys_Company)ViewBag.company;
 }
 
 <div class="top-bar-boxed border-b border-theme-3 px-4 md:px-6 mb-14 md:mb-8">
     <div class="h-full flex items-center">
         <!-- BEGIN: Logo -->
-        <a href="" class="-intro-x hidden md:flex">
+        <a href="#" class="-intro-x hidden md:flex">
             <img alt="S7VEN" style="width:130px" src="~/Content/pgrlogos/S7VENLogoWhite.png">
             <span class="text-white text-lg ml-3" style="font-size:11px"> REAL STATE AGENT PORTAL<span class="font-medium"></span> </span>
         </a>
@@ -20,7 +22,8 @@ else if (ViewBag.Title == "Premium Group Realty - Network")
 {
     <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Network</a> </div>
 
-}else if (ViewBag.Title == "Premium Group Realty - PGR Management")
+}
+else if (ViewBag.Title == "Premium Group Realty - PGR Management")
 {
     <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Network</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Management</a> </div>
 
@@ -30,6 +33,31 @@ else
     <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> </div>
 }
 
+                        @if (company == null)
+    {
+             <img alt="S7VEN" style="width:130px;margin-right:20px" src="~/Content/dist/images/logo-1.png">
+}
+else
+{
+if (company.Logo == "")
+{
+            
+                    }
+                    else
+                    {
+                        if (company.Logo.StartsWith("http"))
+                        {
+                             <img alt="S7VEN" style="width:130px;margin-right:20px" src="@company.Logo">
+                        }
+                        else
+                        {
+  <img alt="S7VEN" style="width:130px;margin-right:20px" src="@Url.Content(company.Logo)">
+                        }
+           
+}
+
+}
+       
         <!-- END: Breadcrumb -->
         <!-- BEGIN: Search -->
         <!-- END: Search -->
@@ -39,71 +67,7 @@ else
             <div class="notification-content pt-2 dropdown-menu">
                 <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
                     <div class="notification-content__title">Notifications</div>
-                    <div class="cursor-pointer relative flex items-center ">
-                        <div class="w-12 h-12 flex-none image-fit mr-1">
-                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
-                            <div class="w-3 h-3 bg-theme-20 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="ml-2 overflow-hidden">
-                            <div class="flex items-center">
-                                <a href="javascript:;" class="font-medium truncate mr-5">Bruce Willis</a>
-                                <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">05:09 AM</div>
-                            </div>
-                            <div class="w-full truncate text-gray-600 mt-0.5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                        </div>
-                    </div>
-                    <div class="cursor-pointer relative flex items-center mt-5">
-                        <div class="w-12 h-12 flex-none image-fit mr-1">
-                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
-                            <div class="w-3 h-3 bg-theme-20 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="ml-2 overflow-hidden">
-                            <div class="flex items-center">
-                                <a href="javascript:;" class="font-medium truncate mr-5">Vin Diesel</a>
-                                <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">05:09 AM</div>
-                            </div>
-                            <div class="w-full truncate text-gray-600 mt-0.5">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20</div>
-                        </div>
-                    </div>
-                    <div class="cursor-pointer relative flex items-center mt-5">
-                        <div class="w-12 h-12 flex-none image-fit mr-1">
-                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-12.jpg">
-                            <div class="w-3 h-3 bg-theme-20 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="ml-2 overflow-hidden">
-                            <div class="flex items-center">
-                                <a href="javascript:;" class="font-medium truncate mr-5">Leonardo DiCaprio</a>
-                                <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">01:10 PM</div>
-                            </div>
-                            <div class="w-full truncate text-gray-600 mt-0.5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                        </div>
-                    </div>
-                    <div class="cursor-pointer relative flex items-center mt-5">
-                        <div class="w-12 h-12 flex-none image-fit mr-1">
-                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
-                            <div class="w-3 h-3 bg-theme-20 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="ml-2 overflow-hidden">
-                            <div class="flex items-center">
-                                <a href="javascript:;" class="font-medium truncate mr-5">Kevin Spacey</a>
-                                <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">05:09 AM</div>
-                            </div>
-                            <div class="w-full truncate text-gray-600 mt-0.5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                        </div>
-                    </div>
-                    <div class="cursor-pointer relative flex items-center mt-5">
-                        <div class="w-12 h-12 flex-none image-fit mr-1">
-                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
-                            <div class="w-3 h-3 bg-theme-20 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="ml-2 overflow-hidden">
-                            <div class="flex items-center">
-                                <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a>
-                                <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">01:10 PM</div>
-                            </div>
-                            <div class="w-full truncate text-gray-600 mt-0.5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -111,17 +75,62 @@ else
         <!-- BEGIN: Account Menu -->
         <div class="intro-x dropdown w-8 h-8">
             <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in" role="button" aria-expanded="false">
-                <img alt="Tinker Tailwind HTML Admin Template" src="dist/images/profile-2.jpg">
+                @if (user == null)
+    {
+            <img alt="S7VEN" src="~/Content/dist/images/profile-2.jpg">
+}
+else
+{
+if (user.Image == "")
+{
+            <img alt="S7VEN" src="~/Content/dist/images/profile-2.jpg">
+                    }
+                    else
+                    {
+                        if (user.Image.StartsWith("http"))
+                        {
+                             <img src="@user.Image" alt="S7VEN">
+                        }
+                        else
+                        {
+ <img src="@Url.Content(user.Image)" alt="S7VEN">
+                        }
+           
+}
+
+}
+
             </div>
             <div class="dropdown-menu w-56">
                 <div class="dropdown-menu__content box dark:bg-dark-6">
-                    <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
-                        <div class="font-medium">Bruce Willis</div>
-                        <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">Software Engineer</div>
+                    @if (user == null)
+    {
+                <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
+                    <div class="font-medium">Username</div>
+                    <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">
+                        Rol
                     </div>
+                </div>
+}
+else
+{
+                <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
+                    <div class="font-medium">@user.Name @user.LastName</div>
+                    <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">
+                        @if (ViewBag.rol == "Agent")
+        {
+                <span>Real Estate Agent</span>
+}
+else if (ViewBag.rol == "Admin")
+{ <span>Broker</span>}
+else if (ViewBag.rol == "SA")
+{ <span>Super Administrator</span>}
+                    </div>
+                </div>
+}
+
                     <div class="p-2">
                         <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account </a>
                         <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
                         <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a>
                     </div>

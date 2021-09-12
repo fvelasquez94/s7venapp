@@ -12,11 +12,11 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Notification -->
             @*<div class="col-span-12 mt-6 -mb-6 intro-y">
-                <div class="alert alert-dismissible show box bg-theme-25 text-white flex items-center mb-6" role="alert">
-                    <span>Introducing new dashboard!<a href="#" class="underline ml-1" target="blank">themeforest.net</a>.</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <i data-feather="x" class="w-4 h-4"></i> </button>
-                </div>
-            </div>*@
+            <div class="alert alert-dismissible show box bg-theme-25 text-white flex items-center mb-6" role="alert">
+                <span>Introducing new dashboard!<a href="#" class="underline ml-1" target="blank">themeforest.net</a>.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <i data-feather="x" class="w-4 h-4"></i> </button>
+            </div>
+        </div>*@
             <!-- BEGIN: Notification -->
             <!-- BEGIN: General Report -->
             <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-2">
@@ -24,7 +24,7 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         Dashboard
                     </h2>
-   
+
                 </div>
                 <div class="report-box-2 intro-y mt-12 sm:mt-5">
                     <div class="box sm:flex">
@@ -32,26 +32,26 @@
                             <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
                                 <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
                                     @if (user.Image == "")
-            {
-                        <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-6.jpg">
-}
-else
-{
+                            {
+                                <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-6.jpg">
+                    }
+                    else
+                    {
                         <img src="@Url.Content(user.Image)" alt="S7VEN" class="rounded-full">
-}
+            }
                                     <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
                                 </div>
                                 <div class="ml-5">
                                     <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">@user.Name @user.LastName</div>
                                     <div class="text-gray-600">
                                         @if (ViewBag.rol == "Agent")
-                {
-                        <span>Real Estate Agent</span>
-}
-else if (ViewBag.rol == "Admin")
-{ <span>Broker</span>}
-else if (ViewBag.rol == "SA")
-{ <span>Super Administrator</span>}
+                                {
+                                    <span>Real Estate Agent</span>
+                        }
+                        else if (ViewBag.rol == "Admin")
+                        { <span>Broker</span>}
+                else if (ViewBag.rol == "SA")
+                { <span>Super Administrator</span>}
                                     </div>
                                 </div>
                                 <input type="file" id="imgupload" style="display:none" />
@@ -59,35 +59,30 @@ else if (ViewBag.rol == "SA")
 
 
                             </div>
-                            <br /><br />
-                                  <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
 
-                                      <p><strong>Brokerage Name:</strong> @company.Name</p><br />
-                                      <img alt="S7VEN" style="width:150px" src="~/Content/dist/images/profile-6.jpg">
-                                  </div>
-                         
+
 
                         </div>
                         <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-gray-300 dark:border-dark-5 border-dashed">
                             <div class="text-gray-600 dark:text-gray-600 text-xs">LISTINGS</div>
                             <div class="mt-1.5 flex items-center">
                                 <div class="text-base">0</div>
-                                <div class="text-theme-21 flex text-xs font-medium tooltip cursor-pointer ml-2" title="2% Lower than last month"> 0% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                <div class="text-theme-21 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0% Lower than last month"> 0% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
                             <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">PROJECTIN GAINS</div>
                             <div class="mt-1.5 flex items-center">
                                 <div class="text-base">$0.00</div>
-                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="49% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
                             <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">EARNINGS</div>
                             <div class="mt-1.5 flex items-center">
                                 <div class="text-base">$0.00</div>
-                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="52% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
-                            <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">NEW CUSTOMERS</div>
+                            <div class="text-gray-600 dark:text-gray-600 text-xs mt-5">NEW LEADS</div>
                             <div class="mt-1.5 flex items-center">
                                 <div class="text-base">0</div>
-                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="52% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
                         </div>
                     </div>
@@ -97,32 +92,33 @@ else if (ViewBag.rol == "SA")
             <!-- BEGIN: Visitors -->
             <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-4 mt-2">
                 <div class="intro-y flex items-center h-10">
-                  
-                 
+
+
                 </div>
                 <div class="report-box-2 intro-y mt-5">
                     <div class="box p-5">
-    
+
                         @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-    {
-             
-if (user.Team_Leader == true)
-{
-                    <p>Team name: @user.Leader_Name</p>
+                {
+                    <p><strong>Brokerage Name:</strong> @company.Name</p>
+            if (user.Team_Leader == true)
+            {
+                if (user.Leader_Name == "")
+                { <p>Team name: not assigned</p>}
+        else
+        { <p>Team name: @user.Leader_Name</p> }
+
 }
-else
-{
-                    <p>Team name: @user.Leader_Name</p>
-}
-                    <p>Address: @userBroker.Brokerage_address</p>
-                    <p>Broker Contact: @userBroker.Broker_Contact</p>
-                    <p>Broker License: @userBroker.Broker_License</p>
-                    <p>My License #: @user.My_License </p>
-                    <p>Member Since: @user.Member_since.ToShortDateString()</p>
+
+        <p><strong>Address:</strong> @userBroker.Brokerage_address</p>
+        <p><strong>Broker Contact:</strong> @userBroker.Broker_Contact</p>
+        <p><strong>Broker License:</strong> @userBroker.Broker_License</p>
+        <p><strong>My License #:</strong> @user.My_License </p>
+        <p><strong>Member Since:</strong> @user.Member_since.ToShortDateString()</p>
 }
 else if (ViewBag.rol == "SA")
 { }
-                        <button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My profile</button>
+                        <button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My Profile</button>
                     </div>
                 </div>
             </div>
@@ -130,124 +126,90 @@ else if (ViewBag.rol == "SA")
             <!-- BEGIN: Users By Age -->
             <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-2 mt-2 lg:mt-6 xl:mt-2">
                 <div class="intro-y flex items-center h-10">
-              
-              
+
+
                 </div>
                 <div class="report-box-2 intro-y mt-5">
                     <div class="box p-5">
-                        <div class="boxed-tabs nav nav-tabs justify-center w-4/5 bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-500 rounded-md mx-auto" role="tablist"> <a data-toggle="tab" data-target="#active-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2 active" id="active-users-tab" role="tab" aria-controls="active-users" aria-selected="true">Customers</a> 
-                        <a data-toggle="tab" data-target="#inactive-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2" id="inactive-users-tab" role="tab" aria-selected="false">Leads</a> </div>
-                        <div class="tab-content mt-6">
-                            <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
-                                <div class="relative">
-                                    <canvas class="mt-3" id="report-donut-chart" height="300"></canvas>
-                                    <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
-                                        <div class="text-2xl font-medium">2.501</div>
-                                        <div class="text-gray-600 dark:text-gray-600 mt-0.5">Customers</div>
-                                    </div>
-                                </div>
-                                <div class="mt-5">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                                        <span class="truncate">17 - 30 Years old</span>
-                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                        <span class="font-medium xl:ml-auto">62%</span>
-                                    </div>
-                                    <div class="flex items-center mt-4">
-                                        <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
-                                        <span class="truncate">31 - 50 Years old</span>
-                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                        <span class="font-medium xl:ml-auto">33%</span>
-                                    </div>
-                                    <div class="flex items-center mt-4">
-                                        <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
-                                        <span class="truncate">>= 50 Years old</span>
-                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                        <span class="font-medium xl:ml-auto">10%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <img alt="S7VEN" style="width:100%" src="~/Content/dist/images/profile-6.jpg">
                     </div>
                 </div>
             </div>
             <!-- END: Users By Age -->
-    
-                <!-- BEGIN: Item List -->
-                <div class="intro-y col-span-12 lg:col-span-12">
-                    <div class="lg:flex intro-y">
-                      
-                            <h2 class="text-lg font-medium truncate mr-5">
-                                Modules
-                            </h2>
+            <!-- BEGIN: Item List -->
+            <div class="intro-y col-span-12 lg:col-span-12">
+                <div class="lg:flex intro-y">
 
-                      
-                    </div>
-                    <div class="grid grid-cols-12 gap-5 mt-5">
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                    <h2 class="text-lg font-medium truncate mr-5">
+                        Modules
+                    </h2>
 
-                            <div class="font-medium text-center">      <i data-feather="users"></i> <br /><br />CRM</div>
-                            <div class="text-center">Customer Relationship Manager. Manage your customer data.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="globe"></i> <br /><br />Networking</div>
-                            <div class="text-center">Find and Connect with Professionals for a smother transaction.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="archive"></i> <br /><br />Documents History</div>
-                            <div class="text-center">Upload all your transaction documents.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="box"></i> <br /><br />General Resources</div>
-                            <div class="text-center">Access to all MLS forms, Scripts and more.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="tv"></i> <br /><br />Videos</div>
-                            <div class="text-center">Training videos.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="briefcase"></i> <br /><br />Marketing Resources</div>
-                            <div class="text-center">Images for your social networks.</div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                            <div class="font-medium text-center">      <i data-feather="calendar"></i> <br /><br />Webinars</div>
-                            <div class="text-center">Stay up to date with all 7 events and access to live trainings.</div>
-                        </div>
-                 
-                    </div>
-              
-                </div>
-                <!-- END: Item List -->
-              
-                <!-- BEGIN: Official Store -->
-                <!-- END: Official Store -->
-                <!-- BEGIN: Weekly Best Sellers -->
-                <!-- END: Weekly Best Sellers -->
-                <!-- BEGIN: Ads 1 -->
-                <div class="col-span-12 lg:col-span-6 mt-6">
-                    <div class="ads-box box p-8 relative overflow-hidden bg-theme-24 intro-y">
-                        <div class="ads-box__title w-full sm:w-72 text-white text-xl -mt-3">One of the largest and most accurate multiple listing service in New York State</div>
-                        <div class="w-full sm:w-72 leading-relaxed text-white text-opacity-70 dark:text-gray-600 dark:text-opacity-100 mt-3"></div>
-                        <a href="https://www.lirealtor.com/" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your MLS</a>
-                        <img class="hidden sm:block absolute top-0 right-0 w-2/5 -mt-3 mr-2" alt="S7VEN" src="~/Content/dist/images/woman-illustration.svg">
-                    </div>
-                </div>
-                <!-- END: Ads 1 -->
-                <!-- BEGIN: Ads 2 -->
-                <div class="col-span-12 lg:col-span-6 mt-6">
-                    <div class="ads-box box p-8 relative overflow-hidden intro-y">
-                        <div class="ads-box__title w-full sm:w-52 text-theme-24 dark:text-white text-xl -mt-3">Take a look at our <span class="font-medium">Comparative Market Analysis</span> Partner</div>
-                        <div class="w-full sm:w-72 leading-relaxed text-gray-600 mt-3"></div>
-                        <a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your CMA</a>
 
-                        <img class="hidden sm:block absolute top-0 right-0 w-1/2 mt-1 -mr-12" alt="S7VEN" src="~/Content/dist/images/phone-illustration.svg">
-                    </div>
                 </div>
-                <!-- END: Ads 2 -->
-                <!-- BEGIN: Weekly Top Products -->
-                
-                <!-- END: Weekly Top Products -->
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+
+                        <div class="font-medium text-center">      <i data-feather="users"></i> <br /><br />CRM</div>
+                        <div class="text-center">Customer Relationship Manager. Manage your customer data.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="globe"></i> <br /><br />Networking</div>
+                        <div class="text-center">Find and Connect with Professionals for a smother transaction.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="archive"></i> <br /><br />Documents History</div>
+                        <div class="text-center">Upload all your transaction documents.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="box"></i> <br /><br />General Resources</div>
+                        <div class="text-center">Access to all MLS forms, Scripts and more.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="tv"></i> <br /><br />Videos</div>
+                        <div class="text-center">Training videos.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="briefcase"></i> <br /><br />Marketing Resources</div>
+                        <div class="text-center">Images for your social networks.</div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                        <div class="font-medium text-center">      <i data-feather="calendar"></i> <br /><br />Webinars</div>
+                        <div class="text-center">Stay up to date with all 7 events and access to live trainings.</div>
+                    </div>
+
+                </div>
+
             </div>
+            <!-- END: Item List -->
+            <!-- BEGIN: Official Store -->
+            <!-- END: Official Store -->
+            <!-- BEGIN: Weekly Best Sellers -->
+            <!-- END: Weekly Best Sellers -->
+            <!-- BEGIN: Ads 1 -->
+            <div class="col-span-12 lg:col-span-6 mt-6">
+                <div class="ads-box box p-8 relative overflow-hidden intro-y">
+                    <div class="ads-box__title w-full sm:w-52 text-theme-24 dark:text-white text-xl -mt-3">One of the largest and most accurate multiple listing service in New York State</div>
+                    <div class="w-full sm:w-72 leading-relaxed text-gray-600 mt-3"></div>
+              
+                    <a href="https://sso.mlsstratus.com/idp/profile/SAML2/Redirect/SSO?execution=e1s2" target="_blank" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your MLS</a>
+                    <img class="hidden sm:block absolute bottom-0 right-0  mt-1 -mr-12" style="width:70%" alt="S7VEN" src="~/Content/dist/images/Marketanalysis.png">
+                </div>
+            </div>
+            <div class="col-span-12 lg:col-span-6 mt-6">
+                <div class="ads-box box p-8 relative overflow-hidden bg-theme-24 intro-y">
+                    <div class="ads-box__title w-full sm:w-72 text-white text-xl -mt-3">Take a look at <br />our <span class="font-medium">Comparative  Market <br />Analysis</span> Partner <br /> <br /></div>
+                    <a href="https://www.narrpr.com/home?cbcode=NYMLS-N" target="_blank" class="btn w-32 bg-white dark:bg-dark-2 dark:text-white mt-6 sm:mt-10">Your CMA</a>
+                    <img class="hidden sm:block absolute bottom-0 right-0 w-2/5 -mt-3 mr-2" alt="S7VEN" src="~/Content/dist/images/phone-illustration.svg">
+                   
+                </div>
+            </div>
+            <!-- END: Ads 1 -->
+            <!-- BEGIN: Ads 2 -->
+            <!-- END: Ads 2 -->
+            <!-- BEGIN: Weekly Top Products -->
+            <!-- END: Weekly Top Products -->
+        </div>
         </div>
     <div class="col-span-12 2xl:col-span-3">
         <div class="2xl:border-l border-theme-31 -mb-10 pb-10">
@@ -272,31 +234,31 @@ else if (ViewBag.rol == "SA")
                                 </div>
                                 <div class="p-5">
                                     @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-    {
-        if (Model.Count > 0)
-        {
-            foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
-            {
+                        {
+                            if (Model.Count > 0)
+                            {
+                                foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
+                                {
 
                                     <div class="text-base font-medium truncate">Broker message: @item.Title</div>
-                                <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
-                                <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
-                                <div class="font-medium flex mt-5">
-                                    <button type="button" class="btn btn-secondary py-1 px-2">View more</button>
+                                    <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
+                                    <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
+                                    <div class="font-medium flex mt-5">
+                                        <button type="button" class="btn btn-secondary py-1 px-2">View more</button>
 
-                                </div>
+                                    </div>
 
 
-}
+                    }
 
-}
-else
-{
-                                <div class="text-base font-medium truncate">Broker message</div>
-                                <div class="text-gray-500 mt-1"></div>
-                                <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
+                }
+                else
+                {
+                    <div class="text-base font-medium truncate">Broker message</div>
+                    <div class="text-gray-500 mt-1"></div>
+                    <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
 
-}
+    }
 }
 
                                 </div>
@@ -305,24 +267,97 @@ else
                     </div>
                 </div>
                 <!-- END: Important Notes -->
-
                 <!-- BEGIN: Schedules -->
                 <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
                     <div class="intro-x flex items-center h-10">
                         <h2 class="text-lg font-medium truncate mr-5">
                             Coming soon Webinars
                         </h2>
-                        @*<a href="#" class="ml-auto text-theme-30 dark:text-theme-25 truncate flex items-center"> <i data-feather="plus" class="w-4 h-4 mr-1"></i> Add New Event </a>*@
                     </div>
                     <div class="mt-5">
                         <div class="intro-x box">
+                            <div class="p-5">
+                                <div class="flex">
+                                 
+                                    <div class="font-medium text-base mx-auto">September</div>
+                                   
+                                </div>
+                                <div class="grid grid-cols-7 gap-4 mt-5 text-center">
+                                    <div class="font-medium">Su</div>
+                                    <div class="font-medium">Mo</div>
+                                    <div class="font-medium">Tu</div>
+                                    <div class="font-medium">We</div>
+                                    <div class="font-medium">Th</div>
+                                    <div class="font-medium">Fr</div>
+                                    <div class="font-medium">Sa</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">29</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">30</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">31</div>
+                                    <div class="py-0.5 rounded relative">1</div>
+                                    <div class="py-0.5 rounded relative">2</div>
+                                    <div class="py-0.5 rounded relative">3</div>
+                                    <div class="py-0.5 rounded relative">4</div>
+                                    <div class="py-0.5 rounded relative">5</div>
+                                    <div class="py-0.5 rounded relative">6</div>
+                                    <div class="py-0.5 rounded relative">7</div>
+                                    <div class="py-0.5 rounded relative">8</div>
+                                    <div class="py-0.5 rounded relative">9</div>
+                                    <div class="py-0.5 rounded relative">10</div>
+                                    <div class="py-0.5 rounded relative">11</div>
+                                    <div class="py-0.5 rounded relative">12</div>
+                                    <div class="py-0.5 rounded relative">13</div>
+                                    <div class="py-0.5 bg-theme-24 dark:bg-theme-25 text-white rounded relative">14</div>
+                                    <div class="py-0.5 rounded relative">15</div>
+                                    <div class="py-0.5 rounded relative">16</div>
+                                    <div class="py-0.5 rounded relative">17</div>
+                                    <div class="py-0.5 rounded relative">18</div>
+                                    <div class="py-0.5 rounded relative">19</div>
+                                    <div class="py-0.5 bg-theme-19 dark:bg-theme-15 rounded relative">20</div>
+                                    <div class="py-0.5 rounded relative">21</div>
+                                    <div class="py-0.5 rounded relative">22</div>
+                                    <div class="py-0.5 rounded relative">23</div>
+                                    <div class="py-0.5 rounded relative">24</div>
+                                    <div class="py-0.5 rounded relative">25</div>
+                                    <div class="py-0.5 rounded relative">26</div>
+                                    <div class="py-0.5  rounded relative">27</div>
+                                    <div class="py-0.5 rounded relative">28</div>
+                                    <div class="py-0.5 rounded relative">29</div>
+                                    <div class="py-0.5 rounded relative">30</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">1</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">2</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">3</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">4</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">5</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">6</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">7</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">8</div>
+                                    <div class="py-0.5 rounded relative text-gray-600">9</div>
+                                </div>
+                            </div>
                             <div class="border-t border-gray-200 p-5">
-                                <iframe src="https://calendar.google.com/calendar/b/4/embed?height=400&amp;wkst=1&amp;bgcolor=%23A79B8E&amp;ctz=America%2FNew_York&amp;src=cGdyd2Vic2l0ZTIwMjBAZ21haWwuY29t&amp;color=%23039BE5&amp;showNav=0&amp;showTitle=0&amp;showTabs=0&amp;showCalendars=0&amp;showDate=1&amp;mode=AGENDA&amp;showPrint=0&amp;showTz=0" style="border:solid 1px #777" width="100%" id="iframe" height="400" frameborder="0" scrolling="no"></iframe>
-
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                                    <span class="truncate">Purchase CEMA Potential Benefits -  1 Credit</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">14th</span>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                                    <span class="truncate">Coop VS Condo - 1 Credit</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">14th</span>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-theme-19 rounded-full mr-3"></div>
+                                    <span class="truncate">Focus on the Goal, Closing the Deal - 2 Credit</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">20th</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- END: Schedules -->
             </div>
         </div>

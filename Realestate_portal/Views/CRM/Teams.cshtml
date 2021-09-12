@@ -1,0 +1,203 @@
+﻿@model List<Realestate_portal.Models.ViewModels.CRM.TeamsModel>
+@{
+    ViewBag.Title = "Work Teams";
+
+}
+
+
+<!-- BEGIN: Weekly Top Products -->
+<div class="col-span-12 mt-6">
+    <div class="intro-y block sm:flex items-center h-10">
+        <h2 class="text-lg font-medium truncate mr-5">
+            Work Teams
+        </h2>
+        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+            @if (ViewBag.rol == "SA")
+            {
+
+            }
+            else
+            {
+                <div class="widget-options">
+                    <a class="btn btn-success"  href="javascript:;" data-toggle="modal" data-target="#Newteam-modal">Add Team</a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+        <table class="table table-report sm:mt-2">
+            <thead>
+                <tr>
+                    <th class="whitespace-nowrap">AGENTS</th>
+                    <th class="whitespace-nowrap">NAME'S TEAM</th>
+                    <th class="text-center whitespace-nowrap">TOTAL LEADS</th>
+                    <th class="text-center whitespace-nowrap">DATA</th>
+                    <th class="text-center whitespace-nowrap">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="intro-x">
+                    <td>
+                        <div class="flex">
+                            <div class="w-10 h-10 image-fit zoom-in">
+                                <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-6.jpg" title="Francisco Velasquez">
+                            </div>
+                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                                <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="Uploaded at 25 November 2022">
+                            </div>
+                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                                <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-5.jpg" title="Uploaded at 7 September 2022">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="" class="font-medium whitespace-nowrap">Nikon Z6</a>
+                        <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5">Photography</div>
+                    </td>
+                    <td class="text-center">93</td>
+                    <td class="w-40">
+                        <div class="flex items-center justify-center text-theme-20"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div>
+                    </td>
+                    <td class="table-report__action w-56">
+                        <div class="flex justify-center items-center">
+                            <a class="flex items-center mr-3" href="javascript:;" data-toggle="modal" data-target="#header-footer-slide-over-preview"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+
+                            <a class="flex items-center text-theme-21" href=""> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<!-- END: Weekly Top Products -->
+<!-- BEGIN: Slide Over Content -->
+<div id="header-footer-slide-over-preview" class="modal modal-slide-over" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <a data-dismiss="modal" href="javascript:;"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
+            <!-- BEGIN: Slide Over Header -->
+            <div class="modal-header">
+                <h2 class="font-medium text-base mr-auto">
+                    Broadcast Message
+                </h2>
+                <button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </button>
+                <div class="dropdown sm:hidden">
+                    <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                    <div class="dropdown-menu w-40">
+                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                            <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Slide Over Header -->
+            <!-- BEGIN: Slide Over Body -->
+            <div class="modal-body">
+                <div>
+                    <label for="modal-form-1" class="form-label">From</label>
+                    <input id="modal-form-1" type="text" class="form-control" placeholder="example@gmail.com">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-2" class="form-label">To</label>
+                    <input id="modal-form-2" type="text" class="form-control" placeholder="example@gmail.com">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-3" class="form-label">Subject</label>
+                    <input id="modal-form-3" type="text" class="form-control" placeholder="Important Meeting">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-4" class="form-label">Has the Words</label>
+                    <input id="modal-form-4" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-5" class="form-label">Doesn't Have</label>
+                    <input id="modal-form-5" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-6" class="form-label">Size</label>
+                    <select id="modal-form-6" class="form-select">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>35</option>
+                        <option>50</option>
+                    </select>
+                </div>
+            </div>
+            <!-- END: Slide Over Body -->
+            <!-- BEGIN: Slide Over Footer -->
+            <div class="modal-footer text-right w-full absolute bottom-0">
+                <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                <button type="button" class="btn btn-primary w-20">Send</button>
+            </div>
+            <!-- END: Slide Over Footer -->
+        </div>
+    </div>
+</div>
+<!-- END: Slide Over Content -->
+<!-- BEGIN: Slide Over Content -->
+<div id="Newteam-modal" class="modal modal-slide-over" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <a data-dismiss="modal" href="javascript:;"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
+            <!-- BEGIN: Slide Over Header -->
+            <div class="modal-header">
+                <h2 class="font-medium text-base mr-auto">
+                    New Work Team
+                </h2>
+                
+                <div class="dropdown sm:hidden">
+                    <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                    <div class="dropdown-menu w-40">
+                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                            <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Slide Over Header -->
+            <!-- BEGIN: Slide Over Body -->
+            <div class="modal-body">
+                <div>
+                    <label for="modal-form-1" class="form-label">From</label>
+                    <input id="modal-form-1" type="text" class="form-control" placeholder="example@gmail.com">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-2" class="form-label">To</label>
+                    <input id="modal-form-2" type="text" class="form-control" placeholder="example@gmail.com">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-3" class="form-label">Subject</label>
+                    <input id="modal-form-3" type="text" class="form-control" placeholder="Important Meeting">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-4" class="form-label">Has the Words</label>
+                    <input id="modal-form-4" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-5" class="form-label">Doesn't Have</label>
+                    <input id="modal-form-5" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                </div>
+                <div class="mt-3">
+                    <label for="modal-form-6" class="form-label">Size</label>
+                    <select id="modal-form-6" class="form-select">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>35</option>
+                        <option>50</option>
+                    </select>
+                </div>
+            </div>
+            <!-- END: Slide Over Body -->
+            <!-- BEGIN: Slide Over Footer -->
+            <div class="modal-footer text-right w-full absolute bottom-0">
+                <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                <button type="button" class="btn btn-primary w-20">Send</button>
+            </div>
+            <!-- END: Slide Over Footer -->
+        </div>
+    </div>
+</div>
+<!-- END: Slide Over Content -->

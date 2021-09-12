@@ -149,7 +149,7 @@ namespace Realestate_portal.Controllers
         
            
             tb_Customers.ID_Company = activeuser.ID_Company;
-            tb_Customers.Lead = false;
+            tb_Customers.Lead = true;
             if (tb_Customers.Zipcode == null) { tb_Customers.Zipcode = ""; }
             if (tb_Customers.Mobile == null) { tb_Customers.Mobile = ""; }
             if (tb_Customers.Address == null) { tb_Customers.Address = ""; }

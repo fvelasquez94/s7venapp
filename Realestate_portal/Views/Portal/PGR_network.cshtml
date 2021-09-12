@@ -16,7 +16,7 @@
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+            @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA") { 
 
             <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add New Network</a>
             <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("PGR_network_management", "Portal")">Management</a>

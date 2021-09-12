@@ -73,10 +73,16 @@
     <Reference Include="Google.Apis.PlatformServices, Version=1.46.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.46.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -180,6 +186,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BlobStorage\ConnectionString.cs" />
+    <Compile Include="Controllers\BlobStorage\UploadService.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\clsGeneral.cs" />
     <Compile Include="Controllers\Cls_GoogleCalendar.cs" />
@@ -192,10 +200,12 @@
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\Sys_CompanyController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\Tb_Customers_UsersController.cs" />
     <Compile Include="Controllers\Tb_OptionsController.cs" />
     <Compile Include="Controllers\Tb_SourceController.cs" />
     <Compile Include="Controllers\Tb_StatusController.cs" />
+    <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -309,7 +319,7 @@
     <Compile Include="Models\Tb_Status.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tb_TemplatesCatalogo.cs">
+    <Compile Include="Models\Tb_Tasks.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tb_Videos.cs">
@@ -318,9 +328,13 @@
     <Compile Include="Models\Tb_Webinars.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tb_WorkTeams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\CRM\CustomerCRMDashboard.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerTableViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerViewModel.cs" />
+    <Compile Include="Models\ViewModels\CRM\TeamsModel.cs" />
     <Compile Include="Models\ViewModels\NotesView.cs" />
     <Compile Include="Models\ViewModels\ReviewView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1329,32 +1343,16 @@
     <Content Include="Content\dist\images\bg-main-dark.svg" />
     <Content Include="Content\dist\images\bg-main.svg" />
     <Content Include="Content\dist\images\error-illustration.svg" />
-    <Content Include="Content\dist\images\food-beverage-1.jpg" />
-    <Content Include="Content\dist\images\food-beverage-10.jpg" />
-    <Content Include="Content\dist\images\food-beverage-11.jpg" />
-    <Content Include="Content\dist\images\food-beverage-12.jpg" />
-    <Content Include="Content\dist\images\food-beverage-13.jpg" />
-    <Content Include="Content\dist\images\food-beverage-14.jpg" />
-    <Content Include="Content\dist\images\food-beverage-15.jpg" />
-    <Content Include="Content\dist\images\food-beverage-16.jpg" />
-    <Content Include="Content\dist\images\food-beverage-17.jpg" />
-    <Content Include="Content\dist\images\food-beverage-18.jpg" />
-    <Content Include="Content\dist\images\food-beverage-19.jpg" />
-    <Content Include="Content\dist\images\food-beverage-2.jpg" />
-    <Content Include="Content\dist\images\food-beverage-3.jpg" />
-    <Content Include="Content\dist\images\food-beverage-4.jpg" />
-    <Content Include="Content\dist\images\food-beverage-5.jpg" />
-    <Content Include="Content\dist\images\food-beverage-6.jpg" />
-    <Content Include="Content\dist\images\food-beverage-7.jpg" />
-    <Content Include="Content\dist\images\food-beverage-8.jpg" />
-    <Content Include="Content\dist\images\food-beverage-9.jpg" />
+    <Content Include="Content\dist\images\goal.png" />
     <Content Include="Content\dist\images\Group 1.svg" />
     <Content Include="Content\dist\images\Group 2.svg" />
     <Content Include="Content\dist\images\illustration.svg" />
     <Content Include="Content\dist\images\illustration2.svg" />
+    <Content Include="Content\dist\images\logo-1.png" />
     <Content Include="Content\dist\images\logo.svg" />
     <Content Include="Content\dist\images\map-marker-region.png" />
     <Content Include="Content\dist\images\map-marker.png" />
+    <Content Include="Content\dist\images\Marketanalysis.png" />
     <Content Include="Content\dist\images\phone-illustration.svg" />
     <Content Include="Content\dist\images\placeholders\200x200.jpg" />
     <Content Include="Content\dist\images\placeholders\800x800.jpg" />
@@ -1396,6 +1394,9 @@
     <Content Include="Content\dist\images\profile-7.jpg" />
     <Content Include="Content\dist\images\profile-8.jpg" />
     <Content Include="Content\dist\images\profile-9.jpg" />
+    <Content Include="Content\dist\images\realtor.png" />
+    <Content Include="Content\dist\images\recruitment.png" />
+    <Content Include="Content\dist\images\to-do-list.png" />
     <Content Include="Content\dist\images\woman-illustration.svg" />
     <Content Include="Content\dist\js\app.js" />
     <Content Include="Content\dist\js\app.js.LICENSE.txt" />
@@ -2044,6 +2045,18 @@
     <Content Include="Views\Shared\_Layout_videos.cshtml" />
     <Content Include="Views\Shared\Partials\Video_ms\Menu\header_menu.cshtml" />
     <Content Include="Views\Shared\Partials\Video_ms\Menu\footer_menu.cshtml" />
+    <Content Include="Views\CRM\Tasks.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\Delete.cshtml" />
+    <Content Include="Views\Tasks\Details.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\CRM\Teams.cshtml" />
+    <Content Include="Views\Teams\Create.cshtml" />
+    <Content Include="Views\Teams\Delete.cshtml" />
+    <Content Include="Views\Teams\Details.cshtml" />
+    <Content Include="Views\Teams\Edit.cshtml" />
+    <Content Include="Views\Teams\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

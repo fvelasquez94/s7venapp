@@ -22,24 +22,44 @@
             }
             else
             {
-                      <a href="@Url.Action("CRMDashboard", "CRM")" class="top-menu">
+                      <a href="javascript:void(0)" class="top-menu">
             <div class="top-menu__icon"> <i data-feather="users"></i> </div>
             <div class="top-menu__title"> CRM <i data-feather="chevron-down" class="top-menu__sub-icon"></i></div>
         </a>
             }
                       <ul class="">
                           <li>
-                              <a href="top-menu-dark-wysiwyg-editor-classic.html" class="top-menu">
+                              <a href="@Url.Action("CRMDashboard", "CRM")" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Dashboard</div>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="@Url.Action("Index", "Users")" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Agents</div>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="@Url.Action("Leads", "CRM")" class="top-menu">
                                   <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                                   <div class="top-menu__title">Leads</div>
                               </a>
                           </li>
                           <li>
-                              <a href="top-menu-dark-wysiwyg-editor-inline.html" class="top-menu">
+                              <a href="@Url.Action("Tasks", "CRM")" class="top-menu">
                                   <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                                  <div class="top-menu__title">Task management</div>
+                                  <div class="top-menu__title">Task Management</div>
                               </a>
                           </li>
+                          <li>
+                              <a href="@Url.Action("Teams", "CRM")" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Work Teams</div>
+                              </a>
+                          </li>
+
+
                       </ul>
         </li>
         <li>
@@ -94,7 +114,7 @@
                 <li>
                     @if (ViewBag.rol == "SA")
         {
-            <a href="@Url.Action("Resouces", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+            <a href="@Url.Action("Resources", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                 <div class="top-menu__title">Resources</div>
             </a>
@@ -113,14 +133,14 @@ else
                 <li>
                     @if (ViewBag.rol == "SA")
                     {
-            <a href="@Url.Action("Resouces_broker", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+            <a href="#" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                 <div class="top-menu__title">Broker Resources</div>
             </a>
                     }
                     else
                     {
-            <a href="@Url.Action("Resources_broker", "Portal")" class="top-menu">
+            <a href="#" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                 <div class="top-menu__title">Broker Resources</div>
             </a>
