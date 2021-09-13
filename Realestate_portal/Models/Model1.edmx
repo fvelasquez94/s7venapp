@@ -174,6 +174,7 @@
           <Property Name="ID_Company" Type="int" Nullable="false" />
           <Property Name="Creation_date" Type="datetime" Nullable="false" />
           <Property Name="Source" Type="nchar" MaxLength="30" />
+          <Property Name="ID_team" Type="int" />
         </EntityType>
         <EntityType Name="Tb_Customers_Users">
           <Key>
@@ -538,18 +539,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_customeruser">
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1" />
-          <End Role="Tb_Customers_Users" Type="Self.Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Network">
           <End Role="Tb_Network" Type="Self.Tb_Network" Multiplicity="1" />
           <End Role="Tb_Reviews" Type="Self.Tb_Reviews" Multiplicity="*" />
@@ -800,18 +789,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_usercustomer">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
-          <End Role="Tb_Customers_Users" Type="Self.Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_usersdoc">
           <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
           <End Role="Tb_DocuAgent" Type="Self.Tb_DocuAgent" Multiplicity="*" />
@@ -901,10 +878,6 @@
             <End Role="Tb_Customers" EntitySet="Tb_Customers" />
             <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
           </AssociationSet>
-          <AssociationSet Name="Fk_customeruser" Association="Self.Fk_customeruser">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Network" Association="Self.FK_Network">
             <End Role="Tb_Network" EntitySet="Tb_Network" />
             <End Role="Tb_Reviews" EntitySet="Tb_Reviews" />
@@ -977,10 +950,6 @@
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Webinars" EntitySet="Tb_Webinars" />
           </AssociationSet>
-          <AssociationSet Name="Fk_usercustomer" Association="Self.Fk_usercustomer">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
           <AssociationSet Name="fk_usersdoc" Association="Self.fk_usersdoc">
             <End Role="Sys_Users" EntitySet="Sys_Users" />
             <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
@@ -1037,16 +1006,16 @@
           <NavigationProperty Name="crTb_OrderDetails" Relationship="Self.FK_crTb_OrderDetails_crTb_Orders" FromRole="Sys_Company" ToRole="crTb_OrderDetails" />
           <NavigationProperty Name="crTb_Orders" Relationship="Self.FK_crTb_Orders_Sys_Company" FromRole="Sys_Company" ToRole="crTb_Orders" />
           <NavigationProperty Name="Sys_Roles" Relationship="Self.FK_Sys_Roles_Sys_Company" FromRole="Sys_Company" ToRole="Sys_Roles" />
-          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Sys_Users_Sys_Company" FromRole="Sys_Company" ToRole="Sys_Users" />
           <NavigationProperty Name="Tb_Appointments" Relationship="Self.FK_Tb_Appointments_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Appointments" />
           <NavigationProperty Name="Tb_Conversation" Relationship="Self.FK_Tb_Conversation_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Conversation" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_Tb_Customers_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Customers" />
           <NavigationProperty Name="Tb_Marketing" Relationship="Self.FK_Tb_Marketing_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Marketing" />
           <NavigationProperty Name="Tb_Network" Relationship="Self.FK_Tb_Network_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Network" />
           <NavigationProperty Name="Tb_Resources" Relationship="Self.FK_Tb_Resources_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Resources" />
           <NavigationProperty Name="Tb_Videos" Relationship="Self.FK_Tb_Videos_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Videos" />
           <NavigationProperty Name="Tb_Webinars" Relationship="Self.FK_Tb_Webinars_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Webinars" />
           <NavigationProperty Name="Tb_Docpackages" Relationship="Realstate_agentsModel.FK_Tb_Docpackages_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Docpackages" />
+          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.FK_Sys_Users_Sys_Company" FromRole="Sys_Company" ToRole="Sys_Users" />
+          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.FK_Tb_Customers_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Customers" />
         </EntityType>
         <EntityType Name="Sys_Notifications">
           <Key>
@@ -1058,7 +1027,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="ID_user" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Notifications" ToRole="Sys_Users" />
+          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Notifications" ToRole="Sys_Users" />
         </EntityType>
         <EntityType Name="Sys_Roles">
           <Key>
@@ -1069,61 +1038,6 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Sys_Roles_Sys_Company" FromRole="Sys_Roles" ToRole="Sys_Company" />
-        </EntityType>
-        <EntityType Name="Sys_Users">
-          <Key>
-            <PropertyRef Name="ID_User" />
-          </Key>
-          <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Birth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Last_login" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Main_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Secundary_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fb_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Ins_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tw_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Other_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID_Company" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Email_active" Type="Boolean" Nullable="false" />
-          <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Roles" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Brokerage_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Brokerage_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Broker_Contact" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Broker_License" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="My_License" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Member_since" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Bank" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bank_number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bank_typeaccount" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Credit_number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Credit_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Credit_classification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Credit_month" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Credit_year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Sys_Users_Sys_Company" FromRole="Sys_Users" ToRole="Sys_Company" />
-          <NavigationProperty Name="Sys_Notifications" Relationship="Self.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Users" ToRole="Sys_Notifications" />
-          <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
-          <NavigationProperty Name="Tb_Notes" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Notes" />
-          <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
-          <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
-          <Property Name="Id_Leader" Type="Int32" />
-          <Property Name="Leader_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tb_Customers_Users" Relationship="Realstate_agentsModel.Fk_usercustomer" FromRole="Sys_Users" ToRole="Tb_Customers_Users" />
-          <NavigationProperty Name="Tb_Posts" Relationship="Realstate_agentsModel.FK_Tb_Posts_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Posts" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1163,33 +1077,6 @@
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Conversation_Sys_Company" FromRole="Tb_Conversation" ToRole="Sys_Company" />
           <NavigationProperty Name="Tb_Message" Relationship="Self.FK_Tb_Message_Tb_Conversation" FromRole="Tb_Conversation" ToRole="Tb_Message" />
-        </EntityType>
-        <EntityType Name="Tb_Customers">
-          <Key>
-            <PropertyRef Name="ID_Customer" />
-          </Key>
-          <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Marital_status" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Mobile" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Lead" Type="Boolean" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="ID_Company" Type="Int32" Nullable="false" />
-          <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Customers_Sys_Company" FromRole="Tb_Customers" ToRole="Sys_Company" />
-          <NavigationProperty Name="Tb_Process" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
-          <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Tb_LeadDocs" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
-          <NavigationProperty Name="Tb_Customers_Users" Relationship="Realstate_agentsModel.Fk_customeruser" FromRole="Tb_Customers" ToRole="Tb_Customers_Users" />
         </EntityType>
         <EntityType Name="Tb_docCategies">
           <Key>
@@ -1260,7 +1147,6 @@
           <Property Name="ID_Property" Type="Int32" Nullable="false" />
           <Property Name="ID_Customer" Type="Int32" Nullable="false" />
           <Property Name="ID_User" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.FK_Tb_Notes_Sys_Users" FromRole="Tb_Notes" ToRole="Sys_Users" />
           <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Tb_Options">
@@ -1326,7 +1212,7 @@
           <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Loan_Officer_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Attorneys_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Process" ToRole="Tb_Customers" />
+          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.FK_Tb_Process_Tb_Customers" FromRole="Tb_Process" ToRole="Tb_Customers" />
         </EntityType>
         <EntityType Name="Tb_Quotes">
           <Key>
@@ -1345,7 +1231,7 @@
           </Key>
           <Property Name="ID_Reminder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_User" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Tb_Reminders" ToRole="Sys_Users" />
+          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.FK_Tb_Reminders_Sys_Users" FromRole="Tb_Reminders" ToRole="Sys_Users" />
         </EntityType>
         <EntityType Name="Tb_Resources">
           <Key>
@@ -1443,20 +1329,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sys_Users_Sys_Company">
-          <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Company">
-              <PropertyRef Name="ID_Company" />
-            </Principal>
-            <Dependent Role="Sys_Users">
-              <PropertyRef Name="ID_Company" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tb_Appointments_Sys_Company">
           <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1481,20 +1353,6 @@
               <PropertyRef Name="ID_Company" />
             </Principal>
             <Dependent Role="Tb_Conversation">
-              <PropertyRef Name="ID_Company" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tb_Customers_Sys_Company">
-          <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Company">
-              <PropertyRef Name="ID_Company" />
-            </Principal>
-            <Dependent Role="Tb_Customers">
               <PropertyRef Name="ID_Company" />
             </Dependent>
           </ReferentialConstraint>
@@ -1569,34 +1427,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sys_Notifications_Sys_Users">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Sys_Notifications" Type="Self.Sys_Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Sys_Notifications">
-              <PropertyRef Name="ID_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tb_Reminders_Sys_Users">
-          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Tb_Reminders" Type="Self.Tb_Reminders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Reminders">
-              <PropertyRef Name="ID_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tb_Message_Tb_Conversation">
           <End Role="Tb_Conversation" Type="Self.Tb_Conversation" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1611,31 +1441,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tb_Process_Tb_Customers">
-          <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Tb_Process" Type="Self.Tb_Process" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Process">
-              <PropertyRef Name="ID_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Realstate_agentsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="crTb_OrderDetails" EntityType="Self.crTb_OrderDetails" />
           <EntitySet Name="crTb_Orders" EntityType="Self.crTb_Orders" />
           <EntitySet Name="Sys_Company" EntityType="Self.Sys_Company" />
           <EntitySet Name="Sys_Notifications" EntityType="Self.Sys_Notifications" />
           <EntitySet Name="Sys_Roles" EntityType="Self.Sys_Roles" />
-          <EntitySet Name="Sys_Users" EntityType="Self.Sys_Users" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Tb_Appointments" EntityType="Self.Tb_Appointments" />
           <EntitySet Name="Tb_Conversation" EntityType="Self.Tb_Conversation" />
-          <EntitySet Name="Tb_Customers" EntityType="Self.Tb_Customers" />
           <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" />
           <EntitySet Name="Tb_Marketing" EntityType="Self.Tb_Marketing" />
           <EntitySet Name="Tb_Message" EntityType="Self.Tb_Message" />
@@ -1661,10 +1475,6 @@
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Sys_Roles" EntitySet="Sys_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sys_Users_Sys_Company" Association="Self.FK_Sys_Users_Sys_Company">
-            <End Role="Sys_Company" EntitySet="Sys_Company" />
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tb_Appointments_Sys_Company" Association="Self.FK_Tb_Appointments_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Appointments" EntitySet="Tb_Appointments" />
@@ -1672,10 +1482,6 @@
           <AssociationSet Name="FK_Tb_Conversation_Sys_Company" Association="Self.FK_Tb_Conversation_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Conversation" EntitySet="Tb_Conversation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tb_Customers_Sys_Company" Association="Self.FK_Tb_Customers_Sys_Company">
-            <End Role="Sys_Company" EntitySet="Sys_Company" />
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
           </AssociationSet>
           <AssociationSet Name="FK_Tb_Marketing_Sys_Company" Association="Self.FK_Tb_Marketing_Sys_Company">
             <End Role="Sys_Company" EntitySet="Sys_Company" />
@@ -1697,21 +1503,9 @@
             <End Role="Sys_Company" EntitySet="Sys_Company" />
             <End Role="Tb_Webinars" EntitySet="Tb_Webinars" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sys_Notifications_Sys_Users" Association="Self.FK_Sys_Notifications_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Sys_Notifications" EntitySet="Sys_Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tb_Reminders_Sys_Users" Association="Self.FK_Tb_Reminders_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Reminders" EntitySet="Tb_Reminders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tb_Message_Tb_Conversation" Association="Self.FK_Tb_Message_Tb_Conversation">
             <End Role="Tb_Conversation" EntitySet="Tb_Conversation" />
             <End Role="Tb_Message" EntitySet="Tb_Message" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tb_Process_Tb_Customers" Association="Self.FK_Tb_Process_Tb_Customers">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Process" EntitySet="Tb_Process" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1743,10 +1537,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <AssociationSet Name="FK_Tb_Notes_Sys_Users" Association="Realstate_agentsModel.FK_Tb_Notes_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Notes" EntitySet="Tb_Notes" />
-          </AssociationSet>
           <EntitySet Name="Tb_Reviews" EntityType="Realstate_agentsModel.Tb_Reviews" />
           <AssociationSet Name="FK_Network" Association="Realstate_agentsModel.FK_Network">
             <End Role="Tb_Network" EntitySet="Tb_Network" />
@@ -1755,29 +1545,8 @@
           <EntitySet Name="Tb_Source" EntityType="Realstate_agentsModel.Tb_Source" />
           <EntitySet Name="Tb_Status" EntityType="Realstate_agentsModel.Tb_Status" />
           <EntitySet Name="Tb_LeadDocs" EntityType="Realstate_agentsModel.Tb_LeadDocs" />
-          <AssociationSet Name="FK_CustomerDoc" Association="Realstate_agentsModel.FK_CustomerDoc">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
-          </AssociationSet>
           <EntitySet Name="Tb_DocuAgent" EntityType="Realstate_agentsModel.Tb_DocuAgent" />
-          <AssociationSet Name="fk_usersdoc" Association="Realstate_agentsModel.fk_usersdoc">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
-          </AssociationSet>
-          <EntitySet Name="Tb_Customers_Users" EntityType="Realstate_agentsModel.Tb_Customers_Users" />
-          <AssociationSet Name="Fk_usercustomer" Association="Realstate_agentsModel.Fk_usercustomer">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_customeruser" Association="Realstate_agentsModel.Fk_customeruser">
-            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
-            <End Role="Tb_Customers_Users" EntitySet="Tb_Customers_Users" />
-          </AssociationSet>
           <EntitySet Name="Tb_Tasks" EntityType="Realstate_agentsModel.Tb_Tasks" />
-          <AssociationSet Name="FK_Tb_Posts_Sys_Users" Association="Realstate_agentsModel.FK_Tb_Posts_Sys_Users">
-            <End Role="Sys_Users" EntitySet="Sys_Users" />
-            <End Role="Tb_Posts" EntitySet="Tb_Posts" />
-          </AssociationSet>
           <EntitySet Name="Tb_Docpackages" EntityType="Realstate_agentsModel.Tb_Docpackages" />
           <EntitySet Name="Tb_Docpackages_details" EntityType="Realstate_agentsModel.Tb_Docpackages_details" />
           <AssociationSet Name="FK_Tb_Docpackages_Sys_Company" Association="Realstate_agentsModel.FK_Tb_Docpackages_Sys_Company">
@@ -1789,7 +1558,42 @@
             <End Role="Tb_Docpackages_details" EntitySet="Tb_Docpackages_details" />
           </AssociationSet>
           <EntitySet Name="Tb_WorkTeams" EntityType="Realstate_agentsModel.Tb_WorkTeams" />
-        </EntityContainer>
+          <EntitySet Name="Sys_Users" EntityType="Realstate_agentsModel.Sys_Users" />
+          <EntitySet Name="Tb_Customers_Users" EntityType="Realstate_agentsModel.Tb_Customers_Users" />
+          <AssociationSet Name="FK_Sys_Users_Sys_Company" Association="Realstate_agentsModel.FK_Sys_Users_Sys_Company">
+            <End Role="Sys_Company" EntitySet="Sys_Company" />
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sys_Notifications_Sys_Users" Association="Realstate_agentsModel.FK_Sys_Notifications_Sys_Users">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Sys_Notifications" EntitySet="Sys_Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tb_Posts_Sys_Users" Association="Realstate_agentsModel.FK_Tb_Posts_Sys_Users">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Tb_Posts" EntitySet="Tb_Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tb_Reminders_Sys_Users" Association="Realstate_agentsModel.FK_Tb_Reminders_Sys_Users">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Tb_Reminders" EntitySet="Tb_Reminders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usersdoc" Association="Realstate_agentsModel.fk_usersdoc">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
+          </AssociationSet>
+          <EntitySet Name="Tb_Customers" EntityType="Realstate_agentsModel.Tb_Customers" />
+          <AssociationSet Name="FK_Tb_Customers_Sys_Company" Association="Realstate_agentsModel.FK_Tb_Customers_Sys_Company">
+            <End Role="Sys_Company" EntitySet="Sys_Company" />
+            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerDoc" Association="Realstate_agentsModel.FK_CustomerDoc">
+            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+            <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tb_Process_Tb_Customers" Association="Realstate_agentsModel.FK_Tb_Process_Tb_Customers">
+            <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+            <End Role="Tb_Process" EntitySet="Tb_Process" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1801,18 +1605,6 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <Association Name="FK_Tb_Notes_Sys_Users">
-          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1" />
-          <End Type="Realstate_agentsModel.Tb_Notes" Role="Tb_Notes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Notes">
-              <PropertyRef Name="ID_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tb_Reviews">
           <Key>
             <PropertyRef Name="Id_Review" />
@@ -1863,21 +1655,9 @@
           <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id_Customer" Type="Int32" />
           <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_LeadDocs" ToRole="Tb_Customers" />
           <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_LeadDocs" ToRole="Tb_Customers" />
         </EntityType>
-        <Association Name="FK_CustomerDoc">
-          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="0..1" />
-          <End Type="Realstate_agentsModel.Tb_LeadDocs" Role="Tb_LeadDocs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_LeadDocs">
-              <PropertyRef Name="Id_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tb_DocuAgent">
           <Key>
             <PropertyRef Name="Id_Document" />
@@ -1888,57 +1668,9 @@
           <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Upload_Date" Type="DateTime" Precision="3" />
           <Property Name="Id_User" Type="Int32" />
-          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Tb_DocuAgent" ToRole="Sys_Users" />
           <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Tb_DocuAgent" ToRole="Sys_Users" />
         </EntityType>
-        <Association Name="fk_usersdoc">
-          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="0..1" />
-          <End Type="Realstate_agentsModel.Tb_DocuAgent" Role="Tb_DocuAgent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_DocuAgent">
-              <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Tb_Customers_Users">
-          <Key>
-            <PropertyRef Name="Id_Customer_User" />
-          </Key>
-          <Property Name="Id_Customer_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_User" Type="Int32" Nullable="false" />
-          <Property Name="Id_Customer" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sys_Users" Relationship="Realstate_agentsModel.Fk_usercustomer" FromRole="Tb_Customers_Users" ToRole="Sys_Users" />
-          <NavigationProperty Name="Tb_Customers" Relationship="Realstate_agentsModel.Fk_customeruser" FromRole="Tb_Customers_Users" ToRole="Tb_Customers" />
-          <Property Name="ID_team" Type="Int32" />
-          <Property Name="Teamleader" Type="Boolean" />
-        </EntityType>
-        <Association Name="Fk_usercustomer">
-          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1" />
-          <End Type="Realstate_agentsModel.Tb_Customers_Users" Role="Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_customeruser">
-          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="1" />
-          <End Type="Realstate_agentsModel.Tb_Customers_Users" Role="Tb_Customers_Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Customers">
-              <PropertyRef Name="ID_Customer" />
-            </Principal>
-            <Dependent Role="Tb_Customers_Users">
-              <PropertyRef Name="Id_Customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tb_Tasks">
           <Key>
             <PropertyRef Name="ID_task" />
@@ -1953,20 +1685,6 @@
           <Property Name="Username" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ID_Company" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Tb_Posts_Sys_Users">
-          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Realstate_agentsModel.Tb_Posts" Role="Tb_Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sys_Users">
-              <PropertyRef Name="ID_User" />
-            </Principal>
-            <Dependent Role="Tb_Posts">
-              <PropertyRef Name="ID_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tb_Docpackages">
           <Key>
             <PropertyRef Name="ID_docpackage" />
@@ -2047,7 +1765,205 @@
           <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Sys_Users">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Last_login" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Main_telephone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Secundary_telephone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fb_url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ins_url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Tw_url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Other_url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Company" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Email_active" Type="Boolean" Nullable="false" />
+          <Property Name="Position" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Brokerage_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Brokerage_address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Broker_Contact" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Broker_License" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="My_License" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Member_since" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Bank" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_number" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_typeaccount" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Credit_number" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Credit_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Credit_classification" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Credit_month" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Credit_year" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
+          <Property Name="Id_Leader" Type="Int32" />
+          <Property Name="Leader_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sys_Company" Relationship="Realstate_agentsModel.FK_Sys_Users_Sys_Company" FromRole="Sys_Users" ToRole="Sys_Company" />
+          <NavigationProperty Name="Sys_Notifications" Relationship="Realstate_agentsModel.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Users" ToRole="Sys_Notifications" />
+          <NavigationProperty Name="Tb_Posts" Relationship="Realstate_agentsModel.FK_Tb_Posts_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Posts" />
+          <NavigationProperty Name="Tb_Reminders" Relationship="Realstate_agentsModel.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
+          <NavigationProperty Name="Tb_DocuAgent" Relationship="Realstate_agentsModel.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
+        </EntityType>
+        <EntityType Name="Tb_Customers_Users">
+          <Key>
+            <PropertyRef Name="Id_Customer_User" />
+          </Key>
+          <Property Name="Id_Customer_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="Id_Customer" Type="Int32" Nullable="false" />
+          <Property Name="ID_team" Type="Int32" />
+          <Property Name="Teamleader" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Sys_Users_Sys_Company">
+          <End Type="Realstate_agentsModel.Sys_Company" Role="Sys_Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Company">
+              <PropertyRef Name="ID_Company" />
+            </Principal>
+            <Dependent Role="Sys_Users">
+              <PropertyRef Name="ID_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sys_Notifications_Sys_Users">
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Sys_Notifications" Role="Sys_Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Sys_Notifications">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tb_Posts_Sys_Users">
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Tb_Posts" Role="Tb_Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Tb_Posts">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tb_Reminders_Sys_Users">
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Tb_Reminders" Role="Tb_Reminders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Tb_Reminders">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usersdoc">
+          <End Type="Realstate_agentsModel.Sys_Users" Role="Sys_Users" Multiplicity="0..1" />
+          <End Type="Realstate_agentsModel.Tb_DocuAgent" Role="Tb_DocuAgent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Tb_DocuAgent">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tb_Customers">
+          <Key>
+            <PropertyRef Name="ID_Customer" />
+          </Key>
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Marital_status" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Zipcode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Lead" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ID_Company" Type="Int32" Nullable="false" />
+          <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="ID_team" Type="Int32" />
+          <NavigationProperty Name="Sys_Company" Relationship="Realstate_agentsModel.FK_Tb_Customers_Sys_Company" FromRole="Tb_Customers" ToRole="Sys_Company" />
+          <NavigationProperty Name="Tb_LeadDocs" Relationship="Realstate_agentsModel.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
+          <NavigationProperty Name="Tb_Process" Relationship="Realstate_agentsModel.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
+        </EntityType>
+        <Association Name="FK_Tb_Customers_Sys_Company">
+          <End Type="Realstate_agentsModel.Sys_Company" Role="Sys_Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Company">
+              <PropertyRef Name="ID_Company" />
+            </Principal>
+            <Dependent Role="Tb_Customers">
+              <PropertyRef Name="ID_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerDoc">
+          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="0..1" />
+          <End Type="Realstate_agentsModel.Tb_LeadDocs" Role="Tb_LeadDocs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Customers">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="Tb_LeadDocs">
+              <PropertyRef Name="Id_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tb_Process_Tb_Customers">
+          <End Type="Realstate_agentsModel.Tb_Customers" Role="Tb_Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Realstate_agentsModel.Tb_Process" Role="Tb_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Customers">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="Tb_Process">
+              <PropertyRef Name="ID_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2121,55 +2037,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sys_Users">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Users">
-              <MappingFragment StoreEntitySet="Sys_Users">
-                <ScalarProperty Name="Leader_Name" ColumnName="Leader_Name" />
-                <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
-                <ScalarProperty Name="Team_Leader" ColumnName="Team_Leader" />
-                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Birth" ColumnName="Birth" />
-                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
-                <ScalarProperty Name="Last_update" ColumnName="Last_update" />
-                <ScalarProperty Name="Last_login" ColumnName="Last_login" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Main_telephone" ColumnName="Main_telephone" />
-                <ScalarProperty Name="Secundary_telephone" ColumnName="Secundary_telephone" />
-                <ScalarProperty Name="Fb_url" ColumnName="Fb_url" />
-                <ScalarProperty Name="Ins_url" ColumnName="Ins_url" />
-                <ScalarProperty Name="Tw_url" ColumnName="Tw_url" />
-                <ScalarProperty Name="Other_url" ColumnName="Other_url" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Email_active" ColumnName="Email_active" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="Roles" ColumnName="Roles" />
-                <ScalarProperty Name="Brokerage_name" ColumnName="Brokerage_name" />
-                <ScalarProperty Name="Brokerage_address" ColumnName="Brokerage_address" />
-                <ScalarProperty Name="Broker_Contact" ColumnName="Broker_Contact" />
-                <ScalarProperty Name="Broker_License" ColumnName="Broker_License" />
-                <ScalarProperty Name="My_License" ColumnName="My_License" />
-                <ScalarProperty Name="Member_since" ColumnName="Member_since" />
-                <ScalarProperty Name="Bank" ColumnName="Bank" />
-                <ScalarProperty Name="Bank_number" ColumnName="Bank_number" />
-                <ScalarProperty Name="Bank_typeaccount" ColumnName="Bank_typeaccount" />
-                <ScalarProperty Name="Credit_number" ColumnName="Credit_number" />
-                <ScalarProperty Name="Credit_name" ColumnName="Credit_name" />
-                <ScalarProperty Name="Credit_classification" ColumnName="Credit_classification" />
-                <ScalarProperty Name="Credit_month" ColumnName="Credit_month" />
-                <ScalarProperty Name="Credit_year" ColumnName="Credit_year" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="Realstate_agentsModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -2206,30 +2073,6 @@
                 <ScalarProperty Name="ID_Receptor" ColumnName="ID_Receptor" />
                 <ScalarProperty Name="Created_at" ColumnName="Created_at" />
                 <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Customers">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers">
-              <MappingFragment StoreEntitySet="Tb_Customers">
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="Marital_status" ColumnName="Marital_status" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="Lead" ColumnName="Lead" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
-                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2527,17 +2370,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Customers_Users">
-            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers_Users">
-              <MappingFragment StoreEntitySet="Tb_Customers_Users">
-                <ScalarProperty Name="Teamleader" ColumnName="Teamleader" />
-                <ScalarProperty Name="ID_team" ColumnName="ID_team" />
-                <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
-                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
-                <ScalarProperty Name="Id_Customer_User" ColumnName="Id_Customer_User" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tb_Tasks">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Tasks">
               <MappingFragment StoreEntitySet="Tb_Tasks">
@@ -2602,6 +2434,91 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_Users">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Users">
+              <MappingFragment StoreEntitySet="Sys_Users">
+                <ScalarProperty Name="Leader_Name" ColumnName="Leader_Name" />
+                <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
+                <ScalarProperty Name="Team_Leader" ColumnName="Team_Leader" />
+                <ScalarProperty Name="Credit_year" ColumnName="Credit_year" />
+                <ScalarProperty Name="Credit_month" ColumnName="Credit_month" />
+                <ScalarProperty Name="Credit_classification" ColumnName="Credit_classification" />
+                <ScalarProperty Name="Credit_name" ColumnName="Credit_name" />
+                <ScalarProperty Name="Credit_number" ColumnName="Credit_number" />
+                <ScalarProperty Name="Bank_typeaccount" ColumnName="Bank_typeaccount" />
+                <ScalarProperty Name="Bank_number" ColumnName="Bank_number" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Member_since" ColumnName="Member_since" />
+                <ScalarProperty Name="My_License" ColumnName="My_License" />
+                <ScalarProperty Name="Broker_License" ColumnName="Broker_License" />
+                <ScalarProperty Name="Broker_Contact" ColumnName="Broker_Contact" />
+                <ScalarProperty Name="Brokerage_address" ColumnName="Brokerage_address" />
+                <ScalarProperty Name="Brokerage_name" ColumnName="Brokerage_name" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Email_active" ColumnName="Email_active" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Other_url" ColumnName="Other_url" />
+                <ScalarProperty Name="Tw_url" ColumnName="Tw_url" />
+                <ScalarProperty Name="Ins_url" ColumnName="Ins_url" />
+                <ScalarProperty Name="Fb_url" ColumnName="Fb_url" />
+                <ScalarProperty Name="Secundary_telephone" ColumnName="Secundary_telephone" />
+                <ScalarProperty Name="Main_telephone" ColumnName="Main_telephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Last_login" ColumnName="Last_login" />
+                <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Customers_Users">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers_Users">
+              <MappingFragment StoreEntitySet="Tb_Customers_Users">
+                <ScalarProperty Name="Teamleader" ColumnName="Teamleader" />
+                <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+                <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Id_Customer_User" ColumnName="Id_Customer_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Customers">
+            <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers">
+              <MappingFragment StoreEntitySet="Tb_Customers">
+                <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+                <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Lead" ColumnName="Lead" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Marital_status" ColumnName="Marital_status" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

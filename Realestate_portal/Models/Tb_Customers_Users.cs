@@ -19,8 +19,5 @@ namespace Realestate_portal.Models
         public int Id_Customer { get; set; }
         public Nullable<int> ID_team { get; set; }
         public Nullable<bool> Teamleader { get; set; }
-    
-        public virtual Sys_Users Sys_Users { get; set; }
-        public virtual Tb_Customers Tb_Customers { get; set; }
     }
 }

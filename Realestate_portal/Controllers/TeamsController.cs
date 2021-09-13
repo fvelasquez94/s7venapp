@@ -46,16 +46,73 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_team,Name,Description,ID_Company,Active,Creation_date,Last_update")] Tb_WorkTeams tb_WorkTeams)
+        public ActionResult Create([Bind(Include = "ID_team,Name,Description,ID_Company,Active,Creation_date,Last_update")] Tb_WorkTeams tb_WorkTeams, int[] agents, int[] idcustomer)
         {
-            if (ModelState.IsValid)
+
+            try
             {
+                var idcompany = 1;
+                var idcustomersel = 0;
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                if (activeuser != null) { idcompany = activeuser.ID_Company; }
+                tb_WorkTeams.ID_Company = idcompany;
+                tb_WorkTeams.Active = true;
+                tb_WorkTeams.Creation_date = DateTime.UtcNow;
+                tb_WorkTeams.Last_update = DateTime.UtcNow;
                 db.Tb_WorkTeams.Add(tb_WorkTeams);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if(idcustomer!=null)
+                {
+                    if (idcustomer.Length > 0)
+                    {
+                        foreach(var cust in idcustomer)
+                        {
+                            //Agregamos prop a cliente
+                            var customer = db.Tb_Customers.Where(c => c.ID_Customer == cust).FirstOrDefault();
+                            if (customer != null)
+                            {
+                                //idcustomersel = customer.ID_Customer;
+                                customer.ID_team = tb_WorkTeams.ID_team;
+                                db.Entry(customer).State = EntityState.Modified;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+
+                }
+
+
+                //guardamos agentes
+                if (agents != null)
+                {
+                    if (agents.Length > 0)
+                    {
+                        foreach (var user in agents)
+                        {
+                            //Agregamos agentes a equipo
+                            Tb_Customers_Users newteamuser = new Tb_Customers_Users();
+                            newteamuser.Id_Customer = idcustomersel;
+                            newteamuser.Id_User = user;
+                            newteamuser.ID_team = tb_WorkTeams.ID_team;
+                            newteamuser.Teamleader = false;
+                            db.Tb_Customers_Users.Add(newteamuser);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+
+                return RedirectToAction("Teams", "CRM", new { token = "success" });
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Teams", "CRM", new { token = "error" });
             }
 
-            return View(tb_WorkTeams);
+          
+
+          
         }
 
         // GET: Teams/Edit/5
@@ -77,16 +134,77 @@ namespace Realestate_portal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_team,Name,Description,ID_Company,Active,Creation_date,Last_update")] Tb_WorkTeams tb_WorkTeams)
+    
+        public ActionResult Edit(int ID_team, string NameEdit, string DescriptionEdit, int[] agentsEdit, int[] idcustomerEdit)
         {
-            if (ModelState.IsValid)
-            {
+            try {
+                var idcustomersel = 0;
+                Tb_WorkTeams tb_WorkTeams = db.Tb_WorkTeams.Find(ID_team);
+                tb_WorkTeams.Name = NameEdit;
+                tb_WorkTeams.Description = DescriptionEdit;
+                tb_WorkTeams.Last_update = DateTime.UtcNow;
+
                 db.Entry(tb_WorkTeams).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+                //Eliminamos agentes viejos
+                var agents = db.Tb_Customers_Users.Where(c => c.ID_team == ID_team).ToList();
+                if (agents.Count > 0)
+                {
+                    db.Tb_Customers_Users.RemoveRange(agents);
+                    db.SaveChanges();
+                }
+
+
+                //volvemos a correr proceso de guardado
+                if (idcustomerEdit != null)
+                {
+                    if (idcustomerEdit.Length > 0)
+                    {
+                        foreach (var cust in idcustomerEdit)
+                        {
+                            //Agregamos prop a cliente
+                            var customer = db.Tb_Customers.Where(c => c.ID_Customer == cust).FirstOrDefault();
+                            if (customer != null)
+                            {
+                                //idcustomersel = customer.ID_Customer;
+                                customer.ID_team = tb_WorkTeams.ID_team;
+                                db.Entry(customer).State = EntityState.Modified;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+
+                }
+
+
+                //guardamos agentes
+                if (agentsEdit != null)
+                {
+                    if (agentsEdit.Length > 0)
+                    {
+                        foreach (var user in agentsEdit)
+                        {
+                            //Agregamos agentes a equipo
+                            Tb_Customers_Users newteamuser = new Tb_Customers_Users();
+                            newteamuser.Id_Customer = idcustomersel;
+                            newteamuser.Id_User = user;
+                            newteamuser.ID_team = tb_WorkTeams.ID_team;
+                            newteamuser.Teamleader = false;
+                            db.Tb_Customers_Users.Add(newteamuser);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Teams", "CRM", new { token = "success" });
             }
-            return View(tb_WorkTeams);
+            catch (Exception ex)
+            {
+                return RedirectToAction("Teams", "CRM", new { token = "error" });
+            }
+
+
         }
 
         // GET: Teams/Delete/5
@@ -105,14 +223,48 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Teams/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_WorkTeams tb_WorkTeams = db.Tb_WorkTeams.Find(id);
-            db.Tb_WorkTeams.Remove(tb_WorkTeams);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Tb_WorkTeams tb_WorkTeams = db.Tb_WorkTeams.Find(id);
+                db.Tb_WorkTeams.Remove(tb_WorkTeams);
+                db.SaveChanges();
+
+                //Quitamos prop a clientes
+                var customer = db.Tb_Customers.Where(c => c.ID_team == id).ToList();
+                if (customer.Count>0)
+                {
+                    foreach(var cust in customer)
+                    {
+                        cust.ID_team = 0;
+                        db.Entry(cust).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                 
+                }
+
+                var agents = db.Tb_Customers_Users.Where(c => c.ID_team == id).ToList();
+                if (agents.Count > 0)
+                {
+                    db.Tb_Customers_Users.RemoveRange(agents);
+                    db.SaveChanges();
+                }
+             
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+
         }
 
         protected override void Dispose(bool disposing)

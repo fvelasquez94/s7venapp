@@ -1,4 +1,4 @@
-﻿@model List<Realestate_portal.Models.ViewModels.CRM.CustomerTableViewModel>
+﻿@model List<Realestate_portal.Models.ViewModels.CRM.LeadsMain>
 @{
     ViewBag.Title = "Leads";
 
@@ -74,7 +74,7 @@
                                 @foreach (var item in Model)
             {
                     <tr>
-                        <td> <a href="" class="font-medium whitespace-nowrap">@item.Name</a></td>
+                        <td> <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_lead})" class="font-medium whitespace-nowrap">@item.Name</a></td>
                         <td >@item.Phone</td>
                         <td >@item.Email</td>
                         <td >@item.Type</td>
@@ -84,17 +84,34 @@
     {
                         <td>
                    
-                                            <div class="flex">
-                                                <div class="w-10 h-10 image-fit zoom-in">
-                                                    <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-6.jpg" title="Francisco Velasquez">
-                                                </div>
-                                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                                    <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="Uploaded at 25 November 2022">
-                                                </div>
-                                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                                    <img alt="Tinker Tailwind HTML Admin Template" class="tooltip rounded-full" src="~/Content/dist/images/preview-5.jpg" title="Uploaded at 7 September 2022">
-                                                </div>
+                                      <div class="flex">
+                                    @if (item.Agents.Count() > 0)
+                                    {
+                                        foreach (var agent in item.Agents)
+                                        {
+                                            <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                @if (agent.Url_image == "")
+                                                {
+                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="@agent.Name">
+                                                }
+                                                else if (agent.Url_image.StartsWith("http"))
+                                                {
+                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                                                }
+                                                else
+                                                {
+                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                                                }
+
                                             </div>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <label>Not assigned</label>
+                                    }
+                                </div>
                                         </td>
 
 }
@@ -106,7 +123,7 @@
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center mr-3" href="javascript:;" data-toggle="modal" data-target="#header-footer-slide-over-preview"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
 
-                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.Id)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.ID_lead)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                             </div>
                           
                         </td>

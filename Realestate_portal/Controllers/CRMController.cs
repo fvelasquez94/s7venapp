@@ -608,31 +608,30 @@ namespace Realestate_portal.Controllers
                     ViewBag.rol = "Admin";
                     ViewBag.selbroker = 0;
                 }
-                List<CustomerTableViewModel> leads = new List<CustomerTableViewModel>();
+                List<LeadsMain> leads = new List<LeadsMain>();
 
 
 
 
                 leads = (from a in db.Tb_Customers
-                         join c in db.Tb_Customers_Users on a.ID_Customer equals c.Id_Customer
-                         join u in db.Sys_Users on c.Id_User equals u.ID_User
-                         where (a.Lead == true)
-                         orderby a.LastName ascending
-                         select new CustomerTableViewModel
+                         where (a.Lead == true && a.ID_Company == activeuser.ID_Company)
+                         select new LeadsMain
                          {
-                             Id = a.ID_Customer,
+                             ID_lead = a.ID_Customer,
                              Name = a.LastName + " " + a.Name,
                              Marital_status = a.Marital_status,
                              Type = a.Type,
                              Email = a.Email,
                              Phone = a.Phone,
-                             User_assigned = u.LastName + " " + u.Name,
                              Creation_date = a.Creation_date,
                              ID_Company = a.ID_Company,
                              Lead = a.Lead,
-                             ID_User = c.Id_User,
-                             Team = u.Leader_Name,
-                             DateString = "",
+                             Team = (from t in db.Tb_WorkTeams where (a.ID_team == t.ID_team) select t.Name).FirstOrDefault(),
+                             Agents = (from cu in db.Tb_Customers_Users
+                                       join u in db.Sys_Users on cu.Id_User equals u.ID_User
+                                       where ((cu.ID_team == a.ID_team || cu.Id_Customer == a.ID_Customer) && cu.Id_User!=4) select new TeamsModel_Users {
+                                           Id_User = cu.Id_User, Name = u.Name + " " + u.LastName, Email = u.Email, Url_image = u.Image }).Distinct().ToList(),
+                      
                          }).ToList();
 
                 return View(leads);
@@ -644,7 +643,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Teams()
+        public ActionResult Teams(string token = "")
         {
             if (generalClass.checkSession())
             {
@@ -656,6 +655,7 @@ namespace Realestate_portal.Controllers
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
                 ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
                 //ROLES
                 if (activeuser.Roles.Contains("Agent"))
                 {
@@ -675,6 +675,8 @@ namespace Realestate_portal.Controllers
 
 
                 List<TeamsModel> teams = new List<TeamsModel>();
+                List<Sys_Users> agents = new List<Sys_Users>();
+                List<Tb_Customers> leads = new List<Tb_Customers>();
 
                 teams = (from a in db.Tb_WorkTeams
                          //join c in db.Tb_Customers_Users on a.ID_team equals c.ID_team //si es directo a usuario
@@ -689,11 +691,16 @@ namespace Realestate_portal.Controllers
                              ID_Company=a.ID_Company,
                              Users=(from u in db.Tb_Customers_Users join d in db.Sys_Users on u.Id_User equals d.ID_User where(u.ID_team==a.ID_team) select new TeamsModel_Users {
                                  Name=d.Name + " " + d.LastName, Id_User=u.Id_User, Email=d.Email, Url_image=d.Image
-                             }).ToList()
+                             }).ToList(),
+                             Leads=(from l in db.Tb_Customers where (l.ID_team==a.ID_team) select new TeamsModel_Leads { Id_Lead=l.ID_Customer, Name=l.Name + " " + l.LastName}).ToList()
                            
 
                          }).ToList();
 
+                agents = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.Active && c.ID_User != 4).ToList();
+                leads = db.Tb_Customers.Where(c => c.Lead && c.Active ).ToList();
+                ViewBag.agents = agents;
+                ViewBag.leads = leads;
                 return View(teams);
             }
             else

@@ -32,11 +32,9 @@ namespace Realestate_portal.Models
         public virtual DbSet<Sys_Company> Sys_Company { get; set; }
         public virtual DbSet<Sys_Notifications> Sys_Notifications { get; set; }
         public virtual DbSet<Sys_Roles> Sys_Roles { get; set; }
-        public virtual DbSet<Sys_Users> Sys_Users { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tb_Appointments> Tb_Appointments { get; set; }
         public virtual DbSet<Tb_Conversation> Tb_Conversation { get; set; }
-        public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
         public virtual DbSet<Tb_docCategies> Tb_docCategies { get; set; }
         public virtual DbSet<Tb_Marketing> Tb_Marketing { get; set; }
         public virtual DbSet<Tb_Message> Tb_Message { get; set; }
@@ -55,11 +53,13 @@ namespace Realestate_portal.Models
         public virtual DbSet<Tb_Status> Tb_Status { get; set; }
         public virtual DbSet<Tb_LeadDocs> Tb_LeadDocs { get; set; }
         public virtual DbSet<Tb_DocuAgent> Tb_DocuAgent { get; set; }
-        public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
         public virtual DbSet<Tb_Tasks> Tb_Tasks { get; set; }
         public virtual DbSet<Tb_Docpackages> Tb_Docpackages { get; set; }
         public virtual DbSet<Tb_Docpackages_details> Tb_Docpackages_details { get; set; }
         public virtual DbSet<Tb_WorkTeams> Tb_WorkTeams { get; set; }
+        public virtual DbSet<Sys_Users> Sys_Users { get; set; }
+        public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
+        public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

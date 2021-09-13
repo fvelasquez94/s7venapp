@@ -21,7 +21,5 @@ namespace Realestate_portal.Models
         public int ID_Customer { get; set; }
         public int ID_User { get; set; }
         public string Created_By { get; set; }
-    
-        public virtual Sys_Users Sys_Users { get; set; }
     }
 }

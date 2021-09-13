@@ -18,11 +18,9 @@ namespace Realestate_portal.Models
         public Sys_Users()
         {
             this.Sys_Notifications = new HashSet<Sys_Notifications>();
-            this.Tb_Reminders = new HashSet<Tb_Reminders>();
-            this.Tb_Notes = new HashSet<Tb_Notes>();
-            this.Tb_DocuAgent = new HashSet<Tb_DocuAgent>();
-            this.Tb_Customers_Users = new HashSet<Tb_Customers_Users>();
             this.Tb_Posts = new HashSet<Tb_Posts>();
+            this.Tb_Reminders = new HashSet<Tb_Reminders>();
+            this.Tb_DocuAgent = new HashSet<Tb_DocuAgent>();
         }
     
         public int ID_User { get; set; }
@@ -73,14 +71,10 @@ namespace Realestate_portal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sys_Notifications> Sys_Notifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tb_Posts> Tb_Posts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Reminders> Tb_Reminders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Notes> Tb_Notes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_DocuAgent> Tb_DocuAgent { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Customers_Users> Tb_Customers_Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Posts> Tb_Posts { get; set; }
     }
 }

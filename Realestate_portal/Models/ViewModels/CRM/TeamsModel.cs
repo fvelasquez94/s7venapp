@@ -15,6 +15,7 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public System.DateTime Creation_date { get; set; }
         public System.DateTime Last_update { get; set; }
         public List<TeamsModel_Users> Users { get; set; }
+        public List<TeamsModel_Leads> Leads { get; set; }
     }
     public class TeamsModel_Users
     {
@@ -23,5 +24,10 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public string Email { get; set; }
         public string Url_image { get; set; }
   
+    }
+    public class TeamsModel_Leads
+    {
+        public int Id_Lead { get; set; }
+        public string Name { get; set; }
     }
 }

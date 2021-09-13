@@ -131,8 +131,24 @@ else if (ViewBag.rol == "SA")
                 </div>
                 <div class="report-box-2 intro-y mt-5">
                     <div class="box p-5">
-
-                        <img alt="S7VEN" style="width:100%" src="~/Content/dist/images/profile-6.jpg">
+                        @if (company != null)
+                        {
+                            if (company.Logo != "")
+                            {
+                                if (company.Logo.StartsWith("http"))
+                                {
+                                          <img alt="S7VEN" style="width:200px" src="@company.Logo">
+                                }
+                                else
+                                {
+                                          <img alt="S7VEN" style="width:200px" src="@Url.Content(company.Logo)">
+                                }
+                            }
+                        }
+                        else {
+                            <img alt="S7VEN" style="width:100%" src="~/Content/dist/images/profile-6.jpg">
+                        }
+                        
                     </div>
                 </div>
             </div>

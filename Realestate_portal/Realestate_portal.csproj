@@ -1353,6 +1353,7 @@
     <Content Include="Content\dist\images\map-marker-region.png" />
     <Content Include="Content\dist\images\map-marker.png" />
     <Content Include="Content\dist\images\Marketanalysis.png" />
+    <Content Include="Content\dist\images\nodata-found.png" />
     <Content Include="Content\dist\images\phone-illustration.svg" />
     <Content Include="Content\dist\images\placeholders\200x200.jpg" />
     <Content Include="Content\dist\images\placeholders\800x800.jpg" />

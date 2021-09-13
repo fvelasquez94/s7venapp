@@ -11,6 +11,8 @@
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="~/Content/dist/css/app.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@1.1/dist/js/tom-select.complete.js"></script>
     <!-- END: CSS Assets-->
     <style>
         table.dataTable.no-footer {
@@ -21,7 +23,15 @@
             margin-bottom: 50px;
         }
 
+        .swal2-title{
+            line-height:30px !important;
+        }
 
+        .swal2-styled.swal2-confirm {
+      
+            background-color: #57770d;
+      
+        }
     </style>
 </head>
 <body class="main">
@@ -41,7 +51,19 @@
         @RenderBody()
 
     </div>
-
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/613f154ed326717cb68124b8/1fff6mf0k';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>
 <!-- BEGIN: JS Assets-->
