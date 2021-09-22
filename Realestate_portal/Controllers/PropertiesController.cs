@@ -174,7 +174,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateProperty([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process, int broker)
+        public ActionResult CreateProperty([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process)
         {
             if (tb_Process.Address == null) { tb_Process.Address = ""; }
             if (tb_Process.TypeofAgency == null) { tb_Process.TypeofAgency = ""; }
@@ -199,10 +199,15 @@ namespace Realestate_portal.Controllers
             {
                 tb_Process.Stage = customer.Marital_status;
             }
-               db.Tb_Process.Add(tb_Process);
+            if (customer.Source == null)
+            {
+                tb_Process.Source = "";
+            }
+
+            db.Tb_Process.Add(tb_Process);
                 db.SaveChanges();
-            TempData["exito"] = "Property created successfully.";
-            return RedirectToAction("CustomerDashboard", "CRM", new { id = customer.ID_Customer,broker=broker });
+  
+            return RedirectToAction("CustomerDashboard", "CRM", new { id = customer.ID_Customer, token="success" });
         }
 
         // GET: Properties/Edit/5
@@ -498,16 +503,15 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Properties/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id, int broker = 0)
+
+        public ActionResult DeleteConfirmed(int id)
         {
             Tb_Process tb_Process = db.Tb_Process.Find(id);
             try
             {               
                 db.Tb_Process.Remove(tb_Process);
                 db.SaveChanges();
-                TempData["exito"] = "Property deleted successfully.";
+             
 
                 var packages = (from a in db.Tb_Docpackages where (a.ID_Process == id) select a).ToList();
                 if (packages.Count > 0)
@@ -516,12 +520,14 @@ namespace Realestate_portal.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
             {
-                TempData["advertencia"] = "Property could not be deleted... Try again";
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+
+                var result = "error";
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
           
 

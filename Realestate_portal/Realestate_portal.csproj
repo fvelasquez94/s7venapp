@@ -100,6 +100,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -194,6 +197,7 @@
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomResourcesController.cs" />
+    <Compile Include="Controllers\LeadDocsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
@@ -331,12 +335,14 @@
     <Compile Include="Models\Tb_WorkTeams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\AgentsView.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerCRMDashboard.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerTableViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\TeamsModel.cs" />
     <Compile Include="Models\ViewModels\NotesView.cs" />
     <Compile Include="Models\ViewModels\ReviewView.cs" />
+    <Compile Include="Models\ViewModels\TasksView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1337,12 +1343,14 @@
     <Content Include="Content\common\library\air-datepicker-master\dist\js\i18n\datepicker.en.js" />
     <Content Include="Content\common\library\jquery.steps.js" />
     <Content Include="Content\dist\css\app.css" />
+    <Content Include="Content\dist\css\bootstrap.css" />
     <Content Include="Content\dist\fonts\roboto\LICENSE.txt" />
     <Content Include="Content\dist\images\bg-login-page-dark.svg" />
     <Content Include="Content\dist\images\bg-login-page.svg" />
     <Content Include="Content\dist\images\bg-main-dark.svg" />
     <Content Include="Content\dist\images\bg-main.svg" />
     <Content Include="Content\dist\images\error-illustration.svg" />
+    <Content Include="Content\dist\images\file.png" />
     <Content Include="Content\dist\images\goal.png" />
     <Content Include="Content\dist\images\Group 1.svg" />
     <Content Include="Content\dist\images\Group 2.svg" />
@@ -1354,6 +1362,8 @@
     <Content Include="Content\dist\images\map-marker.png" />
     <Content Include="Content\dist\images\Marketanalysis.png" />
     <Content Include="Content\dist\images\nodata-found.png" />
+    <Content Include="Content\dist\images\noimageavailable.jpg" />
+    <Content Include="Content\dist\images\pdf.png" />
     <Content Include="Content\dist\images\phone-illustration.svg" />
     <Content Include="Content\dist\images\placeholders\200x200.jpg" />
     <Content Include="Content\dist\images\placeholders\800x800.jpg" />
@@ -2058,6 +2068,10 @@
     <Content Include="Views\Teams\Details.cshtml" />
     <Content Include="Views\Teams\Edit.cshtml" />
     <Content Include="Views\Teams\Index.cshtml" />
+    <Content Include="Views\CRM\CustomerDashboard - Copy.cshtml" />
+    <Content Include="Views\CRM\Agents.cshtml" />
+    <Content Include="Views\Emails\NewNotification_task.cshtml" />
+    <Content Include="Views\Portal\Package_detailsCD.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2122,6 +2136,7 @@
     <Folder Include="Content\Uploads\Resources\Documents\" />
     <Folder Include="Content\Uploads\Resources\Scripts\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\LeadDocs\" />
     <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>

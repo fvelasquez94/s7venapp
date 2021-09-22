@@ -46,7 +46,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_team,Name,Description,ID_Company,Active,Creation_date,Last_update")] Tb_WorkTeams tb_WorkTeams, int[] agents, int[] idcustomer)
+        public ActionResult Create([Bind(Include = "ID_team,Name,Description,ID_Company,Active,Creation_date,Last_update")] Tb_WorkTeams tb_WorkTeams, int[] agents, int[] idcustomer, int leader)
         {
 
             try
@@ -103,6 +103,17 @@ namespace Realestate_portal.Controllers
                 }
 
 
+             
+                    //Agregamos Team leader
+                    Tb_Customers_Users newteamuserleader = new Tb_Customers_Users();
+                    newteamuserleader.Id_Customer = idcustomersel;
+                    newteamuserleader.Id_User = leader;
+                    newteamuserleader.ID_team = tb_WorkTeams.ID_team;
+                    newteamuserleader.Teamleader = true;
+                    db.Tb_Customers_Users.Add(newteamuserleader);
+                    db.SaveChanges();
+                
+
                 return RedirectToAction("Teams", "CRM", new { token = "success" });
             }
             catch(Exception ex)
@@ -135,7 +146,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
     
-        public ActionResult Edit(int ID_team, string NameEdit, string DescriptionEdit, int[] agentsEdit, int[] idcustomerEdit)
+        public ActionResult Edit(int ID_team, string NameEdit, string DescriptionEdit, int[] agentsEdit, int[] idcustomerEdit, int leaderEdit)
         {
             try {
                 var idcustomersel = 0;
@@ -197,6 +208,16 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
                 }
+
+                //Agregamos Team leader
+                Tb_Customers_Users newteamuserleader = new Tb_Customers_Users();
+                newteamuserleader.Id_Customer = idcustomersel;
+                newteamuserleader.Id_User = leaderEdit;
+                newteamuserleader.ID_team = tb_WorkTeams.ID_team;
+                newteamuserleader.Teamleader = true;
+                db.Tb_Customers_Users.Add(newteamuserleader);
+                db.SaveChanges();
+
                 return RedirectToAction("Teams", "CRM", new { token = "success" });
             }
             catch (Exception ex)

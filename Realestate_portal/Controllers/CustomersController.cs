@@ -157,7 +157,9 @@ namespace Realestate_portal.Controllers
             if (tb_Customers.Email == null) { tb_Customers.Email = ""; }
             tb_Customers.Active = true;
             tb_Customers.Creation_date = DateTime.UtcNow;
-
+            tb_Customers.ID_team = 0;
+            tb_Customers.Gender = "";
+            
         
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
@@ -165,7 +167,7 @@ namespace Realestate_portal.Controllers
            
 
 
-            return RedirectToAction("AssignList", "Tb_Customers_Users", new { id = tb_Customers.ID_Customer, broker = 0});
+            return RedirectToAction("Leads", "CRM");
             
                 
             
@@ -453,7 +455,7 @@ namespace Realestate_portal.Controllers
 
         // GET: Tb_Customers/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id, int broker=0)
+        public ActionResult Edit(int? id, int broker=0, string token="")
         {
 
             if (generalClass.checkSession())
@@ -477,6 +479,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
+                ViewBag.token = "";
 
                 Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
 
@@ -590,33 +593,20 @@ namespace Realestate_portal.Controllers
                 if (tb_Customers.State == null) { tb_Customers.State = ""; }
                 if (tb_Customers.Type == null) { tb_Customers.Type = ""; }
                 tb_Customers.Creation_date = DateTime.UtcNow;
-                Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
-                tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);
-                tb_Customers.Tb_Process = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
+                //Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
+                //tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);
+                //tb_Customers.Tb_Process = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
                
 
                 db.Entry(tb_Customers).State=EntityState.Modified;
                 db.SaveChanges();
-                TempData["exito"] = "Customer info updated successfully.";
-
-              
-                       
-           
-                    //Sys_Notifications newnotification = new Sys_Notifications();
-                    //newnotification.Active = true;
-                    //newnotification.Date = DateTime.UtcNow;
-                    //newnotification.Title = "New Customer assigned.";
-                    //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-                    //newnotification.ID_user = tb_Customers.ID_User;
-                    //db.Sys_Notifications.Add(newnotification);
-                    //db.SaveChanges();                                       
+                            
                
 
-                return RedirectToAction("CustomerDashboard", "CRM", new {id=tb_Customers.ID_Customer, broker= 0 });
+                return RedirectToAction("Edit", "Customers", new {id=tb_Customers.ID_Customer ,token="success" });
             }
             catch (Exception ex) {
-                TempData["advertencia"] = "Something went wrong, the customer info could not be updated, please try again";
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Customers.ID_Customer, broker = 0 });
+                return RedirectToAction("Edit", "Customers", new { id = tb_Customers.ID_Customer, token = "error" });
             }        
         }
 
@@ -707,14 +697,29 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Tb_Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+    
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
-            db.Tb_Customers.Remove(tb_Customers);
-            db.SaveChanges();
-            return RedirectToAction("Customers", "CRM");
+            try
+            {
+                Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
+                db.Tb_Customers.Remove(tb_Customers);
+                db.SaveChanges();
+
+                Tb_Customers_UsersController tb_Customers_Users = new Tb_Customers_UsersController();
+                var delete_Custo = tb_Customers_Users.Delete(id);
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception EX)
+            {
+                var result2 = "error";
+                return Json(result2, JsonRequestBehavior.AllowGet);
+            }
+        
+           
         }
 
       [HttpPost]

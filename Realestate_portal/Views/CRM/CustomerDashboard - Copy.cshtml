@@ -1,0 +1,2582 @@
+﻿@model Realestate_portal.Models.Tb_Customers
+
+@{
+    ViewBag.Title = "Dashboard CRM";
+
+}
+
+<div class="content content--top-nav content--dashboard">
+    <div class="relative">
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 xl:col-span-9 2xl:col-span-9 z-10">
+
+                <div class="mt-14 mb-3 grid grid-cols-12 sm:gap-10 intro-y">
+                    <div class="col-span-12 sm:col-span-6 md:col-span-4 py-6 sm:pl-5 md:pl-0 lg:pl-5 relative text-center sm:text-left">
+
+                        <div class="text-white text-sm 2xl:text-base font-medium -mb-1"> Lead Dashboard </div>
+                        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-14 2xl:mt-24"> Projected Gains  </div>
+                        <div class="2xl:flex mt-5 mb-3">
+                            <div class="flex items-center justify-center sm:justify-start">
+                                <div class="text-white relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0">$</span> 0.00 </div>
+                                <a class="text-gray-500 ml-4 2xl:ml-16" href=""> <i data-feather="refresh-ccw" class="w-4 h-4"></i> </a>
+                            </div>
+                            <div class="mt-5 2xl:flex 2xl:justify-center 2xl:mt-0 2xl:-ml-20 2xl:w-14 2xl:flex-none 2xl:pl-2.5">
+
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <div class="mr-auto">
+                                <div class="text-white text-opacity-70 flex items-center leading-3"> Gains  </div>
+                                <div class="text-white relative text-2xl font-medium leading-5 pl-4 mt-3.5"> <span class="absolute text-xl top-0 left-0 -mt-1.5">$</span> 0.00 </div>
+                            </div>
+                        </div>
+
+                        @*<div class="mt-14 2xl:mt-24 dropdown">
+                                <button class="dropdown-toggle btn btn-rounded bg-theme-25 border-theme-25 text-white w-44 2xl:w-52 px-4 relative justify-start" aria-expanded="false">
+                                    Download Reports
+                                    <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-1"> <i data-feather="chevron-down" class="w-4 h-4"></i> </span>
+                                </button>
+                                <div class="dropdown-menu w-44 2xl:w-52">
+                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Annual Report </a>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="row-start-2 md:row-start-auto col-span-12 md:col-span-4 py-6 border-theme-11 border-t md:border-t-0 md:border-l md:border-r border-dashed px-10 sm:px-28 md:px-5 -mx-5">
+                        <div class="flex flex-wrap items-center">
+                            <div class="flex items-center w-full sm:w-auto justify-center sm:justify-start mr-auto mb-5 2xl:mb-0">
+                                <div class="w-2 h-2 bg-theme-24 rounded-full -mt-4"></div>
+                                <div class="ml-3.5">
+                                    <div class="relative text-white text-xl 2xl:text-2xl font-medium leading-6 2xl:leading-5 pl-3.5 2xl:pl-4"> <span class="absolute text-base 2xl:text-xl top-0 left-0 2xl:-mt-1.5"></span> 0 </div>
+                                    <div class="text-theme-34 dark:text-gray-600 mt-2">Total Listings</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <canvas class="mt-6" id="report-bar-chart-1" height="267"></canvas>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 md:col-span-4 py-6 border-theme-11 border-t sm:border-t-0 border-l md:border-l-0 border-dashed -ml-4 pl-4 md:ml-0 md:pl-0">
+                        <div class="boxed-tabs nav nav-tabs justify-center w-3/4 2xl:w-4/6 bg-theme-27 text-white dark:bg-dark-2 dark:text-gray-500 rounded-md p-1 mx-auto" role="tablist"> <a data-toggle="tab" data-target="#active-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2 active" id="active-users-tab" role="tab" aria-controls="active-users" aria-selected="true">Listings by Status</a> </div>
+                        <div class="tab-content mt-6">
+                            <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                                <div class="relative">
+                                    <canvas class="mt-8" id="report-donut-chart-3" height="190"></canvas>
+                                    <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                        <div class="text-white text-xl 2xl:text-2xl font-medium">0</div>
+                                        <div class="text-gray-500 dark:text-gray-600 mt-0.5">Total Listings</div>
+                                    </div>
+                                </div>
+                                <div class="mx-auto w-10/12 2xl:w-2/3 mt-8">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
+                                        <span class="text-white truncate">LISTED</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="text-white font-medium xl:ml-auto">62%</span>
+                                    </div>
+                                    <div class="flex items-center mt-4">
+                                        <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                                        <span class="text-white truncate">Pending</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="text-white font-medium xl:ml-auto">33%</span>
+                                    </div>
+                                    <div class="flex items-center mt-4">
+                                        <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+                                        <span class="text-white truncate">Closed</span>
+                                        <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                        <span class="text-white font-medium xl:ml-auto">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="report-box-4 w-full h-full grid grid-cols-12 gap-6 xl:absolute -mt-8 xl:mt-0 pb-6 xl:pb-0 top-0 right-0 z-30 xl:z-auto">
+            <div class="col-span-12 xl:col-span-3 xl:col-start-10 xl:pb-16 z-30">
+                <div class="h-full flex flex-col">
+
+                    <div class="report-box-4__content xl:min-h-0 intro-x">
+                        <div class="max-h-full xl:overflow-y-auto box mt-5">
+                            <div class="bg-white dark:bg-dark-3 xl:sticky top-0 px-5 pt-5 pb-6">
+                                <div class="flex items-center">
+                                    <div class="text-lg font-medium truncate mr-5">Summary Report</div>
+                                    <a href="" class="ml-auto flex items-center text-theme-30 dark:text-theme-25"> <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Refresh </a>
+                                </div>
+                                <div class="boxed-tabs nav nav-tabs justify-center border border-gray-400 border-dashed text-gray-600 dark:border-gray-700 dark:bg-dark-3 dark:text-gray-500 rounded-md p-1 mt-5 mx-auto" role="tablist"> <a data-toggle="tab" data-target="#active-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2 active" id="active-users-tab" role="tab" aria-controls="active-users" aria-selected="true">Weekly</a> <a data-toggle="tab" data-target="#inactive-users" href="javascript:;" class="btn flex-1 border-0 shadow-none py-1.5 px-2" id="inactive-users-tab" role="tab" aria-selected="false">Monthly</a> </div>
+                            </div>
+                            <div class="tab-content px-5 pb-5">
+                                <div class="tab-pane active grid grid-cols-12 gap-y-6" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Unpaid Loan</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">$155.430.000</div>
+                                            <div class="text-theme-21 flex text-xs font-medium tooltip cursor-pointer ml-2" title="2% Lower than last month"> 2% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Active Funding Partner</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">52 Partner</div>
+                                            <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0.1% Lower than last month"> 49% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Paid Installment</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">$75.430.000</div>
+                                            <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="49% Higher than last month"> 36% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Success Payment</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">100%</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Waiting For Disbursement</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                                        <div class="text-gray-600 dark:text-gray-500">Unpaid Loan</div>
+                                        <div class="mt-1.5 flex items-center">
+                                            <div class="text-lg">$21.430.000</div>
+                                            <div class="text-theme-21 flex text-xs font-medium tooltip cursor-pointer ml-2" title="2% Lower than last month"> 23% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary col-span-12 border-gray-400 border-dashed relative justify-start mb-2">
+                                        <div class="truncate mr-5">My Portfolio Details</div>
+                                        <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-feather="arrow-right" class="w-4 h-4"></i> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="intro-y box mt-20 px-8 py-12">
+        <h2 class="intro-y text-2xl font-medium text-center mr-auto">
+            Best Price & Services
+        </h2>
+        <!-- BEGIN: Pricing Tab -->
+        <div class="intro-y flex justify-center mt-6">
+            <div class="pricing-tabs nav nav-tabs box dark:bg-dark-1 rounded-full overflow-hidden" role="tablist"> <a id="layout-2-monthly-fees-tab" data-toggle="tab" data-target="#layout-2-monthly-fees" href="javascript:;" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center active" role="tab" aria-controls="layout-2-monthly-fees" aria-selected="true">Monthly Fees</a> <a id="layout-2-annual-fees-tab" data-toggle="tab" data-target="#layout-2-annual-fees" href="javascript:;" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center" role="tab" aria-controls="layout-2-annual-fees" aria-selected="false">Annual Fees</a> </div>
+        </div>
+        <!-- END: Pricing Tab -->
+        <!-- BEGIN: Pricing Content -->
+        <div class="flex mt-10">
+            <div class="tab-content">
+                <div id="layout-2-monthly-fees" class="tab-pane flex flex-col lg:flex-row active" role="tabpanel" aria-labelledby="layout-2-monthly-fees-tab">
+                    <div class="intro-y flex justify-center flex-col flex-1 text-center sm:px-10 lg:px-5 pb-10 lg:pb-0">
+                        <div class="font-medium text-lg">Monthly Product Pricing</div>
+                        <div class="mt-3 lg:text-justify text-gray-700 dark:text-gray-600">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
+                            <p class="mt-2">When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                        </div>
+                    </div>
+                    <div class="intro-y flex-1 border-t border-b lg:border-t-0 lg:border-b-0 lg:border-l lg:border-r border-gray-200 dark:border-dark-5 py-16 lg:ml-8">
+                        <i data-feather="briefcase" class="block w-12 h-12 text-theme-25 dark:text-theme-22 mx-auto"></i>
+                        <div class="text-xl font-medium text-center mt-10">Business</div>
+                        <div class="text-gray-700 dark:text-gray-600 text-center mt-5"> 1 Domain <span class="mx-1">•</span> 10 Users <span class="mx-1">•</span> 20 Copies </div>
+                        <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                        <div class="flex justify-center">
+                            <div class="relative text-5xl font-semibold mt-8 mx-auto"> <span class="absolute text-2xl top-0 left-0 text-gray-600 -ml-4">$</span> 60 </div>
+                        </div>
+                        <button type="button" class="btn btn-rounded-primary py-3 px-4 block mx-auto mt-8">PURCHASE NOW</button>
+                    </div>
+                    <div class="intro-y flex-1 py-16">
+                        <i data-feather="shopping-bag" class="block w-12 h-12 text-theme-25 dark:text-theme-22 mx-auto"></i>
+                        <div class="text-xl font-medium text-center mt-10">Enterprise</div>
+                        <div class="text-gray-700 dark:text-gray-600 text-center mt-5"> 1 Domain <span class="mx-1">•</span> 10 Users <span class="mx-1">•</span> 20 Copies </div>
+                        <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                        <div class="flex justify-center">
+                            <div class="relative text-5xl font-semibold mt-8 mx-auto"> <span class="absolute text-2xl top-0 left-0 text-gray-600 -ml-4">$</span> 120 </div>
+                        </div>
+                        <button type="button" class="btn btn-rounded-primary py-3 px-4 block mx-auto mt-8">PURCHASE NOW</button>
+                    </div>
+                </div>
+                <div id="layout-2-annual-fees" class="tab-pane flex flex-col lg:flex-row" role="tabpanel" aria-labelledby="layout-2-annual-fees-tab">
+                    <div class="intro-y flex justify-center flex-col flex-1 text-center sm:px-10 lg:px-5 pb-10 lg:pb-0">
+                        <div class="font-medium text-lg">Annual Product Pricing</div>
+                        <div class="mt-3 lg:text-justify text-gray-700">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
+                            <p class="mt-2">When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                        </div>
+                    </div>
+                    <div class="intro-y flex-1 border-t border-b lg:border-t-0 lg:border-b-0 lg:border-l lg:border-r border-gray-200 dark:border-dark-5 py-16 lg:ml-8">
+                        <i data-feather="briefcase" class="block w-12 h-12 text-theme-25 dark:text-theme-22 mx-auto"></i>
+                        <div class="text-xl font-medium text-center mt-10">Business</div>
+                        <div class="text-gray-700 dark:text-gray-600 text-center mt-5"> 1 Domain <span class="mx-1">•</span> 10 Users <span class="mx-1">•</span> 20 Copies </div>
+                        <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                        <div class="flex justify-center">
+                            <div class="relative text-5xl font-semibold mt-8 mx-auto"> <span class="absolute text-2xl top-0 left-0 text-gray-600 -ml-4">$</span> 120 </div>
+                        </div>
+                        <button type="button" class="btn btn-rounded-primary py-3 px-4 block mx-auto mt-8">PURCHASE NOW</button>
+                    </div>
+                    <div class="intro-y flex-1 py-16">
+                        <i data-feather="shopping-bag" class="block w-12 h-12 text-theme-25 dark:text-theme-22 mx-auto"></i>
+                        <div class="text-xl font-medium text-center mt-10">Enterprise</div>
+                        <div class="text-gray-700 dark:text-gray-600 text-center mt-5"> 1 Domain <span class="mx-1">•</span> 10 Users <span class="mx-1">•</span> 20 Copies </div>
+                        <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                        <div class="flex justify-center">
+                            <div class="relative text-5xl font-semibold mt-8 mx-auto"> <span class="absolute text-2xl top-0 left-0 text-gray-600 -ml-4">$</span> 210 </div>
+                        </div>
+                        <button type="button" class="btn btn-rounded-primary py-3 px-4 block mx-auto mt-8">PURCHASE NOW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Pricing Content -->
+    </div>
+</div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <!-- Begin Page Header-->
+                <div class="row">
+                    <div class="page-header">
+                        <div class="row" style="position: absolute; right :0;">
+
+
+                        </div>
+                        <!-- here start header title and breadcrumb sections -->
+                        <div class="d-flex align-items-center">
+                            @if (Model.customer.Lead)
+                            {
+                                <h2 class="page-header-title">Lead dashboard</h2>
+                            }
+                            else
+                            {
+                                <h2 class="page-header-title">Lead dashboard</h2>
+                            }
+                            @if (@TempData["exito"] != null)
+                            {
+                                <h2 style="color:green" id="hideMe">@TempData["exito"]</h2>
+                            }
+                            else if (@TempData["advertencia"] != null)
+                            {
+                                <h2 style="color:red" id="hideMe">@TempData["exito"]</h2>
+                            }
+
+
+                            <!-- here start breadcrumb sections -->
+                            <div>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a class=" bold-bk" href="#"><i class="ti ti-home"></i></a></li>
+                                    @if (Model.customer.Lead)
+                                    {
+                                        <li class="breadcrumb-item active bold-bk"> <a href="@Url.Action("Leads","CRM", new {broker=ViewBag.selbroker })" class="bold-bk">Leads : </a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="breadcrumb-item active bold-bk"> <a href="@Url.Action("Customers","CRM", new {broker=ViewBag.selbroker })" class="bold-bk">Leads : </a></li>
+                                    }
+                                    <li class="breadcrumb-item active bold-bl bold-uppercase"><a href="@Url.Action("Customers", "CRM", new { broker = ViewBag.selbroker })" class="bold-bl bold-uppercase">@Model.customer.Name @Model.customer.LastName</a></li>
+                                </ul>
+                            </div>
+                            <!-- here ends breadcrumb sections -->
+                        </div>
+                        <!-- here ends header title  and breadcrumb sections -->
+                    </div>
+                </div>
+                <!-- End Page Header -->
+                <div class="row">
+                    <div class="col-md-12" style="background-color:white">
+                        <!-- tab menu headers start here -->
+                        <ul class="nav nav-tabs main-navigationcrm" role="tablist">
+                            @if (Model.customer.Lead)
+                            {
+                                <li class="nav-item">
+                                    <a onclick="changeAria()" class="nav-link active" id="i-vert-tab-1" data-toggle="tab" href="#i-v-tab-1" role="tab" aria-controls="i-v-tab-1" aria-selected="true">Notes</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="i-vert-tab-1" data-toggle="tab" href="#i-v-tab-1" role="tab" aria-controls="i-v-tab-1" aria-selected="true">Notes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="i-vert-tab-2" data-toggle="tab" href="#i-v-tab-2" role="tab" aria-controls="i-v-tab-2" aria-selected="false">Properties</a>
+                                </li>
+                            }
+                        </ul>
+                        <!--tab menu  ends here -->
+                        <!-- here starts tabs body content -->
+                        <div class="tab-content d-flex align-items-center">
+
+                            <!-- here start notes sections -->
+                            <div class="tab-pane fade show active" id="i-v-tab-1" style="width:100% !important; margin: auto !important" role="tabpanel" aria-labelledby="i-vert-tab-1">
+                                <div class="row pt-5 pl-3 pr-3 text-align-center">
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2"></div>
+                                    <!-- here stars no note in tab menu section -->
+                                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 justify-content-center mb-4 custom-card" style="display:flex">
+                                        <div class="media w-100">
+                                            <div class="align-self-center mr-2">
+                                                <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                            </div>
+                                            <div class="media-body align-self-center text-align-center">
+                                                <div class="files-title"><a style="color: #2c9ad6" class="textfileDocs " href="/Portal/Showpdf/10" target="_blank">Create a note</a></div>
+                                                <br />
+                                                <textarea class="form-control-lg" style="width: 80%" id="notebody"></textarea>
+                                                <br />
+                                                <br />
+                                                <button class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addnote">Add Note</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- here ends no note in tab menu section -->
+                                    <div id="notecard" style="width:100%">
+                                        @if (Model.notes.Count() > 0)
+                                        {
+                                            int number = 1;
+                                            foreach (var item in Model.notes)
+                                            {
+
+                                                <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                                                    <div>
+                                                        <input type="hidden" id="noteid" value="@item.ID_note" />
+                                                        <input type="hidden" id="notetext" value="@item.Text" />
+                                                        <input type="hidden" id="notenumber" value="@number" />
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="value-progress text-info  text-align-right">
+                                                            <ul class="nav" role="tablist">
+                                                                <li class="nav-link add-property">
+                                                                    <a class="badge badgeDocstype btn notetoedit" style="background-color:#f4f4f4" onclick="editDocument(event)">Edit Note</a>
+                                                                </li>
+                                                                <li class="nav-link add-property">
+                                                                    <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" onclick="deleteNote(event)">Delete Note</a>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="media w-100">
+                                                        <div class="align-self-center mr-2">
+                                                            <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                                        </div>
+                                                        <div class="media-body align-self-center text-align-center">
+                                                            <div class="files-title"><a style="color: #2c9ad6" class="textfileDocs " href="/Portal/Showpdf/10" target="_blank">Note @number</a></div>
+                                                            <br />
+                                                            <div class="files-number">Last update : @item.Date.ToShortDateString()</div>
+                                                            <br />
+                                                            <p class="files-title">@item.Text</p>
+                                                            <p style="float:right; font-size:10px" class="files-title"><label>Created by : </label><br /><label style="color: #2c9ad6"> @item.Created_By</label></p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin-top: 20px; display: none;" class="row">
+                                                        <div class="value-progress text-info text-align-center">
+                                                            <div class="col-12 text-align-center">
+                                                                <a class="badge badgeDocstype btn notesave" style="background-color:#f4f4f4" onclick="updateNote(event)">Update</a>
+                                                                <a class="badge badgeDocstype btn notecancel" onclick="cancelEdit(event)" style="background-color:#f4f4f4">Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                number++;
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- here ends notes sections -->
+                            <!-- here start active/desactive tab property section when there is no property sections -->
+                            <!-- here stars properties sections -->
+                            @if (Model.properties.Count() > 0)
+                            {
+                                <!-- here stars properties when property exist sections -->
+                                <div class="tab-pane fade" id="i-v-tab-2" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-2">
+                                    <div class="row pt-5 pl-0 pr-0 text-align-center">
+
+                                        @foreach (var item in Model.properties)
+                                        {
+                                            <!-- here stars edit property form modal section -->
+                                            <div aria-hidden="true" id="updatepropertywindow" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 id="closewindow">Edit property</h4>
+                                                            <button onclick="closingAlert()" class="close" aria-label="Close">
+                                                                <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Begin Widget Body -->
+                                                            @using (Html.BeginForm("Edit", "Properties", new { broker = ViewBag.selbroker }, FormMethod.Post))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <div id="propertyform" class="widget-body">
+                                                                    <div class="form-horizontal">
+                                                                        <div class="row" style="text-align:center">
+                                                                            <input type="hidden" value="@item.Description" name="Description" />
+                                                                            <input type="hidden" name="Last_update" value="@item.Last_update" />
+                                                                            <input type="hidden" name="Closing_date" value="@item.Closing_date" />
+                                                                            <input type="hidden" name="Creation_date" value="@item.Creation_date" />
+                                                                            <input type="hidden" name="Inspection_date" value="@item.Inspection_date" />
+                                                                            <input type="hidden" name="Offer_accepted_date" value="@item.Offer_accepted_date" />
+                                                                            <input type="hidden" name="Under_contract_date" value="@item.Under_contract_date" />
+                                                                            <input type="hidden" name="ID_Process" value="@item.ID_Process" />
+                                                                            <input type="hidden" name="ID_Property" value="@item.ID_Property" />
+                                                                            <input type="hidden" name="Notes" value="@item.Notes" />
+                                                                            <div class="col-md-12">
+
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <input type="hidden" name="ID_Customer" value="@Model.customer.ID_Customer" class="form-control" required />
+                                                                                <label class="control-label">Customer :</label>
+                                                                                <input class="form-control" type="text" disabled value="@Model.customer.Name @Model.customer.LastName" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Status</label>
+                                                                                <select class="form-control" name="Property">
+                                                                                    @if (item.Property == "LISTED")
+                                                                                    {
+                                                                                        <option selected>LISTED</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>LISTED</option>
+                                                                                    }
+                                                                                    @if (item.Property == "PENDING")
+                                                                                    {
+                                                                                        <option selected>PENDING</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>PENDING</option>
+                                                                                    }
+                                                                                    @if (item.Property == "CLOSED")
+                                                                                    {
+                                                                                        <option selected>CLOSED</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>CLOSED</option>
+                                                                                    }
+                                                                                    @if (item.Property == "RENTED")
+                                                                                    {
+                                                                                        <option selected>RENTED</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>RENTED</option>
+                                                                                    }
+                                                                                    @if (item.Property == "EXPIRED")
+                                                                                    {
+                                                                                        <option selected>EXPIRED</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>EXPIRED</option>
+                                                                                    }
+                                                                                </select>
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label ">Address</label>
+                                                                                <input type="text" name="Address" value="@item.Address" class="form-control" required />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Purchase Price ($)</label>
+                                                                                <input type="number" step="0.01" name="Purchase_price" value="@item.Purchase_price" class="form-control" required />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Commission Amount ($)</label>
+                                                                                <input type="number" step="0.01" name="Commission_amount" value="@item.Commission_amount" class="form-control" required
+                                                                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Commission Percentage (%)</label>
+                                                                                <input type="number" step="0.01" name="Commissionperc" value="@item.Commissionperc" class="form-control" required
+                                                                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                                                            </div>
+                                                                            <input type="hidden" value="@Model.customer.Marital_status" name="Stage" />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Stage</label>
+                                                                                <input type="text" disabled value="@Model.customer.Marital_status" name="Stage" class="form-control" required />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Source</label>
+                                                                                <input type="hidden" value="@Model.customer.Source" name="Source" />
+                                                                                <input class="form-control" disabled name="Source" value="@Model.customer.Source" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Type of Agency</label>
+                                                                                <select class="form-control" id="TypeofAgency" name="TypeofAgency">
+                                                                                    @if (item.TypeofAgency == "NOT ASSIGNED")
+                                                                                    {
+                                                                                        <option selected>NOT ASSIGNED</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>NOT ASSIGNED</option>
+                                                                                    }
+                                                                                    @if (item.TypeofAgency == "BROKERS AGENT")
+                                                                                    {
+                                                                                        <option selected>BROKERS AGENT</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>BROKERS AGENT</option>
+                                                                                    }
+                                                                                    @if (item.TypeofAgency == "BUYERS AGENT")
+                                                                                    {
+                                                                                        <option selected>BUYERS AGENT</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>BUYERS AGENT</option>
+                                                                                    }
+                                                                                    @if (item.TypeofAgency == "SELLING AGENT")
+                                                                                    {
+                                                                                        <option selected>SELLING AGENT</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>SELLING AGENT</option>
+                                                                                    }
+                                                                                    @if (item.TypeofAgency == "DUAL AGENT")
+                                                                                    {
+                                                                                        <option selected>DUAL AGENT</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>DUAL AGENT</option>
+                                                                                    }
+                                                                                    @if (item.TypeofAgency == "LISTING AGENT")
+                                                                                    {
+                                                                                        <option selected>LISTING AGENT</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option>LISTING AGENT</option>
+                                                                                    }
+                                                                                </select>
+                                                                            </div>
+                                                                            <br />
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Loan Officer's Name</label>
+                                                                                <input type="text" name="Loan_Officer_name" value="@item.Loan_Officer_name" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Loan Officer's Telephone</label>
+                                                                                <input type="text" name="Loan_Officer_tel" value="@item.Loan_Officer_tel" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Attorney's Name</label>
+                                                                                <input type="text" name="Attorneys_name" value="@item.Attorneys_name" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Attorney's Telephone</label>
+                                                                                <input type="text" name="Attorneys_tel" value="@item.Attorneys_tel" class="form-control" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group" style="position: relative !important; top:  20px !important;">
+                                                                                    <div class="col-md-offset-2 col-md-10">
+                                                                                        <input id="editpropertybtn" onclick="" type="submit" value="update" class="btn btn-outline-info" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }                                                <!-- End Widget -->
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button style="display:none" id="closeeditpropertybutton" type="button" data-dismiss="modal">Close</button>
+                                                            <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- here ends edit property form modal section -->
+                                            <!-- here stars delete property form modal section -->
+                                            <div aria-hidden="true" id="deletepropertywindow" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 id="closewindow">Delete property</h4>
+                                                            <button onclick="closingAlert()" class="close" aria-label="Close">
+                                                                <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Begin Widget Body -->
+                                                            @using (Html.BeginForm("Delete", "Properties", new { id = item.ID_Process, broker = ViewBag.selbroker }, FormMethod.Post))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <div id="propertyform" class="widget-body">
+                                                                    <div class="form-horizontal">
+                                                                        <div class="row" style="text-align:center">
+
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Customer : </label>
+                                                                                <input class="form-control" type="text" disabled value="@Model.customer.Name @Model.customer.LastName" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Status</label>
+                                                                                <input class="form-control" type="text" disabled value="@item.Property" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label ">Address</label>
+                                                                                <input type="text" disabled value="@item.Address" class="form-control" required />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Purchase Price ($)</label>
+                                                                                <input type="text" disabled value="@item.Purchase_price" name="Purchase_price" class="form-control" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Commission Amount ($)</label>
+                                                                                <input type="text" name="Commission_amount" class="form-control" disabled value="@item.Commission_amount" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Commission Percentage (%)</label>
+                                                                                <input type="text" name="Commissionperc" class="form-control" disabled value="@item.Commissionperc" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Stage</label>
+                                                                                <input type="text" disabled value="@item.Stage" name="Stage" class="form-control" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Source</label>
+                                                                                <input type="text" disabled value="@item.Source" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Type of Agency</label>
+                                                                                <input type="text" disabled value="@item.TypeofAgency" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Loan Officer's Name</label>
+                                                                                <input type="text" name="Loan_Officer_name" disabled value="@item.Loan_Officer_name" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label">Loan Officer's Telephone</label>
+                                                                                <input type="text" name="Loan_Officer_tel" disabled value="@item.Loan_Officer_tel" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Attorney's Name</label>
+                                                                                <input type="text" name="Attorneys_name" disabled value="@item.Attorneys_name" class="form-control" />
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="col-md-12">
+                                                                                <label class="control-label"> Attorney's Telephone</label>
+                                                                                <input type="text" name="Attorneys_tel" disabled value="@item.Attorneys_tel" class="form-control" />
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group" style="position: relative !important; top:  20px !important;">
+                                                                                    <div class="col-md-offset-2 col-md-10">
+                                                                                        <input onclick="deletepropertyconfirm()" value="Delete" class="btn btn-outline-info" />
+                                                                                        <input style="display:none" type="submit" id="deleteProp" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }                                                <!-- End Widget -->
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button style="display:none" id="closedeletepropertybutton" type="button" data-dismiss="modal">Close</button>
+                                                            <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- here ends delete property form modal section -->
+                                            <!-- here starts item property card section -->
+                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 justify-content-center mb-4" style="display:flex">
+
+                                                <div class="custom-card br-50-5 media w-100 mx-1">
+                                                    <div class="media-body align-self-center text-align-center">
+                                                        <img src="~/Content/assets/img/smarthome/Properties.jpg" class="img-fluid br-50-5 mb-2" />
+                                                        <div class="files-title">
+                                                            <a>Status: </a>
+                                                            <a class="bold-bl bold-uppercase">
+                                                                @item.Property
+                                                            </a>
+                                                        </div>
+                                                        <br />
+                                                        <div class="files-number">
+                                                            <a>Stage: </a>
+                                                            <a id="stagecard" class="bold-bl bold-uppercase">
+                                                                @item.Stage
+                                                            </a>
+                                                        </div>
+                                                        <br />
+                                                        <div>
+                                                            <a>Address : </a>
+                                                            <a class="bold-bl bold-uppercase">@item.Address </a>
+                                                        </div>
+                                                        <br />
+                                                        <div>
+                                                            <a>
+                                                                Purchase price :
+                                                                <p id="purchaseprice" class="bold-bl bold-uppercase">$@item.Purchase_price.ToString("N2")</p>
+                                                            </a>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="value-progress text-info">
+                                                                <ul class="nav" role="tablist">
+                                                                    <li class="nav-link">
+                                                                        <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" data-toggle="modal" data-target="#updatepropertywindow">Edit</a>
+                                                                    </li>
+                                                                    <li class="nav-link">
+                                                                        <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" data-toggle="modal" data-target="#deletepropertywindow">Delete</a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- here ends item property card section -->
+                                        }
+
+                                    </div>
+                                </div>
+                                <!-- here ends properties when property exist sections -->
+                            }
+                            else if (Model.properties.Count() < 1 && !Model.customer.Lead)
+                            {
+                                <!-- here stars properties sections when no property-->
+                                <div class="tab-pane fade" id="i-v-tab-2" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-2">
+
+                                    <div class="row pt-5 pl-0 pr-0 text-align-center">
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 justify-content-center mb-4" style="display:flex">
+                                            <div class="custom-card br-50-5 media mx-1">
+                                                <div class="media-body align-self-center text-align-center">
+                                                    <img src="~/Content/assets/img/smarthome/Properties.jpg" class="img-fluid br-50-5 mb-4" />
+                                                    <div class="files-title">
+                                                        <a>Status: </a>
+                                                        <a class="bold-bl bold-uppercase">
+                                                            not property yet
+                                                        </a>
+                                                    </div>
+                                                    <div class="files-number">
+                                                        <a>Stage: </a>
+                                                        <a class="bold-bl bold-uppercase">
+                                                            not property yet
+                                                        </a>
+                                                    </div>
+                                                    <br />
+                                                    <a>Address : </a>
+                                                    <a class="bold-bl bold-uppercase"> not property yet </a>
+                                                    <br />
+                                                    <br />
+                                                    <div>
+                                                        <a>Purchase price :</a>
+                                                        <a class="bold-bl bold-uppercase">  not property yet</a>
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-12 text-align-center" style="margin: auto">
+                                                        <ul class="nav" role="tablist">
+                                                            <li class="nav-link">
+                                                                <button id="addproperty" onclick="confirmclick()" class="btn btn-info" data-toggle="modal" data-target="#propertywindow">Add property</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- here ends properties sections  when no property-->
+                            }
+
+
+                            <!-- here ends  active/desactive tab property section when there is no property sections -->
+                        </div>
+                        <!-- here ends tabs body content -->
+                    </div>
+                    <!-- here edit customer property form modal section -->
+                    <div aria-hidden="true" id="editcustomerwindow" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 id="closewindow">Edit customer : <label style="color:#2c9ad6">@Model.customer.Name @Model.customer.LastName</label></h4>
+                                    <button onclick="closingAlert()" class="close" aria-label="Close">
+                                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-align-center">
+                                    <!-- Begin edit customer Widget Body -->
+                                    <div class="widget-body">
+
+                                        @using (Html.BeginForm("Edit", "Customers", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-horizontal edit-form">
+                                                <h4>EDIT CUSTOMER</h4>
+                                                <hr />
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <input type="hidden" name="ID_Customer" value="@Model.customer.ID_Customer" />
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label">First Name</label>
+                                                    <div>
+                                                        <input type="text" class="form-control" name="Name" value="@Model.customer.Name" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label ">Last Name</label>
+                                                    <div>
+                                                        <input class="form-control" type="text" name="LastName" value="@Model.customer.LastName" />
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="display:none;">
+                                                    <label class="control-label">Gender</label>
+                                                    <div>
+                                                        <select name="Gender" id="Gender" class="form-control">
+
+                                                            <option selected>Male</option>
+
+                                                            @if (Model.customer.Gender == "Female")
+                                                            {
+                                                                <option>Female</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>Female</option>
+                                                            }
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.customer.Birthday.ToString("yyyy-MM-dd")" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label">Status</label>
+                                                    <div>
+                                                        <select name="Marital_status" id="Marital_status" class="form-control">
+                                                            @foreach (var item in status)
+                                                            {
+                                                                if (Model.customer.Marital_status.Contains(item.Stage_name))
+                                                                {
+                                                                    <option value="@item.Stage_name" selected>@item.Stage_name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Stage_name">@item.Stage_name</option>
+                                                                }
+                                                            }
+
+
+                                                        </select>
+                                                        @if (ViewBag.rol == "Admin")
+                                                        {
+                                                            <a class="la la-plus-circle la-2x" href="#" data-toggle="modal" data-target="#mstatusModal"></a>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <select class="form-control" id="Type" name="Type">
+                                                            <option>NOT ASSIGNED</option>
+                                                            @if (Model.customer.Type == "SELLER")
+                                                            {
+                                                                <option selected>SELLER</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>SELLER</option>
+                                                            }
+                                                            @if (Model.customer.Type == "BUYER")
+                                                            {
+                                                                <option selected>BUYER</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>BUYER</option>
+                                                            }
+                                                            @if (Model.customer.Type == "RENTAL")
+                                                            {
+                                                                <option selected>RENTAL</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>RENTAL</option>
+                                                            }
+                                                            @if (Model.customer.Type == "SHORT SALE")
+                                                            {
+                                                                <option selected>SHORT SALE</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>SHORT SALE</option>
+                                                            }
+                                                            @if (Model.customer.Type == "INVESTOR")
+                                                            {
+                                                                <option selected>INVESTOR</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>INVESTOR</option>
+                                                            }
+
+                                                            @if (Model.customer.Type == "TENANTS")
+                                                            {
+                                                                <option selected>TENANTS</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>INVESTENANTSTOR</option>
+                                                            }
+                                                            @if (Model.customer.Type == "LANDLORD")
+                                                            {
+                                                                <option selected>LANDLORD</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>LANDLORD</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="Email" value="@Model.customer.Email" />
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="Phone" value="@Model.customer.Phone" />
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="display:none;">
+                                                    @Html.LabelFor(model => model.customer.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="Mobile" value="@Model.customer.Mobile" />
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="State" value="@Model.customer.State" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="Address" value="@Model.customer.Address" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.customer.Zipcode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input class="form-control" type="text" name="Zipcode" value="@Model.customer.Zipcode" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label"> Source</label>
+                                                    <select class="form-control" name="Source" id="selectSource">
+                                                        @foreach (var item in source)
+                                                        {
+                                                            if (Model.customer.Source.Contains(item.Source_name))
+                                                            {
+                                                                <option value="@item.Source_name" selected>@item.Source_name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Source_name">@item.Source_name</option>
+                                                            }
+
+                                                        }
+
+                                                    </select>
+                                                    @if (ViewBag.rol == "Admin")
+                                                    {
+                                                        <a class="la la-plus-circle la-2x" href="#" data-toggle="modal" data-target="#sourceModal"></a>
+                                                    }
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Active customer?</label>
+                                                    <div>
+
+
+                                                        <div class="checkbox is-checked">
+                                                            @if (Model.customer.Active == true)
+                                                            {
+                                                                @Html.CheckBox("Active", true)
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.CheckBox("Active", false)
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="display:none;">
+                                                    @Html.LabelFor(model => model.customer.ID_Company, "ID_Company", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div>
+                                                        <input type="hidden" name="ID_Company" value="@Model.customer.ID_Company" />
+                                                    </div>
+                                                </div>
+
+
+                                                @if (ViewBag.rol == "Agent")
+                                                {
+
+                                                    <div class="form-group" style="display:none;">
+                                                        <div>
+                                                            <input type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+                                                        </div>
+                                                    </div> }
+                                                else
+                                                {
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label">Creation date</label>
+                                                        <div>
+                                                            <input class="form-control" type="date" name="Creation_date" value="@Model.customer.Creation_date.ToShortDateString()" />
+
+                                                        </div>
+                                                    </div>}
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2">
+                                                        <input type="hidden" name="broker" value="@ViewBag.selbroker" />
+                                                        <input type="submit" value="Save" class="btn btn-info" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <!-- here finishes form tag edit-->
+                                    </div>
+                                    <!-- here finishes customer edit-->                                   <!-- End Widget -->
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button style="display:none" id="closebuttonedit" type="button" data-dismiss="modal">Close</button>
+                                    <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- here ends edit customer form modal section -->
+                    <!-- here stars add property form modal section -->
+                    <div aria-hidden="true" id="propertywindow" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 id="closewindow">Add a property</h4>
+                                    <button onclick="closingAlert()" class="close" aria-label="Close">
+                                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Begin Widget Body -->
+                                    @using (Html.BeginForm("CreateProperty", "Properties", new { broker = ViewBag.selbroker }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div id="propertyform" class="widget-body">
+                                            <div class="form-horizontal">
+                                                <div class="row" style="text-align:center">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Description</label>
+                                                        <input class="form-control" type="text" value="" id="Description" name="Description" />
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <input type="hidden" name="ID_Customer" value="@Model.customer.ID_Customer" class="form-control" required />
+                                                        <label class="control-label">Customer :</label>
+                                                        <input class="form-control" type="text" disabled value="@Model.customer.Name @Model.customer.LastName" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Status</label>
+                                                        <select class="form-control" name="Property">
+                                                            <option>------</option>
+                                                            <option selected>LISTED</option>
+                                                            <option>PENDING</option>
+                                                            <option>CLOSED</option>
+                                                            <option>RENTED</option>
+                                                            <option>EXPIRED</option>
+                                                        </select>
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label ">Address</label>
+                                                        <input type="text" name="Address" class="form-control" required />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Purchase Price ($)</label>
+                                                        <input type="number" step="0.01" name="Purchase_price" class="form-control" required
+                                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Commission Amount ($)</label>
+                                                        <input type="number" step="0.01" name="Commission_amount" class="form-control" required
+                                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Commission Percentage (%)</label>
+                                                        <input type="number" step="0.01" name="Commissionperc" class="form-control" required
+                                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Stage</label>
+                                                        <input type="text" id="stageedit" disabled value="@Model.customer.Marital_status" name="Stage" class="form-control" required />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label"> Source</label>
+                                                        <input name="Source" value="@Model.customer.Source" disabled class="form-control" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label"> Type of Agency</label>
+                                                        <select class="form-control" name="TypeofAgency">
+                                                            <option>NOT ASSIGNED</option>
+                                                            <option>BROKERS AGENT</option>
+                                                            <option>BUYERS AGENT</option>
+                                                            <option>SELLING AGENT</option>
+                                                            <option>DUAL AGENT</option>
+                                                            <option>LISTING AGENT</option>
+                                                        </select>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Loan Officer's Name</label>
+                                                        <input type="text" name="Loan_Officer_name" value="" class="form-control" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Loan Officer's Telephone</label>
+                                                        <input type="text" name="Loan_Officer_tel" value="" class="form-control" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label"> Attorney's Name</label>
+                                                        <input type="text" name="Attorneys_name" value="" class="form-control" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12">
+                                                        <label class="control-label"> Attorney's Telephone</label>
+                                                        <input type="text" name="Attorneys_tel" value="" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" style="position: relative !important; top:  20px !important;">
+                                                            <div class="col-md-offset-2 col-md-10">
+                                                                <input onclick="" type="submit" value="Create" class="btn btn-outline-info" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }                                                <!-- End Widget -->
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button style="display:none" id="closenewpropertybutton" type="button" data-dismiss="modal">Close</button>
+                                    <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- here ends property form modal section -->
+                </div>
+            </div>
+            <!-- here starts notes right side bard for full screen-->
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <nav class="side-navbar right-side-navigation box-scroll sidebar-scroll">
+                    @*<i class="la la-2x la-tasks primary-color d-inline-block"></i>
+                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Task</a>
+                        <i class="la la-2x la-plus-circle primary-color d-inline-block ml-5"></i>*@
+                    @*<ul>
+                            <li>No upcoming task</li>
+                        </ul>*@
+
+                    @*<hr />*@
+                    <br />
+                    @*<i class="la la-2x la-share-alt-square primary-color d-inline-block"></i>
+                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Campaigns</a>*@
+
+                    @*<hr />*@
+                    <br />
+                    @if (!Model.customer.Lead && Model.property != null)
+                    {
+                        <ul class="nav" role="tablist">
+                            <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
+                            <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#adddocuments">
+                                Documents
+                            </a>
+
+                        </ul>
+                        <ul class="nav" role="tablist">
+                            <button style="display:none" id="opendocument" data-toggle="modal" data-target="#adddocuments"></button>
+                        </ul>
+                        <hr />
+
+                    }
+
+                    @*<i class="la la-2x la-area-chart primary-color d-inline-block"></i>
+                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>*@
+
+                    @*<hr />*@
+                    <br />
+                    <br />
+                    @*<i class="la la-2x la-tachometer primary-color d-inline-block"></i>
+                        <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Marketing</a>*@
+                    @*<hr />*@
+                    <br />
+                    <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
+                    <a class="font-weight-600 font-size-medium primary-color d-inline-block" href="#" data-toggle="modal" data-target="#leadDocuments" id="buttonDocuments">Other Documents</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- here edit customer property form modal section -->
+    <div aria-hidden="true" id="adddocuments" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="closewindow">Add documents for : <label style="color:#2c9ad6"><strong>@Model.customer.Name @Model.customer.LastName</strong> </label></h4>
+                    <button class="close" id="closemodal" aria-label="Close" data-dismiss="modal">
+                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-align-center">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <!-- Begin Widget 08 -->
+                            <div class="widget widget-08" style="width: 100%;background-color:transparent">
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="today">
+                                            <div class="title">UPLOAD</div>
+                                            <div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="widget-options" style="position: relative; right: 0;">
+
+                                            @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                            {
+                                                if (Model.package == null)
+                                                {
+                                                    <a id="docpackbutton" class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="deletePack()" class="btn btn-shadow">Delete &nbsp;<i class="la la-close delete"></i></a>
+                                                }
+                                                <a style="display:none" onclick="deletePack()" id="delpackbutton" class="btn btn-shadow">Delete &nbsp;<i class="la la-close delete"></i></a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="filesection" style="width: 100%">
+                        @if (Model.pack_Det.Count > 0)
+                        {
+                            var package = Model.package;
+                            var property = Model.property;
+                            var customer = Model.customer;
+                            var modelcount = Model.pack_Det.Where(a => a.mandatory == true).Count();
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <!-- Sorting -->
+                                        <div class="widget has-shadow">
+                                            <div class="widget-header bordered no-actions d-flex align-items-center">
+                                                <div class="today">
+                                                    <div class="title">Document Package Details</div>
+                                                    <div class="new-tasks"><label class="text-primary" for="task-1">@package.Description.ToUpper() | PROPERTY ID: @property.ID_Property - @property.Address | CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() |CATEGORY: @package.Category</label><br /> </div>
+                                                </div><h2></h2>
+                                                <div class="widget-options" id="emailsection">
+                                                    @if (Model.pack_Det.Count > 0)
+                                                    {
+                                                        if (Model.pack_Det.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
+                                                        {
+                                                            <button class="btn btn-success" id="sendtobroker">Send package</button>
+                                                            <br />
+                                                            <br />
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkBroker" checked>
+                                                                <label class="form-check-label">
+
+                                                                    Send to broker
+                                                                </label>
+
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkExtra">
+                                                                <label class="form-check-label">
+
+                                                                    Send to extra mail
+                                                                </label>
+
+                                                            </div>
+                                                            <br />
+                                                            <label class="control-label">Add extra e-mail</label>
+                                                            <br />
+                                                            <input class="form-control" type="text" id="extraemail" />
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            </div>
+
+                                            <div class="widget-body">
+                                                <div class="table-responsive">
+                                                    <table id="tableresources" class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Document ID</th>
+                                                                <th>Title</th>
+                                                                <th>Required</th>
+                                                                <th>Uploaded</th>
+                                                                <th>Document</th>
+                                                                @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                                                {
+                                                                    <th>Select a file</th>
+                                                                }
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model.pack_Det)
+                                                            {
+                                                                <tr>
+                                                                    <td><span class="text-primary">@item.ID_Detail</span></td>
+                                                                    <td><span class="text-primary">@item.Title</span></td>
+                                                                    <td>
+                                                                        @if (item.mandatory)
+                                                                        {
+                                                                            <label class="badge badge-success">YES</label>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <label class="badge badge-secondary">NO</label>
+                                                                        }
+                                                                    </td>
+
+
+                                                                    <td>
+                                                                        @if (item.uploaded)
+                                                                        {
+                                                                            <label class="badge badge-success">YES</label>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <label class="badge badge-warning">NO</label>
+                                                                        }
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @if (item.uploaded)
+                                                                        {
+                                                                            if (item.Extension == ".pdf")
+                                                                            {
+                                                                                <a href="@Url.Action("Showpdf_docspackage","Portal", new { id=item.ID_Detail})" target="_blank">
+                                                                                    <div class="c-icon">
+                                                                                        <i class="la la-file-pdf-o"></i>
+                                                                                    </div>
+                                                                                </a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a href="@Url.Action("DownloadDocPackage","Portal", new { id=item.ID_Detail})">
+                                                                                    <div class="c-icon">
+
+
+
+
+
+                                                                                        <i class="la la-file-word-o"></i>
+
+                                                                                    </div>
+                                                                                </a>
+                                                                            }
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <label>-</label>
+                                                                        }
+                                                                    </td>
+                                                                    @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                                                    {
+                                                                        <td class="td-actions">
+                                                                            <input type="file" class="form-control fileToUpload" id="file_@item.ID_Detail" />
+                                                                        </td>
+                                                                    }
+
+                                                                </tr>
+
+
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-12" style="margin:auto">
+                                                            <button id="uploadall" class="btn btn-info">Upload all</button>
+                                                        </div>
+
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <!-- End Sorting -->
+
+                                    </div>
+                                </div>
+                                <!-- End Row -->
+                            </div>
+                            <!-- End Container -->
+
+
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (ViewBag.rol == "Agent")
+                    {
+                        <button style="display:none" id="closebuttondocuments" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                    }
+                    else
+                    {
+                        <button class="btn" style="background-color:#E74C3C" type="button" data-dismiss="modal">Close</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- here ends edit customer form modal section -->
+    <!--Here starts Modal other documents-->
+    <div aria-hidden="true" id="leadDocuments" tabindex="-1" role="dialog" aria-labelledby="closewindow" data-backdrop="static" class="modal fade">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="closewindow">Add documents for : <label style="color:#2c9ad6"><strong>@Model.customer.Name @Model.customer.LastName</strong> </label></h4>
+                    <button class="close" id="closemodal" aria-label="Close" data-dismiss="modal">
+                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-align-center">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <!-- Begin Widget 08 -->
+                            <div class="widget widget-08" style="width: 100%;background-color:transparent">
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="today">
+                                            <div class="title">UPLOAD</div>
+                                            <div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="filesection" style="width: 100%">
+                        @if (docs.Count > 0)
+                        {
+                            var title = Model.package;
+                            var property = Model.property;
+                            var customer = Model.customer;
+                            var modelcount = Model.pack_Det.Where(a => a.mandatory == true).Count();
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <!-- Sorting -->
+                                        <div class="widget has-shadow">
+                                            <div class="widget-header bordered no-actions d-flex align-items-center">
+                                                <div class="today">
+                                                    <div class="title">Document</div>
+                                                    <div class="new-tasks"><label class="text-primary" for="task-1">CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper() </label><br /> </div>
+                                                </div><h2></h2>
+
+                                            </div>
+
+                                            <div class="widget-body">
+                                                <div class="table-responsive">
+                                                    <table id="tableDocuments" class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th>Title</th>
+                                                                <th>Document</th>
+                                                                <th>Date</th>
+                                                                <th></th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in docs)
+                                                            {
+                                                                <tr>
+
+                                                                    <td><span class="text-primary">@item.Title</span></td>
+                                                                    <td>
+
+                                                                        @if (item.Extension == ".pdf")
+                                                                        {
+                                                                            <a href="@Url.Action("Showpdf_docs","Portal", new { id=item.Id_Document})" target="_blank">
+                                                                                <div class="c-icon">
+                                                                                    <i class="la la-file-pdf-o"></i>
+                                                                                </div>
+                                                                            </a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a href="@Url.Action("DownloadLeadDoc","Portal", new { id=item.Id_Document})">
+                                                                                <div class="c-icon">
+
+                                                                                    <i class="la la-file-word-o"></i>
+
+                                                                                </div>
+                                                                            </a>
+                                                                        }
+
+                                                                    </td>
+                                                                    <td><span class="text-primary">@item.Upload_Date</span></td>
+                                                                    <td><a href="@Url.Action("DeleteLeadDoc","Portal", new { id= item.Id_Document})">Delete</td>
+                                                                </tr>
+
+
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Sorting -->
+
+                                    </div>
+                                </div>
+                                <!-- End Row -->
+                            </div>
+                            <!-- End Container -->
+
+
+                        }
+                    </div>
+                    <div>
+                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                        {
+                            <div class="row">
+                                <div class="col-12" style="margin:auto">
+                                    <input type="file" class="form-control fileUpload" id="file" />
+                                    <button id="uploadFile" class="btn btn-info">Upload file</button>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (ViewBag.rol == "Agent")
+                    {
+                        <button style="display:none" id="closebuttondocuments" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn" style="background-color:#E74C3C" type="button" onclick="closingAlert()">Close</button>
+                    }
+                    else
+                    {
+                        <button class="btn" style="background-color:#E74C3C" type="button" data-dismiss="modal">Close</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Her ends modal other documents-->
+    <!-- here starts category package modal section -->
+    <div aria-hidden="true" id="modalNewwebinar" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div style="background:#f4f4f4" class="modal-header">
+                    <h4 id="closewindow">Add a property</h4>
+                    <button data-dismiss="modal" class="close" aria-label="Close">
+                        <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                    </button>
+                </div>
+                <div style="background:#f4f4f4" class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="category" class="form-control" required>
+                                    <option value="1">BUYER</option>
+                                    <option value="2">SELLER</option>
+                                    <option value="3">DUAL AGENCY</option>
+                                    <option value="4">RENTAL LISTING</option>
+                                    <option value="5">COMMERCIAL/INDUSTRIAL LISTING</option>
+                                    <option value="6">LAND</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:#f4f4f4" class="modal-footer">
+                    <button class="btn" style="background-color:#E74C3C" type="button" id="closecategory" data-dismiss="modal">Close</button>
+                    <button id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- here ends category package modal section -->
+    <!--Modal source-->
+    <div class="modal" id="sourceModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add source</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Source name:</label>
+                        <input type="text" class="form-control" id="sourceName" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="buttonNewSource">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="mstatusModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Marital Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButtonStatus">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Status name:</label>
+                        <input type="text" class="form-control" id="statusName" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="buttonNewStatus">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      document.getElementById("buttonNewSource").onclick = function () {
+        var sourceName = $("#sourceName").val();
+
+        sourceName = sourceName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateSource","Tb_Source")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                source: sourceName
+            }),
+            success: function (response) {
+                $('#selectSource').append($('<option>', {
+
+                    value: sourceName,
+                    text: sourceName
+                }));
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+                $('#sourceName').val('');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
+     document.getElementById("buttonNewStatus").onclick = function () {
+        var statusName = $("#statusName").val();
+
+        statusName = statusName.toUpperCase();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateStatus", "Tb_Status")',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                mstatus: statusName
+            }),
+            success: function (response) {
+                $('#Marital_status').append($('<option>', {
+
+                    value: statusName,
+                    text: statusName
+                }));
+                var closeModal = $('#closeButtonStatus');
+                closeModal.trigger('click');
+                $('#statusName').val('');
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'Information added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+            },
+            error: function (error) {
+
+                alert("Error" + error + " " + response);
+                var closeModal = $('#closeButton');
+                closeModal.trigger('click');
+            }
+        });
+    }
+    function closingAlert() {
+        var con = confirm("Are you sure you wanna close?");
+        if (con) {
+            $("#closenewpropertybutton").trigger('click');
+            $("#closebutton").trigger('click');
+            $("#closebuttonedit").trigger('click');
+            $("#closebuttoneditnote").trigger('click');
+            $("#closebuttondeletenote").trigger('click');
+            $("#closeeditpropertybutton").trigger('click');
+            $("#closedeletepropertybutton").trigger('click');
+            $("#closebuttondocuments").trigger('click');
+        }
+    }
+
+    function confirmclick() {
+        console.log("i was clicked ");
+    }
+
+
+
+    function deleteconfirm() {
+        var con = confirm("Are you sure you want to delete this note?");
+        if (con) {
+            $("#deletenotebutton").trigger('click');
+
+        }
+    }
+
+    function deletepropertyconfirm() {
+        var con = confirm("Are you sure you want to delete this property?");
+        if (con) {
+            $("#deleteProp").trigger('click');
+
+        }
+    }
+    stag = document.getElementById("stage");
+    stag.onchange= function () {
+             var broker = @ViewBag.selbroker;
+            var id_customer =@Model.customer.ID_Customer;
+            var user = $("#assignagent").val();
+            var stage = $("#stage").val();
+            var e = document.getElementById("assignagent");
+            var text = e.options[e.selectedIndex].text;
+        var data = { id: id_customer, broker: broker, UserID: user, UserName: text, stage: stage };
+        document.getElementById("Marital_status").value = stage;
+               if (document.getElementById("stagecard") !== null) {
+                   document.getElementById("stagecard").innerHTML = stage;
+               }
+
+
+            var isConfirm = confirm("You are updating " + "@Model.customer.Name"+" "+"@Model.customer.LastName" + "\n " + "stage from "+"@Model.customer.Marital_status" +" to be "+stage+", do you want to continue?");
+            if (isConfirm) {
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    url: '@Url.Action("UpdateByAjaxSideBard", "CRM")',
+                    data: data,
+                    success: AlertOnSuccess
+                });
+                if (stage == "ON CONTRACT") {
+                    $("#addproperty").trigger('click');
+                }
+            } else {
+                var options = document.getElementById("stage").options;
+                for (var option of options) {
+                    if (option.text === "@Model.customer.Marital_status") {
+                        option.selected = true;
+                    }
+                }
+            }
+
+    }
+
+    function AlertOnSuccess() {
+        alert("the data has been updated");
+    }
+
+
+
+    var addnote = document.querySelector("#addnote");
+    addnote.onclick = function () {
+        var notecard = $("#notecard");
+        var notebody = $("#notebody").val();
+        var data = { id:@Model.customer.ID_Customer, text: notebody };
+        document.getElementById("addnote").disabled = true;
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            url: '@Url.Action("GetNotesByAjax", "Notes")',
+            data: data,
+            success: function (result) {
+                notecard.html('');
+                $.each(result, function (i, item) {
+               notecard.append(`
+  <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                                                <div>
+                                                    <input type="hidden" id="noteid" value="${item.ID_note}" />
+                                                    <input type="hidden" id="notetext" value="${item.Text}" />
+                                                    <input type="hidden" id="notenumber" value="${1+i}" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-progress text-info  text-align-right">
+                                                        <ul class="nav" role="tablist">
+                                                            <li class="nav-link add-property">
+                                                                <a class="badge badgeDocstype btn notetoedit" style="background-color:#f4f4f4" onclick="editDocument(event)">Edit Note</a>
+                                                            </li>
+                                                            <li class="nav-link add-property">
+                                                                <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" onclick="deleteNote(event)">Delete Note</a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+                                                <div class="media w-100">
+                                                    <div class="align-self-center mr-2">
+                                                        <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                                    </div>
+                                                    <div class="media-body align-self-center text-align-center">
+                                                        <div class="files-title"><a style="color: #2c9ad6" class="textfileDocs " href="/Portal/Showpdf/10" target="_blank">Note ${1+i}</a></div>
+                                                        <br />
+                                                        <div class="files-number">Last update : ${item.Date}</div>
+                                                        <br />
+                                                        <p class="files-title">${item.Text}</p>
+                                                        <p style="float:right; font-size:10px" class="files-title"><label>Created by : </label><br /><label style="color: #2c9ad6"> ${item.Created_By}</label></p>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-top: 20px; display: none;" class="row">
+                                                    <div class="value-progress text-info text-align-center">
+                                                        <div class="col-12 text-align-center">
+                                                            <a class="badge badgeDocstype btn notesave" style="background-color:#f4f4f4" onclick="updateNote(event)">Update</a>
+                                                            <a class="badge badgeDocstype btn notecancel" style="background-color:#f4f4f4" onclick="cancelEdit(event)">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+       `);
+                });
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    text: 'note added successfully',
+                    progressBar: true,
+                    timeout: 2500
+                }).show()
+                setTimeout(function () {
+                }, 2000);
+                document.getElementById("addnote").disabled = false;
+                var clearingnote = document.getElementById("notebody");
+                clearingnote.value = "";
+            },
+            error: function (result) {
+                document.getElementById("addnote").disabled = false;
+                alert("It seems an error occurred...");
+            }
+                });
+
+    };
+
+    function editDocument(e) {
+            var button = e.target;
+            var li = button.parentNode;
+            var ul = li.parentNode;
+            var div = ul.parentNode;
+            var row = div.parentNode;
+            var card = row.parentNode;
+            var noteid = card.childNodes[1].childNodes[1].value;
+            var notetext = card.childNodes[1].childNodes[3].value;
+            var notenumber = card.childNodes[1].childNodes[5].value;
+
+            card.childNodes[5].childNodes[3].style.display = "none";
+            card.childNodes[3].style.display = "none";
+            card.childNodes[7].style.display = "block";
+
+            let space = document.createElement('div');
+            let divmain = document.createElement('div');
+            let divheader = document.createElement('div');
+            let adivh = document.createElement('a');
+            let br = document.createElement('br');
+            let textarea = document.createElement('textarea');
+
+            divmain.classList.add('media-body');
+            divmain.classList.add('align-self-center');
+            divmain.classList.add('text-align-center');
+
+            divheader.classList.add('files-title');
+            adivh.classList.add('textfileDocs');
+            textarea.classList.add('form-control-lg');
+
+            adivh.style.color = "#2c9ad6";
+            adivh.style.marginBottom = "20px";
+
+            textarea.id = "noteedited";
+            textarea.value = notetext;
+            adivh.innerHTML = "Note " + notenumber;
+
+            divmain.append(divheader);
+            divheader.append(adivh);
+            divheader.append(br);
+            divmain.append(textarea);
+
+
+            card.childNodes[5].appendChild(divmain);
+            textarea.style.width = "80%";
+
+    }
+
+
+    function deleteNote(e) {
+            var button = e.target;
+            var div1 = button.parentNode;
+            var div2 = div1.parentNode;
+            var div3 = div2.parentNode;
+            var div4=div3.parentNode;
+            var card = div4.parentNode;
+
+            var noteid;
+            var notetext;
+        var notecard = $("#notecard");
+        console.log(card);
+
+                noteid = card.childNodes[1].childNodes[1].value;
+
+        console.log(noteid);
+
+            notetext = card.childNodes[1].childNodes[3].value;
+        console.log(notetext);
+
+        var con = confirm("Are you sure you want to delete this note \n"+"\n NOTE : "+notetext);
+        if (con) {
+                 $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteNoteByAjax", "Notes")',
+                data: { id: noteid, idcustomer:@Model.customer.ID_Customer},
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: true,
+                success: function (result) {
+                    notecard.html('');
+                    $.each(result, function (i, item) {
+                        notecard.append(`
+  <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                                                <div>
+                                                    <input type="hidden" id="noteid" value="${item.ID_note}" />
+                                                    <input type="hidden" id="notetext" value="${item.Text}" />
+                                                    <input type="hidden" id="notenumber" value="${1 + i}" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-progress text-info  text-align-right">
+                                                        <ul class="nav" role="tablist">
+                                                            <li class="nav-link add-property">
+                                                                <a class="badge badgeDocstype btn notetoedit" style="background-color:#f4f4f4" onclick="editDocument(event)">Edit Note</a>
+                                                            </li>
+                                                            <li class="nav-link add-property">
+                                                                <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" onclick="deleteNote(event)">Delete Note</a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+                                                <div class="media w-100">
+                                                    <div class="align-self-center mr-2">
+                                                        <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                                    </div>
+                                                    <div class="media-body align-self-center text-align-center">
+                                                        <div class="files-title"><a style="color: #2c9ad6" class="textfileDocs " href="/Portal/Showpdf/10" target="_blank">Note ${1 + i}</a></div>
+                                                        <br />
+                                                        <div class="files-number">Last update : ${item.Date}</div>
+                                                        <br />
+                                                        <p class="files-title">${item.Text}</p>
+                                                        <p style="float:right; font-size:10px" class="files-title"><label>Created by : </label><br /><label style="color: #2c9ad6"> ${item.Created_By}</label></p>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-top: 20px; display: none;" class="row">
+                                                    <div class="value-progress text-info text-align-center">
+                                                        <div class="col-12 text-align-center">
+                                                            <a class="badge badgeDocstype btn notesave" style="background-color:#f4f4f4" onclick="updateNote(event)">Update</a>
+                                                            <a class="badge badgeDocstype btn notecancel" style="background-color:#f4f4f4" onclick="cancelEdit(event)">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+       `);
+                    });
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'note removed successfully',
+                        progressBar: true,
+                        timeout: 2500
+                    }).show()
+                    setTimeout(function () {
+                    }, 2000);
+                },
+                error: function(error) {
+                    alert("Error deleting note, refresh the page and try again...");
+                }
+            });
+        }
+    }
+
+    function cancelEdit (e) {
+            var button = e.target;
+            var div1 = button.parentNode;
+            var div2 = div1.parentNode;
+            var div3 = div2.parentNode;
+            var card = div3.parentNode;
+
+            if (card.children.length == 5) {
+                card.childNodes[8].style.display = "none";
+                card.childNodes[4].style.display = "block";
+                card.childNodes[6].removeChild(card.childNodes[6].childNodes[5]);
+                card.childNodes[6].childNodes[3].style.display = "block";
+            } else {
+                card.childNodes[7].style.display = "none";
+                card.childNodes[3].style.display = "block";
+                card.childNodes[5].removeChild(card.childNodes[5].childNodes[5]);
+                card.childNodes[5].childNodes[3].style.display = "block";
+            }
+
+
+
+    }
+
+    function updateNote(e) {
+            var button = e.target;
+            var div1 = button.parentNode;
+            var div2 = div1.parentNode;
+            var div3 = div2.parentNode;
+            var card = div3.parentNode;
+
+            var noteid;
+            var notetext;
+            var grammarlynode;
+
+            if (card.childNodes[1].childNodes[1]!=undefined) {
+                noteid = card.childNodes[1].childNodes[1].value;
+                grammarlynode = true;
+            } else {
+                noteid = card.childNodes[2].childNodes[1].value;
+            }
+
+
+            if (card.childNodes[5].childNodes[5] != undefined) {
+                notetext = card.childNodes[5].childNodes[5].childNodes[1].value;
+            } else {
+                var notetext = card.childNodes[6].childNodes[5].childNodes[1].value;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateNoteByajax","Notes")',
+                data: { id: noteid, text:notetext },
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: true,
+                success: function (result) {
+                    if (result == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'note updated successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                        }, 2000);
+                        if (card.childNodes[5].childNodes[3] != undefined) {
+                            card.childNodes[5].childNodes[3].childNodes[9].innerHTML = notetext;
+                        } else {
+                            card.childNodes[6].childNodes[3].childNodes[9].innerHTML = notetext;
+                        }
+
+                    }
+                    else {
+                        alert(result);
+                    }
+
+                },
+                error: function(error) {
+                    alert("Error updating note, refresh the page and try again...");
+                }
+            });
+
+            if (grammarlynode) {
+                console.log(grammarlynode+"is true");
+                console.log(card.children.length);
+                card.childNodes[7].style.display = "none";
+                card.childNodes[3].style.display = "block";
+                card.childNodes[5].removeChild(card.childNodes[5].childNodes[5]);
+                card.childNodes[5].childNodes[3].style.display = "block";
+            } else {
+                console.log(grammarlynode + "is false");
+                console.log(card.children.length);
+                card.childNodes[8].style.display = "none";
+                card.childNodes[4].style.display = "block";
+                card.childNodes[6].removeChild(card.childNodes[6].childNodes[5]);
+                card.childNodes[6].childNodes[3].style.display = "block";
+            }
+
+
+    }
+
+
+
+
+
+    </script>
+    <script>
+
+    //here we extract all the elements with the class specified
+    var uploadfile = document.querySelectorAll(".fileUpload");
+
+    //here we listen for the even on every html element
+    for (const file of uploadfile) {
+        file.addEventListener('change', handleChange);
+
+    }
+    //variables to store the file and id arrays
+    var filesLead = [];
+    var vids = [];
+
+
+    //we capture the data we need from the html attribute
+    function handleChange(e) {
+        var id = $(this).attr("id");
+        var idtosave = id.substring(5);
+            filesLead.push(e.target.files[0]);
+            vids.push(idtosave);
+
+        console.log(filesLead);
+        console.log(id);
+        console.log(idtosave);
+        console.log(vids);
+
+    }
+
+    var uploadFile = document.getElementById("uploadFile");
+
+    uploadFile.onclick = function () {
+
+        var formData = new FormData();
+
+        $.each(filesLead, (i, file) => {
+            formData.append("imageUploadForm", file);
+        });
+
+        $.each(vids, (i, id) => {
+            formData.append("ids", id);
+            formData.append("idcustomer", @Model.customer.ID_Customer)
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: '/Portal/Uploadleadfile',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log(response);
+                if (response == "SUCCESS") {
+
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Files uploaded successfully',
+                        progressBar: true,
+                        timeout: 3000
+                    }).show();
+                    setTimeout(function () {
+                        window.location.reload(true);
+
+                    }, 1000);
+                    setTimeout(function () {
+
+                        var modaldoc = $("#buttonDocuments");
+                        modaldoc.trigger('click');
+                        console.log(response);
+                    }, 1000);
+
+                     console.log(response);
+                } else {
+                    $("#loader_form").hide();
+
+                    alert(response);
+                }
+            },
+            error: function (error) {
+                $("#loader_form").hide();
+
+                alert("Error uploading file");
+            }
+        });
+    }
+
+    </script>
+
+    @if (Model.package != null)
+    {
+        <script>
+
+        var broker = document.getElementById("sendtobroker");
+        broker.onclick= function () {
+            var extraemail = document.getElementById("extraemail");
+            if (!extraemail.value) {
+                extraemail.value = "";
+            }
+            var checkBroker = document.getElementById('checkBroker');
+            var checkExtra = document.getElementById('checkExtra');
+
+            console.log(checkBroker.checked);
+            console.log(checkBroker.checked);
+            var idpack = '@Model.package.ID_docpackage';
+            var data = { idpackage: idpack, email: extraemail.value, broker: checkBroker.checked, extra: checkExtra.checked };
+            $.ajax({
+              url:'@Url.Action("SendPackage", "Portal")',
+                type: 'POST',
+                data: data,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: true,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Document Package sent successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                        }, 2000);
+                    } else {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: response,
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                        }, 2000);
+                    }
+
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+
+         function deletePack()
+                 {
+                    var con = confirm("Are you sure you want to delete this document package?");
+                    if (con)
+                    {
+                        $("#preloader").show();
+                        var url = "@Url.Action("DeletePackage","Portal")";
+                        var data = { id:@Model.package.ID_docpackage, iduser: @Model.customer.ID_Customer, broker: @ViewBag.selbroker};
+                        $.ajax({
+                                    type: "POST",
+                            url: url,
+                            data: data,
+                            dataType: 'json',
+                            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                            processData: true,
+                            success: function(response) {
+                                            if (response == "SUCCESS")
+                                            {
+                                    $("#preloader").hide();
+                                    $("#subbtnenviar").attr("disabled", false);
+                                                new Noty({
+                                                    type: 'success',
+                                                    layout: 'topRight',
+                                                    text: 'Document Package removed successfully',
+                                                    progressBar: true,
+                                                    timeout: 2500
+                                                }).show()
+                                                      setTimeout(function() {
+                                                    window.location.reload(true);
+                                                }, 2000);
+                                            }
+                                            else
+                                            {
+                                    $("#preloader").hide();
+                                    $("#subbtnenviar").attr("disabled", false);
+                                                alert(response);
+                                            }
+                                        },
+                            error: function(error) {
+                                $("#preloader").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+                                            alert("Error removing package");
+                                        }
+                                    });
+
+                                }
+
+                }
+
+        </script>
+    }
+
+    @if (@Model.property != null)
+    {
+        <script>
+        var submitbutton = document.getElementById("subbtnenviar");
+        submitbutton.onclick = function () {
+                                $("#subbtnenviar").attr("disabled", true);
+                                event.preventDefault();
+                                $("#preloader").show();
+
+        var title = "@Model.customer.Name" + " " + "@Model.customer.LastName"+" "+"@Model.property.Address";
+        var idcategory = $("#category").val();
+        var customer = 0;
+        var property = "@Model.property.ID_Process";
+        var category = $("#category option:selected").html();
+            var filesection = $("#filesection");
+            var data = { title: title, category: category, customer: customer, property: property, idpackage: idcategory  };
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: '/Portal/newPackage',
+                                    data:data,
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    processData: true,
+                                    success: function (response) {
+                                        var closecategory = $("#closecategory");
+                                        closecategory.trigger('click');
+                                        var closebuttondocuments = $("#closemodal");
+                                        var adddocument = $("#opendocument");
+                                        closebuttondocuments.trigger('click');
+                                        filesection.html('');
+                                        filesection.html(response);
+                                        var deletebutton = $("#delpackbutton");
+                                        var packbutton = $("#docpackbutton");
+                                        deletebutton.css('display', 'block');
+                                        packbutton.css('display', 'none');
+
+                                        setTimeout(function () {
+                                            adddocument.trigger('click');
+                                        }, 1000);
+
+                                        $("#preloader").hide();
+
+                                            $("#subbtnenviar").attr("disabled", false);
+
+                                        new Noty({
+                                                type: 'success',
+                                                layout: 'topRight',
+                                                text: 'Document Package added successfully',
+                                                progressBar: true,
+                                                timeout: 2500
+                                            }).show()
+                                        setTimeout(function () {
+                                            }, 2000);
+
+                                            },
+                                    error: function(error) {
+                                        $("#preloader").hide();
+                                        $("#subbtnenviar").attr("disabled", false);
+                                        alert("Error uploading package");
+            }
+        });
+
+
+        }
+
+    //here we extract all the elements with the class specified
+    var uploadfile = document.querySelectorAll(".fileToUpload");
+
+    //here we listen for the even on every html element
+    for (const file of uploadfile) {
+        file.addEventListener('change', handleChange);
+    }
+    //variables to store the file and id arrays
+    var files = [];
+    var ids = [];
+
+
+    //we capture the data we need from the html attribute
+    function handleChange(e) {
+        var id = $(this).attr("id");
+        var idtosave = id.substring(5);
+        files.push(e.target.files[0]);
+        ids.push(idtosave);
+
+    }
+
+    var uploadall = document.getElementById("uploadall");
+    uploadall.onclick = function () {
+        var checkboxes = $("#emailsection");
+        var formData = new FormData();
+
+        $.each(files, (i, file) => {
+            formData.append("imageUploadForm", file);
+        });
+
+        $.each(ids, (i, id) => {
+            formData.append("ids", id);
+        });
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Portal/Uploadfile',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response == "SUCCESS") {
+                            console.log(response);
+                            var closebuttondocuments = $("#closemodal");
+                            var adddocument = $("#opendocument");
+                            closebuttondocuments.trigger('click');
+                            setTimeout(function () {
+
+                                adddocument.trigger('click');
+                            }, 1000);
+                            new Noty({
+                                type: 'success',
+                                layout: 'topRight',
+                                text: 'Files uploaded successfully',
+                                progressBar: true,
+                                timeout: 2500
+                            }).show()
+                            window.location.reload(true);
+
+                        } else {
+                            $("#loader_form").hide();
+
+                            alert(response);
+                        }
+                    },
+                    error: function (error) {
+                        $("#loader_form").hide();
+
+                        alert("Error uploading file");
+                    }
+                });
+            }
+
+
+
+        </script>
+        <script type="text/javascript">
+
+        </script>
+
+        <script type="text/javascript">
+            window.onload = function () {
+                $("#tableresources").DataTable();
+            }
+        </script>
+
+
+
+
+    }

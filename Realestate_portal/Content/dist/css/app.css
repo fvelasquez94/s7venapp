@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*
  |--------------------------------------------------------------------------
  | TailwindCSS Directives
@@ -12975,16 +12975,16 @@ html body {
 	background-color: rgba(41, 49, 69, var(--tw-bg-opacity));
 }
 @media (max-width: 1279px) {
-  .login {
-    background: linear-gradient(to bottom, #1c3faa, #2b51b4);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
+    .login {
+        background: linear-gradient(to bottom, #162343, #162343);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 }
 .login:before {
   content: "";
   margin-left: -48%;
-  background-image: url(../images/bg-login-page.svg);
+  background-image: url(../images/bg-login-page-dark.svg);
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-position: right;
@@ -13013,9 +13013,9 @@ html body {
   background-image: url(../images/bg-login-page-dark.svg);
 }
 @media (max-width: 1279px) {
-  .dark .login {
-    background: #232a3b;
-  }
+    .dark .login {
+        background: #162343;
+    }
 }
 
 .table-report:not(.table-report--bordered):not(.table-report--tabulator) {

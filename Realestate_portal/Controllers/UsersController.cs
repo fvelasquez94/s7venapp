@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -398,78 +399,82 @@ namespace Realestate_portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_User,Name,LastName,Gender,Email,Password,Birth,Creation_date,Last_update,Last_login,State,Address,Main_telephone,Secundary_telephone,Fb_url,Ins_url,Tw_url,Other_url,Image,ID_Company,Status,Active,Email_active,Position,Department,Roles,Brokerage_name,Brokerage_address,Broker_Contact,Broker_License,My_License,Member_since,Bank,Bank_number,Bank_typeaccount,Credit_number,Credit_name,Credit_classification,Credit_month,Credit_year,Team_Leader,Id_Leader,Leader_Name")] Sys_Users sys_Users)
         {
-            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-            sys_Users.Birth = DateTime.UtcNow;
-            sys_Users.Creation_date = DateTime.UtcNow;
-            sys_Users.Last_login = DateTime.UtcNow;
-            sys_Users.Last_update = DateTime.UtcNow;
-            sys_Users.Roles = "Agent";
-            sys_Users.Department = "";
-            sys_Users.Email_active=true;
-            sys_Users.Active=true;
-            sys_Users.Status=1;
-            sys_Users.ID_Company= activeuser.ID_Company;
-            sys_Users.Member_since = DateTime.UtcNow;
-            sys_Users.Gender = "Male";
-
-            if (sys_Users.Address == null) { sys_Users.Address = ""; }
-            if (sys_Users.State == null) { sys_Users.State = ""; }
-            if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
-            if (sys_Users.Bank_number == null) { sys_Users.Bank_number = ""; }
-            if (sys_Users.Bank_typeaccount == null) { sys_Users.Bank_typeaccount = ""; }
-            if (sys_Users.Credit_classification == null) { sys_Users.Credit_classification = ""; }
-            if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
-            if (sys_Users.Credit_year == null) { sys_Users.Credit_year = ""; }
-            if (sys_Users.Credit_number == null) { sys_Users.Credit_number = ""; }
-            if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
-            if (sys_Users.Credit_name == null) { sys_Users.Credit_name = ""; }
-            if (sys_Users.Brokerage_address == null) { sys_Users.Brokerage_address = ""; }
-            if (sys_Users.Brokerage_name == null) { sys_Users.Brokerage_name = ""; }
-            if (sys_Users.Broker_Contact == null) { sys_Users.Broker_Contact = ""; }
-            if (sys_Users.Broker_License == null) { sys_Users.Broker_License = ""; }
-            if (sys_Users.My_License == null) { sys_Users.My_License = ""; }
-            if (sys_Users.Fb_url == null) { sys_Users.Fb_url = ""; }
-            if (sys_Users.Ins_url == null) { sys_Users.Ins_url = ""; }
-            if (sys_Users.Tw_url == null) { sys_Users.Tw_url = ""; }
-            if (sys_Users.Other_url == null) { sys_Users.Other_url = ""; }
-            if (sys_Users.Image == null) { sys_Users.Image = ""; }
-            if (sys_Users.Department == null) { sys_Users.Department = ""; }
-            if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
-            if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
-            if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
-            if (sys_Users.Team_Leader == true) 
-            {   
-                sys_Users.Id_Leader = 0;
-                if (sys_Users.Leader_Name.Equals(""))
-                {
-                    sys_Users.Leader_Name = "Team " + sys_Users.Name + " " + sys_Users.LastName;
-                }
-            }
-            if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
-            if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
-
-            db.Sys_Users.Add(sys_Users);
-            db.SaveChanges();
+      
 
 
                 try
                 {
-                    if (sys_Users.Email != "")
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                sys_Users.Birth = DateTime.UtcNow;
+                sys_Users.Creation_date = DateTime.UtcNow;
+                sys_Users.Last_login = DateTime.UtcNow;
+                sys_Users.Last_update = DateTime.UtcNow;
+                sys_Users.Roles = "Agent";
+                sys_Users.Department = "";
+                sys_Users.Email_active = true;
+                sys_Users.Active = true;
+                sys_Users.Status = 1;
+                sys_Users.ID_Company = activeuser.ID_Company;
+                sys_Users.Member_since = DateTime.UtcNow;
+                sys_Users.Gender = "Male";
+                sys_Users.Password = CreatePassword(8);
+                if (sys_Users.Address == null) { sys_Users.Address = ""; }
+                if (sys_Users.State == null) { sys_Users.State = ""; }
+                if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
+                if (sys_Users.Bank_number == null) { sys_Users.Bank_number = ""; }
+                if (sys_Users.Bank_typeaccount == null) { sys_Users.Bank_typeaccount = ""; }
+                if (sys_Users.Credit_classification == null) { sys_Users.Credit_classification = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_year == null) { sys_Users.Credit_year = ""; }
+                if (sys_Users.Credit_number == null) { sys_Users.Credit_number = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_name == null) { sys_Users.Credit_name = ""; }
+                if (sys_Users.Brokerage_address == null) { sys_Users.Brokerage_address = ""; }
+                if (sys_Users.Brokerage_name == null) { sys_Users.Brokerage_name = ""; }
+                if (sys_Users.Broker_Contact == null) { sys_Users.Broker_Contact = ""; }
+                if (sys_Users.Broker_License == null) { sys_Users.Broker_License = ""; }
+                if (sys_Users.My_License == null) { sys_Users.My_License = ""; }
+                if (sys_Users.Fb_url == null) { sys_Users.Fb_url = ""; }
+                if (sys_Users.Ins_url == null) { sys_Users.Ins_url = ""; }
+                if (sys_Users.Tw_url == null) { sys_Users.Tw_url = ""; }
+                if (sys_Users.Other_url == null) { sys_Users.Other_url = ""; }
+                if (sys_Users.Image == null) { sys_Users.Image = ""; }
+                if (sys_Users.Department == null) { sys_Users.Department = ""; }
+                if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
+                if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
+                if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
+                if (sys_Users.Team_Leader == true)
+                {
+                    sys_Users.Id_Leader = 0;
+                    //if (sys_Users.Leader_Name.Equals(""))
+                    //{
+                    //    sys_Users.Leader_Name = "Team " + sys_Users.Name + " " + sys_Users.LastName;
+                    //}
+                }
+                if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
+                if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
+
+                db.Sys_Users.Add(sys_Users);
+                db.SaveChanges();
+
+
+                if (sys_Users.Email != "")
                     {
                         //Enviamos correo para notificar
                         dynamic emailtosend = new Email("newBroker");
                         emailtosend.To = sys_Users.Email.ToString();
-                        emailtosend.From = "customercare@premiumgrealty.com";
+                        emailtosend.From = "support@s7ven.co";
                         emailtosend.correo = sys_Users.Email;
                         emailtosend.contrasena = sys_Users.Password;
                         emailtosend.Send();
 
-                        return RedirectToAction("Index");
+
+                    return RedirectToAction("Agents", "CRM", new { token="success"});
                     }
                     else
                     {
-                        return RedirectToAction("Index");
-                    }
+                    return RedirectToAction("Agents", "CRM", new { token = "success" });
+                }
 
                     //Sys_Notifications newnotification = new Sys_Notifications();
                     //if (sys_Users.Team_Leader == true)
@@ -498,12 +503,25 @@ namespace Realestate_portal.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Agents", "CRM", new { token = "error" });
+            }
 
 
         }
-        
+
+
+        public string CreatePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#!";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
+        }
+
         // GET: Users/Edit/5
         public ActionResult EditAgent(int? id, string modulo, int broker=0)
         {
@@ -967,7 +985,7 @@ namespace Realestate_portal.Controllers
                 db.Sys_Users.Remove(sys_Users);
                 db.SaveChanges();
 
-                var result = "SUCCESS";
+                var result = "Success";
                  return Json(result);
             }
             catch (Exception ex)

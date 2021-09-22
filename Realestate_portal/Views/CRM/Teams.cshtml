@@ -41,7 +41,9 @@
                 <thead>
                     <tr>
                         <th class="whitespace-nowrap">AGENTS</th>
+                        <th class="whitespace-nowrap">LEADER</th>
                         <th class="whitespace-nowrap">TEAM'S NAME</th>
+
                         <th class="whitespace-nowrap">LEADS</th>
 
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
@@ -54,31 +56,69 @@
                             <td>
                                 <div class="flex">
                                     @if (item.Users.Count() > 0)
-                                    {
-                                        foreach (var agent in item.Users)
-                                        {
-                                            <div class="w-12 h-12 image-fit zoom-in -ml-4">
-                                                @if (agent.Url_image == "")
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="@agent.Name">
-                                                }
-                                                else if (agent.Url_image.StartsWith("http"))
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
-                                                }
-                                                else
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
-                                                }
+    {
+        foreach (var agent in item.Users)
+        {
 
-                                            </div>
-                                        }
+                               if (agent.Url_image == "")
+{
+                                <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
 
-                                    }
-                                    else
-                                    {
-                                        <label>Not assigned</label>
-                                    }
+}
+else if (agent.Url_image.StartsWith("http"))
+{
+                                <div class="w-12 h-12 image-fit zoom-in">
+                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                                </div>
+}
+else
+{ <div class="w-12 h-12 image-fit zoom-in ">
+                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                                </div>
+}
+
+
+}
+
+}
+else
+{
+                                <label> Not assigned </label>
+}
+                                </div>
+                            </td>
+                                                        <td>
+                                <div class="flex">
+                                    @if (item.Teamleader.Count() > 0)
+    {
+        foreach (var agent in item.Teamleader)
+        {
+
+                               if (agent.Url_image == "")
+{
+                                <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
+
+}
+else if (agent.Url_image.StartsWith("http"))
+{
+                                <div class="w-12 h-12 image-fit zoom-in">
+                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                                </div>
+}
+else
+{ <div class="w-12 h-12 image-fit zoom-in ">
+                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                                </div>
+}
+
+
+}
+
+}
+else
+{
+                                <label> Not assigned </label>
+}
                                 </div>
                             </td>
                             <td>
@@ -91,7 +131,7 @@
 
         foreach (var le in item.Leads)
         {
-                                <div class="flex items-center mt-4">
+                                <div class="flex items-center">
                                     <div class="w-2 h-2 bg-theme-25 dark:bg-theme-10 rounded-full mr-3"></div>
                                     <span class="truncate">@le.Name</span>
                                 </div>
@@ -110,7 +150,7 @@ else
 
     <td class="table-report__action w-56">
     <div class="flex justify-center items-center">
-        <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#Editteam-modal" onclick="editData('@item.ID_team', '@item.Name','@item.Description','@Html.Raw(Json.Encode(item.Users.Select(c=>c.Id_User)))','@Html.Raw(Json.Encode(item.Leads.Select(c=>c.Id_Lead)))')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit</a>
+        <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#Editteam-modal" onclick="editData('@item.ID_team', '@item.Name','@item.Description','@Html.Raw(Json.Encode(item.Users.Select(c=>c.Id_User)))','@Html.Raw(Json.Encode(item.Leads.Select(c=>c.Id_Lead)))','@Html.Raw(Json.Encode(item.Teamleader.Select(c=>c.Id_User)))')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit</a>
 
         <a class="flex items-center text-theme-21" href="javascript:void(0)" onclick="deleteTeam(@item.ID_team)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete</a>
     </div>
@@ -151,7 +191,7 @@ else
             @using (Html.BeginForm("Edit", "Teams", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                <input type="text" id="ID_team" name="ID_team" />
+                <input style="display:none" type="text" id="ID_team" name="ID_team" />
                 <!-- BEGIN: Slide Over Header -->
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">
@@ -188,7 +228,7 @@ else
                         <select data-placeholder="Search here.." class="w-full" id="agentsEdit" name="agentsEdit" multiple>
                             @foreach (var item in lstagents)
                             {
-                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
                             }
 
                         </select>
@@ -208,6 +248,16 @@ else
                                     <option value="@item.ID_Customer">@item.Name @item.LastName</option>
                                 }
 
+                            }
+
+                        </select>
+                    </div>
+                                              <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" >
+                            @foreach (var item in lstagents)
+                            {
+                            <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
                             }
 
                         </select>
@@ -271,7 +321,7 @@ else
                         <select data-placeholder="Search here.." class="tom-select w-full" id="agents" name="agents" multiple>
                             @foreach (var item in lstagents)
                             {
-                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                            <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
                             }
 
                         </select>
@@ -291,6 +341,16 @@ else
                                     <option value="@item.ID_Customer">@item.Name @item.LastName</option>
                                 }
 
+                            }
+
+                        </select>
+                    </div>
+                                <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        <select data-placeholder="Search here.." class="tom-select w-full" id="leader" name="leader" >
+                            @foreach (var item in lstagents)
+                            {
+                            <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
                             }
 
                         </select>
@@ -354,7 +414,7 @@ else
                                         'The record has been deleted.',
                                         'success'
                                     )
-                                    //window.location.reload(true);
+                                    window.location.reload(true);
                                 } else {
                                     alert(result);
                                 }
@@ -373,7 +433,8 @@ else
             }
             var control;
             var control2;
-            function editData(idteam, name, description,agents, leads) {
+            var control3;
+            function editData(idteam, name, description,agents, leads, teamleader) {
             
                 if (typeof control === 'undefined') {
                     // variable is undefined
@@ -393,6 +454,17 @@ else
                     control2.clear(false);
 
                 }
+
+                if (typeof control3 === 'undefined') {
+                    // variable is undefined
+                    control3 = new TomSelect('#leaderEdit', {
+                        
+                    });
+                } else {
+                    control3.clear(false);
+
+                }
+
                 $("#ID_team").val(idteam);
                 $("#NameEdit").val(name);
                 $("#DescriptionEdit").val(description);
@@ -410,6 +482,15 @@ else
                     var res2 = result2.split(",");
                     if (res2.length > 0) {
                         control2.setValue(res2, true)
+                    }
+
+                }
+
+                var result3 = teamleader.substring(1, teamleader.length - 1);
+                if (result3.length > 0) {
+                    var res3 = result3.split(",");
+                    if (res3.length > 0) {
+                        control3.setValue(res3, true)
                     }
 
                 }

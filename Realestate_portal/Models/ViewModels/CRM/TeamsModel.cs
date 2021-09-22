@@ -16,11 +16,13 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public System.DateTime Last_update { get; set; }
         public List<TeamsModel_Users> Users { get; set; }
         public List<TeamsModel_Leads> Leads { get; set; }
+        public List<TeamsModel_Users> Teamleader { get; set; }
     }
     public class TeamsModel_Users
     {
         public int Id_User { get; set; }
         public string Name { get; set; }
+        public string Lastname { get; set; }
         public string Email { get; set; }
         public string Url_image { get; set; }
   

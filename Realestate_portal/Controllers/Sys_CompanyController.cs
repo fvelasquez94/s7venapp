@@ -125,6 +125,59 @@ namespace Realestate_portal.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult changeCompanyImg(int id)
+        {
+            var path = "";
+            var fileName = "";
+
+
+            try
+            {
+
+                if (Request.Files.Count > 0)
+                {
+
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+
+                        fileName = Path.GetFileName(file.FileName);
+
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/Images/profiles/"), fileName);
+                        file.SaveAs(path);
+                    }
+
+                    var company = (from a in db.Sys_Company where (a.ID_Company == id) select a).FirstOrDefault();
+                    company.Logo = "~/Content/Uploads/Images/profiles/" + fileName;
+                
+                    db.Entry(company).State = EntityState.Modified;
+                    db.SaveChanges();
+
+              
+
+
+                    var result = "SUCCESS";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+
+
+                    var result = "No image";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+
         // POST: Sys_Company/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

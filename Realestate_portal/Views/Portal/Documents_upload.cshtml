@@ -3,231 +3,227 @@
     ViewBag.Title = "S7VEN";
 }
 
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">DOCUMENTS HISTORY</li>
-                    </ul>
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Documents History
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Documents History
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+                    @if (ViewBag.rol == "Admin")
+                    {
+                        <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
+
+
+                        <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
+                    }
+                    else if (ViewBag.rol == "Agent")
+                    {
+                        <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
+                        <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
+
+
+                        <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
+                    }
                 </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        PACKAGE ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        DESCRIPTION
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        PROPERTY ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        LAST UPDATE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TOTAL DOCUMENTS
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        STATUS
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID_docpackage</td>
+                                        <td> <a href="@Url.Action("Package_details","Portal", new { idpackage=item.ID_docpackage})" class="font-medium whitespace-nowrap"><i data-feather="link" class="w-4 h-4 mr-1"></i> @item.Description</a></td>
+                                        <td>@item.Category</td>
+                                        <td>@item.ID_Property</td>
+                                        <td>@Convert.ToDateTime(item.Last_update).ToShortDateString()</td>
+                                        <td>(@item.Total_docsf/@item.Total_docs)</td>
+                                        <td>
+                                            @if (item.Finished && item.Sent)
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-20 text-white mr-1">COMPLETED</label>
+                                            }
+                                            else
+                                            {<label class="px-2 py-1 rounded-full bg-theme-15 mr-1">IN PROGRESS</label>}
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- End Page Header -->
-  
-            <!-- Begin Widget 08 -->
-            <div class="widget widget-08" style="width: 100%;background-color:transparent">
-                <div class="widget-header bordered d-flex align-items-center">
-                    <div class="today">
-                        <div class="title">UPLOAD</div>
-                        <div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>
-                    </div><h2></h2>
-                          <div class="widget-options">
-                              @if (ViewBag.rol == "Admin")
-                            {
-                          <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
+</div>
+<!-- END: Basic Table -->
+<!-- Begin Calendar -->
+@*<div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <label class="form-control-label">By Category</label>
+            <select class="selectpicker show-menu-arrow" id="filterbycat" multiple>
+                <option>BUYER</option>
+                <option>SELLER</option>
+                <option>DUAL AGENCY</option>
+                <option>RENTAL LISTING</option>
+                <optioN>RENTAL TENANT</optioN>
+                <option>COMMERCIAL/INDUSTRIAL LISTING</option>
+                <option>LAND</option>
+            </select>
+
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type to search" style="width:50%">
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <label class="form-control-label">Date range</label>
+            <select class="selectpicker show-menu-arrow" id="dateRange" style="width:60%">
+                <option></option>
+                <option value="3">Last 3 months</option>
+                <option value="6">Last 6 months</option>
+                <option value="12">Last 12 months</option>
+                <option value="24">Last 24 months</option>
+                <option value="36">Last 36 months</option>
+            </select>
+            <button type="button" class="btn btn-shadow" id="searchByDate" value="submit">Search</button>
+
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">From</span>
+                </div>
+                <input type="date" id="startDate" class="form-control" value="01-01-2018" />
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2">To</span>
+                </div>
+                <input type="date" id="endDate" class="form-control" value="23-6-2021" />
+            </div>
+            <button type="button" class="btn btn-shadow" id="searchRangeDate" value="submit">Search</button>
+        </div>
+    </div>*@
 
 
-                          <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-                            }
-                            else if (ViewBag.rol == "Agent")
-                            {
-                          <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
-                          <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-                            }
-                            else
-                            {
-                          <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Document Package</a>
 
-
-                          <a class="btn btn-shadow" href="@Url.Action("Documents_upload_management", "Portal")">Management</a>
-                            }
-                          </div>
-                </div><br />
-           
-     
-                        <!-- Begin Widget -->
-                        <div class="widget has-shadow">
-
-                            <!-- End Widget Header -->
-                            <!-- Begin Widget Body -->
-                            <div class="widget-body" style="padding-bottom:250px">
-                                <!-- Begin Calendar -->
-                                <div class="row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                        <label class="form-control-label">By Category</label>
-                                        <select class="selectpicker show-menu-arrow" id="filterbycat" multiple>
-                                            <option>BUYER</option>
-                                            <option>SELLER</option>
-                                            <option>DUAL AGENCY</option>
-                                            <option>RENTAL LISTING</option>
-                                            <optioN>RENTAL TENANT</optioN>
-                                            <option>COMMERCIAL/INDUSTRIAL LISTING</option>
-                                            <option>LAND</option>
-                                        </select>
-                                        
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                        <input type="text" id="myInput" class="form-control" onkeyup="searchin_li()" placeholder="Type to search" style="width:50%">
-                                    </div>   
-                                    
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                        <label class="form-control-label">Date range</label>
-                                        <select class="selectpicker show-menu-arrow" id="dateRange" style="width:60%">
-                                            <option></option>
-                                            <option value="3">Last 3 months</option>
-                                            <option value="6">Last 6 months</option>
-                                            <option value="12">Last 12 months</option>
-                                            <option value="24">Last 24 months</option>
-                                            <option value="36">Last 36 months</option>
-                                        </select>
-                                        <button type="button" class="btn btn-shadow" id="searchByDate" value="submit">Search</button>
-                                       
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">From</span>
-                                            </div>
-                                            <input type="date" id="startDate" class="form-control" value="01-01-2018" />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon2">To</span>
-                                            </div>
-                                            <input type="date" id="endDate" class="form-control" value="23-6-2021" />
-                                        </div>
-                                        <button type="button" class="btn btn-shadow" id="searchRangeDate" value="submit">Search</button>
-                                    </div>
-                                </div>
-                     
-                                <!-- Begin List -->
-                                @if (Model.Count > 0)
-                                {
-                                <div class="todo-list">
-                                    <ul id="sortable" class="list">
-                                        @foreach (var item in Model)
-                                        {
-                                          
-                                            <li id="@item.Description">
-                                                <a href="@Url.Action("Package_details","Portal", new { idpackage=item.ID_docpackage})">
-                                                    <div id="@item.Category" class="styled-checkbox">
-                                                        @if (item.Finished && item.Sent)
-                                                {
-                                                <input type="checkbox" id="pack_@item.ID_docpackage" readonly checked>
-                                                }
-                                                   
-                                                        <label class="text-primary" for="task-1">@item.Description | PROCESS ID: @item.ID_Process |CATEGORY: @item.Category </label><br />
-                                                        <label class="badge-text-small">Last update: @Convert.ToDateTime(item.Last_update).ToShortDateString()</label> | <label class="badge-text-small">Total Documents (@item.Total_docsf/@item.Total_docs)</label>
-                                                    
-                                                   </div>
-                                                </a>
-                                        </li>
-                                          
-
-                                        }
-                            
-
-                                    </ul>
-                                </div>
-                                }
-                                else {
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <label>No data to show</label>
-                                }
-                                <!-- End List -->
-                                <!-- End Calendar -->
-                               
-                            </div>
-                            <!-- End Calendar -->
-                        </div>
-                        <!-- End Widget -->
-        
-               
+<div id="modalNewwebinar" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Package</h4>
 
             </div>
-
-    </div>
-
-    <!-- End Container -->
-
-
-
-    <div id="modalNewwebinar" class="modal fade">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Document Package</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                        <span class="sr-only">close</span>
-                    </button>
-                </div>
-                <form id="htmlform" method="post">
-                    <div class="modal-body">
-                        <div class="row">
-                            @*<div class="col-7">
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        @*<div class="col-7">
                                 <div class="form-group">
                                     <label>Package Name *</label>
                                     <input type="text" class="form-control" id="title" placeholder="Name to identify easily your documents package" required />
                                 </div>
                             </div>*@
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label>Category *</label>
-                                    <select id="category" class="form-control" required>
-                                        <option value="1">BUYER</option>
-                                        <option value="3">SELLER</option>
-                                        <option value="5">DUAL AGENCY</option>
-                                        <option value="6">RENTAL LISTING</option>
-                                        <option value="7">RENTAL TENANT</option>
-                                        <option value="9">COMMERCIAL/INDUSTRIAL LISTING</option>
-                                        <option value="11">LAND</option>
-                                    </select>
-                                </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="category" class="form-control" required>
+                                    <option value="1">BUYER</option>
+                                    <option value="3">SELLER</option>
+                                    <option value="5">DUAL AGENCY</option>
+                                    <option value="6">RENTAL LISTING</option>
+                                    <option value="7">RENTAL TENANT</option>
+                                    <option value="9">COMMERCIAL/INDUSTRIAL LISTING</option>
+                                    <option value="11">LAND</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label>Property *</label>
-                                    @Html.DropDownList("ID_Property", null, htmlAttributes: new { @class = "form-control" })
-                                
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Property *</label>
+                                @Html.DropDownList("ID_Property", null, htmlAttributes: new { @class = "form-control" })
+
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
-                        <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
 
-    <script type="text/javascript">
-        document.getElementById("searchByDate").onclick = function () { searchByDate() };
-        function searchByDate() {
-            var date = $('#dateRange').val();
-            window.location.href = "/Portal/Documents_upload?date=" + date;
+<script type="text/javascript">
+        //document.getElementById("searchByDate").onclick = function () { searchByDate() };
+        //function searchByDate() {
+        //    var date = $('#dateRange').val();
+        //    window.location.href = "/Portal/Documents_upload?date=" + date;
 
-        };
-            document.getElementById("searchRangeDate").onclick = function () { searchbyRange() };
+        //};
+            @*document.getElementById("searchRangeDate").onclick = function () { searchbyRange() };
             function searchbyRange() {
 
                 var startDate = $('#startDate').val();
                 var endDate = $('#endDate').val();
-                
+
                 if (startDate == "" || endDate == "") {
                     alert("Please select a date.");
                 }
@@ -243,14 +239,15 @@
                     }
 
                 }
-            }
+            }*@
 
-        window.onload = function () {
+    window.onload = function () {
+        $("#tableresources").DataTable();
                     $('#htmlform').on('submit', function (event) {
                         $("#subbtnenviar").attr("disabled", true);
                         event.preventDefault();
 
-                        $("#preloader").show();
+                  
 
                         var formData = new FormData();
 
@@ -281,26 +278,17 @@
                                 if (response == "SUCCESS") {
                                     $("#preloader").hide();
                                     $("#subbtnenviar").attr("disabled", false);
-
-                                    new Noty({
-                                        type: 'success',
-                                        layout: 'topRight',
-                                        text: 'Document Package added successfully',
-                                        progressBar: true,
-                                        timeout: 2500
-                                    }).show()
-                                    setTimeout(function () {
-                                        window.location.reload(true);
-                                    }, 2000);
-
+                                    var link = document.getElementById('basic-non-sticky-notification-toggle');
+                                    link.click();
+                                    window.location.reload(true);
                                 } else {
-                                    $("#preloader").hide();
+                                
                                     $("#subbtnenviar").attr("disabled", false);
                                     alert(response);
                                 }
                             },
                             error: function (error) {
-                                $("#preloader").hide();
+                             
                                 $("#subbtnenviar").attr("disabled", false);
                                 alert("Error uploading package");
                                 window.location.reload(true);
@@ -401,4 +389,4 @@
 
         }
 
-    </script>
+</script>

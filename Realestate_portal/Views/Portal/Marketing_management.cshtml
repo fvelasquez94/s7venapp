@@ -4,91 +4,98 @@
     List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
 }
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">MARKETING</li>
-                    </ul>
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Marketing
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Marketing Management
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- End Page Header -->
-    <div class="row">
-        <div class="col-xl-12">
-            <!-- Sorting -->
-            <div class="widget has-shadow">
-                <div class="widget-header bordered no-actions d-flex align-items-center">
-                    <h4>Marketing Management</h4>
-                </div>
-                <div class="widget-body">
-                    @if (TempData["advertencia"] != null)
-                    {
-                        <div class="alert alert-outline-warning dashed" role="alert">
-                            @TempData["advertencia"]
-                        </div><br />
-                    }
-                    @if (TempData["exito"] != null)
-                    {
-                        <div class="alert alert-outline-success dashed" role="alert">
-                            @TempData["exito"]
-                        </div><br />
-                    }
-                    <div class="table-responsive">
-                        <table id="tableresources" class="table mb-0">
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
                             <thead>
-                                <tr>
-                                    <th>Resource ID</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Image url</th>
-                                    <th>Category</th>
-                                    <th>Actions</th>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        RESOURCE ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TITLE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        DESCRIPTION
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        IMG URL
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        CATEGORY
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ACTIONS
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td><span class="text-primary">@item.ID_marketing</span></td>
-                                        <td>@item.Name  </td>
-                                        <td>@item.Description  </td>
+                                        <td>@item.ID_marketing</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.Category</td>
                                         <td><a href="@Url.Action("Download_imageMarketing","Portal", new { id=item.ID_marketing })" target="_blank">Download</a></td>
-                                        <td><span class="badge badge-success" style="font-size:12px;">@item.Category</span></td>
 
-                                        <td class="td-actions">
-                                            <a href="#" onclick="editimage('@item.ID_marketing','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")')"><i class="la la-edit edit"></i></a>
-                                            <a href="@Url.Action("DeleteMarketing","Portal", new { id=item.ID_marketing })"><i class="la la-close delete"></i></a>
+                                        <td>
+                                            <div class="flex justify-center items-center">
+                                                <a class="flex items-center mr-3" data-toggle="modal" data-target="#modalEditvideo" onclick="editimage('@item.ID_marketing','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+
+                                                <a class="flex items-center text-theme-21" href="@Url.Action("DeleteMarketing","Portal", new { id=item.ID_marketing })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                            </div>
+
                                         </td>
+
                                     </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
-            <!-- End Sorting -->
         </div>
     </div>
-    <!-- End Row -->
 </div>
-<!-- End Container -->
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
+
 
 <div id="modalEditvideo" class="modal fade">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Edit Image</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">close</span>
-                </button>
+
             </div>
             <form id="htmlform" method="post">
                 <div class="modal-body">
@@ -97,7 +104,7 @@
                             <div class="form-group">
                                 <label>Title *</label>
                                 <input type="text" class="form-control" id="titlevideo" required />
-                                <input type="text" class="form-control" id="idvideo"  hidden/>
+                                <input type="text" class="form-control" id="idvideo" hidden />
                             </div>
                         </div>
                         <div class="col-6">
@@ -138,87 +145,199 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    window.onload = function () {
-        $("#tableresources").DataTable();
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
 
 
-        $('#htmlform').on('submit', function (event) {
-            $("#subbtnenviar").attr("disabled", true);
-            event.preventDefault();
-
-            $("#preloader").show();
-
-
-            var formData = new FormData();
-            var file = document.getElementById("imageUpload").files[0];
-
-            var id = $("#idvideo").val();
-            var title = $("#titlevideo").val();
-            var category = $("#categoryvideo").val();
-            var description = $.trim($("#descriptionvideo").val());
-            var url = $("#urlvideo").val();
-
-            formData.append("imageUploadForm", file);
-            formData.append("title", title);
-            formData.append("id", id);
-            formData.append("category", category);
-            formData.append("description", description);
+        </script>
+    }
+    else
+    {
+        @section scripts{
+            <script type="text/javascript">
+                window.onload = function () {
+                    $("#tableresources").DataTable();
 
 
+                    $('#htmlform').on('submit', function (event) {
+                        $("#subbtnenviar").attr("disabled", true);
+                        event.preventDefault();
 
-            $.ajax({
-                type: "POST",
-                url: '/Portal/EditImage',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response == "SUCCESS") {
-                        $("#loader_form").hide();
-                        $("#subbtnenviar").attr("disabled", false);
+                        $("#preloader").show();
 
-                        new Noty({
-                            type: 'success',
-                            layout: 'topRight',
-                            text: 'Image edited successfully',
-                            progressBar: true,
-                            timeout: 2500
-                        }).show()
-                        setTimeout(function () {
-                            window.location.reload(true);
-                        }, 2000);
 
-                    } else {
-                        $("#loader_form").hide();
-                        $("#subbtnenviar").attr("disabled", false);
-                        alert(response);
-                    }
-                },
-                error: function (error) {
-                    $("#loader_form").hide();
-                    $("#subbtnenviar").attr("disabled", false);
-                    alert("Error uploading video");
+                        var formData = new FormData();
+                        var file = document.getElementById("imageUpload").files[0];
+
+                        var id = $("#idvideo").val();
+                        var title = $("#titlevideo").val();
+                        var category = $("#categoryvideo").val();
+                        var description = $.trim($("#descriptionvideo").val());
+                        var url = $("#urlvideo").val();
+
+                        formData.append("imageUploadForm", file);
+                        formData.append("title", title);
+                        formData.append("id", id);
+                        formData.append("category", category);
+                        formData.append("description", description);
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: '/Portal/EditImage',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                if (response == "SUCCESS") {
+                                    $("#loader_form").hide();
+                                    $("#subbtnenviar").attr("disabled", false);
+
+                                    new Noty({
+                                        type: 'success',
+                                        layout: 'topRight',
+                                        text: 'Image edited successfully',
+                                        progressBar: true,
+                                        timeout: 2500
+                                    }).show()
+                                    setTimeout(function () {
+                                        window.location.reload(true);
+                                    }, 2000);
+
+                                } else {
+                                    $("#loader_form").hide();
+                                    $("#subbtnenviar").attr("disabled", false);
+                                    alert(response);
+                                }
+                            },
+                            error: function (error) {
+                                $("#loader_form").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+                                alert("Error uploading video");
+                            }
+                        });
+                    });
                 }
-            });
-        });
+
+                function editimage(id, title, cat, descr) {
+
+                    var ID_video = id;// Extract info from data-* attributes
+                    var title = title;// Extract info from data-* attributes
+                    var Category = cat;
+                    var Description = descr;
+
+
+                    $("#idvideo").val(ID_video);
+                    $("#titlevideo").val(title);
+                    $("#categoryvideo").val(Category);
+                    $("#descriptionvideo").text(Description);
+
+
+                    //$('#modalEditvideo').modal('show');
+                }
+            </script>
+        }
     }
 
-    function editimage(id, title, cat, descr) {
-
-        var ID_video = id;// Extract info from data-* attributes
-        var title = title;// Extract info from data-* attributes
-        var Category = cat;
-        var Description = descr;
-   
-
-        $("#idvideo").val(ID_video);
-        $("#titlevideo").val(title);
-        $("#categoryvideo").val(Category);
-        $("#descriptionvideo").text(Description);
+}
+else
+{
+    @section scripts{
+        <script type="text/javascript">
+            window.onload = function () {
+                $("#tableresources").DataTable();
 
 
-        $('#modalEditvideo').modal('show');
+                $('#htmlform').on('submit', function (event) {
+                    $("#subbtnenviar").attr("disabled", true);
+                    event.preventDefault();
+
+                    $("#preloader").show();
+
+
+                    var formData = new FormData();
+                    var file = document.getElementById("imageUpload").files[0];
+
+                    var id = $("#idvideo").val();
+                    var title = $("#titlevideo").val();
+                    var category = $("#categoryvideo").val();
+                    var description = $.trim($("#descriptionvideo").val());
+                    var url = $("#urlvideo").val();
+
+                    formData.append("imageUploadForm", file);
+                    formData.append("title", title);
+                    formData.append("id", id);
+                    formData.append("category", category);
+                    formData.append("description", description);
+
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/Portal/EditImage',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response == "SUCCESS") {
+                                $("#loader_form").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+
+                                new Noty({
+                                    type: 'success',
+                                    layout: 'topRight',
+                                    text: 'Image edited successfully',
+                                    progressBar: true,
+                                    timeout: 2500
+                                }).show()
+                                setTimeout(function () {
+                                    window.location.reload(true);
+                                }, 2000);
+
+                            } else {
+                                $("#loader_form").hide();
+                                $("#subbtnenviar").attr("disabled", false);
+                                alert(response);
+                            }
+                        },
+                        error: function (error) {
+                            $("#loader_form").hide();
+                            $("#subbtnenviar").attr("disabled", false);
+                            alert("Error uploading video");
+                        }
+                    });
+                });
+            }
+
+            function editimage(id, title, cat, descr) {
+
+                var ID_video = id;// Extract info from data-* attributes
+                var title = title;// Extract info from data-* attributes
+                var Category = cat;
+                var Description = descr;
+
+
+                $("#idvideo").val(ID_video);
+                $("#titlevideo").val(title);
+                $("#categoryvideo").val(Category);
+                $("#descriptionvideo").text(Description);
+
+
+                //$('#modalEditvideo').modal('show');
+            }
+        </script>
     }
-</script>
+
+}

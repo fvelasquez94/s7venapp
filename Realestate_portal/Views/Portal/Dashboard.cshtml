@@ -6,7 +6,13 @@
     Sys_Users userBroker = (Sys_Users)ViewBag.userdataBroker;
     Sys_Company company = (Sys_Company)ViewBag.company;
 }
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
 
+    </div>
+</div>
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 2xl:col-span-9">
         <div class="grid grid-cols-12 gap-6">
@@ -54,7 +60,7 @@
                 { <span>Super Administrator</span>}
                                     </div>
                                 </div>
-                                <input type="file" id="imgupload" style="display:none" />
+                                <input type="file" class="img1" id="imgupload" style="display:none" />
 
 
 
@@ -63,7 +69,7 @@
 
 
                         </div>
-                        <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-gray-300 dark:border-dark-5 border-dashed">
+                        @*<div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-gray-300 dark:border-dark-5 border-dashed">
                             <div class="text-gray-600 dark:text-gray-600 text-xs">LISTINGS</div>
                             <div class="mt-1.5 flex items-center">
                                 <div class="text-base">0</div>
@@ -84,7 +90,7 @@
                                 <div class="text-base">0</div>
                                 <div class="text-theme-20 flex text-xs font-medium tooltip cursor-pointer ml-2" title="0% Higher than last month"> 0% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
@@ -118,7 +124,7 @@
 }
 else if (ViewBag.rol == "SA")
 { }
-                        <button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My Profile</button>
+                        @*<button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My Profile</button>*@
                     </div>
                 </div>
             </div>
@@ -127,28 +133,80 @@ else if (ViewBag.rol == "SA")
             <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-2 mt-2 lg:mt-6 xl:mt-2">
                 <div class="intro-y flex items-center h-10">
 
-
+                  
                 </div>
                 <div class="report-box-2 intro-y mt-5">
                     <div class="box p-5">
+
                         @if (company != null)
-                        {
-                            if (company.Logo != "")
-                            {
-                                if (company.Logo.StartsWith("http"))
-                                {
-                                          <img alt="S7VEN" style="width:200px" src="@company.Logo">
-                                }
-                                else
-                                {
-                                          <img alt="S7VEN" style="width:200px" src="@Url.Content(company.Logo)">
-                                }
-                            }
-                        }
-                        else {
-                            <img alt="S7VEN" style="width:100%" src="~/Content/dist/images/profile-6.jpg">
-                        }
-                        
+    {
+        if (company.Logo != "")
+        {
+            if (company.Logo.StartsWith("http"))
+            {
+
+                if (user.Roles.Contains("Agent"))
+                {
+                    <img alt="S7VEN" style="width:200px" src="@company.Logo">
+}
+else
+{
+                    <label>Top bar Logo</label> <br /><br />
+                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload2" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                    <input type="file" class="img2" id="imgupload2" style="display:none" />
+                    <img alt="S7VEN" style="width:200px" src="@company.Logo">
+}
+
+}
+else
+{
+if (user.Roles.Contains("Agent"))
+{
+                    <img alt="S7VEN" style="width:200px" src="@Url.Content(company.Logo)">
+}
+else
+{
+                    <label>Top bar Logo</label> <br /><br />
+                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload2" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                    <input type="file"  class="img2" id="imgupload2" style="display:none" />
+                    <img alt="S7VEN" style="width:200px" src="@Url.Content(company.Logo)">
+}
+
+
+}
+}
+else
+{
+if (user.Roles.Contains("Agent"))
+{
+
+}
+else
+{
+                    <label>Top bar Logo</label> <br /><br />
+                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload2" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                    <input type="file" class="img2" id="imgupload2" style="display:none" />
+                    <img alt="S7VEN" style="width:130px;margin-right:20px" src="~/Content/dist/images/logo-1.png">
+}
+
+}
+}
+else
+{
+if (user.Roles.Contains("Agent"))
+{
+
+}
+else
+{
+                    <label>Top bar Logo</label> <br /><br />
+                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload2" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                    <input type="file" class="img2" id="imgupload2" style="display:none" />
+                    <img alt="S7VEN" style="width:130px;margin-right:20px" src="~/Content/dist/images/logo-1.png">
+}
+
+}
+
                     </div>
                 </div>
             </div>
@@ -260,7 +318,7 @@ else if (ViewBag.rol == "SA")
                                     <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
                                     <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
                                     <div class="font-medium flex mt-5">
-                                        <button type="button" class="btn btn-secondary py-1 px-2">View more</button>
+                                        @*<button type="button" class="btn btn-secondary py-1 px-2">View more</button>*@
 
                                     </div>
 
@@ -322,20 +380,20 @@ else if (ViewBag.rol == "SA")
                                     <div class="py-0.5 rounded relative">11</div>
                                     <div class="py-0.5 rounded relative">12</div>
                                     <div class="py-0.5 rounded relative">13</div>
-                                    <div class="py-0.5 bg-theme-24 dark:bg-theme-25 text-white rounded relative">14</div>
+                                    <div class="py-0.5   rounded relative">14</div>
                                     <div class="py-0.5 rounded relative">15</div>
                                     <div class="py-0.5 rounded relative">16</div>
                                     <div class="py-0.5 rounded relative">17</div>
                                     <div class="py-0.5 rounded relative">18</div>
                                     <div class="py-0.5 rounded relative">19</div>
-                                    <div class="py-0.5 bg-theme-19 dark:bg-theme-15 rounded relative">20</div>
+                                    <div class="py-0.5  rounded relative">20</div>
                                     <div class="py-0.5 rounded relative">21</div>
-                                    <div class="py-0.5 rounded relative">22</div>
-                                    <div class="py-0.5 rounded relative">23</div>
+                                    <div class="py-0.5 bg-theme-24 text-white rounded relative">22</div>
+                                    <div class="py-0.5 bg-theme-19  rounded relative">23</div>
                                     <div class="py-0.5 rounded relative">24</div>
                                     <div class="py-0.5 rounded relative">25</div>
                                     <div class="py-0.5 rounded relative">26</div>
-                                    <div class="py-0.5  rounded relative">27</div>
+                                    <div class="py-0.5 bg-theme-17  rounded relative">27</div>
                                     <div class="py-0.5 rounded relative">28</div>
                                     <div class="py-0.5 rounded relative">29</div>
                                     <div class="py-0.5 rounded relative">30</div>
@@ -353,21 +411,39 @@ else if (ViewBag.rol == "SA")
                             <div class="border-t border-gray-200 p-5">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                                    <span class="truncate">Purchase CEMA Potential Benefits -  1 Credit</span>
+                                    <span class="truncate">Offering Key Plan Components - 1 Credit</span>
                                     <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                    <span class="font-medium xl:ml-auto">14th</span>
+                                    <span class="font-medium xl:ml-auto">22th</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                                    <span class="truncate">Coop VS Condo - 1 Credit</span>
+                                    <span class="truncate">Overcoming Closing Obstacles - 1 Credit</span>
                                     <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                    <span class="font-medium xl:ml-auto">14th</span>
+                                    <span class="font-medium xl:ml-auto">22th</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-theme-19 rounded-full mr-3"></div>
-                                    <span class="truncate">Focus on the Goal, Closing the Deal - 2 Credit</span>
+                                    <span class="truncate">Loan Estimates and Closing Disclosure - 1 Credit</span>
                                     <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                                    <span class="font-medium xl:ml-auto">20th</span>
+                                    <span class="font-medium xl:ml-auto">23th</span>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-theme-19 rounded-full mr-3"></div>
+                                    <span class="truncate">Understanding Title Insurance- 1 Credit</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">23th</span>
+                                </div> 
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-theme-19 rounded-full mr-3"></div>
+                                    <span class="truncate">RPR for New Members (PART 1)</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">23th</span>
+                                </div>   
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-theme-17 rounded-full mr-3"></div>
+                                    <span class="truncate">Agency - 2 Credit</span>
+                                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                                    <span class="font-medium xl:ml-auto">27th</span>
                                 </div>
                             </div>
                         </div>
@@ -380,7 +456,7 @@ else if (ViewBag.rol == "SA")
     </div>
 </div>
 
-
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
 <script type="text/javascript">
 
 
@@ -414,9 +490,10 @@ else if (ViewBag.rol == "SA")
 
 
         $('#OpenImgUpload').click(function () { $('#imgupload').trigger('click'); });
+        $('#OpenImgUpload2').click(function () { $('#imgupload2').trigger('click'); });
 
 
-        $('input[type="file"]').change(function () {
+        $('input[type="file"].img1').change(function () {
                var fileData = new FormData();
             var iduser = @user.ID_User;
             var file = document.getElementById("imgupload").files[0];
@@ -452,6 +529,8 @@ else if (ViewBag.rol == "SA")
             success: function (result) {
                 //$("#modal_demoform_saving").modal('hide');
                 if (result == "SUCCESS") {
+                    var link = document.getElementById('basic-non-sticky-notification-toggle');
+                    link.click();
                     window.location.reload(true);
                 } else {
                     console.log(result);
@@ -464,6 +543,56 @@ else if (ViewBag.rol == "SA")
         });
         });
 
+
+        $('input[type="file"].img2').change(function () {
+               var fileData = new FormData();
+            var iduser = @company.ID_Company;
+            var file = document.getElementById("imgupload2").files[0];
+
+
+        // Adding one more key to FormData object
+            fileData.append('id', iduser);
+            fileData.append("imgupload", file);
+
+        //if true rotate to the right
+        //$('#maindivprogress_' + ID).show();
+        $.ajax({
+            url: '/Sys_Company/changeCompanyImg',
+            //xhr: function () {
+            //    var xhr = new window.XMLHttpRequest();
+            //    xhr.upload.addEventListener("progress", function (evt) {
+            //        if (evt.lengthComputable) {
+            //            var percentComplete = (evt.loaded / evt.total) * 100;
+
+            //            $('#divprogress_' + ID).width(percentComplete + '%');
+            //            $('#imgprogress_' + ID).html(percentComplete.toFixed(2) + "%");
+
+            //        }
+            //    }, false);
+            //    return xhr;
+            //},
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            //async: true,
+            timeout: 80000,
+            data: fileData,
+            success: function (result) {
+                //$("#modal_demoform_saving").modal('hide');
+                if (result == "SUCCESS") {
+                    var link = document.getElementById('basic-non-sticky-notification-toggle');
+                    link.click();
+                    window.location.reload(true);
+                } else {
+                    console.log(result);
+                }
+                //$("#loading").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error uploading image. " + errorThrown );
+            }
+        });
+        });
     };
 
 

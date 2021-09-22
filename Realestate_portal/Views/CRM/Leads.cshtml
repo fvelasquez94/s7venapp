@@ -3,9 +3,17 @@
     ViewBag.Title = "Leads";
 
 }
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-        Leads 
+        Leads
     </h2>
 </div>
 <div class="grid grid-cols-12 gap-12 mt-5">
@@ -18,21 +26,30 @@
                 </h2>
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
                     @if (ViewBag.rol == "SA")
-    {
+                    {
 
-    }
-    else
-    {
-                <div class="widget-options">
-                    <a class="btn btn-success" href="@Url.Action("Create", "Customers")">Add Lead</a>
-                </div>
-}
+                    }
+                    else
+                    {
+                        <div class="widget-options">
+                            <a class="btn btn-success" href="@Url.Action("Create", "Customers")">Add Lead</a>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="p-5" id="basic-table">
                 <div class="preview">
                     <div class="overflow-x-auto">
-                        <table class="table table-report sm:mt-2" id="tableresources" >
+                        <label>Filter by Status</label>
+                        <select id="selecttable" class="form-control" style="width:150px">
+                            <option>ALL</option>
+                            @foreach (var item in Model.Select(c => c.Marital_status).Distinct())
+                            {
+                                <option>@item</option>
+                            }
+                        </select><br /><br />
+                        <table class="table table-report sm:mt-2" id="tableresources">
+
                             <thead>
                                 <tr class="text-white" style="background-color:#162343">
                                     <th class="whitespace-nowrap">
@@ -53,169 +70,180 @@
                                     </th>
                                     <th class="whitespace-nowrap">TEAM</th>
                                     @if (ViewBag.rol != "SA")
-                {
-                    <th class="whitespace-nowrap">
-                        AGENTS
-                    </th>
-}
-                                    <th class="whitespace-nowrap">
-                                        LAST ACTIVITY
-                                    </th>
+                                    {
+                                        <th class="whitespace-nowrap">
+                                            AGENTS
+                                        </th>
+                                    }
+
 
                                     @if (ViewBag.rol != "Agent" && ViewBag.rol != "SA")
-                {
-                    <th class="whitespace-nowrap">
-                        ACTIONS
-                    </th>
-}
+                                    {
+                                        <th class="whitespace-nowrap">
+                                            ACTIONS
+                                        </th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
-            {
-                    <tr>
-                        <td> <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_lead})" class="font-medium whitespace-nowrap">@item.Name</a></td>
-                        <td >@item.Phone</td>
-                        <td >@item.Email</td>
-                        <td >@item.Type</td>
-                        <td >@item.Marital_status</td>
-                        <td >@item.Team</td>
-                        @if (ViewBag.rol != "SA")
-    {
-                        <td>
-                   
-                                      <div class="flex">
-                                    @if (item.Agents.Count() > 0)
-                                    {
-                                        foreach (var agent in item.Agents)
+                                {
+                                    <tr>
+                                        <td>  <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_lead})" class="font-medium whitespace-nowrap"><i data-feather="link" class="w-4 h-4 mr-1"></i> @item.Name</a></td>
+                                        <td>@item.Phone</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Type</td>
+                                        <td>@item.Marital_status</td>
+                                        <td>@item.Team</td>
+                                        @if (ViewBag.rol != "SA")
                                         {
-                                            <div class="w-12 h-12 image-fit zoom-in -ml-4">
-                                                @if (agent.Url_image == "")
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="@agent.Name">
-                                                }
-                                                else if (agent.Url_image.StartsWith("http"))
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
-                                                }
-                                                else
-                                                {
-                                                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
-                                                }
+                                            <td>
 
-                                            </div>
+                                                <div class="flex">
+                                                    @if (item.Agents.Count() > 0)
+                                                    {
+                                                        foreach (var agent in item.Agents)
+                                                        {
+
+
+                                                            if (agent.Url_image == "")
+                                                            {
+
+                                                                <div class="tooltip text-lg  image-fit zoom-in font-medium truncate -ml-4" title="@agent.Name @agent.Lastname">   <p data-letters="@agent.Name.Substring(0, 1) @agent.Lastname.Substring(0, 1)"></p></div>
+
+
+                                                            }
+                                                            else if (agent.Url_image.StartsWith("http"))
+                                                            {
+                                                                <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
+                                                                </div>
+                                                            }
+
+
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <label> Not assigned </label>
+                                                    }
+                                                </div>
+                                            </td>
+
                                         }
 
-                                    }
-                                    else
-                                    {
-                                        <label>Not assigned</label>
-                                    }
-                                </div>
-                                        </td>
+                                        @if (ViewBag.rol != "Agent" && ViewBag.rol != "SA")
+                                        {
+                                            <td>
+                                                <div class="flex justify-center items-center">
+                                                    <a class="flex items-center mr-3" href="@Url.Action("Edit","Customers", new { id=item.ID_lead})" > <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
 
-}
-                        <td>@item.Creation_date</td>
+                                                    <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.ID_lead)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                                </div>
 
-                        @if (ViewBag.rol != "Agent" && ViewBag.rol != "SA")
-    {
-                        <td>
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;" data-toggle="modal" data-target="#header-footer-slide-over-preview"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-
-                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.ID_lead)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                          
-                        </td>
-}
-                    </tr>
-}
+                                            </td>
+                                        }
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
                 </div>
-        
+
             </div>
-        </div>
-        </div>
-        </div>
-        <!-- END: Basic Table -->
-        <!-- BEGIN: Bordered Table -->
-       
-<!--notes modal start here -->
-<div id="modalnotes" class="modal fade">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Notes</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">close</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table" id="tbodynotes">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Text</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
-            </div>
-            <label id="ddbystatus">
-                <span> Search Status:</span>
-                <select id="status" aria-controls="tableresources" class="form-control form-control-sm">
-                    <option value="All">ALL</option>
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="ON_CONTRACT">ON CONTRACT</option>
-                    <option value="FOLLOW_UP">FOLLOW UP</option>
-                    <option value="CLOSED">CLOSED</option>
-                    <option value="DEAD">DEAD</option>
-                </select>
-            </label>
         </div>
     </div>
 </div>
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
 
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
+
+
+        </script>
+    }
+
+}
 <!-- End table Container -->
 <!--table scripts starts here to pull all data from controller by datable ajax -->
 @section scripts{
     <script>
+        function deleteCustomer(idcustomer) {
+
+            swal.fire({
+                title: 'Do you really want to delete these record?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Customers/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idcustomer },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
         $(document).ready(function () {
-            $("#tableresources").DataTable();
+
+
+            table = $("#tableresources").DataTable();
+
+            $('#selecttable').on('change', function () {
+                if (this.value == "ALL") {
+                    table.columns(4).search('').draw();
+                } else {
+                    table.columns(4).search(this.value).draw();
+                }
+
+            });
         });
     </script>
 }
-<script type="text/javascript">
-    function shownotes(idcustomer) {
-        $.ajax
-            ({
-                url: '/Customers/Getnotes',
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    idcustomer: idcustomer
-                }),
-                success: function (result) {
-                    $("#tbodynotes tbody").html("");
-                    $.each($.parseJSON(result), function (i, notes) {
-                        var newRowContent = "<tr><td>" + notes.ID_note + " </td><td>" + notes.Text + " </td><td>" + new Date(parseInt(notes.Date.substr(6))).toLocaleDateString('en-US'); + "</td></tr>";
-                        $("#tbodynotes tbody").append(newRowContent);
-                    });
-                },
-                error: function () {
-                    alert("Whooaaa! Something went wrong..")
-                },
-            });
-    }
-</script>
+
 
 
 

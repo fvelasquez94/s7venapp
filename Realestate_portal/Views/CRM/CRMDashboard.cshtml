@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Realestate_portal.Models.Tb_Customers>
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Process>
 
 @{
     ViewBag.Title = "Dashboard";
-
-}
+    List<Realestate_portal.Models.Tb_Customers> lstleads = (List<Realestate_portal.Models.Tb_Customers>)ViewBag.leads;
+}  
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 2xl:col-span-9">
         <div class="grid grid-cols-12 gap-6">
@@ -13,22 +13,22 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         CRM
                     </h2>
-                 
+
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 xl:col-span-4">
 
                         <div class="box p-5 ">
                             @if (ViewBag.rol == "Agent")
-    {
-                        <img src="~/Content/crm/AGENTPROFILE.png" style="width: 100%;" />}
+                            {
+                                <img src="~/Content/crm/AGENTPROFILE.png" style="width: 100%;" />}
                             @if (ViewBag.rol == "Admin")
-    {
-                        <img src="~/Content/crm/BROKERPROFILE.png" style="width: 100%;" />}
+                            {
+                                <img src="~/Content/crm/BROKERPROFILE.png" style="width: 100%;" />}
                             @if (ViewBag.rol == "SA")
-    {
-                        <img src="~/Content/crm/ADMINPROFILE.png" style="width: 100%;" />}
-                         
+                            {
+                                <img src="~/Content/crm/ADMINPROFILE.png" style="width: 100%;" />}
+
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-3 xl:col-span-2 intro-y">
@@ -36,9 +36,9 @@
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="users" class="report-box__icon text-theme-20"></i>
-                                  
+
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">@ViewBag.totalleads</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">@lstleads.Count()</div>
                                 <div class="text-base text-gray-600 mt-1">Leads</div>
                             </div>
                         </div>
@@ -48,10 +48,10 @@
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="shopping-cart" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
-                                
+
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">$@ViewBag.totalgains</div>
-                                <div class="text-base text-gray-600 mt-1">Sales</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "CLOSED").Sum(f => f.Commission_amount)).ToString("N2")</div>
+                                <div class="text-base text-gray-600 mt-1">Gains</div>
                             </div>
                         </div>
                     </div>
@@ -60,14 +60,14 @@
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="home" class="report-box__icon text-theme-29"></i>
-                                    
+
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">@ViewBag.totallistings</div>
-                                <div class="text-base text-gray-600 mt-1">Listings</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">@Model.Count()</div>
+                                <div class="text-base text-gray-600 mt-1">Properties</div>
                             </div>
                         </div>
                     </div>
-    
+
 
                 </div>
             </div>
@@ -76,35 +76,34 @@
             <div class="col-span-12 lg:col-span-6 mt-8">
                 <div class="intro-y block sm:flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
-                        Sales Report
+                        Gains Report
                     </h2>
                     <div class="sm:ml-auto mt-3 sm:mt-0 relative text-gray-700 dark:text-gray-300">
-                        <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
-                        <input type="text" class="datepicker form-control sm:w-56 box pl-10">
+                     
+                       
+                        <div id="reportrange" class="form-control sm:w-56 box pl-10">
+                            <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="intro-y box p-5 mt-12 sm:mt-5">
                     <div class="flex flex-col xl:flex-row xl:items-center">
                         <div class="flex">
                             <div>
-                                <div class="text-theme-24 dark:text-gray-300 text-lg xl:text-xl font-medium">$15,000</div>
-                                <div class="mt-0.5 text-gray-600 dark:text-gray-600">This Month</div>
+                                <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">$@Convert.ToDecimal(Model.Where(f => f.Stage == "ON CONTRACT").Sum(f => f.Commission_amount)).ToString("N2")</div>
+                                <div class="mt-0.5 text-gray-600 dark:text-gray-600">Projected Gains</div>
                             </div>
                             <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-5"></div>
                             <div>
-                                <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">$10,000</div>
-                                <div class="mt-0.5 text-gray-600 dark:text-gray-600">Last Month</div>
+                                <div class="text-theme-24 dark:text-gray-300 text-lg xl:text-xl font-medium">$@Convert.ToDecimal(Model.Where(f => f.Stage == "CLOSED").Sum(f => f.Commission_amount)).ToString("N2")</div>
+                                <div class="mt-0.5 text-gray-600 dark:text-gray-600">Gains</div>
                             </div>
                         </div>
-                        <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
-                            <button class="dropdown-toggle btn btn-outline-secondary font-normal" aria-expanded="false"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
-                            <div class="dropdown-menu w-40">
-                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2 overflow-y-auto h-32"> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC & Laptop</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a> </div>
-                            </div>
-                        </div>
+ 
                     </div>
                     <div class="report-chart">
-                        <canvas id="report-line-chart" height="169" class="mt-6"></canvas>
+                        <canvas id="gainsreport" height="169" class="mt-6"></canvas>
                     </div>
                 </div>
             </div>
@@ -113,30 +112,42 @@
             <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
-                        Weekly Top Seller
+                        Properties by Status
                     </h2>
-                    <a href="" class="ml-auto text-theme-30 dark:text-theme-25 truncate">Show More</a>
                 </div>
                 <div class="intro-y box p-5 mt-5">
-                    <canvas class="mt-3" id="report-pie-chart" height="300"></canvas>
+                    <canvas class="mt-3" id="listingchartstatus" height="300"></canvas>
                     <div class="mt-8">
                         <div class="flex items-center">
                             <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                            <span class="truncate">17 - 30 Years old</span>
+                            <span class="truncate">LISTED</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">62%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Property == "LISTED").Count()</span>
+                        </div>
+
+                        <div class="flex items-center mt-4">
+                            <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                            <span class="truncate">CLOSED</span>
+                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Property == "CLOSED").Count()</span>
                         </div>
                         <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
-                            <span class="truncate">31 - 50 Years old</span>
+                            <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                            <span class="truncate">RENTED</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">33%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Property == "RENTED").Count()</span>
                         </div>
                         <div class="flex items-center mt-4">
                             <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
-                            <span class="truncate">>= 50 Years old</span>
+                            <span class="truncate">PENDING</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">10%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Property == "PENDING").Count()</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                            <span class="truncate">EXPIRED</span>
+                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Property == "EXPIRED").Count()</span>
                         </div>
                     </div>
                 </div>
@@ -146,46 +157,63 @@
             <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
-                        Sales Report
+                        Leads by Stage
                     </h2>
-                    <a href="" class="ml-auto text-theme-30 dark:text-theme-25 truncate">Show More</a>
+
                 </div>
                 <div class="intro-y box p-5 mt-5">
-                    <canvas class="mt-3" id="report-donut-chart" height="300"></canvas>
+                    <canvas class="mt-3" id="leadschart" height="300"></canvas>
                     <div class="mt-8">
                         <div class="flex items-center">
                             <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                            <span class="truncate">17 - 30 Years old</span>
+                            <span class="truncate">ACTIVE</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">62%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "ACTIVE").Count()</span>
+                        </div>
+
+                        <div class="flex items-center mt-4">
+                            <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                            <span class="truncate">FOLLOW UP</span>
+                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "FOLLOW UP").Count()</span>
                         </div>
                         <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
-                            <span class="truncate">31 - 50 Years old</span>
+                            <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                            <span class="truncate">ON CONTRACT</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">33%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "ON CONTRACT").Count()</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                            <span class="truncate">CLOSED</span>
+                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "CLOSED").Count()</span>
                         </div>
                         <div class="flex items-center mt-4">
                             <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
-                            <span class="truncate">>= 50 Years old</span>
+                            <span class="truncate">MARRIED</span>
                             <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">10%</span>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "MARRIED").Count()</span>
                         </div>
+                        <div class="flex items-center mt-4">
+                            <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                            <span class="truncate">DEAD</span>
+                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                            <span class="font-medium xl:ml-auto">@Model.Where(f => f.Stage == "DEAD").Count()</span>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
             <!-- END: Sales Report -->
             <!-- BEGIN: Official Store -->
-           
             <!-- END: Official Store -->
             <!-- BEGIN: Weekly Best Sellers -->
-            
             <!-- END: Weekly Best Sellers -->
             <!-- BEGIN: General Report -->
-        
             <!-- END: General Report -->
             <!-- BEGIN: Weekly Top Products -->
-
             <!-- END: Weekly Top Products -->
         </div>
     </div>
@@ -201,7 +229,7 @@
                     </div>
                     <div class="mt-5">
                         <div class="intro-x">
-                            <a href="@Url.Action("Index", "Users")">
+                            <a href="@Url.Action("Agents", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                         <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
@@ -213,10 +241,10 @@
                                     <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
 
                                 </div>
-                                </a>
+                            </a>
                         </div>
                         <div class="intro-x">
-                            <a href="@Url.Action("Customers", "CRM")">
+                            <a href="@Url.Action("Leads", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                         <img alt="S7VEN" src="~/Content/dist/images/recruitment.png">
@@ -225,13 +253,13 @@
                                         <div class="font-medium">Leads</div>
 
                                     </div>
-                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalleads</div>
+                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@lstleads.Count()</div>
 
                                 </div>
                             </a>
                         </div>
                         <div class="intro-x">
-                            <a href="@Url.Action("TeamList", "Users")">
+                            <a href="@Url.Action("Teams", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                         <img alt="S7VEN" src="~/Content/dist/images/goal.png">
@@ -240,7 +268,7 @@
                                         <div class="font-medium">Teams</div>
 
                                     </div>
-                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">1</div>
+                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalteams</div>
 
                                 </div>
                             </a>
@@ -266,13 +294,10 @@
                 </div>
                 <!-- END: Transactions -->
                 <!-- BEGIN: Recent Activities -->
-                
                 <!-- END: Recent Activities -->
                 <!-- BEGIN: Important Notes -->
-               
                 <!-- END: Important Notes -->
                 <!-- BEGIN: Schedules -->
-               
                 <!-- END: Schedules -->
             </div>
         </div>
@@ -281,38 +306,282 @@
 
 <!-- End Container -->
 <script type="text/javascript">
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function (n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+    }
+
     window.onload = function () {
-        $("#tableresources").DataTable();
+        var modeltotal = @Model.Count();
 
-    }
+        var leadblue = 0;
+        var leadgreen = 0;
+        var leadyellow = 0;
+        var leadred = 0;
 
-    function shownotes(idcustomer) {
-        $.ajax
-            ({
-                url: '/Customers/Getnotes',
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    idcustomer: idcustomer
-                }),
-                success: function (result) {
+        if (modeltotal > 0) {
+            leadblue = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Stage == "ACTIVE" || f.Stage == "FOLLOW UP").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+            leadgreen = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Stage == "ON CONTRACT" || f.Stage == "CLOSED").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+            leadyellow = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Stage == "MARRIED").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+            leadred = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Stage == "DEAD").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
 
-                    $("#tbodynotes tbody").html("");
-                    $.each($.parseJSON(result), function (i, notes) {
+        }
 
-                        var newRowContent = "<tr><td>" + notes.ID_note + " </td><td>" + notes.Text + " </td><td>" + new Date(parseInt(notes.Date.substr(6))).toLocaleDateString('en-US'); + "</td></tr>";
 
-                        $("#tbodynotes tbody").append(newRowContent);
+        var ctx = document.getElementById('leadschart').getContext('2d');
 
+
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["ACTIVE, FOLLOW UP", "ON CONTRACT, CLOSED", "MARRIED", "DEAD"],
+                datasets: [{
+                    data: [leadblue, leadgreen, leadyellow, leadred],
+                    backgroundColor: ["#294cb7", "#13b176", "#fbc500", "#ce3131"],
+                    hoverBackgroundColor: ["#294cb7", "#13b176", "#fbc500", "#ce3131"],
+                    borderWidth: 5,
+                    borderColor: cash("html").hasClass("dark") ? "#303953" : "#fff"
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                cutoutPercentage: 61,
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                            var total = meta.total;
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+                            //return currentValue + ' (' + percentage + '%)';
+                            return ' (' + percentage + '%)';
+                        },
+                        title: function (tooltipItem, data) {
+                            return data.labels[tooltipItem[0].index];
+                        }
                     }
-
-                    )
-
                 },
-                error: function () {
-                    alert("Whooaaa! Something went wrong..")
+
+            }
+        });
+
+        //Listing by status
+        var ctx2 = document.getElementById('listingchartstatus').getContext('2d');
+
+                          var listingblue =0;
+          var listinggreen = 0;
+          var listingyellow = 0;
+          var listingred = 0;
+        if (modeltotal > 0) {
+          listingblue = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Property == "LISTED").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+          listinggreen = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Property == "CLOSED" || f.Property == "RENTED").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+          listingyellow = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Property == "PENDING").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+          listingred = @Convert.ToDecimal((Convert.ToDecimal(Model.Where(f => f.Property == "EXPIRED").Count()) / Convert.ToDecimal(Model.Count())) * 100).ToString("N2");
+        }
+
+
+        var myPieChart = new Chart(ctx2, {
+            type: "pie",
+            data: {
+                labels: ["LISTED", "CLOSED, RENTED", "PENDING", "EXPIRED"],
+                datasets: [{
+                    data: [listingblue, listinggreen, listingyellow, listingred],
+                    backgroundColor: ["#294cb7", "#13b176", "#fbc500", "#ce3131"],
+                    hoverBackgroundColor: ["#294cb7", "#13b176", "#fbc500", "#ce3131"],
+                    borderWidth: 5,
+                    borderColor: cash("html").hasClass("dark") ? "#303953" : "#fff"
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
                 },
-            });
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                            var total = meta.total;
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+                            //return currentValue + ' (' + percentage + '%)';
+                            return ' (' + percentage + '%)';
+                        },
+                        title: function (tooltipItem, data) {
+                            return data.labels[tooltipItem[0].index];
+                        }
+                    }
+                },
+            }
+        });
+
+
+        //Sales Report
+
+        var ctx3 = document.getElementById('gainsreport').getContext('2d');
+        var myChart = new Chart(ctx3, {
+            type: "line",
+            data: {
+                labels: @Html.Raw(Json.Encode(ViewBag.gainsreport_dates)),
+                datasets: [{
+                    label: "Projected Gains $",
+                    data: @Html.Raw(Json.Encode(ViewBag.gainsreport_projected)),
+                    borderWidth: 2,
+                    borderDash: [2, 2],
+                    borderColor: "#8d9eb1",
+                    backgroundColor: "transparent",
+                    pointBorderColor: "transparent"
+             
+                }, {
+                    label: "Gains $",
+                    data: @Html.Raw(Json.Encode(ViewBag.gainsreport_gains)),
+                    borderWidth: 2,
+                    borderColor: "#2F5AD8",
+                    backgroundColor: "transparent",
+                    pointBorderColor: "transparent"
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: "12",
+                            fontColor: cash("html").hasClass("dark") ? "#718096" : "#777777"
+                        },
+                        gridLines: {
+                            display: true
+                        }
+                    }],
+                    yAxes: [{
+           
+                        gridLines: {
+                            color: cash("html").hasClass("dark") ? "#718096" : "#D8D8D8",
+                            zeroLineColor: cash("html").hasClass("dark") ? "#718096" : "#D8D8D8",
+                            borderDash: [2, 2],
+                            zeroLineBorderDash: [2, 2],
+                            drawBorder: false
+                        }
+                    }]
+                }
+            }
+
+        });
+
+
+        var flag = 0;
+       //DATETIMEPICKER
+ var t1 = "@ViewBag.filtrofechastart";
+        var t2 = "@ViewBag.filtrofechaend";
+
+        var start = moment(t1, "MM-DD-YYYY");
+        var end = moment(t2, "MM-DD-YYYY");
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            if (flag == 0) {
+                flag = 1;
+            } else {
+                filterSObydate();
+            }
+
+
+        }
+
+        $('#reportrange').daterangepicker({
+
+            startDate: start,
+            endDate: end,
+            autoApply: false,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
+
+
+        function filterSObydate() {
+            var st = new Date($('#reportrange').data('daterangepicker').startDate);
+            var ed = new Date($('#reportrange').data('daterangepicker').endDate);
+
+            //st = st.toLocaleDateString();
+            //ed = ed.toLocaleDateString();
+            ////colocamos la url de la demo
+
+
+
+            var today = st;
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            st = mm + '/' + dd + '/' + yyyy;
+
+            var today2 = ed;
+            var dd2 = today2.getDate();
+            var mm2 = today2.getMonth() + 1; //January is 0!
+
+            var yyyy2 = today2.getFullYear();
+            if (dd2 < 10) {
+                dd2 = '0' + dd2;
+            }
+            if (mm2 < 10) {
+                mm2 = '0' + mm2;
+            }
+            ed = mm2 + '/' + dd2 + '/' + yyyy2;
+
+            var url = '@Url.Action("CRMDashboard", "CRM", new { fstartd = "dad", fendd="tfe" })';
+            url = url.replace('dad', st);
+            var newurl = url;
+            newurl = newurl.replace('tfe', ed);
+
+            newurl = newurl.replace(/&amp;/g, "&");
+
+            window.location.href = newurl;
+        };
+
     }
+
+    
+
+
 </script>

@@ -25,10 +25,10 @@
 
             <div class="hidden md:block mx-auto text-gray-600">&nbsp;</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-                <div class="w-56 relative text-gray-700 dark:text-gray-300">
+                @*<div class="w-56 relative text-gray-700 dark:text-gray-300">
                     <input type="text" class="form-control w-100 box pr-10 placeholder-theme-13" placeholder="Search...">
                     <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
-                </div>
+                </div>*@
             </div>
         </div>
 
@@ -163,14 +163,12 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add PGR Network</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                        <span class="sr-only">close</span>
-                    </button>
+                    <h4 class="modal-title">Add Network</h4>
+          
                 </div>
-                <form id="htmlform" method="post">
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form id="htmlform" method="post">
+
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -213,9 +211,9 @@
                                     <label>Category *</label>
                                     <select id="categoryvideo" class="form-control" required>
                                         @foreach (var item in lstcategories)
-                                        {
-                                            <option value="@item.Description">@item.Description</option>
-                                        }
+                        {
+                            <option value="@item.Description">@item.Description</option>
+        }
                                     </select>
                                 </div>
                             </div>
@@ -235,67 +233,72 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
-                        <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                            <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     <!-- here start review sections -->
-    <div id="modalReview" class="modal hide fade in" data-keyboard="false" data-backdrop="static">
+    <div id="modalReview" class="modal hide fade in" data-keyboard="false" >
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <!-- here stars no note in tab menu section -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Review</h4>
-                    <button type="button" class="close" data-dismiss="modal" id="buttonClose">
-                        <span aria-hidden="true">×</span>
-                        <span class="sr-only">close</span>
-                    </button>
+                    <h4 class="modal-title">Reviews</h4>
+             
                 </div>
-                <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
-                    <div class="media w-100">
+                <div class="modal-body">
+                    <div id="reviewCard" style="width:100%">
+                        <div>
+
+                            <input type="hidden" id="index" value="0" />
+                            <input type="hidden" id="reviewId" value="" />
+                            <input type="hidden" id="reviewText" value="" />
+
+                        </div>
+                        <div class="media-body">
+
+                            <br />
+                            <div class="files-number">Date : </div>
+                            <br />
+
+                        </div>
+                    </div>
+                    <div class="media w-100 mt-10">
 
                         <form id="reviewForm" class="media-body align-self-center text-align-center">
 
 
 
-                            <h4>Write your review...</h4>
+                            <h2>Write your review...</h2>
                             <br />
-                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" placeholder="Write your review..."></textarea>
+                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" placeholder="Type here..."></textarea>
 
-                            <span class="la la-star la-2x" id="Rate1" onclick="CRate(1)"></span>
-                            <span class="la la-star-o la-2x" id="Rate2" onclick="CRate(2)"></span>
-                            <span class="la la-star-o la-2x" id="Rate3" onclick="CRate(3)"></span>
-                            <span class="la la-star-o la-2x" id="Rate4" onclick="CRate(4)"></span>
-                            <span class="la la-star-o la-2x" id="Rate5" onclick="CRate(5)"></span>
+                            <span class="la la-star la-2x" style="color:gold" id="Rate1" onclick="CRate(1)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate2" onclick="CRate(2)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate3" onclick="CRate(3)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate4" onclick="CRate(4)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate5" onclick="CRate(5)"></span>
                             <input type="hidden" name="rating" id="rating" value="1">
                             <br />
                             <br />
                             <button class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addReview">Add Review</button>
+
+
+
                         </form>
+
+
+
                     </div>
+
+
                 </div>
-                <!-- here ends no note in tab menu section -->
-                <div id="reviewCard" style="width:100%">
-                    <div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
 
-                        <input type="hidden" id="index" value="0" />
-                        <input type="hidden" id="reviewId" value="" />
-                        <input type="hidden" id="reviewText" value="" />
-
-                    </div>
-                    <div class="media-body align-self-center text-align-center">
-
-                        <br />
-                        <div class="files-number">Date : </div>
-                        <br />
-
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -376,13 +379,15 @@
                         $.each(result, function (i, review) {
 
                             for (var x = 0; x < review.Review_Rate; x++) {
-                                star = star.concat(`<span class="la la-star la-2x"></span>`)
+                                star = star.concat(`<span class="la la-star la-2x" style="color:gold"></span>`)
                             };
-                            $('#reviewCard').append(`<div style="margin-left: 16.6%" class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 mb-4 custom-card">
+                            $('#reviewCard').append(`<div style="margin-bottom:10px">
                                                        <h4>Review #${i + 1}  </h4>
-                                                       <h2>${star}:${review.Review_Rate}</h2>
-                                                       <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" disabled>${review.Comment}</textarea>
-                                                       <h6>Date: ${review.Date} Created by: ${review.User}</h6>
+<h6>Date: ${review.Date} Created by: ${review.User}</h6>
+                                                       <h2>${star}</h2>
+                                                        
+                                                       <textarea class="form-control-lg align-self-center" style="width: 100%"  cols="50" rows="5" disabled>${review.Comment}</textarea>
+                                                      
                                                         @if (ViewBag.rol == "SA")
                                                         {
 

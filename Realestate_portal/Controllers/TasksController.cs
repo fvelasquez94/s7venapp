@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Postal;
 using Realestate_portal.Models;
 
 namespace Realestate_portal.Controllers
@@ -54,12 +55,27 @@ namespace Realestate_portal.Controllers
                 tb_Tasks.Createdat = DateTime.UtcNow;
                 tb_Tasks.Lastupdate = DateTime.UtcNow;
                 tb_Tasks.ID_Company = activeuser.ID_Company;
-                tb_Tasks.Username = activeuser.Name + " " + activeuser.LastName;
-                tb_Tasks.ID_User = activeuser.ID_User;
+                tb_Tasks.Username = "";
+
+
+                var agent = (from a in db.Sys_Users where (a.ID_User == tb_Tasks.ID_User) select a).FirstOrDefault();
+
                 if (ModelState.IsValid)
                 {
                     db.Tb_Tasks.Add(tb_Tasks);
                     db.SaveChanges();
+
+                    //Send the email
+                    dynamic semail = new Email("NewNotification_task");
+                    semail.To = agent.Email.ToString();
+                    semail.From = "support@s7ven.co";
+                    semail.user = agent.Name + " " + agent.LastName;
+                    semail.title = tb_Tasks.Title;
+                    semail.Description = tb_Tasks.Description;
+                    semail.Assignedby = activeuser.Name + " " + activeuser.LastName;
+
+                    semail.Send();
+
                     return RedirectToAction("Tasks", "CRM", new { token = "success" });
                 }
                 else
@@ -122,14 +138,51 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Tasks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_Tasks tb_Tasks = db.Tb_Tasks.Find(id);
-            db.Tb_Tasks.Remove(tb_Tasks);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Tb_Tasks tb_Tasks = db.Tb_Tasks.Find(id);
+                db.Tb_Tasks.Remove(tb_Tasks);
+                db.SaveChanges();
+
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+
+
+        public ActionResult UpdateTask(int id, bool value)
+        {
+            try
+            {
+                Tb_Tasks tb_Tasks = db.Tb_Tasks.Find(id);
+                tb_Tasks.Finished = value;
+                db.Entry(tb_Tasks).State=EntityState.Modified;
+                db.SaveChanges();
+
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
         }
 
         protected override void Dispose(bool disposing)

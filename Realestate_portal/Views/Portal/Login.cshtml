@@ -1,93 +1,92 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Login.cshtml";
+    Layout = null;
 }
-<!-- Begin Container -->
-<div class="container-fluid no-padding h-100">
-    <div class="row flex-row h-100 bg-white">
-        <!-- Begin Left Content -->
-        <div class="col-xl-8 col-lg-6 col-md-5 no-padding">
-            <div class="elisyam-bg" style="background-color:#a001e2">
-                <div class="elisyam-overlay overlay-01"></div>
-                <div class="authentication-col-content mx-auto">
-                    <h1 class="gradient-text-01">
-                        Welcome to your real estate agent portal!
-                    </h1>
-                    <span class="description">
-                        Powered by SEVEN.
-                    </span>
-                </div>
-            </div>
-        </div>
-        <!-- End Left Content -->
-        <!-- Begin Right Content -->
-        <div class="col-xl-4 col-lg-6 col-md-7 my-auto no-padding">
-            <!-- Begin Form -->
-            @using (Html.BeginForm("Log_in", "Portal", FormMethod.Post, new { id = "myform" }))
-    {
-        <div class="authentication-form mx-auto">
-            <div class="logo-centered">
-                <a href="#">
-                    <img src="~/Content/pgrlogos/S7VENLogoBlack.png" alt="logo">
+<!DOCTYPE html>
+<html lang="en" class="light">
+<!-- BEGIN: Head -->
+<head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="S7VEN Co.">
+    <meta name="keywords" content="real estate, agents, web">
+    <meta name="author" content="Francisco Velasquez">
+    <title>S7VEN - Login</title>
+    <!-- BEGIN: CSS Assets-->
+    <link rel="stylesheet" href="~/Content/dist/css/app.css" />
+    <!-- END: CSS Assets-->
+</head>
+<!-- END: Head -->
+<body class="login">
+    <div class="container sm:px-10">
+        <div class="block xl:grid grid-cols-2 gap-4">
+            <!-- BEGIN: Login Info -->
+            <div class="hidden xl:flex flex-col min-h-screen">
+                <a href="javascript:void(0)" class="-intro-x flex items-center pt-5">
+                   
+                    <span class="text-white text-lg ml-3"> S7VEN.CO<span class="font-medium"></span> </span>
                 </a>
-            </div>
-               @if (TempData["advertencia"] != null)
-    {
-        <div class="alert alert-outline-warning dashed" role="alert">
-           @TempData["advertencia"]
-        </div><br />
-    }
-
-
-            <div class="group material-input">
-                <input type="text" value="@ViewBag.correo" name="email" id="email" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Email</label>
-            </div>
-            <div class="group material-input">
-                <input type="password" value="@ViewBag.pass" name="password" id="password" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Password</label>
-            </div>
-
-            <div class="row" >
-                <div class="col text-left">
-                    <div class="styled-checkbox" style="display:none">
-                        @*<input type="checkbox" name="rememberme" id="rememberme" value="false">*@
-                        @Html.CheckBox("rememberme", (bool)ViewBag.remember, new { @class = "" })
-                        <label for="rememberme">Remember me</label>
+                <div class="my-auto">
+           
+                    <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                        Welcome to your real
+                        <br>
+                        estate agent portal
                     </div>
-                </div>
-                <div class="col text-right">
-                    <a href="@Url.Action("Forgot_password", "Portal")">Forgot Password ?</a>
+       
                 </div>
             </div>
-            <div class="sign-btn text-center">
-                <button type="submit" class="btn btn-lg btn-gradient-01">
-                    Sign in
-                </button>
-            </div>
-
-            @*<div class="register">
-                Don't have an account?
-                <br>
-                <a href="#">More information</a>
-            </div>*@
-        </div>
+            <!-- END: Login Info -->
+            <!-- BEGIN: Login Form -->
+            <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-dark-1 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                    @using (Html.BeginForm("Log_in", "Portal", FormMethod.Post, new { id = "myform" }))
+    {
+                <img src="~/Content/pgrlogos/S7VENLogoBlack.png" style="width:150px;margin-bottom:50px; margin-left:165px" alt="logo">
+                <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                    Sign In
+                </h2>
+                <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">Welcome to your real estate agent portal</div>
+                if (TempData["advertencia"] != null)
+{
+                <div class="intro-x mt-2" style="color:#ff0000"> @TempData["advertencia"]</div>
+                <br />
 }
-            <!-- End Form -->
+                <div class="intro-x mt-8">
+                    <input type="text" value="@ViewBag.correo" name="email" id="email" required class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email">
+                    <input type="password" value="@ViewBag.pass" name="password" id="password" required class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password">
+                </div>
+                <div class="styled-checkbox" style="display:none">
+                    @*<input type="checkbox" name="rememberme" id="rememberme" value="false">*@
+                    @Html.CheckBox("rememberme", (bool)ViewBag.remember, new { @class = "" })
+                    <label for="rememberme">Remember me</label>
+                </div>
+                <div class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4">
+
+                    <a href="@Url.Action("Forgot_password", "Portal")">Forgot Password?</a>
+                </div>
+                <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                    <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Login</button>
+                    @*<button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top">Sign up</button>*@
+                </div>
+}
+                    @*<div class="intro-x mt-10 xl:mt-24 text-gray-700 dark:text-gray-600 text-center xl:text-left">
+            By signin up, you agree to our
+            <br>
+            <a class="text-theme-25 dark:text-theme-22" href="">Terms and Conditions</a> & <a class="text-theme-25 dark:text-theme-22" href="">Privacy Policy</a>
+        </div>*@
+                </div>
+            </div>
+            <!-- END: Login Form -->
         </div>
-        <!-- End Right Content -->
     </div>
-    <!-- End Row -->
-</div>
-<!-- End Container -->
+    <!-- BEGIN: Dark Mode Switcher-->
 
-    <script type="text/javascript">
-        window.onload = function () {
+    <!-- END: Dark Mode Switcher-->
+    <!-- BEGIN: JS Assets-->
+    <script src="~/Content/dist/js/app.js"></script>
+    <!-- END: JS Assets-->
+</body>
+</html>
 
-            $('input[type="hidden"]').remove();
-        };
-    </script>
