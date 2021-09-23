@@ -21,7 +21,7 @@ namespace Realestate_portal.Controllers
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
 
-//global ajax variables for datatable calls 
+//global ajax variables for datatable calls merge
       
      
 
