@@ -164,22 +164,26 @@ else
                                 </div>
                                 <div class="modal-body">
                                     @using (Html.BeginForm("Create", "Tasks", FormMethod.Post))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="mt-3"> <label for="Title" class="form-label">Title</label> <input id="Title" name="Title" type="text" class="form-control" placeholder="" required> </div>
-                                        <div class="mt-3"> <label for="Description" class="form-label">Description</label> <input id="Description" name="Description" type="text" class="form-control" placeholder="" required> </div>
-                                        <div class="mt-3">
-                                            <label for="agents" class="form-label">Agent</label>
-                                            <select data-placeholder="Search here.." class="tom-select w-full" id="ID_User" name="ID_User" required>
-                                                @foreach (var item in lstagents)
-                                                {
-                                                    <option value="@item.ID_User">@item.Name @item.LastName (@item.Email)</option>
-                                                }
+        {
+                            @Html.AntiForgeryToken()
+                            <div class="mt-3"> <label for="Title" class="form-label">Title</label> <input id="Title" name="Title" type="text" class="form-control" placeholder="" required> </div>
+                            <div class="mt-3"> <label for="Description" class="form-label">Description</label> <input id="Description" name="Description" type="text" class="form-control" placeholder="" required> </div>
+                            <div class="mt-3">
+                                <label for="agents" class="form-label">Agent</label>
+                                <select data-placeholder="Search here.." class="tom-select w-full" id="ID_User" name="ID_User" required>
+                                    @foreach (var item in lstagents)
+        {
+                            <option value="@item.ID_User">@item.Name @item.LastName (@item.Email)</option>
+}
 
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-success block w-40 mx-auto mt-5">Add Task</button>
-                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success block w-40 mx-auto mt-5">Add Task</button>
+}
+                                </div>
+                                <div class="modal-footer text-right w-full absolute bottom-0">
+                                    <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                              
                                 </div>
                             </div>
                         </div>

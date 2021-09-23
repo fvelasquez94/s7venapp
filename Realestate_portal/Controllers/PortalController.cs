@@ -771,7 +771,7 @@ namespace Realestate_portal.Controllers
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
                 ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
-                ViewBag.token = token; db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token; 
                 //FIN HEADER
 
                 //Filtros SA
@@ -1053,28 +1053,19 @@ namespace Realestate_portal.Controllers
 
             }
         }
-        public ActionResult Documents_upload_management(int broker = 0)
+        public ActionResult Documents_upload_management(int broker = 0, string token="")
         {
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Documents Uploads";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
                 //FIN HEADER
 
                 //Filtros SA
@@ -1083,7 +1074,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
                 List<Tb_Docpackages> lstdocpacakges = new List<Tb_Docpackages>();
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     lstdocpacakges = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
@@ -1091,7 +1082,7 @@ namespace Realestate_portal.Controllers
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();

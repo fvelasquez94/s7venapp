@@ -1999,6 +1999,7 @@
     <Content Include="img\Open House Sign.jpg" />
     <Content Include="img\Rider.jpg" />
     <Content Include="img\Stand Up Banner.jpg" />
+    <Content Include="Views\Emails\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2347,7 +2348,6 @@
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\newNotification_lead.cshtml" />
     <Content Include="Views\Emails\newNotification_propertyAgent.cshtml" />
     <Content Include="Views\Portal\Documents_upload_management.cshtml" />
