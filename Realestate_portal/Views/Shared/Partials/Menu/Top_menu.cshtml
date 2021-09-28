@@ -52,7 +52,7 @@
                       <li>
                           <a href="@Url.Action("Teams", "CRM")" class="top-menu">
                               <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                              <div class="top-menu__title">Work Teams</div>
+                              <div class="top-menu__title">Teams</div>
                           </a>
                       </li>
 }
@@ -125,25 +125,25 @@ else
 }
 
                 </li>
-                @*@if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
                 {
                 <li>
                     @if (ViewBag.rol == "SA")
                     {
             <a href="@Url.Action("Resources_broker", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                <div class="top-menu__title">Broker Resources</div>
+                <div class="top-menu__title">Broker's Resources</div>
             </a>
                     }
                     else
                     {
             <a href="@Url.Action("Resources_broker", "Portal")" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                <div class="top-menu__title">Broker Resources</div>
+                <div class="top-menu__title">Broker's Resources</div>
             </a>
                     }
 
-                </li>}*@
+                </li>}
             </ul>
 
         </li>
@@ -202,7 +202,7 @@ else
 
         </li>
         <li>
-            <a href="https://www.lirealtor.com/" target="_blank" class="top-menu">
+            <a href="https://sso.mlsstratus.com/idp/profile/SAML2/Redirect/SSO?execution=e1s2" target="_blank" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="home"></i> </div>
                 <div class="top-menu__title"> Your MLS </div>
             </a>

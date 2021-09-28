@@ -76,7 +76,7 @@
                                     </th>
                                     <th class="whitespace-nowrap">BROKER</th>
                                     <th class="whitespace-nowrap">TEAMS</th>
-                                    <th class="whitespace-nowrap">LEADS</th>
+                                    <th class="whitespace-nowrap" style="width:350px">LEADS</th>
                                     <th class="whitespace-nowrap">ACTIONS</th>
 
 
@@ -148,29 +148,14 @@
 
                                             @if (item.Leads.Count() > 0)
                                             {
-                                                <div id="basic-accordion" class="p-5">
-                                                    <div class="preview">
-                                                        <div id="faq-accordion-1" class="accordion">
-                                                            <div class="accordion-item">
-                                                                <div id="faq-accordion-content-1" class="accordion-header">
-                                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-1" aria-expanded="true" aria-controls="faq-accordion-collapse-1">Show assigned Leads </button>
-                                                                </div>
-                                                                <div id="faq-accordion-collapse-1" class="accordion-collapse collapse show" aria-labelledby="faq-accordion-content-1" data-bs-parent="#faq-accordion-1">
-                                                                    <div class="accordion-body  leading-relaxed">
-                                                                        @foreach (var lead in item.Leads)
+                     
+                                                                        foreach (var lead in item.Leads)
                                                                         {
-                                                                            <div class="flex items-center mt-4">
-                                                                                <div class="w-2 h-2 bg-theme-25 dark:bg-theme-10 rounded-full mr-3"></div>
-                                                                                <span class="truncate">@lead.Name</span>
-                                                                            </div>
+                                                                     
+                                                                                <a href="@Url.Action("CustomerDashboard","CRM", new { id=lead.ID_lead})"><span class="text-xs px-1 border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1 truncate badgeleadagents">@lead.Name</span></a>
+                                                                       
                                                                         }
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                        
 
 
                                             }
@@ -273,7 +258,7 @@
 
 
             table = $("#tableresources").DataTable({
-                "iDisplayLength": 100
+                "iDisplayLength": 25
             });
 
             $('#selecttable').on('change', function () {

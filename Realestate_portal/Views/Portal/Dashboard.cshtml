@@ -222,35 +222,49 @@ else
 
                 </div>
                 <div class="grid grid-cols-12 gap-5 mt-5">
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-
-                        <div class="font-medium text-center">      <i data-feather="users"></i> <br /><br />CRM</div>
-                        <div class="text-center">Customer Relationship Manager. Manage your customer data.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="globe"></i> <br /><br />Networking</div>
-                        <div class="text-center">Find and Connect with Professionals for a smother transaction.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="archive"></i> <br /><br />Documents History</div>
-                        <div class="text-center">Upload all your transaction documents.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="box"></i> <br /><br />General Resources</div>
-                        <div class="text-center">Access to all MLS forms, Scripts and more.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="tv"></i> <br /><br />Videos</div>
-                        <div class="text-center">Training videos.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="briefcase"></i> <br /><br />Marketing Resources</div>
-                        <div class="text-center">Images for your social networks.</div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
-                        <div class="font-medium text-center">      <i data-feather="calendar"></i> <br /><br />Webinars</div>
-                        <div class="text-center">Stay up to date with all 7 events and access to live trainings.</div>
-                    </div>
+                    
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("CRMDashboard", "CRM")">
+                                <div class="font-medium text-center">      <i data-feather="users"></i> <br /><br />CRM</div>
+                                <div class="text-center">Customer Relationship Manager. Manage your customer data.</div>
+                            </a></div>
+                   
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("PGR_network", "Portal")">
+                                <div class="font-medium text-center">      <i data-feather="globe"></i> <br /><br />Networking</div>
+                                <div class="text-center">Find and Connect with Professionals for a smother transaction.</div>
+                                </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("Documents_upload", "Portal")">
+                                <div class="font-medium text-center">      <i data-feather="archive"></i> <br /><br />Documents History</div>
+                                <div class="text-center">Upload all your transaction documents.</div>
+                                </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("Resources", "Portal")">
+                                <div class="font-medium text-center">      <i data-feather="box"></i> <br /><br />General Resources</div>
+                                <div class="text-center">Access to all MLS forms, Scripts and more.</div>
+                                </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("Videos", "Portal")" target="_blank">
+                                <div class="font-medium text-center">      <i data-feather="tv"></i> <br /><br />Videos</div>
+                                <div class="text-center">Training videos.</div>
+                                </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("Marketing", "Portal")">
+                                <div class="font-medium text-center">      <i data-feather="briefcase"></i> <br /><br />Marketing</div>
+                                <div class="text-center">Images for your social networks.</div>
+                                </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 2xl:col-span-3 box p-5 cursor-pointer zoom-in">
+                            <a href="@Url.Action("Webinar", "Portal")">
+                                <div class="font-medium text-center">      <i data-feather="calendar"></i> <br /><br />Webinars</div>
+                                <div class="text-center">Stay up to date with all 7 events and access to live trainings.</div>
+                                </a>
+                        </div>
 
                 </div>
 
@@ -311,31 +325,40 @@ else
                                 </div>
                                 <div class="p-5">
                                     @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-                        {
-                            if (Model.Count > 0)
-                            {
-                                foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
-                                {
+    {
+        if (Model.Count > 0)
+        {
+            foreach (var item in Model.Where(c => c.Active == true && c.Post_type == 1))
+            {
 
-                                    <div class="text-base font-medium truncate">Broker message: @item.Title</div>
-                                    <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
-                                    <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
-                                    <div class="font-medium flex mt-5">
-                                        @*<button type="button" class="btn btn-secondary py-1 px-2">View more</button>*@
+                                <div class="text-base font-medium truncate">Broker message: @item.Title</div>
+                                <div class="text-gray-500 mt-1">@item.created_at.ToShortDateString()</div>
+                                <div class="text-gray-600 text-justify mt-1">@item.Content_post</div>
+                                <div class="font-medium flex mt-5">
+                                    @*<button type="button" class="btn btn-secondary py-1 px-2">View more</button>*@
+                                    @if (ViewBag.rol != "Agent")
+    {
+                                <a href="@Url.Action("Index","Posts")" class="btn btn-success py-1 px-2">Messages</a>
+}
 
-                                    </div>
+
+                                </div>
 
 
-                    }
+}
 
-                }
-                else
-                {
-                    <div class="text-base font-medium truncate">Broker message</div>
-                    <div class="text-gray-500 mt-1"></div>
-                    <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
+}
+else
+{
+                                <div class="text-base font-medium truncate">Broker message</div>
+                                <div class="text-gray-500 mt-1"></div>
+                                <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
+                                @if (ViewBag.rol != "Agent")
+{
+                                <a href="@Url.Action("Index","Posts")" class="btn btn-success py-1 px-2">Messages</a>
+}
 
-    }
+}
 }
 
                                 </div>

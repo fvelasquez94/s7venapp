@@ -9,12 +9,17 @@
     <meta name="author" content="Francisco Velasquez">
     <title>S7VEN CO</title>
     <!-- BEGIN: CSS Assets-->
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/dist/css/app.css" />
     <link rel="stylesheet" href="~/Content/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@1.1/dist/js/tom-select.complete.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+
     <!-- END: CSS Assets-->
     <style>
         table.dataTable.no-footer {
@@ -44,7 +49,6 @@
             border-radius: 50%;
             background: #1c3faa;
             vertical-align: middle;
-
             color: white;
         }
 
@@ -62,6 +66,18 @@
             width: 90%;
             position: relative; /* <-- Added */
             z-index: 1; /* <-- Added */
+        }
+
+        .badgeleadagents:hover {
+            background-color: #0094ff;
+            color: #fff;
+        }
+
+        .selectedresourcetype {
+            text-decoration: underline;
+            color: #000;
+            font-size: 16px;
+            font-weight: bolder;
         }
     </style>
 </head>
@@ -84,29 +100,31 @@
     </div>
     <!--Start of Tawk.to Script-->
     @*<script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/613f154ed326717cb68124b8/1fff6mf0k';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>*@
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/613f154ed326717cb68124b8/1fff6mf0k';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>*@
     <!--End of Tawk.to Script-->
 </body>
 </html>
 <!-- BEGIN: JS Assets-->
 <script src="~/Content/dist/js/app.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.com/libraries/Chart.js" type="text/javascript"></script>
-
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <!-- END: JS Assets-->
 <!-- BEGIN: JS Scripts-->
 <script>

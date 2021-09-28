@@ -1363,6 +1363,7 @@
     <Content Include="Content\dist\images\Marketanalysis.png" />
     <Content Include="Content\dist\images\nodata-found.png" />
     <Content Include="Content\dist\images\noimageavailable.jpg" />
+    <Content Include="Content\dist\images\papel.png" />
     <Content Include="Content\dist\images\pdf.png" />
     <Content Include="Content\dist\images\phone-illustration.svg" />
     <Content Include="Content\dist\images\placeholders\200x200.jpg" />
@@ -2073,6 +2074,8 @@
     <Content Include="Views\CRM\Agents.cshtml" />
     <Content Include="Views\Emails\NewNotification_task.cshtml" />
     <Content Include="Views\Portal\Package_detailsCD.cshtml" />
+    <Content Include="Views\Portal\Resources_broker.cshtml" />
+    <Content Include="Views\Portal\Notfound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2383,7 +2386,7 @@
     <Content Include="Views\Portal\Videosbroker_management.cshtml" />
     <Content Include="Views\Portal\Videos_broker.cshtml" />
     <Content Include="Views\Portal\Resourcesbroker_management.cshtml" />
-    <Content Include="Views\Portal\Resources_broker.cshtml" />
+    <Content Include="Views\Portal\Resources_broker_old.cshtml" />
     <Content Include="Views\Portal\Reservations.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\Delete.cshtml" />
