@@ -14,7 +14,7 @@
         </a>
         <!-- END: Logo -->
         <!-- BEGIN: Breadcrumb -->
-        @if (ViewBag.Title == "Dashboard")
+        @*if (ViewBag.Title == "Dashboard")
     {
         <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="@Url.Action("Dashboard","Portal")" class="breadcrumb--active">Dashboard</a> </div>
 }
@@ -29,9 +29,9 @@ else if (ViewBag.Title == "Premium Group Realty - PGR Management")
 
 }
 else
-{
-    <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> </div>
-}
+{*@
+    <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">&nbsp;</a> </div>
+@*}*@
 
         @if (company == null)
     {

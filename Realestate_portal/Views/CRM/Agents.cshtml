@@ -210,6 +210,8 @@
 }
 <!--table scripts starts here to pull all data from controller by datable ajax -->
 @section scripts{
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
     <script>
         function deleteAgent(idagent) {
 
@@ -258,7 +260,20 @@
 
 
             table = $("#tableresources").DataTable({
-                "iDisplayLength": 25
+                "order": [[1, "asc"]],
+                dom: 'lBfrtip',
+                "iDisplayLength": 25,
+                buttons: [
+                    'colvis',
+                    {
+                        text: 'Show All Columns <i class="fa-lg fas fa-check-square"></i>',
+                        className: 'show-all-columns',
+                        action: function (e, dt) {
+                            dt.columns([0, 1, 2, 3, 4, 5]).visible(true, false); // show selected columns, false is to disable redraw calcs for speed
+
+                        }
+                    }
+                ]
             });
 
             $('#selecttable').on('change', function () {
@@ -272,11 +287,11 @@
 
 
 
-            $(".accordion-collapse").removeClass("show");
-            $(".accordion-collapse").removeClass("collapsed");
-            $(".accordion-collapse").css("display", "none");
-            $(".accordion-button").attr("aria-expanded", false);
-            $(".accordion-button").addClass("collapsed");
+            //$(".accordion-collapse").removeClass("show");
+            //$(".accordion-collapse").removeClass("collapsed");
+            //$(".accordion-collapse").css("display", "none");
+            //$(".accordion-button").attr("aria-expanded", false);
+            //$(".accordion-button").addClass("collapsed");
 
 
         });

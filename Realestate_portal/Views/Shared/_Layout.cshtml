@@ -17,6 +17,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@1.1/dist/js/tom-select.complete.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
 
 
 
@@ -79,6 +80,12 @@
             font-size: 16px;
             font-weight: bolder;
         }
+        button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled), input.dt-button:hover:not(.disabled) {
+            background:#ccc;
+        }
+        button.dt-button:active:not(.disabled):hover:not(.disabled), button.dt-button.active:not(.disabled):hover:not(.disabled), div.dt-button:active:not(.disabled):hover:not(.disabled), div.dt-button.active:not(.disabled):hover:not(.disabled), a.dt-button:active:not(.disabled):hover:not(.disabled), a.dt-button.active:not(.disabled):hover:not(.disabled), input.dt-button:active:not(.disabled):hover:not(.disabled), input.dt-button.active:not(.disabled):hover:not(.disabled) {
+            background: #ffd800;
+        }
     </style>
 </head>
 <body class="main">
@@ -99,7 +106,7 @@
 
     </div>
     <!--Start of Tawk.to Script-->
-    @*<script type="text/javascript">
+    <script type="text/javascript">
             var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
             (function () {
                 var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
@@ -109,7 +116,7 @@
                 s1.setAttribute('crossorigin', '*');
                 s0.parentNode.insertBefore(s1, s0);
             })();
-        </script>*@
+        </script>
     <!--End of Tawk.to Script-->
 </body>
 </html>

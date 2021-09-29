@@ -353,7 +353,7 @@ else
                                 <div class="text-base font-medium truncate">Broker message</div>
                                 <div class="text-gray-500 mt-1"></div>
                                 <div class="text-gray-600 text-justify mt-1">No message from Broker</div>
-                                @if (ViewBag.rol != "Agent")
+                                if (ViewBag.rol != "Agent")
 {
                                 <a href="@Url.Action("Index","Posts")" class="btn btn-success py-1 px-2">Messages</a>
 }
