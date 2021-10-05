@@ -53,6 +53,7 @@ namespace Realestate_portal.Controllers
             {
                 var idcompany = 1;
                 var idcustomersel = 0;
+                tb_WorkTeams.Description = "";
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
                 if (activeuser != null) { idcompany = activeuser.ID_Company; }
                 tb_WorkTeams.ID_Company = idcompany;
@@ -111,6 +112,19 @@ namespace Realestate_portal.Controllers
                     newteamuserleader.ID_team = tb_WorkTeams.ID_team;
                     newteamuserleader.Teamleader = true;
                     db.Tb_Customers_Users.Add(newteamuserleader);
+
+                //Le cambiamos la propiedad para que tenga mas acceso
+                try
+                {
+                    var usuario = db.Sys_Users.Find(leader);
+                    usuario.Team_Leader = true;
+                    db.Entry(usuario).State = EntityState.Modified;
+                }
+                catch {
+
+                }
+              
+
                     db.SaveChanges();
                 
 
@@ -152,6 +166,7 @@ namespace Realestate_portal.Controllers
                 var idcustomersel = 0;
                 Tb_WorkTeams tb_WorkTeams = db.Tb_WorkTeams.Find(ID_team);
                 tb_WorkTeams.Name = NameEdit;
+                DescriptionEdit = "";
                 tb_WorkTeams.Description = DescriptionEdit;
                 tb_WorkTeams.Last_update = DateTime.UtcNow;
 
@@ -216,6 +231,18 @@ namespace Realestate_portal.Controllers
                 newteamuserleader.ID_team = tb_WorkTeams.ID_team;
                 newteamuserleader.Teamleader = true;
                 db.Tb_Customers_Users.Add(newteamuserleader);
+
+                //Le cambiamos la propiedad para que tenga mas acceso
+                try
+                {
+                    var usuario = db.Sys_Users.Find(leaderEdit);
+                    usuario.Team_Leader = true;
+                    db.Entry(usuario).State = EntityState.Modified;
+                }
+                catch
+                {
+
+                }
                 db.SaveChanges();
 
                 return RedirectToAction("Teams", "CRM", new { token = "success" });

@@ -1,5 +1,6 @@
 ﻿
 @{
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
     Layout = null;
 }
 
@@ -47,7 +48,7 @@
                                   <div class="top-menu__title">Task Management</div>
                               </a>
                           </li>
-                          @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin")
+                          @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin" || user.Team_Leader)
     {
                       <li>
                           <a href="@Url.Action("Teams", "CRM")" class="top-menu">
@@ -56,7 +57,12 @@
                           </a>
                       </li>
 }
-
+                          <li>
+                              <a href="@Url.Action("Properties", "CRM")" class="top-menu">
+                                  <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                  <div class="top-menu__title">Properties</div>
+                              </a>
+                          </li>
                       </ul>
         </li>
         <li>

@@ -2,84 +2,74 @@
 
 @{
     ViewBag.Title = "Properties";
-    Layout = "~/Views/Shared/_CRM.cshtml";
+
 }
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">PROPERTIES</li>
-                    </ul>
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Properties
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Properties
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+                    @if (ViewBag.rol == "SA")
+                    {
+
+                    }
+                    else
+                    {
+                        <div class="widget-options">
+                            <a class="btn btn-success" href="@Url.Action("Create","Properties")">Add Property</a>
+                        </div>
+                    }
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- End Page Header -->
-    <!-- Begin Widget 08 -->
-    <div class="widget widget-08" style="width: 100%;background-color:transparent">
-        <div class="widget-header bordered d-flex align-items-center">
-            <div class="today">
-                <div class="title">PROPERTIES</div>
-                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
-            </div><h2></h2>
-            @if (ViewBag.rol == "SA")
-            {
-
-            }
-            else
-            {
-                <div class="widget-options">
-                    <a class="btn btn-shadow" href="@Url.Action("Create","Properties")">Add Property</a>
-
-                </div>
-            }
-
-        </div><br />
-
-
-        <!-- Begin Widget -->
-        <div class="widget has-shadow">
-
-            <!-- End Widget Header -->
-            <!-- Begin Widget Body -->
-            <div class="widget-body" style="padding-bottom:250px">
-                <div class="table-responsive">
-                    <table class="table" id="tableresources" style="width:100%">
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <table class="table table-report sm:mt-2" id="tableresources">
                         <thead>
-                            <tr>
-                                <th>
+                            <tr class="text-white" style="background-color:#162343">
+                                <th class="whitespace-nowrap">
                                     ID
                                 </th>
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Status
                                 </th>
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Address
                                 </th>
 
 
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Purchase price
                                 </th>
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Stage
                                 </th>
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Customer
                                 </th>
-                                <th>
+                                <th class="whitespace-nowrap">
                                     Type of Agency
                                 </th>
-                                <th>
-                                    Agent
-                                </th>
-                                <th>
+
+                                <th class="whitespace-nowrap">
                                     Last Update
                                 </th>
                                 <th></th>
@@ -88,57 +78,58 @@
 
                         <tbody>
                             @foreach (var item in Model)
-                {
-                            <tr style="color:black">
-                                <td>
-                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.ID_Process</a>
-                                </td>
-                                <td>
-                                    @item.Property
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.Address</a>
-                                </td>
+                            {
+                                <tr style="color:black">
+                                    <td>
+                                        <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.ID_Process</a>
+                                    </td>
+                                    <td>
+                                        @item.Property
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.Address</a>
+                                    </td>
 
-                                <td>
-                                    $@Convert.ToDecimal(item.Purchase_price).ToString("N2")
-                                </td>
-                                <td>
-                                    @item.Stage
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
+                                    <td>
+                                        $@Convert.ToDecimal(item.Purchase_price).ToString("N2")
+                                    </td>
+                                    <td>
+                                        @item.Stage
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
 
-                                </td>
-                                <td>
-                                    @item.TypeofAgency
-                                </td>
-                                <td>
-                                    @item.Loan_Officer_name
-                                </td>
-                                <td>
-                                    @item.Last_update.ToShortDateString()
-                                </td>
-                                <td>
-                                    @if (ViewBag.rol != "SA")
-                                    {
-                                        <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">Edit</a>
-                                        <a href = "@Url.Action("Delete","Properties",new { id=item.ID_Process})" > Delete </a>
-                                    }
+                                    </td>
+                                    <td>
+                                        @item.TypeofAgency
+                                    </td>
 
-                                    <a href="#" onclick="shownotes(@item.ID_Process)" data-toggle="modal" data-target="#modalnotes">Notes</a>
+                                    <td>
+                                        @item.Last_update.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @if (ViewBag.rol != "SA")
+                                        {
 
-                                </td>
-                            </tr>
-    }
+
+                                            <a class="flex items-center mr-3" href="@Url.Action("Edit","Properties", new { id=item.ID_Process})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+
+                                            <a class="flex items-center text-theme-21" href="javascript:void(0)" onclick="deleteProperty(@item.ID_Process)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                        }
+
+                                        @*<a href="#" onclick="shownotes(@item.ID_Process)" data-toggle="modal" data-target="#modalnotes">Notes</a>*@
+
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
 
                 </div>
-                </div>
-                <!-- End Calendar -->
             </div>
+            <!-- End Calendar -->
+        </div>
         <!-- End Widget -->
 
 
@@ -179,9 +170,9 @@
 </div>
 <!-- End Container -->
 <script type="text/javascript">
-        window.onload = function () {
-            $("#tableresources").DataTable();
-        }
+    window.onload = function () {
+        $("#tableresources").DataTable();
+    }
     function shownotes(idcustomer) {
         $.ajax
             ({
@@ -212,3 +203,52 @@
             });
     }
 </script>
+@section scripts{
+    <script>
+        function deleteProperty(idprocess) {
+
+            swal.fire({
+                title: 'Do you really want to delete these record?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Properties/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idprocess },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
+
+
+
+    </script>
+}

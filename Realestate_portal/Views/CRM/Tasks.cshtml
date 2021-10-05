@@ -45,60 +45,145 @@
             <div class="nav nav-tabs ml-auto hidden sm:flex" role="tablist"> <a id="latest-tasks-mobile-new-tab" data-toggle="tab" data-target="#latest-tasks-new" href="javascript:;" class="py-5 ml-6 active" role="tab" aria-selected="true"></a> <a id="latest-tasks-mobile-last-week-tab" data-toggle="tab" data-target="#latest-tasks-last-week" href="javascript:;" class="py-5 ml-6" role="tab" aria-selected="false"></a> </div>
         </div>
         <div class="p-5">
-            <div class="tab-content">
-                <div id="latest-tasks-new" class="tab-pane active" role="tabpanel" aria-labelledby="latest-tasks-new-tab">
-                    @if (Model.Count() > 0)
+            <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+                @if (Model.Count() > 0)
+        {
+            <table class="table table-report sm:mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap"></th>
+                        <th class="whitespace-nowrap">AGENT</th>
+                        <th class="whitespace-nowrap">TASK</th>
+                        <th class="whitespace-nowrap">DATE TO COMPLETE</th>
+                        <th class="whitespace-nowrap">STATUS</th>
+                        <th class="text-center whitespace-nowrap">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(c=>c.Lastupdate.Date==DateTime.Today).OrderBy(c=>c.Finished))
+            {
+                <tr class="intro-x">
+                    <td>
+                        <div class="flex">
+                            @if (item.Url_image == "")
                     {
-                        foreach (var item in Model)
-                        {
-                    <div class="flex items-center">
-
-
-                        @if (item.Url_image == "")
-    {
-                                           <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
-
-                            }
-                            else if (item.Url_image.StartsWith("http"))
-                            {
-                            <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
-                                <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
-                            </div>
-                                }
-                                else
-                                {
-                                <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
-                                    <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
-                                </div>
-                                    }
-
-                                <div class=" pl-4">
-
-                                    <a href="" class="font-medium">@item.Title</a>
-                                    <div class="text-gray-600">@item.Description</div>
-                                    <div class="text-gray-600">@item.Lastupdate.ToShortDateString()</div>
-                                </div>
-                                @if (item.Finished)
-    {
-                            <input class="form-check-switch ml-auto checktask" id="@item.ID_task" type="checkbox" checked>
-}
-else
-{ <input class="form-check-switch ml-auto checktask" id="@item.ID_task" type="checkbox">}
-
-                                <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
-                            </div><br />
-                        }
-                    }
-                    else
-                    {
-                        <div class="flex items-center mt-5">
-                            <label>No tasks created</label>
-                        </div>
-                    }
+                        <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
+                     
+            }
+            else if (item.Url_image.StartsWith("http"))
+            {
+                <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
+                    <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
+                    
                 </div>
-            </div>
+    }
+    else
+    {
+        <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
+            <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
+        
         </div>
-    </div>
+}
+                        </div>
+                    </td>
+                    <td><label>@item.Name @item.Lastname</label></td>
+                    <td>
+                        <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+
+                    </td>
+                    <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
+                    <td>
+                        @if (item.Finished)
+                {
+                    <input style="border-color:#7c7a7a !important" class="form-check-switch text-align-right ml-5 checktask" id="@item.ID_task" type="checkbox" checked>
+        }
+        else
+        { <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
+
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
+                    </td>
+                    
+                    </tr>
+        }
+
+                                        @foreach (var item in Model.Where(c=>c.Lastupdate.Date!=DateTime.Today.Date).OrderBy(c => c.Finished))
+                                        {
+                <tr class="intro-x">
+                    <td>
+                        <div class="flex">
+                            @if (item.Url_image == "")
+                    {
+                        <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
+                     
+            }
+            else if (item.Url_image.StartsWith("http"))
+            {
+                <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
+                    <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
+                    
+                </div>
+    }
+    else
+    {
+        <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
+            <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
+        
+        </div>
+}
+                        </div>
+                    </td>
+                    <td><label>@item.Name @item.Lastname</label></td>
+                    <td>
+                        <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+
+                    </td>
+                    <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
+                    <td>
+                        @if (item.Finished)
+                {
+                    <input style="border-color:#7c7a7a !important" class="form-check-switch text-align-right ml-5 checktask" id="@item.ID_task" type="checkbox" checked>
+        }
+        else
+        { <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
+
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
+                    </td>
+                    
+                    </tr>
+        }
+
+
+                </tbody>
+                </table>
+                }
+                else
+                {
+
+                <div class="sm:flex items-center">
+                    <img src="~/Content/dist/images/nodata-found.png" style="width:600px" />
+
+                    <div class="preview">
+
+                        <div class="alert alert-outline-secondary alert-dismissible show flex items-center mb-2" role="alert">
+                            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i> No tasks created
+
+                        </div>
+
+                    </div>
+                </div>
+
+                }
+
+            </div>
+            </div>
+            </div>
+          
     <!-- END: Latest Tasks -->
     <!-- BEGIN: Work In Progress -->
     <div class="col-md-3">
@@ -168,6 +253,7 @@ else
                             @Html.AntiForgeryToken()
                             <div class="mt-3"> <label for="Title" class="form-label">Title</label> <input id="Title" name="Title" type="text" class="form-control" placeholder="" required> </div>
                             <div class="mt-3"> <label for="Description" class="form-label">Description</label> <input id="Description" name="Description" type="text" class="form-control" placeholder="" required> </div>
+                            <div class="mt-3"> <label for="Description" class="form-label">Date to complete</label> <input id="Createdat" name="Createdat" type="date" class="form-control" required> </div>
                             <div class="mt-3">
                                 <label for="agents" class="form-label">Agent</label>
                                 <select data-placeholder="Search here.." class="tom-select w-full" id="ID_User" name="ID_User" required>
@@ -215,7 +301,7 @@ else
         function deleteTask(idtask) {
 
             swal.fire({
-                title: 'Do you really want to delete these record?',
+                title: 'Do you want to delete?',
                 text: "This process cannot be undone.",
                 icon: 'error',
                 showCancelButton: true,

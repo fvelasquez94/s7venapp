@@ -75,8 +75,8 @@
                                         STATUS
                                     </th>
                                     <th class="whitespace-nowrap">BROKER</th>
-                                    <th class="whitespace-nowrap">TEAMS</th>
-                                    <th class="whitespace-nowrap" style="width:350px">LEADS</th>
+                                    <th class="whitespace-nowrap">TEAM </th>
+                                    <th class="whitespace-nowrap">TEAM LEADER?</th>
                                     <th class="whitespace-nowrap">ACTIONS</th>
 
 
@@ -106,7 +106,7 @@
 
 
                                         </td>
-                                        <td>  @item.Name @item.LastName</td>
+                                        <td> <a href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})">@item.Name @item.LastName</a>  </td>
                                         <td>@item.Email</td>
                                         <td>@item.Last_login.ToShortDateString()</td>
                                         <td>@item.State</td>
@@ -146,22 +146,15 @@
                                         <td>
 
 
-                                            @if (item.Leads.Count() > 0)
+                                            @if (item.Team_Leader)
                                             {
                      
-                                                                        foreach (var lead in item.Leads)
-                                                                        {
-                                                                     
-                                                                                <a href="@Url.Action("CustomerDashboard","CRM", new { id=lead.ID_lead})"><span class="text-xs px-1 border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1 truncate badgeleadagents">@lead.Name</span></a>
-                                                                       
-                                                                        }
-                                        
-
+      <label class="p-5 badge badge-success">YES</label>
 
                                             }
                                             else
                                             {
-                                                <label class="p-5">Not assigned</label>
+                                                <label class="p-5 badge badge-light">NO</label>
                                             }
 
 
@@ -169,7 +162,7 @@
 
                                         <td>
                                             <div class="flex justify-center items-center">
-                                                @*<a class="flex items-center mr-3" href="@Url.Action("EditAgent","Users", new { id=item.ID_User})" > <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>*@
+                                                <a class="flex items-center mr-3" href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})" > <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Details </a>
 
                                                 <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteAgent(@item.ID_User)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                             </div>

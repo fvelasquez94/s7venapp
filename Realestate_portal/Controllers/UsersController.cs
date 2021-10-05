@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
+using Realestate_portal.Models.ViewModels;
 
 namespace Realestate_portal.Controllers
 {
@@ -589,6 +590,268 @@ namespace Realestate_portal.Controllers
 
         }
 
+        public ActionResult AgentProfile(int id)
+        {
+
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+
+                List<US_State> states;
+
+                states = new List<US_State>(50);
+                states.Add(new US_State("AL", "Alabama"));
+                states.Add(new US_State("AK", "Alaska"));
+                states.Add(new US_State("AZ", "Arizona"));
+                states.Add(new US_State("AR", "Arkansas"));
+                states.Add(new US_State("CA", "California"));
+                states.Add(new US_State("CO", "Colorado"));
+                states.Add(new US_State("CT", "Connecticut"));
+                states.Add(new US_State("DE", "Delaware"));
+                states.Add(new US_State("DC", "District Of Columbia"));
+                states.Add(new US_State("FL", "Florida"));
+                states.Add(new US_State("GA", "Georgia"));
+                states.Add(new US_State("HI", "Hawaii"));
+                states.Add(new US_State("ID", "Idaho"));
+                states.Add(new US_State("IL", "Illinois"));
+                states.Add(new US_State("IN", "Indiana"));
+                states.Add(new US_State("IA", "Iowa"));
+                states.Add(new US_State("KS", "Kansas"));
+                states.Add(new US_State("KY", "Kentucky"));
+                states.Add(new US_State("LA", "Louisiana"));
+                states.Add(new US_State("ME", "Maine"));
+                states.Add(new US_State("MD", "Maryland"));
+                states.Add(new US_State("MA", "Massachusetts"));
+                states.Add(new US_State("MI", "Michigan"));
+                states.Add(new US_State("MN", "Minnesota"));
+                states.Add(new US_State("MS", "Mississippi"));
+                states.Add(new US_State("MO", "Missouri"));
+                states.Add(new US_State("MT", "Montana"));
+                states.Add(new US_State("NE", "Nebraska"));
+                states.Add(new US_State("NV", "Nevada"));
+                states.Add(new US_State("NH", "New Hampshire"));
+                states.Add(new US_State("NJ", "New Jersey"));
+                states.Add(new US_State("NM", "New Mexico"));
+                states.Add(new US_State("NY", "New York"));
+                states.Add(new US_State("NC", "North Carolina"));
+                states.Add(new US_State("ND", "North Dakota"));
+                states.Add(new US_State("OH", "Ohio"));
+                states.Add(new US_State("OK", "Oklahoma"));
+                states.Add(new US_State("OR", "Oregon"));
+                states.Add(new US_State("PA", "Pennsylvania"));
+                states.Add(new US_State("RI", "Rhode Island"));
+                states.Add(new US_State("SC", "South Carolina"));
+                states.Add(new US_State("SD", "South Dakota"));
+                states.Add(new US_State("TN", "Tennessee"));
+                states.Add(new US_State("TX", "Texas"));
+                states.Add(new US_State("UT", "Utah"));
+                states.Add(new US_State("VT", "Vermont"));
+                states.Add(new US_State("VA", "Virginia"));
+                states.Add(new US_State("WA", "Washington"));
+                states.Add(new US_State("WV", "West Virginia"));
+                states.Add(new US_State("WI", "Wisconsin"));
+                states.Add(new US_State("WY", "Wyoming"));
+
+
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+
+
+                }
+                else
+                {
+                    ViewBag.rol = "SA";
+                }
+
+                Sys_Users sys_Users = db.Sys_Users.Find(id);
+                ViewBag.activeuser = activeuser;
+
+                ViewBag.states = states;
+
+                ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name", sys_Users.ID_Company);
+
+                List<Tb_DocuAgent> lstDocsAgent = new List<Tb_DocuAgent>();
+                List<Tb_Customers> lstleads = new List<Tb_Customers>();
+                List<Tb_Notes> notes = new List<Tb_Notes>();
+                List<TasksView> lst_tasks = new List<TasksView>();
+
+                lstDocsAgent = (from d in db.Tb_DocuAgent where (d.Id_User == id) select d).ToList();
+                ViewBag.docsAgent = lstDocsAgent;
+
+                notes = (from n in db.Tb_Notes where (n.ID_Customer == 0 && n.ID_Property == 0 && n.ID_User == id) select n).ToList();
+                ViewBag.lstNotes = notes;
+
+                var leadsassigned = (from c in db.Tb_Customers_Users where (c.Id_User == id) select c.Id_Customer).Distinct().ToArray();
+                lstleads = (from f in db.Tb_Customers where (leadsassigned.Contains(f.ID_Customer) && f.Lead) select f).ToList();
+
+                ViewBag.leads = lstleads;
+
+
+                lst_tasks = (from a in db.Tb_Tasks
+                             where (a.ID_User == id)
+                             select new TasksView
+                             {
+                                 ID_Company = a.ID_Company,
+                                 Description = a.Description,
+                                 Finished = a.Finished,
+                                 ID_task = a.ID_task,
+                                 ID_User = a.ID_User,
+                                 Lastupdate = a.Createdat,
+                                 Title = a.Title,
+                                 Url_image = (from b in db.Sys_Users where (b.ID_User == a.ID_User) select b.Image).FirstOrDefault(),
+                                 Name = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.Name).FirstOrDefault(),
+                                 Lastname = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.LastName).FirstOrDefault()
+                             }).ToList();
+
+                ViewBag.lsttask = lst_tasks;
+                return View(sys_Users);
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+
+
+        }
+
+        public ActionResult UserProfile()
+        {
+
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+
+                List<US_State> states;
+
+                states = new List<US_State>(50);
+                states.Add(new US_State("AL", "Alabama"));
+                states.Add(new US_State("AK", "Alaska"));
+                states.Add(new US_State("AZ", "Arizona"));
+                states.Add(new US_State("AR", "Arkansas"));
+                states.Add(new US_State("CA", "California"));
+                states.Add(new US_State("CO", "Colorado"));
+                states.Add(new US_State("CT", "Connecticut"));
+                states.Add(new US_State("DE", "Delaware"));
+                states.Add(new US_State("DC", "District Of Columbia"));
+                states.Add(new US_State("FL", "Florida"));
+                states.Add(new US_State("GA", "Georgia"));
+                states.Add(new US_State("HI", "Hawaii"));
+                states.Add(new US_State("ID", "Idaho"));
+                states.Add(new US_State("IL", "Illinois"));
+                states.Add(new US_State("IN", "Indiana"));
+                states.Add(new US_State("IA", "Iowa"));
+                states.Add(new US_State("KS", "Kansas"));
+                states.Add(new US_State("KY", "Kentucky"));
+                states.Add(new US_State("LA", "Louisiana"));
+                states.Add(new US_State("ME", "Maine"));
+                states.Add(new US_State("MD", "Maryland"));
+                states.Add(new US_State("MA", "Massachusetts"));
+                states.Add(new US_State("MI", "Michigan"));
+                states.Add(new US_State("MN", "Minnesota"));
+                states.Add(new US_State("MS", "Mississippi"));
+                states.Add(new US_State("MO", "Missouri"));
+                states.Add(new US_State("MT", "Montana"));
+                states.Add(new US_State("NE", "Nebraska"));
+                states.Add(new US_State("NV", "Nevada"));
+                states.Add(new US_State("NH", "New Hampshire"));
+                states.Add(new US_State("NJ", "New Jersey"));
+                states.Add(new US_State("NM", "New Mexico"));
+                states.Add(new US_State("NY", "New York"));
+                states.Add(new US_State("NC", "North Carolina"));
+                states.Add(new US_State("ND", "North Dakota"));
+                states.Add(new US_State("OH", "Ohio"));
+                states.Add(new US_State("OK", "Oklahoma"));
+                states.Add(new US_State("OR", "Oregon"));
+                states.Add(new US_State("PA", "Pennsylvania"));
+                states.Add(new US_State("RI", "Rhode Island"));
+                states.Add(new US_State("SC", "South Carolina"));
+                states.Add(new US_State("SD", "South Dakota"));
+                states.Add(new US_State("TN", "Tennessee"));
+                states.Add(new US_State("TX", "Texas"));
+                states.Add(new US_State("UT", "Utah"));
+                states.Add(new US_State("VT", "Vermont"));
+                states.Add(new US_State("VA", "Virginia"));
+                states.Add(new US_State("WA", "Washington"));
+                states.Add(new US_State("WV", "West Virginia"));
+                states.Add(new US_State("WI", "Wisconsin"));
+                states.Add(new US_State("WY", "Wyoming"));
+            
+
+            if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+
+
+                }
+                else
+                {
+                    ViewBag.rol = "SA";
+                }
+
+                Sys_Users sys_Users = db.Sys_Users.Find(activeuser.ID_User);
+                ViewBag.activeuser = activeuser;
+
+                ViewBag.states = states;
+
+                ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name", sys_Users.ID_Company);
+
+                //List<Tb_DocuAgent> lstDocsAgent = new List<Tb_DocuAgent>();
+                //List<Tb_Customers> lstleads = new List<Tb_Customers>();
+                //List<Tb_Notes> notes = new List<Tb_Notes>();
+
+                //lstDocsAgent = (from d in db.Tb_DocuAgent where (d.Id_User == activeuser.ID_User) select d).ToList();
+                //ViewBag.docsAgent = lstDocsAgent;
+
+                //notes = (from n in db.Tb_Notes where (n.ID_Customer == 0 && n.ID_Property == 0 && n.ID_User == activeuser.ID_User) select n).ToList();
+                //ViewBag.lstNotes = notes;
+
+                //var leadsassigned = (from c in db.Tb_Customers_Users where (c.Id_User == activeuser.ID_User) select c.Id_Customer).Distinct().ToArray();
+                //lstleads = (from f in db.Tb_Customers where (leadsassigned.Contains(f.ID_Customer) && f.Lead) select f).ToList();
+
+                //ViewBag.leads = lstleads;
+
+                return View(sys_Users);
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+
+
+        }
         // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -627,17 +890,17 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
                 if (sys_Users.Team_Leader == true) 
                 { 
-                    sys_Users.Id_Leader = 0;
-                    if (sys_Users.Leader_Name == null)
-                    {
-                        sys_Users.Leader_Name = "Team " + sys_Users.Name + " " + sys_Users.LastName;
-                    }
-                    foreach (var item in team)
-                    {
-                        item.Leader_Name = sys_Users.Leader_Name;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
+                    //sys_Users.Id_Leader = 0;
+                    //if (sys_Users.Leader_Name == null)
+                    //{
+                    //    sys_Users.Leader_Name = "Team " + sys_Users.Name + " " + sys_Users.LastName;
+                    //}
+                    //foreach (var item in team)
+                    //{
+                    //    item.Leader_Name = sys_Users.Leader_Name;
+                    //    db.Entry(item).State = EntityState.Modified;
+                    //    db.SaveChanges();
+                    //}
                 }
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = ""; }
@@ -646,41 +909,41 @@ namespace Realestate_portal.Controllers
                 db.SaveChanges();
                 
                 
-                if (sys_Users.Active == false)
-                {
+                //if (sys_Users.Active == false)
+                //{
                     
-                    SetToBroker(sys_Users.ID_User);
+                //    SetToBroker(sys_Users.ID_User);
                     
-                }
-                if (sys_Users.Team_Leader == false)
-                {
-                    foreach (var item in team)
-                    {
-                        item.Id_Leader = 0;
-                        item.Leader_Name = "";
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
+                //}
+                //if (sys_Users.Team_Leader == false)
+                //{
+                //    foreach (var item in team)
+                //    {
+                //        item.Id_Leader = 0;
+                //        item.Leader_Name = "";
+                //        db.Entry(item).State = EntityState.Modified;
+                //        db.SaveChanges();
+                //    }
+                //}
                 
-                try
-                {
-                    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                    Session["activeUser"] = (from a in db.Sys_Users where (a.Email == activeuser.Email && a.Password == activeuser.Password) select a).FirstOrDefault();
-                }
-                catch
-                {
+                //try
+                //{
+                //    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //    Session["activeUser"] = (from a in db.Sys_Users where (a.Email == activeuser.Email && a.Password == activeuser.Password) select a).FirstOrDefault();
+                //}
+                //catch
+                //{
 
-                }
+                //}
 
                 TempData["exito"] = "Data saved successfully.";
-                return RedirectToAction("EditAgent", "Users", new { id = sys_Users.ID_User });
+                return RedirectToAction("AgentProfile", "Users", new { id = sys_Users.ID_User });
 
             }
             catch (Exception ex)
             {
                 TempData["advertencia"] = "Something went wrong." + ex.Message;
-                return RedirectToAction("EditAgent", "Users", new { id = sys_Users.ID_User });
+                return RedirectToAction("AgentProfile", "Users", new { id = sys_Users.ID_User });
             }
 
 
@@ -933,36 +1196,30 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
 
-                var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
-                if (sys_Users.Team_Leader == true)
-                {
-                    foreach (var item in team)
-                    {
-                        item.Leader_Name = sys_Users.Leader_Name;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
+                //var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
+                //if (sys_Users.Team_Leader == true)
+                //{
+                //    foreach (var item in team)
+                //    {
+                //        item.Leader_Name = sys_Users.Leader_Name;
+                //        db.Entry(item).State = EntityState.Modified;
+                //        db.SaveChanges();
+                //    }
+                //}
              
                     db.Entry(sys_Users).State = EntityState.Modified;
                     db.SaveChanges();
 
-                try {
-                   
-                    Session["activeUser"] = (from a in db.Sys_Users where (a.Email == activeuser.Email && a.Password == activeuser.Password) select a).FirstOrDefault();
-                }
-                catch {
+                Session["activeUser"] = (from a in db.Sys_Users where (a.Email == sys_Users.Email && a.Password == sys_Users.Password) select a).FirstOrDefault();
 
-                }
-               
 
                 TempData["exito"] = "Data saved successfully.";
-                return RedirectToAction("Edit", "Users", new { id = sys_Users.ID_User });
+                return RedirectToAction("UserProfile", "Users");
               
             }
             catch (Exception ex) {
                 TempData["advertencia"] = "Something went wrong." + ex.Message;
-                return RedirectToAction("Edit", "Users", new { id = sys_Users.ID_User });
+                return RedirectToAction("UserProfile", "Users");
             }
 
      

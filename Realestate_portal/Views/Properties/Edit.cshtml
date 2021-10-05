@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_CRM.cshtml";
+  
 }
 
 <div class="container-fluid">
@@ -13,16 +13,18 @@
                 <h2 class="page-header-title"></h2>
                 <div>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">PROPERTIES</li>
+                   
+                       
                     </ul>
                 </div>
+                <a class="btn btn-primary" href="@Url.Action("CustomerDashboard","CRM", new { id=Model.ID_Customer})">Back to Lead Dashboard</a>
+                <a class="btn btn-primary" href="@Url.Action("Properties","CRM")">Back to Properties</a>
             </div>
         </div>
     </div>
     <!-- End Page Header -->
     <!-- Begin Widget 08 -->
-    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+    <div class="mt-6" >
 
         @if (TempData["advertencia"] != null)
     {
@@ -380,12 +382,12 @@ else
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                        
                         <div class="col-md-10">
                             <a class="btn btn-info" href="@Url.Action("Index","Notes", new {ID_Propery=Model.ID_Process, module="Properties" })">Go to notes</a>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="form-group" style="display:none">
                         @Html.LabelFor(model => model.Creation_date, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -405,7 +407,7 @@ else
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>

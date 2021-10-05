@@ -2076,6 +2076,8 @@
     <Content Include="Views\Portal\Package_detailsCD.cshtml" />
     <Content Include="Views\Portal\Resources_broker.cshtml" />
     <Content Include="Views\Portal\Notfound.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\Users\AgentProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2130,6 +2132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Uploads\DocumentsAgent\" />
     <Folder Include="Content\Uploads\DocumentsLead\" />
     <Folder Include="Content\Uploads\DocumentsPackages\" />
     <Folder Include="Content\Uploads\Images\logos\" />

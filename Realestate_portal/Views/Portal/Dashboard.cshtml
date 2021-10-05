@@ -5,6 +5,8 @@
     Sys_Users user = (Sys_Users)ViewBag.userdata;
     Sys_Users userBroker = (Sys_Users)ViewBag.userdataBroker;
     Sys_Company company = (Sys_Company)ViewBag.company;
+    List<Realestate_portal.Models.Sys_Company> lstCompanies = (List<Realestate_portal.Models.Sys_Company>)ViewBag.lstCompanies;
+
 }
 <div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
     <i class="text-theme-20" data-feather="check-circle"></i>
@@ -105,26 +107,41 @@
                     <div class="box p-5">
 
                         @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
-                {
+    {
                     <p><strong>Brokerage Name:</strong> @company.Name</p>
-            if (user.Team_Leader == true)
-            {
-                if (user.Leader_Name == "")
-                { <p>Team name: not assigned</p>}
-        else
-        { <p>Team name: @user.Leader_Name</p> }
+if (user.Team_Leader == true)
+{
+    if (user.Leader_Name == "")
+    { <p>Team name: not assigned</p>}
+else
+{ <p>Team name: @user.Leader_Name</p> }
 
 }
 
-        <p><strong>Address:</strong> @userBroker.Brokerage_address</p>
-        <p><strong>Broker Contact:</strong> @userBroker.Broker_Contact</p>
-        <p><strong>Broker License:</strong> @userBroker.Broker_License</p>
-        <p><strong>My License #:</strong> @user.My_License </p>
-        <p><strong>Member Since:</strong> @user.Member_since.ToShortDateString()</p>
+                    <p><strong>Address:</strong> @userBroker.Brokerage_address</p>
+                    <p><strong>Broker Contact:</strong> @userBroker.Broker_Contact</p>
+                    <p><strong>Broker License:</strong> @userBroker.Broker_License</p>
+                    <p><strong>My License #:</strong> @user.My_License </p>
+                    <p><strong>Member Since:</strong> @user.Member_since.ToShortDateString()</p>
 }
 else if (ViewBag.rol == "SA")
-{ }
-                        @*<button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My Profile</button>*@
+{
+
+                    <label>Broker filter selected: </label>
+                    <select class="form-control mt-5" id="selectedBroker" onchange="CambiarBroker(this.value)">
+                        @foreach (var broker in lstCompanies)
+    {
+        if (ViewBag.selbroker == broker.ID_Company)
+        {
+                    <option selected value="@broker.ID_Company">@broker.Name</option> }
+else
+{
+                    <option value="@broker.ID_Company">@broker.Name</option>}
+}
+                    </select>
+
+}
+                    @*<button class="btn btn-outline-secondary border-dashed w-full py-1 px-2 mt-4">My Profile</button>*@
                     </div>
                 </div>
             </div>
@@ -206,6 +223,8 @@ else
 }
 
 }
+                        
+           
 
                     </div>
                 </div>

@@ -340,7 +340,7 @@ namespace Realestate_portal.Controllers
                 if (activeuser.Roles.Contains("SA"))
                 {
                     ViewBag.rol = "SA";
-                    return RedirectToAction("Dashboard", "Portal", new { broker = 1 });
+                    return RedirectToAction("Dashboard", "Portal", new { broker = 0 });
                 }
                 if (activeuser.Roles.Contains("Admin"))
                 {
@@ -638,7 +638,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                         ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                         ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
-
+                        broker = activeuser.ID_Company;
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
                     }
@@ -647,6 +647,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "Admin";
                         if (broker == 0)
                         {
+                            broker = activeuser.ID_Company;
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                             ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                             ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
@@ -3348,6 +3349,79 @@ namespace Realestate_portal.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult newPackageClosing(string title, int idpackage, string category, int customer, int property)
+        {
+            //Metodo para que los agentes agreguen paquetes
+            try
+            {
+                Tb_Docpackages newpackage = new Tb_Docpackages();
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                newpackage.Description = title;
+                newpackage.Category = category;
+                newpackage.Last_update = DateTime.UtcNow;
+                newpackage.Total_docs = 0;
+                newpackage.Total_docsf = 0;
+                newpackage.ID_User = activeuser.ID_User;
+                newpackage.ID_Company = activeuser.ID_Company;
+                newpackage.Active = true;
+                newpackage.original = false;
+                newpackage.Finished = false;
+                newpackage.Sent = false;
+                newpackage.ID_Process = property;
+
+                var customerfromProp = (from t in db.Tb_Process where (t.ID_Process == property) select t).FirstOrDefault();
+                var cust = (from t in db.Tb_Customers where (t.ID_Customer == customerfromProp.ID_Customer) select t).FirstOrDefault();
+                newpackage.ID_Customer = customerfromProp.ID_Customer;
+                newpackage.ID_Property = customerfromProp.ID_Process;
+
+
+                //buscamos los detalles
+                List<Tb_Docpackages_details> lsttosave = new List<Tb_Docpackages_details>();
+                Tb_Docpackages_details packdetails = new Tb_Docpackages_details();
+
+                var details = (from a in db.Tb_docCategies where (a.ID_Category == idpackage) select a).ToList();
+
+                newpackage.Total_docs = details.Count();
+                db.Tb_Docpackages.Add(newpackage);
+                db.SaveChanges();
+
+                foreach (var item in details)
+                {
+                    packdetails.original = false;
+                    packdetails.ID_docpackage = newpackage.ID_docpackage;
+                    packdetails.Title = item.Title;
+                    packdetails.mandatory = item.Mandatory;
+                    packdetails.Extension = "";
+                    packdetails.Description = title;
+                    packdetails.URL = "";
+                    packdetails.Notes = "";
+                    packdetails.Size = "";
+                    packdetails.uploaded = false;
+                    packdetails.sent = false;
+
+                    lsttosave.Add(packdetails);
+                    packdetails = new Tb_Docpackages_details();
+                }
+                db.Tb_Docpackages_details.AddRange(lsttosave);
+                db.SaveChanges();
+
+
+
+
+                var result = new { result= "SUCCESS", idpackage=newpackage.ID_docpackage};
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+
 
         public ActionResult Resources(int broker = 0, string token="")
         {
@@ -4044,6 +4118,32 @@ namespace Realestate_portal.Controllers
             }
         }
 
+        public ActionResult ChangeBrokerFilter(int broker)
+        {
+
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+                var usuario = db.Sys_Users.Where(c => c.ID_User == activeuser.ID_User).FirstOrDefault();
+                if (usuario != null)
+                {
+                    usuario.ID_Company = broker;
+
+                }
+                db.Entry(usuario).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Log_in", "Portal", new { email = usuario.Email, password = usuario.Password, rememberme = true });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+
+            }
+        }
+
         public ActionResult DeleteAgentDoc(int id)
         {
 
@@ -4240,7 +4340,7 @@ namespace Realestate_portal.Controllers
         {
 
 
-            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_User == id) select a).FirstOrDefault();
+            var fileDB = (from a in db.Tb_DocuAgent where (a.Id_Document == id) select a).FirstOrDefault();
 
             var path = fileDB.Url;
             var file = Server.MapPath(path);

@@ -122,6 +122,7 @@ namespace Realestate_portal.Controllers
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             if (tb_Customers.Birthday == null) { tb_Customers.Birthday = DateTime.UtcNow; }
+            if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
             var birthdemo = Convert.ToDateTime(tb_Customers.Birthday);
             var theDate = new DateTime(1900, 01, 01, 00, 00, 00);
             if (birthdemo < theDate) {

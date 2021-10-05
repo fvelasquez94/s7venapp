@@ -52,7 +52,7 @@ namespace Realestate_portal.Controllers
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                tb_Tasks.Createdat = DateTime.UtcNow;
+                //tb_Tasks.Createdat = DateTime.UtcNow;
                 tb_Tasks.Lastupdate = DateTime.UtcNow;
                 tb_Tasks.ID_Company = activeuser.ID_Company;
                 tb_Tasks.Username = "";

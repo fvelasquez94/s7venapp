@@ -19,6 +19,7 @@ namespace Realestate_portal.Models.ViewModels
         public string Image { get; set; }
         public int ID_Company { get; set; }
         public bool Active { get; set; }
+        public bool Team_Leader { get; set; }
         public string Position { get; set; }
         public string Brokerage_name { get; set; }
         public string My_License { get; set; }
@@ -37,5 +38,31 @@ namespace Realestate_portal.Models.ViewModels
     {
         public int id_team { get; set; }
         public string Name { get; set; }
+    }
+
+    public class US_State
+    {
+
+        public US_State()
+        {
+            Name = null;
+            Abbreviations = null;
+        }
+
+        public US_State(string ab, string name)
+        {
+            Name = name;
+            Abbreviations = ab;
+        }
+
+        public string Name { get; set; }
+
+        public string Abbreviations { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Abbreviations, Name);
+        }
+
     }
 }

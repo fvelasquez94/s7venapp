@@ -56,16 +56,18 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
-                            <div class="box p-5">
-                                <div class="flex">
-                                    <i data-feather="home" class="report-box__icon text-theme-29"></i>
+                        <a href="@Url.Action("Properties","CRM")">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                        <i data-feather="home" class="report-box__icon text-theme-29"></i>
 
+                                    </div>
+                                    <div class="text-3xl font-medium leading-8 mt-6">@Model.Where(c => c.Description != null).Count()</div>
+                                    <div class="text-base text-gray-600 mt-1">Properties</div>
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">@Model.Count()</div>
-                                <div class="text-base text-gray-600 mt-1">Properties</div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
 
@@ -228,6 +230,8 @@
                         </h2>
                     </div>
                     <div class="mt-5">
+                        @if (ViewBag.rol != "Agent")
+                        {
                         <div class="intro-x">
                             <a href="@Url.Action("Agents", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -243,6 +247,8 @@
                                 </div>
                             </a>
                         </div>
+                        }
+
                         <div class="intro-x">
                             <a href="@Url.Action("Leads", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -258,6 +264,8 @@
                                 </div>
                             </a>
                         </div>
+                         @if (ViewBag.rol != "Agent")
+                        {
                         <div class="intro-x">
                             <a href="@Url.Action("Teams", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -273,7 +281,7 @@
                                 </div>
                             </a>
                         </div>
-
+                        }
                         <div class="intro-x">
                             <a href="@Url.Action("Tasks","CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -333,7 +341,7 @@
 
     window.onload = function () {
         var modeltotal = @Model.Count();
-
+   
         var leadblue = 0;
         var leadgreen = 0;
         var leadyellow = 0;

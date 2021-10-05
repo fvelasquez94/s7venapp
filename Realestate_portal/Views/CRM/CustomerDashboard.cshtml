@@ -403,7 +403,8 @@ else
                                                 <a href="javascript:;" class="dropdown-toggle w-5 h-5 text-gray-600 dark:text-gray-300" aria-expanded="false"> <i data-feather="more-vertical" class="w-4 h-4"></i> </a>
                                                 <div class="dropdown-menu w-40">
                                                     <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#updatepropertywindow" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit Property </a>
+                                                        <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})"  class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit Property </a>
+                                                        @*<a href="javascript:void(0)" data-toggle="modal" data-target="#updatepropertywindow" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit Property </a>*@
                                                         <a href="javascript:void(0)" onclick="deleteListing(@item.ID_Process)" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete Property </a>
                                                     </div>
                                                 </div>
@@ -633,7 +634,7 @@ else
                                                                         PACKAGE ID
                                                                     </th>
                                                                     <th class="whitespace-nowrap">
-                                                                        DESCRIPTION
+                                                                        DESCRIPTION (Click to see details)
                                                                     </th>
                                                                     <th class="whitespace-nowrap">
                                                                         CATEGORY
@@ -1136,19 +1137,22 @@ else
 
                 $.ajax({
                     type: "POST",
-                    url: '/Portal/newPackage',
+                    url: '/Portal/newPackageClosing',
                     data: formData,
                     dataType: 'json',
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        if (response == "SUCCESS") {
-                        
+                       
+                        if (response.result == "SUCCESS") {
+                          
                             $("#subbtnenviar").attr("disabled", false);
 
                             var link = document.getElementById('basic-non-sticky-notification-toggle');
                             link.click();
-                            window.location.reload(true);
+                            
+                            window.location.href = "/Portal/Package_detailsCD?idpackage=" + response.idpackage;
+                           
                         } else {
                             $("#preloader").hide();
                             $("#subbtnenviar").attr("disabled", false);
