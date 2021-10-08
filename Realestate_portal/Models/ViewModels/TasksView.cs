@@ -17,5 +17,6 @@ namespace Realestate_portal.Models.ViewModels
         public string Lastname { get; set; }
         public string Url_image { get; set; }
         public int ID_Company { get; set; }
+        public string Customer { get; set; }
     }
 }

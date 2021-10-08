@@ -1981,29 +1981,23 @@ namespace Realestate_portal.Controllers
             }
 
         }
-        public ActionResult Videos_management(int broker = 0)
+        public ActionResult Videos_management(int broker = 0, string token="")
         {
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Videos";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
+                //ROLES
                 //FIN HEADER
+
+                ViewBag.rol = "";
 
                 //Filtros SA
 
@@ -2011,19 +2005,19 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
                 List<Tb_Videos> lstvideos = new List<Tb_Videos>();
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
+                        lstvideos = (from a in db.Tb_Videos select a).ToList();
                     }
                     else
                     {
@@ -2036,7 +2030,7 @@ namespace Realestate_portal.Controllers
                         else
                         {
                             ViewBag.rol = "SA";
-                            lstvideos = (from a in db.Tb_Videos where (a.ID_Company == broker && a.Type != "broker") select a).ToList();
+                            lstvideos = (from a in db.Tb_Videos  select a).ToList();
                         }
                     }
 
@@ -2046,19 +2040,6 @@ namespace Realestate_portal.Controllers
                 //VIDEO TYPE:
 
                 ViewBag.selbroker = broker;
-
-                var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
-                var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
-                var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
-
-                decimal totalprojectedgains = 0;
-                decimal totalgains = 0;
-                if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
-                if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
-
-                ViewBag.totalcustomers = totalproperties;
-                ViewBag.totalgainsprojected = totalprojectedgains;
-                ViewBag.totalgains = totalgains;
 
 
                 var categories = (from a in db.Tb_Options where (a.Type == 3) select a).ToList();
@@ -3760,14 +3741,9 @@ namespace Realestate_portal.Controllers
                 if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    if (name.Equals(""))
-                    {
-                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
-                    }
-                    else
-                    {
-                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
-                    }
+                    
+                        lstnetwork = (from a in db.Tb_Network  select a).ToList();
+                 
                    
 
 
@@ -3779,15 +3755,10 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
-                        if (name.Equals(""))
-                        {
+                    
                             lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
-                        }
-                        else 
-                        {
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
-                        }
+                        
+                      
 
                         
                     }
@@ -3796,28 +3767,18 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "Admin";
                         if (broker == 0)
                         {
-                            if (name.Equals(""))
-                            {
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
-                            }
-                            else
-                            {
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company && a.Name.Contains(name)) select a).ToList();
-                            }
+                            
+                                lstnetwork = (from a in db.Tb_Network  select a).ToList();
+                          
                            
 
                         }
                         else
                         {
                             ViewBag.rol = "SA";
-                            if (name.Equals(""))
-                            {
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker) select a).ToList();
-                            }
-                            else
-                            {
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker && a.Name.Contains(name)) select a).ToList();
-                            }
+                            
+                                lstnetwork = (from a in db.Tb_Network select a).ToList();
+                          
                            
 
 

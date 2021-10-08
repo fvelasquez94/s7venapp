@@ -147,7 +147,7 @@ namespace Realestate_portal.Controllers
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
 
-           
+
 
 
             return RedirectToAction("Leads", "CRM");
@@ -470,18 +470,14 @@ namespace Realestate_portal.Controllers
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
-
+                List<Sys_Users> lstagents = new List<Sys_Users>();
 
                 if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                          // where (t.Roles.Contains("Agent"))
-                                                      select new
-                                                      {
-                                                          ID = t.ID_User,
-                                                          FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName");
+
+                    lstagents = (from t in db.Sys_Users where (t.ID_Company == activeuser.ID_Company) select t).ToList();
+                                                  
                 }
                 else
                 {
@@ -490,27 +486,17 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        lstagents = (from t in db.Sys_Users where (t.ID_Company == activeuser.ID_Company) select t).ToList();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
-                        ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                              // where (t.Roles.Contains("Agent"))
-                                                          select new
-                                                          {
-                                                              ID = t.ID_User,
-                                                              FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName");
+                    
                     }
                     else
                     {
                         ViewBag.rol = "Admin";
                         if (broker == 0)
                         {
-                            ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                                  where (t.ID_Company == activeuser.ID_Company || t.ID_User==4)
-                                                              select new
-                                                              {
-                                                                  ID = t.ID_User,
-                                                                  FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName");
+                            lstagents = (from t in db.Sys_Users where  (t.ID_Company == activeuser.ID_Company || t.ID_User == 4)  select t).ToList();
+               
                         }
                         else
                         {
@@ -523,9 +509,25 @@ namespace Realestate_portal.Controllers
 
 
                 }
-
+                ViewBag.users = lstagents;
                 ViewBag.selbroker = broker;
 
+
+                //Verificamos si hay un agente directo asignado
+                TeamsModel_Users assigneduser = new TeamsModel_Users();
+                assigneduser = (from cu in db.Tb_Customers_Users
+                              join u in db.Sys_Users on cu.Id_User equals u.ID_User
+                              where ((cu.Id_Customer == id) && cu.ID_team == 0)
+                              select new TeamsModel_Users
+                              {
+                                  Id_User = cu.Id_User,
+                                  Name = u.Name,
+                                  Lastname = u.LastName,
+                                  Email = u.Email,
+                                  Url_image = u.Image
+                              }).FirstOrDefault();
+
+                ViewBag.assigneduser = assigneduser;
                 return View(tb_Customers);
 
             }
@@ -548,7 +550,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers, int id_agent)
         {
             try
             {               
@@ -565,8 +567,46 @@ namespace Realestate_portal.Controllers
 
                 db.Entry(tb_Customers).State=EntityState.Modified;
                 db.SaveChanges();
-                            
-               
+
+                //asignamos agente
+                try
+                {
+
+                    var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
+                    if (agentsassigned.Count() > 0)
+                    {
+                        db.Tb_Customers_Users.RemoveRange(agentsassigned);
+                    }
+                    db.SaveChanges();
+                    if (id_agent != 0)
+                    {
+
+                        Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+
+                        customerUsers.Id_Customer = tb_Customers.ID_Customer;
+                        customerUsers.Id_User = id_agent;
+                        customerUsers.ID_team = 0;
+                        customerUsers.Teamleader = false;
+                        db.Tb_Customers_Users.Add(customerUsers);
+                        db.SaveChanges();
+
+                        Sys_Notifications newnotification = new Sys_Notifications();
+                            newnotification.Active = true;
+                            newnotification.Date = DateTime.UtcNow;
+                            newnotification.Title = "Customer assigned.";
+                            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                            newnotification.ID_user = id_agent;
+                            db.Sys_Notifications.Add(newnotification);
+                            db.SaveChanges();
+                        
+                    }
+                
+
+                   
+                }
+                catch (Exception ex)
+                {
+                }
 
                 return RedirectToAction("Edit", "Customers", new {id=tb_Customers.ID_Customer ,token="success" });
             }

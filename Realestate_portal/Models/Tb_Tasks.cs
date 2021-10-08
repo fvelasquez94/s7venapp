@@ -23,5 +23,7 @@ namespace Realestate_portal.Models
         public int ID_User { get; set; }
         public string Username { get; set; }
         public int ID_Company { get; set; }
+        public Nullable<int> ID_Customer { get; set; }
+        public string Customer { get; set; }
     }
 }

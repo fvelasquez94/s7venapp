@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Premium Group Realty";
-
+    List<Realestate_portal.Models.Sys_Users> lstusers = (List<Realestate_portal.Models.Sys_Users>)ViewBag.users;
+    Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users assigned = (Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users)ViewBag.assigneduser;
 }
 
 
@@ -17,6 +18,8 @@
     <h2 class="text-lg font-medium mr-auto">
         Edit Lead
     </h2>
+    <a href="@Url.Action("CustomerDashboard","CRM",new { id=Model.ID_Customer})" class="btn btn-primary mr-2">Back to Lead's Dashboard</a>
+    <a href="@Url.Action("Leads","CRM")" class="btn btn-primary ml-5">Back to Leads</a>
 </div>
 <div class="grid grid-cols-12 gap-12 mt-5">
     <div class="intro-y col-span-12 lg:col-span-12">
@@ -270,7 +273,38 @@
                         {
                             <div>
                                 <label class="form-label">Assigned Agent</label>
-                                @Html.DropDownList("ID_User", null, htmlAttributes: new { @class = "form-control" })
+                                <select class="form-control" name="ID_agent" id="ID_agent">
+                                    <option value="0">Not assigned</option>
+
+                                    
+                                    @foreach (var item in lstusers)
+                                    {
+                                        if (assigned != null)
+                                        {
+                                            if (assigned.Name != null)
+                                            {
+                                                if (assigned.Id_User == item.ID_User)
+                                                {
+                                <option selected value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                                else
+                                                {
+                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                            }
+
+
+                                        }
+                                        else {
+                                            <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                        }
+                                    }
+
+                                </select>
                             </div>
 
                             <div>

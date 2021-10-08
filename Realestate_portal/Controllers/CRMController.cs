@@ -369,15 +369,24 @@ namespace Realestate_portal.Controllers
 
                 List<TasksView> lst_tasks = new List<TasksView>();
                 List<Sys_Users> agents = new List<Sys_Users>();
+                List<Tb_Customers> leads = new List<Tb_Customers>();
                 if (activeuser.Roles.Contains("Agent"))
                 {
                     lst_tasks = (from a in db.Tb_Tasks where (a.ID_User == activeuser.ID_User) select new TasksView {
-                    ID_Company=a.ID_Company, Description=a.Description, Finished=a.Finished, ID_task=a.ID_task, ID_User=a.ID_User, Lastupdate=a.Createdat, Title=a.Title,
-                        Url_image =(from b in db.Sys_Users where(b.ID_User==a.ID_User) select b.Image).FirstOrDefault(),
+                        ID_Company = a.ID_Company, Description = a.Description, Finished = a.Finished, ID_task = a.ID_task, ID_User = a.ID_User, Lastupdate = a.Createdat, Title = a.Title,
+                        Url_image = (from b in db.Sys_Users where (b.ID_User == a.ID_User) select b.Image).FirstOrDefault(), Customer = a.Customer,
                         Name = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.Name).FirstOrDefault(),
                         Lastname = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.LastName).FirstOrDefault()
                     }).ToList();
                     agents.Add(activeuser);
+
+                    var leadsassigned = (from c in db.Tb_Customers_Users where (c.Id_User == activeuser.ID_User) select c.Id_Customer).Distinct().ToArray();
+
+
+
+                    leads = (from a in db.Tb_Customers
+                             where (a.Lead == true && leadsassigned.Contains(a.ID_Customer))
+                             select a).ToList();
                 }
                 else 
                 {
@@ -395,11 +404,17 @@ namespace Realestate_portal.Controllers
                                          ID_User = a.ID_User,
                                          Lastupdate = a.Createdat,
                                          Title = a.Title,
+                                         Customer = a.Customer,
                                          Url_image = (from b in db.Sys_Users where (b.ID_User == a.ID_User) select b.Image).FirstOrDefault(),
                                          Name = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.Name).FirstOrDefault(),
                                          Lastname = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.LastName).FirstOrDefault()
                                      }).ToList();
-                        agents = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.Active && c.ID_User != 4).ToList();
+                        agents = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.ID_Company==activeuser.ID_Company && c.Active && c.ID_User != 4).ToList();
+
+
+                        leads = (from a in db.Tb_Customers
+                                 where (a.Lead == true && a.ID_Company==activeuser.ID_Company)
+                                 select a).ToList();
                     }
                     else {
                         ViewBag.rol = "SA";
@@ -410,6 +425,7 @@ namespace Realestate_portal.Controllers
                                          ID_Company = a.ID_Company,
                                          Description = a.Description,
                                          Finished = a.Finished,
+                                         Customer = a.Customer,
                                          ID_task = a.ID_task,
                                          ID_User = a.ID_User,
                                          Lastupdate = a.Createdat,
@@ -418,13 +434,19 @@ namespace Realestate_portal.Controllers
                                          Name = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.Name).FirstOrDefault(),
                                          Lastname = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.LastName).FirstOrDefault()
                                      }).ToList();
-                        agents = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.Active && c.ID_User != 4).ToList();
+                        agents = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.ID_Company == activeuser.ID_Company && c.Active && c.ID_User != 4).ToList();
+
+
+                        leads = (from a in db.Tb_Customers
+                                 where (a.Lead == true && a.ID_Company == activeuser.ID_Company)
+                                 select a).ToList();
                     }
                         
                 }
 
                 ViewBag.agents = agents;
                 ViewBag.selbroker = broker;
+                ViewBag.leads = leads;
                 return View(lst_tasks);
             }
             else
@@ -1468,7 +1490,27 @@ namespace Realestate_portal.Controllers
                 Tb_WorkTeams Team = new Tb_WorkTeams();
                 List<TeamsModel_Users> Agents = new List<TeamsModel_Users>();
 
-                List<GainsReport> lstgainsreport = new List<GainsReport>();
+                List<TasksView> lst_tasks = new List<TasksView>();
+ 
+                    lst_tasks = (from a in db.Tb_Tasks
+                                 where (a.ID_Customer==id)
+                                 select new TasksView
+                                 {
+                                     ID_Company = a.ID_Company,
+                                     Description = a.Description,
+                                     Finished = a.Finished,
+                                     ID_task = a.ID_task,
+                                     ID_User = a.ID_User,
+                                     Lastupdate = a.Createdat,
+                                     Title = a.Title,
+                                     Url_image = (from b in db.Sys_Users where (b.ID_User == a.ID_User) select b.Image).FirstOrDefault(),
+                                     Customer = a.Customer,
+                                     Name = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.Name).FirstOrDefault(),
+                                     Lastname = (from c in db.Sys_Users where (c.ID_User == a.ID_User) select c.LastName).FirstOrDefault()
+                                 }).ToList();
+
+                ViewBag.tasks = lst_tasks;
+                    List<GainsReport> lstgainsreport = new List<GainsReport>();
                 if (tb_Customers.ID_team != null)
                 {
                     if (tb_Customers.ID_team != 0)

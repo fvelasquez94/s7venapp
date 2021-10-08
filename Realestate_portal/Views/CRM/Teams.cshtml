@@ -228,15 +228,37 @@ else
                         <label for="NameEdit" class="form-label">Name</label>
                         <input id="NameEdit" name="NameEdit" type="text" class="form-control" required>
                     </div>
-   
+                    <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        @if (user.Team_Leader)
+        {
+                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" disabled>
+                    @foreach (var item in lstagents)
+    {
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+
+                </select>
+}
+else
+{
+                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit">
+                    @foreach (var item in lstagents)
+    {
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+
+                </select>
+}
+                    </div>
 
                     <div class="mt-3">
                         <label for="agentsEdit" class="form-label">Agents</label>
                         <select data-placeholder="Search here.." class="w-full" id="agentsEdit" name="agentsEdit" multiple>
                             @foreach (var item in lstagents)
-                            {
-                                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
-                            }
+            {
+                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
+}
 
                         </select>
                     </div>
@@ -245,42 +267,21 @@ else
                         <select data-placeholder="Search here.." class="w-full" id="idcustomerEdit" name="idcustomerEdit" multiple>
 
                             @foreach (var item in lstcustomers)
-                            {
-                                if (item.ID_team != 0)
-                                {
-                                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.ID_Customer">@item.Name @item.LastName</option>
-                                }
+            {
+                if (item.ID_team != 0)
+                {
+                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
+}
+else
+{
+                <option value="@item.ID_Customer">@item.Name @item.LastName</option>
+}
 
-                            }
-
-                        </select>
-                    </div>
-                                              <div class="mt-3">
-                        <label for="leader" class="form-label">Team Leader</label>
-                                                 @if (user.Team_Leader)
-                                                 {
-                        <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" disabled>
-                            @foreach (var item in lstagents)
-    {
-                        <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
 }
 
                         </select>
-                                                 }
-                                                 else {
-                                                     <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" >
-                            @foreach (var item in lstagents)
-                            {
-                            <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
-                            }
-
-                        </select>
-                                                 }
                     </div>
+
                 </div>
                 <!-- END: Slide Over Body -->
                 <!-- BEGIN: Slide Over Footer -->
@@ -330,15 +331,37 @@ else
                         <label for="Name" class="form-label">Name</label>
                         <input id="Name" name="Name" type="text" class="form-control" required>
                     </div>
-              
+                    <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        <select data-placeholder="Search here.." class="tom-select w-full" id="leader" name="leader">
+                            @if (user.Team_Leader)
+            {
+                foreach (var item in lstagents.Where(c => c.ID_User == user.ID_User))
+                {
+
+                    <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+}
+else
+{
+foreach (var item in lstagents)
+{
+
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+}
+
+
+                        </select>
+                    </div>
 
                     <div class="mt-3">
                         <label for="agents" class="form-label">Agents</label>
                         <select data-placeholder="Search here.." class="tom-select w-full" id="agents" name="agents" multiple>
                             @foreach (var item in lstagents)
-                            {
-                            <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
-                            }
+            {
+                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
+}
 
                         </select>
                     </div>
@@ -347,42 +370,21 @@ else
                         <select data-placeholder="Search here.." class="tom-select w-full" id="idcustomer" name="idcustomer" multiple>
 
                             @foreach (var item in lstcustomers)
-                            {
-                                if (item.ID_team != 0)
-                                {
-                                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.ID_Customer">@item.Name @item.LastName</option>
-                                }
+            {
+                if (item.ID_team != 0)
+                {
+                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
+}
+else
+{
+                <option value="@item.ID_Customer">@item.Name @item.LastName</option>
+}
 
-                            }
-
-                        </select>
-                    </div>
-                                <div class="mt-3">
-                        <label for="leader" class="form-label">Team Leader</label>
-                        <select data-placeholder="Search here.." class="tom-select w-full" id="leader" name="leader" >
-                            @if (user.Team_Leader)
-                            {
-foreach (var item in lstagents.Where(c=>c.ID_User==user.ID_User))
-                            {
-                                
-                            <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
-                            }
-                            }
-                            else {
-foreach (var item in lstagents)
-                            {
-                                
-                            <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
-                            }
-                            }
-                           
+}
 
                         </select>
                     </div>
+
                 </div>
                 <!-- END: Slide Over Body -->
                 <!-- BEGIN: Slide Over Footer -->

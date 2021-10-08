@@ -1,6 +1,7 @@
 ﻿@model List<Realestate_portal.Models.ViewModels.TasksView>
 @{
     List<Realestate_portal.Models.Sys_Users> lstagents = (List<Realestate_portal.Models.Sys_Users>)ViewBag.agents;
+    List<Realestate_portal.Models.Tb_Customers> leads = (List<Realestate_portal.Models.Tb_Customers>)ViewBag.leads;
 }
 
 
@@ -54,6 +55,7 @@
                         <th class="whitespace-nowrap"></th>
                         <th class="whitespace-nowrap">AGENT</th>
                         <th class="whitespace-nowrap">TASK</th>
+                        <th class="whitespace-nowrap">CUSTOMER</th>
                         <th class="whitespace-nowrap">DATE TO COMPLETE</th>
                         <th class="whitespace-nowrap">STATUS</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
@@ -62,99 +64,107 @@
                 <tbody>
                     @foreach (var item in Model.Where(c=>c.Lastupdate.Date==DateTime.Today).OrderBy(c=>c.Finished))
             {
-                <tr class="intro-x">
-                    <td>
-                        <div class="flex">
-                            @if (item.Url_image == "")
-                    {
-                        <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
-                     
-            }
-            else if (item.Url_image.StartsWith("http"))
+                    <tr class="intro-x">
+                        <td>
+                            <div class="flex">
+                                @if (item.Url_image == "")
             {
-                <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
-                    <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
-                    
-                </div>
-    }
-    else
-    {
-        <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
-            <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
-        
-        </div>
+                    <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
+
 }
-                        </div>
-                    </td>
-                    <td><label>@item.Name @item.Lastname</label></td>
-                    <td>
-                        <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+else if (item.Url_image.StartsWith("http"))
+{
+                    <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
+                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
 
-                    </td>
-                    <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
-                    <td>
-                        @if (item.Finished)
-                {
+                    </div>
+}
+else
+{
+                    <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
+                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
+
+                    </div>
+}
+                            </div>
+                        </td>
+                        <td><label>@item.Name @item.Lastname</label></td>
+
+                        <td>
+                            <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+
+                        </td>
+                        <td>
+                            <label>@item.Customer</label>
+                        </td>
+
+                        <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
+                        <td>
+                            @if (item.Finished)
+        {
                     <input style="border-color:#7c7a7a !important" class="form-check-switch text-align-right ml-5 checktask" id="@item.ID_task" type="checkbox" checked>
-        }
-        else
-        { <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
+}
+else
+{ <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
 
-                        
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
-                    </td>
-                    
+
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
+                        </td>
+
                     </tr>
         }
 
                                         @foreach (var item in Model.Where(c=>c.Lastupdate.Date!=DateTime.Today.Date).OrderBy(c => c.Finished))
                                         {
-                <tr class="intro-x">
-                    <td>
-                        <div class="flex">
-                            @if (item.Url_image == "")
-                    {
-                        <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
-                     
-            }
-            else if (item.Url_image.StartsWith("http"))
+                    <tr class="intro-x">
+                        <td>
+                            <div class="flex">
+                                @if (item.Url_image == "")
             {
-                <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
-                    <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
-                    
-                </div>
-    }
-    else
-    {
-        <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
-            <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
-        
-        </div>
+                    <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
+
 }
-                        </div>
-                    </td>
-                    <td><label>@item.Name @item.Lastname</label></td>
-                    <td>
-                        <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+else if (item.Url_image.StartsWith("http"))
+{
+                    <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
+                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
 
-                    </td>
-                    <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
-                    <td>
-                        @if (item.Finished)
-                {
+                    </div>
+}
+else
+{
+                    <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
+                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
+
+                    </div>
+}
+                            </div>
+                        </td>
+                        <td><label>@item.Name @item.Lastname</label></td>
+                        <td>
+                            <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+
+                        </td>
+                        <td>
+                            <label>@item.Customer</label>
+                        </td>
+                        <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
+                        <td>
+                            @if (item.Finished)
+        {
                     <input style="border-color:#7c7a7a !important" class="form-check-switch text-align-right ml-5 checktask" id="@item.ID_task" type="checkbox" checked>
-        }
-        else
-        { <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
+}
+else
+{ <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
 
-                        
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
-                    </td>
-                    
+
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
+                        </td>
+
                     </tr>
         }
 
@@ -253,6 +263,14 @@
                             @Html.AntiForgeryToken()
                             <div class="mt-3"> <label for="Title" class="form-label">Title</label> <input id="Title" name="Title" type="text" class="form-control" placeholder="" required> </div>
                             <div class="mt-3"> <label for="Description" class="form-label">Description</label> <input id="Description" name="Description" type="text" class="form-control" placeholder="" required> </div>
+                            <div class="mt-3"> <label for="ID_Customer" class="form-label">Customer</label> 
+                                    <select id="ID_Customer" name="ID_Customer"  class="form-control">
+                                        <option value="0"></option>
+                                        @foreach (var item in leads) {
+                                            <option value="@item.ID_Customer">@item.Name @item.LastName</option>
+                                        }
+                                    </select>
+                                    </div>
                             <div class="mt-3"> <label for="Description" class="form-label">Date to complete</label> <input id="Createdat" name="Createdat" type="date" class="form-control" required> </div>
                             <div class="mt-3">
                                 <label for="agents" class="form-label">Agent</label>

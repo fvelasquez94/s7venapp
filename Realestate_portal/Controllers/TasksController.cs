@@ -47,7 +47,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_task,Title,Description,Finished,Createdat,Lastupdate,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)
+        public ActionResult Create([Bind(Include = "ID_task,Title,Description,Finished,Createdat,Lastupdate,ID_Customer,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)
         {
             try
             {
@@ -56,13 +56,28 @@ namespace Realestate_portal.Controllers
                 tb_Tasks.Lastupdate = DateTime.UtcNow;
                 tb_Tasks.ID_Company = activeuser.ID_Company;
                 tb_Tasks.Username = "";
-
+                tb_Tasks.Customer = "";
+                if (tb_Tasks.ID_Customer != 0) {
+                    var cust = db.Tb_Customers.Where(c => c.ID_Customer == tb_Tasks.ID_Customer).FirstOrDefault();
+                    if (cust != null) {
+                        tb_Tasks.Customer = cust.Name + " " + cust.LastName;
+                    }
+                }
 
                 var agent = (from a in db.Sys_Users where (a.ID_User == tb_Tasks.ID_User) select a).FirstOrDefault();
 
                 if (ModelState.IsValid)
                 {
                     db.Tb_Tasks.Add(tb_Tasks);
+                    db.SaveChanges();
+                    //Colocamos notificacion
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "New task assigned.";
+                    newnotification.Description = tb_Tasks.Title;
+                    newnotification.ID_user = tb_Tasks.ID_User;
+                    db.Sys_Notifications.Add(newnotification);
                     db.SaveChanges();
 
                     //Send the email
@@ -111,8 +126,17 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_task,Title,Description,Finished,Createdat,Lastupdate,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)
+        public ActionResult Edit([Bind(Include = "ID_task,Title,Description,Finished,Createdat,ID_Customer,Lastupdate,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)
         {
+            tb_Tasks.Customer = "";
+            if (tb_Tasks.ID_Customer != 0)
+            {
+                var cust = db.Tb_Customers.Where(c => c.ID_Customer == tb_Tasks.ID_Customer).FirstOrDefault();
+                if (cust != null)
+                {
+                    tb_Tasks.Customer = cust.Name + " " + cust.LastName;
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(tb_Tasks).State = EntityState.Modified;
