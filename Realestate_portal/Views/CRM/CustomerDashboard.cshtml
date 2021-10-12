@@ -46,7 +46,52 @@
                             <h2 class="text-lg font-medium mr-auto">
                                 Tasks
                             </h2>
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#medium-slide-over-size-preview" class="btn btn-success block w-40 mx-auto mt-5">New Task</a>
+                            <!-- BEGIN: Medium Slide Over Content -->
+                            <div id="medium-slide-over-size-preview" class="modal modal-slide-over" data-backdrop="static" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header p-5">
+                                            <h2 class="font-medium text-base mr-auto">
+                                                New Task
+                                            </h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            @using (Html.BeginForm("CreateCD", "Tasks", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="mt-3"> <label for="Title" class="form-label">Title</label> <input id="Title" name="Title" type="text" class="form-control" placeholder="" required> </div>
+                        <div class="mt-3"> <label for="Description" class="form-label">Description</label> <input id="Description" name="Description" type="text" class="form-control" placeholder="" required> </div>
+                        <div class="mt-3">
+                            <label for="ID_Customer" class="form-label">Customer</label>
+                            <select id="ID_Customer" name="ID_Customer" class="form-control">
+                               
+                        <option selected value="@Model.ID_Customer">@Model.Name @Model.LastName</option>
 
+                            </select>
+                        </div>
+                        <div class="mt-3"> <label for="Description" class="form-label">Date to complete</label> <input id="Createdat" name="Createdat" type="date" class="form-control" required> </div>
+                        <div class="mt-3">
+                            <label for="agents" class="form-label">Agent</label>
+                            <select data-placeholder="Search here.." class="tom-select w-full" id="ID_User" name="ID_User" required>
+                                @foreach (var item in agents)
+        {
+                        <option value="@item.Id_User">@item.Name @item.Lastname (@item.Email)</option>
+}
+
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success block w-40 mx-auto mt-5">Add Task</button>
+}
+                                        </div>
+                                        <div class="modal-footer text-right w-full absolute bottom-0">
+                                            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END: Medium Slide Over Content -->
                         </div>
                         <div class="col-md-12">
 
@@ -63,59 +108,64 @@
                                         <th class="whitespace-nowrap">CUSTOMER</th>
                                         <th class="whitespace-nowrap">DATE TO COMPLETE</th>
                                         <th class="whitespace-nowrap">STATUS</th>
-                                      
+                                        <th class="text-center whitespace-nowrap">ACTIONS</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in lsttasks.OrderByDescending(c => c.Lastupdate))
         {
-                            <tr class="intro-x">
-                                <td>
-                                    <div class="flex">
-                                        @if (item.Url_image == "")
+                                    <tr class="intro-x">
+                                        <td>
+                                            <div class="flex">
+                                                @if (item.Url_image == "")
             {
-                            <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
+                                    <div class="tooltip text-lg -ml-4 font-medium truncate " title="@item.Name @item.Lastname">   <p data-letters="@item.Name.Substring(0, 1) @item.Lastname.Substring(0, 1)"></p></div>
 
 }
 else if (item.Url_image.StartsWith("http"))
 {
-                            <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
-                                <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
+                                    <div class="w-12 h-12 image-fit zoom-in -ml-4  ">
+                                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@item.Url_image" title="@item.Name  @item.Lastname">
 
-                            </div>
+                                    </div>
 }
 else
 {
-                            <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
-                                <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
+                                    <div class="w-12 h-12 image-fit zoom-in -ml-4 ">
+                                        <img alt="@item.Name @item.Lastname" class="tooltip rounded-full" src="@Url.Content(item.Url_image)" title="@item.Name @item.Lastname">
 
-                            </div>
-}
                                     </div>
-                                </td>
-                                <td><label>@item.Name @item.Lastname</label></td>
+}
+                                            </div>
+                                        </td>
+                                        <td><label>@item.Name @item.Lastname</label></td>
 
-                                <td>
-                                    <a href="javascript:void(0)" class="font-medium">@item.Title</a>
+                                        <td>
+                                            <a href="javascript:void(0)" class="font-medium">@item.Title</a>
 
-                                </td>
-                                <td>
-                                    <label>@item.Customer</label>
-                                </td>
+                                        </td>
+                                        <td>
+                                            <label>@item.Customer</label>
+                                        </td>
 
-                                <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
-                                <td>
-                                    @if (item.Finished)
+                                        <td>@item.Lastupdate.ToString("MM/dd/yyyy")</td>
+                                        <td>
+                                            @if (item.Finished)
         {
-<label class="bg-theme-18">FINISHED</label>}
+                                    <input style="border-color:#7c7a7a !important" class="form-check-switch text-align-right ml-5 checktask" id="@item.ID_task" type="checkbox" checked>
+}
 else
-{ <label class="bg-theme-15">IN PROGRESS</label>}
+{ <input class="form-check-switch text-align-right ml-5 checktask" style="border-color:#7c7a7a !important" id="@item.ID_task" type="checkbox">}
 
 
-                                </td>
-                             
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="deleteTask(@item.ID_task)" class="btn btn-sm btn-danger ml-auto">Delete</a>
+                                        </td>
 
-                            </tr>
+
+                                    </tr>
 }
 
                                    
@@ -1099,6 +1149,50 @@ else
 
     @section scripts{
         <script>
+
+            function deleteTask(idtask) {
+
+                swal.fire({
+                    title: 'Do you want to delete?',
+                    text: "This process cannot be undone.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#C83232',
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: 'Delete'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/Tasks/DeleteConfirmed',
+                            type: 'POST',
+                            data: { 'id': idtask },
+                            cache: false,
+                            global: false,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    Swal.fire(
+                                        'Record deleted',
+                                        'The record has been deleted.',
+                                        'success'
+                                    )
+                                    window.location.reload(true);
+                                } else {
+                                    alert(result);
+                                }
+
+
+                            },
+                            error: function (request) {
+                                alert("Something went wrong.");
+
+                            }
+                        });
+
+
+                    }
+                })
+            }
+
         function deleteNote(idnote) {
 
             swal.fire({
@@ -1242,7 +1336,38 @@ else
 
         });
 
+            $('.checktask').change(function () {
+                var value = this.checked;
+                var id = $(this).attr('id');
 
+                $.ajax({
+                    url: '/Tasks/UpdateTask',
+                    type: 'POST',
+                    data: { 'id': id, 'value': value },
+                    cache: false,
+                    global: false,
+                    success: function (result) {
+                        if (result == "Success") {
+                            Swal.fire(
+                                'Record updated',
+                                'The record has been updated.',
+                                'success'
+                            )
+                           
+                        } else {
+                            alert(result);
+                        }
+
+
+                    },
+                    error: function (request) {
+                        alert("Something went wrong.");
+
+                    }
+                });
+
+
+            });
 
         $(document).on("change", "#stagecustomer", function () {
             var stage = $(this).val();

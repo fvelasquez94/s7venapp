@@ -45,6 +45,70 @@ namespace Realestate_portal.Controllers
         // POST: Tasks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCD([Bind(Include = "ID_task,Title,Description,Finished,Createdat,Lastupdate,ID_Customer,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)
+        {
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //tb_Tasks.Createdat = DateTime.UtcNow;
+                tb_Tasks.Lastupdate = DateTime.UtcNow;
+                tb_Tasks.ID_Company = activeuser.ID_Company;
+                tb_Tasks.Username = "";
+                tb_Tasks.Customer = "";
+                if (tb_Tasks.ID_Customer != 0)
+                {
+                    var cust = db.Tb_Customers.Where(c => c.ID_Customer == tb_Tasks.ID_Customer).FirstOrDefault();
+                    if (cust != null)
+                    {
+                        tb_Tasks.Customer = cust.Name + " " + cust.LastName;
+                    }
+                }
+
+                var agent = (from a in db.Sys_Users where (a.ID_User == tb_Tasks.ID_User) select a).FirstOrDefault();
+
+                if (ModelState.IsValid)
+                {
+                    db.Tb_Tasks.Add(tb_Tasks);
+                    db.SaveChanges();
+                    //Colocamos notificacion
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "New task assigned.";
+                    newnotification.Description = tb_Tasks.Title;
+                    newnotification.ID_user = tb_Tasks.ID_User;
+                    db.Sys_Notifications.Add(newnotification);
+                    db.SaveChanges();
+
+                    //Send the email
+                    dynamic semail = new Email("NewNotification_task");
+                    semail.To = agent.Email.ToString();
+                    semail.From = "support@s7ven.co";
+                    semail.user = agent.Name + " " + agent.LastName;
+                    semail.title = tb_Tasks.Title;
+                    semail.Description = tb_Tasks.Description;
+                    semail.Assignedby = activeuser.Name + " " + activeuser.LastName;
+
+                    semail.Send();
+
+                    return RedirectToAction("CustomerDashboard", "CRM", new { id=tb_Tasks.ID_Customer, token = "success" });
+                }
+                else
+                {
+
+                    return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Tasks.ID_Customer, token = "error" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Tasks.ID_Customer, token = "error" });
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_task,Title,Description,Finished,Createdat,Lastupdate,ID_Customer,ID_User,Username,ID_Company")] Tb_Tasks tb_Tasks)

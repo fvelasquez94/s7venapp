@@ -1342,6 +1342,12 @@
     <Content Include="Content\common\library\air-datepicker-master\dist\js\datepicker.min.js" />
     <Content Include="Content\common\library\air-datepicker-master\dist\js\i18n\datepicker.en.js" />
     <Content Include="Content\common\library\jquery.steps.js" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\dist\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\dist\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\dist\css\app.css" />
     <Content Include="Content\dist\css\bootstrap.css" />
     <Content Include="Content\dist\fonts\roboto\LICENSE.txt" />
@@ -2078,6 +2084,7 @@
     <Content Include="Views\Portal\Notfound.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\AgentProfile.cshtml" />
+    <Content Include="Content\dist\bootstrap\config.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

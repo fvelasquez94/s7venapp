@@ -242,28 +242,19 @@ namespace Realestate_portal.Controllers
         }
 
         // GET: Brokers
-        public ActionResult Brokers(int broker = 0)
+        public ActionResult Brokers(int broker = 0, string token="")
         {
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Users";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
                 //FIN HEADER
 
 
@@ -275,7 +266,7 @@ namespace Realestate_portal.Controllers
                 List<Sys_Users> lstAgentes = new List<Sys_Users>();
 
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                 }
@@ -295,18 +286,6 @@ namespace Realestate_portal.Controllers
                 }
 
                 ViewBag.selbroker = broker;
-                var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
-                var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
-                var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
-
-                decimal totalprojectedgains = 0;
-                decimal totalgains = 0;
-                if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
-                if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
-
-                ViewBag.totalcustomers = totalproperties;
-                ViewBag.totalgainsprojected = totalprojectedgains;
-                ViewBag.totalgains = totalgains;
 
                 return View(lstAgentes);
             }
@@ -341,32 +320,22 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Users";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
                 var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) orderby l.LastName ascending select l).ToList();
                 ViewBag.leaders = leaders;
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
 
                 }
-                else if (r.Contains("Admin"))
+                else if (activeuser.Roles.Contains("Admin"))
                 {
                     ViewBag.rol = "Admin";
 

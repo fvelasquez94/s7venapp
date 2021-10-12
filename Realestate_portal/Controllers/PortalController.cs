@@ -4044,12 +4044,12 @@ namespace Realestate_portal.Controllers
                 db.SaveChanges();
 
                 TempData["exito"] = "Video deleted successfully.";
-                return RedirectToAction("Videos_management", "Portal");
+                return Json("success", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 TempData["advertencia"] = "Something went wrong." + ex.Message;
-                return RedirectToAction("Videos_management", "Portal");
+                return Json("error", JsonRequestBehavior.AllowGet);
             }
 
 
