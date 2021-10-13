@@ -80,10 +80,10 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         Gains Report
                     </h2>
-                    <div class="sm:ml-auto mt-3 sm:mt-0 relative text-gray-700 dark:text-gray-300">
+                    <div class="sm:ml-auto mt-3 sm:mt-0  text-gray-700 dark:text-gray-300">
                      
-                       
-                        <div id="reportrange" class="form-control sm:w-56 box pl-10">
+                        <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a>
+                        <div id="reportrange" class="form-control sm:w-56 box pl-10 mb-5">
                             <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
                             <span></span>
                         </div>
@@ -523,7 +523,7 @@
         }
 
         $('#reportrange').daterangepicker({
-
+            linkedCalendars: false,
             startDate: start,
             endDate: end,
             autoApply: false,
