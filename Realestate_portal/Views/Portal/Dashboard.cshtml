@@ -52,13 +52,13 @@
                                 <div class="ml-5">
                                     <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">@user.Name @user.LastName</div>
                                     <div class="text-gray-600">
-                                        @if (ViewBag.rol == "Agent")
+                                        @if (user.Roles.Contains("Agent"))
                                 {
                                     <span>Real Estate Agent</span>
                         }
-                        else if (ViewBag.rol == "Admin")
+                        else if (user.Roles.Contains("Admin"))
                         { <span>Broker</span>}
-                else if (ViewBag.rol == "SA")
+                else if (user.Roles.Contains("SA"))
                 { <span>Super Administrator</span>}
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                 <div class="report-box-2 intro-y mt-5">
                     <div class="box p-5">
 
-                        @if (ViewBag.rol == "Agent" || ViewBag.rol == "Admin")
+                        @if (user.Roles.Contains("Agent") || user.Roles.Contains("Admin"))
     {
                     <p><strong>Brokerage Name:</strong> @company.Name</p>
 if (user.Team_Leader == true)
@@ -124,7 +124,7 @@ else
                     <p><strong>My License #:</strong> @user.My_License </p>
                     <p><strong>Member Since:</strong> @user.Member_since.ToShortDateString()</p>
 }
-else if (ViewBag.rol == "SA")
+else if (user.Roles.Contains("SA"))
 {
 
                     <label>Selected Broker filter: </label>
@@ -139,7 +139,7 @@ else
                     <option value="@broker.ID_Company">@broker.Name</option>}
 }
                     </select>
-                    @*<a href="@Url.Action("Brokers","Users")" class="btn btn-primary border-dashed w-full py-1 px-2 mt-4">BROKERS LIST</a>*@
+                    <a href="@Url.Action("Brokers","CRM")" class="btn btn-primary border-dashed w-full py-1 px-2 mt-4">BROKERS LIST</a>
 }
 
                     </div>

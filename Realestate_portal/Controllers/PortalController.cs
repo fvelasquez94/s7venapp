@@ -3756,7 +3756,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                     
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                            lstnetwork = (from a in db.Tb_Network  select a).ToList();
                         
                       
 

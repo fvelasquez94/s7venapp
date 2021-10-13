@@ -120,6 +120,40 @@ namespace Realestate_portal.Controllers
             }
         }
 
+        // GET: Brokers
+        public ActionResult Brokers(int broker = 0, string token = "")
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
+                //FIN HEADER
+
+
+                //Filtros SA
+
+                var lstCompanies = (from a in db.Sys_Company select a).ToList();
+
+                ViewBag.selbroker = broker;
+
+                return View(lstCompanies);
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+        }
+
 
         public ActionResult CRMDashboard(string fstartd, string fendd, int broker = 0)
         {

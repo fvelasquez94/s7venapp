@@ -241,62 +241,7 @@ namespace Realestate_portal.Controllers
 
         }
 
-        // GET: Brokers
-        public ActionResult Brokers(int broker = 0, string token="")
-        {
-            if (generalClass.checkSession())
-            {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                //NOTIFICATIONS
-                DateTime now = DateTime.Today;
-                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
-                //HEADER DATA
-                ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
-                ViewBag.token = token;
-                //FIN HEADER
 
-
-                //Filtros SA
-
-                var lstCompanies = (from a in db.Sys_Company select a).ToList();
-                ViewBag.lstCompanies = lstCompanies;
-
-                List<Sys_Users> lstAgentes = new List<Sys_Users>();
-
-
-                if (activeuser.Roles.Contains("Agent"))
-                {
-                    ViewBag.rol = "Agent";
-                }
-                else
-                {
-                    ViewBag.rol = "Admin";
-                    if (broker == 0)
-                    {                    
-                    }
-                    else
-                    {                       
-                        ViewBag.rol = "SA";                       
-                    }
-                    // se utiliza id = 4 para registros no asignados
-                    lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Admin") && t.ID_Company == activeuser.ID_Company).OrderBy(t => t.LastName).Include(t => t.Sys_Company).ToList();
-
-                }
-
-                ViewBag.selbroker = broker;
-
-                return View(lstAgentes);
-            }
-            else
-            {
-
-                return RedirectToAction("Login", "Portal", new { access = false });
-
-            }
-
-        }
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
@@ -313,6 +258,52 @@ namespace Realestate_portal.Controllers
             return View(sys_Users);
         }
 
+        public ActionResult CreateBroker(int broker = 0, bool leader = false)
+        {
+
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                //FIN HEADER
+     
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+
+
+                }
+                else
+                {
+                    ViewBag.rol = "SA";
+                }
+
+                ViewBag.activeuser = activeuser;
+                ViewBag.selbroker = broker;
+         
+              
+                return View();
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+
+        }
         // GET: Users/Create
         public ActionResult Create(int broker=0, bool leader = false)
         {
@@ -362,6 +353,163 @@ namespace Realestate_portal.Controllers
    
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateBroker(string BrokerName, string Name, string LastName, string Email, string Brokerage_name, string Brokerage_address, string Broker_Contact, string Broker_License)
+        {
+            try
+            {
+                Sys_Company company = new Sys_Company();
+                company.Name = BrokerName;
+                company.Web = "";
+                company.Logo = "";
+                company.ShortName = "";
+                db.Sys_Company.Add(company);
+                db.SaveChanges();
+
+                Sys_Users sys_Users = new Sys_Users();
+                sys_Users.Name = Name;
+                sys_Users.LastName = LastName;
+                sys_Users.Email = Email;
+                sys_Users.Brokerage_name = Brokerage_name;
+                sys_Users.Brokerage_address = Brokerage_address;
+                sys_Users.Broker_Contact = Broker_Contact;
+                sys_Users.Broker_License = Broker_License;
+                /////
+                sys_Users.Roles = "Admin";
+                sys_Users.Birth = DateTime.UtcNow;
+                sys_Users.Creation_date = DateTime.UtcNow;
+                sys_Users.Last_login = DateTime.UtcNow;
+                sys_Users.Last_update = DateTime.UtcNow;
+         
+                sys_Users.Department = "";
+                sys_Users.Email_active = true;
+                sys_Users.Active = true;
+                sys_Users.Status = 1;
+                sys_Users.ID_Company = company.ID_Company;
+                sys_Users.Member_since = DateTime.UtcNow;
+                sys_Users.Gender = "Male";
+                sys_Users.Password = CreatePassword(8);
+                if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
+                if (sys_Users.Address == null) { sys_Users.Address = ""; }
+                if (sys_Users.State == null) { sys_Users.State = ""; }
+                if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
+                if (sys_Users.Bank_number == null) { sys_Users.Bank_number = ""; }
+                if (sys_Users.Bank_typeaccount == null) { sys_Users.Bank_typeaccount = ""; }
+                if (sys_Users.Credit_classification == null) { sys_Users.Credit_classification = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_year == null) { sys_Users.Credit_year = ""; }
+                if (sys_Users.Credit_number == null) { sys_Users.Credit_number = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_name == null) { sys_Users.Credit_name = ""; }
+                if (sys_Users.Brokerage_address == null) { sys_Users.Brokerage_address = ""; }
+                if (sys_Users.Brokerage_name == null) { sys_Users.Brokerage_name = ""; }
+                if (sys_Users.Broker_Contact == null) { sys_Users.Broker_Contact = ""; }
+                if (sys_Users.Broker_License == null) { sys_Users.Broker_License = ""; }
+                if (sys_Users.My_License == null) { sys_Users.My_License = ""; }
+                if (sys_Users.Fb_url == null) { sys_Users.Fb_url = ""; }
+                if (sys_Users.Ins_url == null) { sys_Users.Ins_url = ""; }
+                if (sys_Users.Tw_url == null) { sys_Users.Tw_url = ""; }
+                if (sys_Users.Other_url == null) { sys_Users.Other_url = ""; }
+                if (sys_Users.Image == null) { sys_Users.Image = ""; }
+                if (sys_Users.Department == null) { sys_Users.Department = ""; }
+                if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
+                if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
+                if (sys_Users.Position == null) { sys_Users.Position = "Admin Broker"; }
+               
+                    sys_Users.Id_Leader = 0;
+              
+                if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
+                if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
+
+                db.Sys_Users.Add(sys_Users);
+                db.SaveChanges();
+
+
+                if (sys_Users.Email != "")
+                {
+                    //Enviamos correo para notificar
+                    dynamic emailtosend = new Email("newBroker");
+                    emailtosend.To = sys_Users.Email.ToString();
+                    emailtosend.From = "support@s7ven.co";
+                    emailtosend.correo = sys_Users.Email;
+                    emailtosend.contrasena = sys_Users.Password;
+                    emailtosend.Send();
+
+
+                    return RedirectToAction("Brokers", "CRM", new { token = "success" });
+                }
+                else
+                {
+                    return RedirectToAction("Brokers", "CRM", new { token = "success" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+               
+                return RedirectToAction("Brokers", "CRM", new { token = "error" });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditBroker(string BrokerName, string Web, string Name, string LastName, string Email, string Password, int ID_Company)
+        {
+            try
+            {
+                Sys_Company company = db.Sys_Company.Where(c => c.ID_Company == ID_Company).FirstOrDefault();
+                company.Name = BrokerName;
+                company.Web = Web;
+                db.Entry(company).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Sys_Users sys_Users = db.Sys_Users.Where(c=>c.ID_Company==ID_Company && c.Roles.Contains("Admin")).FirstOrDefault();
+                if (sys_Users.Address == null) { sys_Users.Address = ""; }
+                if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
+                if (sys_Users.State == null) { sys_Users.State = ""; }
+                if (sys_Users.Bank == null) { sys_Users.Bank = ""; }
+                if (sys_Users.Bank_number == null) { sys_Users.Bank_number = ""; }
+                if (sys_Users.Bank_typeaccount == null) { sys_Users.Bank_typeaccount = ""; }
+                if (sys_Users.Credit_classification == null) { sys_Users.Credit_classification = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_year == null) { sys_Users.Credit_year = ""; }
+                if (sys_Users.Credit_number == null) { sys_Users.Credit_number = ""; }
+                if (sys_Users.Credit_month == null) { sys_Users.Credit_month = ""; }
+                if (sys_Users.Credit_name == null) { sys_Users.Credit_name = ""; }
+                if (sys_Users.Brokerage_address == null) { sys_Users.Brokerage_address = ""; }
+                if (sys_Users.Brokerage_name == null) { sys_Users.Brokerage_name = ""; }
+                if (sys_Users.Broker_Contact == null) { sys_Users.Broker_Contact = ""; }
+                if (sys_Users.Broker_License == null) { sys_Users.Broker_License = ""; }
+                if (sys_Users.My_License == null) { sys_Users.My_License = ""; }
+                if (sys_Users.Fb_url == null) { sys_Users.Fb_url = ""; }
+                if (sys_Users.Ins_url == null) { sys_Users.Ins_url = ""; }
+                if (sys_Users.Tw_url == null) { sys_Users.Tw_url = ""; }
+                if (sys_Users.Other_url == null) { sys_Users.Other_url = ""; }
+                if (sys_Users.Image == null) { sys_Users.Image = ""; }
+                if (sys_Users.Department == null) { sys_Users.Department = ""; }
+                if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
+                if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
+                if (sys_Users.Position == null) { sys_Users.Position = ""; }
+                if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
+                sys_Users.Team_Leader = false;
+                sys_Users.Id_Leader = 0;
+                sys_Users.Leader_Name = ""; 
+
+                db.Entry(sys_Users).State = EntityState.Modified;
+                db.SaveChanges();
+
+     
+                TempData["exito"] = "Data saved successfully.";
+                return RedirectToAction("BrokerProfile", "Users", new { id= ID_Company });
+
+            }
+            catch (Exception ex)
+            {
+                TempData["advertencia"] = "Something went wrong." + ex.Message;
+                return RedirectToAction("UserProfile", "Users", new { id = ID_Company });
+            }
+        }
         // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -687,6 +835,60 @@ namespace Realestate_portal.Controllers
 
                 ViewBag.lsttask = lst_tasks;
                 return View(sys_Users);
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+
+
+        }
+
+        public ActionResult BrokerProfile(int id)
+        {
+
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+
+                Sys_Users lstAdmins = new Sys_Users();
+                lstAdmins =(from a in db.Sys_Users where (a.Roles.Contains("Admin") && a.ID_Company == id) select a).FirstOrDefault();
+                ViewBag.users = lstAdmins;
+
+                Sys_Company selectedBroker = new Sys_Company();
+                selectedBroker = db.Sys_Company.Where(c => c.ID_Company == id).FirstOrDefault();
+
+             
+
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+
+
+                }
+                else
+                {
+                    ViewBag.rol = "SA";
+                }
+
+
+                return View(selectedBroker);
 
             }
             else

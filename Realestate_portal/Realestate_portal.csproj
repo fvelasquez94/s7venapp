@@ -2085,6 +2085,8 @@
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\AgentProfile.cshtml" />
     <Content Include="Content\dist\bootstrap\config.json" />
+    <Content Include="Views\Users\BrokerProfile.cshtml" />
+    <Content Include="Views\Users\CreateBroker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2120,7 +2122,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Portal\Login.cshtml" />
     <Content Include="Views\CRM\Leads.cshtml" />
-    <Content Include="Views\Users\Brokers.cshtml" />
+    <Content Include="Views\CRM\Brokers.cshtml" />
     <Content Include="Views\CRM\CRMDashboardCopy.cshtml" />
     <Content Include="Views\Shared\PartialTables\DocumentsTemplate.cshtml" />
     <Content Include="Views\Tb_Source\Create.cshtml" />

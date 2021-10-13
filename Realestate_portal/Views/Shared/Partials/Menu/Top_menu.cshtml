@@ -27,15 +27,15 @@
                         <div class="top-menu__title">Dashboard</div>
                     </a>
                 </li>
-                @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin" || user.Team_Leader)
-            {
-                <li>
-                    <a href="@Url.Action("Agents", "CRM")" class="top-menu">
-                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                        <div class="top-menu__title">Agents</div>
-                    </a>
-                </li>
-        }
+                @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
+    {
+            <li>
+                <a href="@Url.Action("Agents", "CRM")" class="top-menu">
+                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                    <div class="top-menu__title">Agents</div>
+                </a>
+            </li>
+}
                 <li>
                     <a href="@Url.Action("Leads", "CRM")" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
@@ -48,25 +48,35 @@
                         <div class="top-menu__title">Task Management</div>
                     </a>
                 </li>
-                @if (ViewBag.rol == "SA" || ViewBag.rol == "Admin" || user.Team_Leader)
-            {
-                <li>
-                    <a href="@Url.Action("Teams", "CRM")" class="top-menu">
-                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                        <div class="top-menu__title">Teams</div>
-                    </a>
-                </li>
-        }
+                @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
+    {
+            <li>
+                <a href="@Url.Action("Teams", "CRM")" class="top-menu">
+                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                    <div class="top-menu__title">Teams</div>
+                </a>
+            </li>
+}
+
                 <li>
                     <a href="@Url.Action("Properties", "CRM")" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                         <div class="top-menu__title">Properties</div>
                     </a>
                 </li>
+                @if (user.Roles.Contains("SA"))
+    {
+            <li>
+                <a href="@Url.Action("Brokers", "CRM")" class="top-menu">
+                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                    <div class="top-menu__title">Brokers</div>
+                </a>
+            </li>
+}
             </ul>
         </li>
         <li>
-            @if (ViewBag.rol == "SA")
+            @if (user.Roles.Contains("SA"))
         {
             <a href="@Url.Action("PGR_network", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="share-2"></i> </div>
@@ -91,7 +101,7 @@
 
         </li>*@
         <li>
-            @if (ViewBag.rol == "SA")
+            @if (user.Roles.Contains("SA"))
         {
             <a href="@Url.Action("Documents_upload", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="box"></i> </div>
@@ -116,7 +126,7 @@
 
             <ul class="top-menu__sub-open">
                 <li>
-                    @if (ViewBag.rol == "SA")
+                    @if (user.Roles.Contains("SA"))
                 {
                     <a href="@Url.Action("Resources", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
@@ -132,10 +142,10 @@
         }
 
                 </li>
-                @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
             {
                 <li>
-                    @if (ViewBag.rol == "SA")
+                    @if (user.Roles.Contains("SA"))
                 {
                     <a href="@Url.Action("Resources_broker", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
@@ -156,7 +166,7 @@
         </li>
 
         <li>
-            @if (ViewBag.rol == "SA")
+            @if (user.Roles.Contains("SA"))
     {
 
         <a href="javascript:void(0);" class="top-menu">
@@ -195,7 +205,7 @@
 
       
         <li>
-            @if (ViewBag.rol == "SA")
+            @if (user.Roles.Contains("SA"))
         {
             <a href="@Url.Action("Marketing", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
@@ -213,7 +223,7 @@
 
         </li>
         <li>
-            @if (ViewBag.rol == "SA")
+            @if (user.Roles.Contains("SA"))
         {
             <a href="@Url.Action("Webinar", "Portal")" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="calendar"></i> </div>
