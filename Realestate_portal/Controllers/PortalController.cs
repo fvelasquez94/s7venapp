@@ -16,6 +16,9 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Text.RegularExpressions;
 using System.Text;
+using Google.Apis.Calendar.v3.Data;
+using Realestate_portal.Controllers.BlobStorage;
+using System.Threading.Tasks;
 
 namespace Realestate_portal.Controllers
 {
@@ -24,6 +27,7 @@ namespace Realestate_portal.Controllers
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
         private Cls_GoogleCalendar cls_GoogleCalendar = new Cls_GoogleCalendar();
+        UploadService imageService = new UploadService();
         //Credentials
 
         public ActionResult Log_out()
@@ -57,13 +61,13 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendPackage(int idpackage, string email, bool broker, bool extra)
+        public ActionResult SendPackage(int idpackage)
         {
             var result = "";
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                string company_email = (from c in db.Sys_Company where c.ID_Company == activeuser.ID_Company select c.Web).FirstOrDefault<string>();
+                string company_email = (from c in db.Sys_Users where (c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Admin")) select c.Email).FirstOrDefault<string>();
                 if (activeuser != null)
                 {
                     var zippackage = "";
@@ -80,72 +84,76 @@ namespace Realestate_portal.Controllers
 
                         var listdetais = (from a in db.Tb_Docpackages_details where (a.ID_docpackage == idpackage && a.URL != "") select a).ToList();
 
-                        //zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
-                        //if (!System.IO.File.Exists(zippackage))
-                        //{
-                        //    using (ZipFile zip = new ZipFile())
-                        //    {
-                        //        foreach (var item in listdetais)
-                        //        {
-                        //            // add this map file into the "images" directory in the zip archive
-                        //            zip.AddFile(Server.MapPath(item.URL), "documents");
-                        //        }
+                        zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
+                       
+                            using (ZipFile zip = new ZipFile())
+                            {
+                                foreach (var item in listdetais)
+                                {
+                                    // add this map file into the "images" directory in the zip archive
+                                    zip.AddFile(Server.MapPath(item.URL), "documents");
+                                }
 
-                        //        zip.Save(zippackage);
-                        //    }
-                        //}
-                            var brokeremail = company_email;
+                                zip.Save(zippackage);
+
+
+                            }
+                        
+
+                        var urlpackage = "";
+                        //subimos paquete a Azure
+                        urlpackage =  imageService.UploadNormal(docpackage.ID_docpackage + "_documentsPack", zippackage, "application/zip");
+
+
+
+
+                        var brokeremail = company_email;
                         try
                         {
 
 
-                            if (brokeremail != null && brokeremail != "" && broker == true)
+                            if (brokeremail != null && brokeremail != "")
                             {
                                 //Enviamos correo para notificar
                                 dynamic emailtosend = new Email("newpackage_notification");
-                                emailtosend.To = brokeremail;
+                                emailtosend.To = "franvelasquez194@gmail.com";
                                 emailtosend.From = "support@s7ven.co";
                                 emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - S7VEN Agents Portal";
                                 emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
-                                foreach (var item in listdetais)
-                                {
-                                    // add this map file into the "images" directory in the zip archive
-                                    emailtosend.Attach(new Attachment(Server.MapPath(item.URL)));
-                                }
-                              
-
+                                emailtosend.url = "Download URL: " + urlpackage;
+                             
                                 emailtosend.Send();
                                 result = "SUCCESS";
 
                             }
-                            if (email!=null && email!="" && extra == true)
-                            {
-                                    //Enviamos correo para notificar
-                                    dynamic emailtosendagent = new Email("newpackage_notification");
-                                    emailtosendagent.To = email;
-                                    emailtosendagent.From = "support@s7ven.co";
-                                    emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - S7VEN Agents Portal";
-                                    emailtosendagent.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
+                            //if (email!=null && email!="" && extra == true)
+                            //{
+                            //        //Enviamos correo para notificar
+                            //        dynamic emailtosendagent = new Email("newpackage_notification");
+                            //        emailtosendagent.To = email;
+                            //        emailtosendagent.From = "support@s7ven.co";
+                            //        emailtosendagent.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + "  - S7VEN Agents Portal";
+                            //        emailtosendagent.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
 
-                                    foreach (var item in listdetais)
-                                    {
-                                        // add this map file into the "images" directory in the zip archive
-                                        emailtosendagent.Attach(new Attachment(Server.MapPath(item.URL)));
-                                    }
+                            //        foreach (var item in listdetais)
+                            //        {
+                            //            // add this map file into the "images" directory in the zip archive
+                            //            emailtosendagent.Attach(new Attachment(Server.MapPath(item.URL)));
+                            //        }
 
-                                emailtosendagent.Send();
-                                    result = "SUCCESS";
-                            }
+                            //    emailtosendagent.Send();
+                            //        result = "SUCCESS";
+                            //}
 
 
-                            if (broker == true || extra == true)
-                            {
+                            //if (broker == true || extra == true)
+                            //{
 
-                            }
-                            else 
-                            {
-                                result = "Data saved but email was not configured";
-                            }
+                            //}
+                            //else 
+                            //{
+                            //    result = "Data saved but email was not configured";
+                            //}
 
                         }
                         catch (Exception ex)
@@ -612,9 +620,15 @@ namespace Realestate_portal.Controllers
                 ViewBag.activeuser = activeuser;
                 ViewBag.company = db.Sys_Company.Where(c=>c.ID_Company==activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
+                ////filtros de fecha 
+                var firstDayOfMonth = DateTime.Now;
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
+
+                Events events = new Events();
+                events = cls_GoogleCalendar.get_eventsGCalendar(firstDayOfMonth, lastDayOfMonth);
                 //Filtros SA
-
+                ViewBag.events = events;
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
                 //

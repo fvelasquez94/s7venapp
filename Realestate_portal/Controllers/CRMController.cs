@@ -841,7 +841,7 @@ namespace Realestate_portal.Controllers
                                  Team = (from t in db.Tb_WorkTeams where (a.ID_team == t.ID_team) select t.Name).FirstOrDefault(),
                                  Agents = (from cu in db.Tb_Customers_Users
                                            join u in db.Sys_Users on cu.Id_User equals u.ID_User
-                                           where ((cu.ID_team == a.ID_team || cu.Id_Customer == a.ID_Customer) && cu.Id_User != 4)
+                                           where ((cu.Id_User == activeuser.ID_User || cu.Id_Customer == a.ID_Customer) && cu.Id_User != 4)
                                            select new TeamsModel_Users
                                            {
                                                Id_User = cu.Id_User,
@@ -857,42 +857,9 @@ namespace Realestate_portal.Controllers
                 {
                     ViewBag.rol = "SA";
                     ViewBag.selbroker = 1;
-
+                  
                     leads = (from a in db.Tb_Customers
                              where (a.Lead == true && a.ID_Company == activeuser.ID_Company)
-                             select new LeadsMain
-                             {
-                                 ID_lead = a.ID_Customer,
-                                 Name = a.LastName + " " + a.Name,
-                                 Marital_status = a.Marital_status,
-                                 Type = a.Type,
-                                 Email = a.Email,
-                                 Phone = a.Phone,
-                                 Creation_date = a.Creation_date,
-                                 ID_Company = a.ID_Company,
-                                 Lead = a.Lead,
-                                 Team = (from t in db.Tb_WorkTeams where (a.ID_team == t.ID_team) select t.Name).FirstOrDefault(),
-                                 Agents = (from cu in db.Tb_Customers_Users
-                                           join u in db.Sys_Users on cu.Id_User equals u.ID_User
-                                           where ((cu.ID_team == a.ID_team || cu.Id_Customer == a.ID_Customer) && cu.Id_User != 4)
-                                           select new TeamsModel_Users
-                                           {
-                                               Id_User = cu.Id_User,
-                                               Name = u.Name,
-                                               Lastname = u.LastName,
-                                               Email = u.Email,
-                                               Url_image = u.Image
-                                           }).Distinct().ToList(),
-
-                             }).ToList();
-                }
-                else if (activeuser.Roles.Contains("Admin"))
-                {
-                    ViewBag.rol = "Admin";
-                    ViewBag.selbroker = 0;
-
-                    leads = (from a in db.Tb_Customers
-                             where (a.Lead == true && a.ID_Company==activeuser.ID_Company)
                              select new LeadsMain
                              {
                                  ID_lead = a.ID_Customer,
@@ -918,10 +885,71 @@ namespace Realestate_portal.Controllers
                                            }).Distinct().ToList(),
 
                              }).ToList();
+
+         
+
+                }
+                else if (activeuser.Roles.Contains("Admin"))
+                {
+                    ViewBag.rol = "Admin";
+                    ViewBag.selbroker = 0;
+
+                    leads = (from a in db.Tb_Customers
+                             where (a.Lead == true && a.ID_Company==activeuser.ID_Company)
+                             select new LeadsMain
+                             {
+                                 ID_lead = a.ID_Customer,
+                                 Name = a.LastName + " " + a.Name,
+                                 Marital_status = a.Marital_status,
+                                 Type = a.Type,
+                                 Email = a.Email,
+                                 ID_team=a.ID_team,
+                                 Phone = a.Phone,
+                                 Creation_date = a.Creation_date,
+                                 ID_Company = a.ID_Company,
+                                 Lead = a.Lead,
+                                 Team = (from t in db.Tb_WorkTeams where (a.ID_team == t.ID_team) select t.Name).FirstOrDefault(),
+                                 Agents = (from cu in db.Tb_Customers_Users
+                                           join u in db.Sys_Users on cu.Id_User equals u.ID_User
+                                           where ((cu.Id_Customer == a.ID_Customer) && cu.Id_User != 4)
+                                           select new TeamsModel_Users
+                                           {
+                                               Id_User = cu.Id_User,
+                                               Name = u.Name,
+                                               Lastname = u.LastName,
+                                               Email = u.Email,
+                                               Url_image = u.Image
+                                           }).Distinct().ToList(),
+
+                             }).ToList();
                 }
 
+                if (leads.Count > 0) {
+                    foreach (var item in leads)
+                    {
+                        if (item.ID_team != null) {
+                            if (item.ID_team != 0) {
+                                //asignamos equipo
+                                var agentsadd = (from cu in db.Tb_Customers_Users
+                                                 join u in db.Sys_Users on cu.Id_User equals u.ID_User
+                                                 where ((cu.Id_Customer == item.ID_lead || cu.ID_team==item.ID_team) && cu.Id_User != 4)
+                                                 select new TeamsModel_Users
+                                                 {
+                                                     Id_User = cu.Id_User,
+                                                     Name = u.Name,
+                                                     Lastname = u.LastName,
+                                                     Email = u.Email,
+                                                     Url_image = u.Image
+                                                 }).Distinct().ToList();
 
-
+                                if (agentsadd.Count > 0) {
+                                    item.Agents.AddRange(agentsadd);
+                                }
+                            }
+                        }
+                    }
+                }
+                
 
 
              

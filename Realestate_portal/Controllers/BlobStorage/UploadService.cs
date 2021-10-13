@@ -94,6 +94,47 @@ namespace Realestate_portal.Controllers.BlobStorage
 
         }
 
+        public string UploadNormal(string fileToUpload, string urlpathdisk, string ContentType)
+        {
+            if (fileToUpload == null || fileToUpload.Length == 0)
+            {
+                return "";
+            }
+            try
+            {
+                CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sevenfiles");
+                cloudBlobContainer.SetPermissionsAsync(
+                       new BlobContainerPermissions
+                       {
+                           PublicAccess = BlobContainerPublicAccessType.Blob
+                       }
+                       );
+                //if (await cloudBlobContainer.CreateIfNotExistsAsync())
+                //{
+                //    await cloudBlobContainer.SetPermissionsAsync(
+                //        new BlobContainerPermissions
+                //        {
+                //            PublicAccess = BlobContainerPublicAccessType.Blob
+                //        }
+                //        );
+                //}
+                string imageName = fileToUpload;
+
+                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(imageName);
+                cloudBlockBlob.Properties.ContentType = ContentType;
+                cloudBlockBlob.UploadFromFileAsync(urlpathdisk);
+
+                return cloudBlockBlob.Uri.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "Error uploading to Cloud: " + ex.Message;
+            }
+
+        }
+
         public async Task<bool> DeleteImageAsync(string filename)
         {
             if (filename == null || filename == "")

@@ -321,7 +321,7 @@ else
                                                     </div>
                                                     <div>
                                                         <input type="text" class="form-control" id="Url" name="Url" required style="display:none" />
-                                                        <input type="file" class="form-control documentfile" id="File" />
+                                                        <input type="file" accept=".xls,.xlsx,.doc,.docx,.pdf,.jpg,.png" class="form-control documentfile" id="File" />
                                                     </div>
 
                                                     <label id="lblsuccessdoc"></label>
@@ -519,7 +519,7 @@ else
                                         <div class="bg-white dark:bg-dark-3 xl:sticky top-0 px-5 pt-5 pb-6">
                                             <div class="flex items-center">
 
-                                                <div class="text-lg font-medium truncate mr-5">   <p data-letters="@Model.Name.Substring(0, 1) @Model.LastName.Substring(1, 1)"></p></div>
+                                                <div class="text-lg font-medium truncate mr-5">   <p data-letters="@Model.Name.Substring(0, 1) @Model.LastName.Substring(0, 1)"></p></div>
 
                                             </div>
                                         </div>
@@ -1459,7 +1459,8 @@ else
 
             }
             else {
-
+                alert("File not allowed");
+                input.value = '';
             }
         });
 

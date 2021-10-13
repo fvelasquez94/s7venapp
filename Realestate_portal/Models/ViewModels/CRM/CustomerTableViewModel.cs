@@ -26,6 +26,7 @@ namespace Realestate_portal.Models.ViewModels.CRM
     {
         public int ID_lead { get; set; }
         public int ID_Company { get; set; }
+        public int? ID_team { get; set; }
         public string Name { get; set; }
         public string Marital_status { get; set; }
         public string Type { get; set; }

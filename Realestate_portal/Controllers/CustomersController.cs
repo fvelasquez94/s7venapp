@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
+using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Models.ViewModels.CRM;
 
 namespace Realestate_portal.Controllers
@@ -143,11 +144,50 @@ namespace Realestate_portal.Controllers
             tb_Customers.ID_team = 0;
             tb_Customers.Gender = "";
             
+
         
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
 
+            //asignamos agente
+            try
+            {
 
+                var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
+                if (agentsassigned.Count() > 0)
+                {
+                    db.Tb_Customers_Users.RemoveRange(agentsassigned);
+                }
+                db.SaveChanges();
+                if (activeuser != null)
+                {
+
+                    Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+
+                    customerUsers.Id_Customer = tb_Customers.ID_Customer;
+                    customerUsers.Id_User = activeuser.ID_User;
+                    customerUsers.ID_team = 0;
+                    customerUsers.Teamleader = false;
+                    db.Tb_Customers_Users.Add(customerUsers);
+                    db.SaveChanges();
+
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "Customer assigned.";
+                    newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                    newnotification.ID_user = activeuser.ID_User;
+                    db.Sys_Notifications.Add(newnotification);
+                    db.SaveChanges();
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+            }
 
 
             return RedirectToAction("Leads", "CRM");
@@ -513,6 +553,62 @@ namespace Realestate_portal.Controllers
                 ViewBag.selbroker = broker;
 
 
+                List<US_State> states;
+
+                states = new List<US_State>(50);
+                states.Add(new US_State("AL", "Alabama"));
+                states.Add(new US_State("AK", "Alaska"));
+                states.Add(new US_State("AZ", "Arizona"));
+                states.Add(new US_State("AR", "Arkansas"));
+                states.Add(new US_State("CA", "California"));
+                states.Add(new US_State("CO", "Colorado"));
+                states.Add(new US_State("CT", "Connecticut"));
+                states.Add(new US_State("DE", "Delaware"));
+                states.Add(new US_State("DC", "District Of Columbia"));
+                states.Add(new US_State("FL", "Florida"));
+                states.Add(new US_State("GA", "Georgia"));
+                states.Add(new US_State("HI", "Hawaii"));
+                states.Add(new US_State("ID", "Idaho"));
+                states.Add(new US_State("IL", "Illinois"));
+                states.Add(new US_State("IN", "Indiana"));
+                states.Add(new US_State("IA", "Iowa"));
+                states.Add(new US_State("KS", "Kansas"));
+                states.Add(new US_State("KY", "Kentucky"));
+                states.Add(new US_State("LA", "Louisiana"));
+                states.Add(new US_State("ME", "Maine"));
+                states.Add(new US_State("MD", "Maryland"));
+                states.Add(new US_State("MA", "Massachusetts"));
+                states.Add(new US_State("MI", "Michigan"));
+                states.Add(new US_State("MN", "Minnesota"));
+                states.Add(new US_State("MS", "Mississippi"));
+                states.Add(new US_State("MO", "Missouri"));
+                states.Add(new US_State("MT", "Montana"));
+                states.Add(new US_State("NE", "Nebraska"));
+                states.Add(new US_State("NV", "Nevada"));
+                states.Add(new US_State("NH", "New Hampshire"));
+                states.Add(new US_State("NJ", "New Jersey"));
+                states.Add(new US_State("NM", "New Mexico"));
+                states.Add(new US_State("NY", "New York"));
+                states.Add(new US_State("NC", "North Carolina"));
+                states.Add(new US_State("ND", "North Dakota"));
+                states.Add(new US_State("OH", "Ohio"));
+                states.Add(new US_State("OK", "Oklahoma"));
+                states.Add(new US_State("OR", "Oregon"));
+                states.Add(new US_State("PA", "Pennsylvania"));
+                states.Add(new US_State("RI", "Rhode Island"));
+                states.Add(new US_State("SC", "South Carolina"));
+                states.Add(new US_State("SD", "South Dakota"));
+                states.Add(new US_State("TN", "Tennessee"));
+                states.Add(new US_State("TX", "Texas"));
+                states.Add(new US_State("UT", "Utah"));
+                states.Add(new US_State("VT", "Vermont"));
+                states.Add(new US_State("VA", "Virginia"));
+                states.Add(new US_State("WA", "Washington"));
+                states.Add(new US_State("WV", "West Virginia"));
+                states.Add(new US_State("WI", "Wisconsin"));
+                states.Add(new US_State("WY", "Wyoming"));
+
+                ViewBag.states = states;
                 //Verificamos si hay un agente directo asignado
                 TeamsModel_Users assigneduser = new TeamsModel_Users();
                 assigneduser = (from cu in db.Tb_Customers_Users
@@ -559,6 +655,7 @@ namespace Realestate_portal.Controllers
                 if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
                 if (tb_Customers.State == null) { tb_Customers.State = ""; }
                 if (tb_Customers.Type == null) { tb_Customers.Type = ""; }
+                if (tb_Customers.Gender == null) { tb_Customers.Gender = ""; }
                 tb_Customers.Creation_date = DateTime.UtcNow;
                 //Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
                 //tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);

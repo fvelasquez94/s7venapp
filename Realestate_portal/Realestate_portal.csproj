@@ -2087,6 +2087,7 @@
     <Content Include="Content\dist\bootstrap\config.json" />
     <Content Include="Views\Users\BrokerProfile.cshtml" />
     <Content Include="Views\Users\CreateBroker.cshtml" />
+    <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

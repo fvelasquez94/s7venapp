@@ -14,8 +14,8 @@ namespace Realestate_portal.Controllers
     public class Cls_GoogleCalendar
     {
         public void Test_googleEvents() {
-            string jsonFile = HttpContext.Current.Server.MapPath("~/Content/poetic-producer-280700-821c738ea972.json");
-            string calendarId = @"58p0dlp7hvhgloss62e8jv341k@group.calendar.google.com";
+            string jsonFile = HttpContext.Current.Server.MapPath("~/Content/api-calendar-app-s7ven-745b1ec4f3eb.json");
+            string calendarId = @"c_qia8qjvjo4g3b5ab7hcgv10f9c@group.calendar.google.com";
 
             string[] Scopes = { CalendarService.Scope.Calendar };
 
@@ -213,6 +213,58 @@ namespace Realestate_portal.Controllers
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// NUEVO PARA CALENDARIO WEBINARS
+        /// </summary>
+        /// <param name="fecha">10/13/2021</param>
+        /// <param name="time">12:50am</param>
+        /// <param name="title">CONECTAR WEBINAR GCALENDAR CON APP</param>
+        /// <param name="details"></param>
+
+        public Events get_eventsGCalendar(DateTime fechadesde, DateTime fechahasta)
+        {
+     
+            string jsonFile = HttpContext.Current.Server.MapPath("~/Content/api-calendar-app-s7ven-745b1ec4f3eb.json");
+            string calendarId = @"c_qia8qjvjo4g3b5ab7hcgv10f9c@group.calendar.google.com";
+
+            string[] Scopes = { CalendarService.Scope.Calendar };
+
+            ServiceAccountCredential credential;
+
+            using (var stream =
+                new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
+            {
+                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                credential = new ServiceAccountCredential(
+                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   {
+                       Scopes = Scopes
+                   }.FromPrivateKey(confg.PrivateKey));
+            }
+
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Calendar API Sample",
+            });
+
+            var calendar = service.Calendars.Get(calendarId).Execute();
+
+            // Define parameters of request.
+            EventsResource.ListRequest listRequest = service.Events.List(calendarId);
+            listRequest.TimeMin = new DateTime(fechadesde.Year, fechadesde.Month, fechadesde.Day, 0, 0, 0);
+            listRequest.TimeMax = new DateTime(fechahasta.Year, fechahasta.Month, fechahasta.Day, 23, 58, 0);
+            listRequest.ShowDeleted = false;
+            listRequest.SingleEvents = true;
+            //listRequest.MaxResults = 18;
+            listRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            // List events.
+            Events events = listRequest.Execute();
+
+            return events;
         }
 
         public void POST_googleEvents(DateTime fecha, DateTime time, string title, string details)
