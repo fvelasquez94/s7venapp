@@ -160,7 +160,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
     
-        public ActionResult Edit(int ID_team, string NameEdit, string DescriptionEdit, int[] agentsEdit, int[] idcustomerEdit, int leaderEdit)
+        public ActionResult Edit(int ID_team, string NameEdit, string DescriptionEdit, int[] agentsEdit, int[] idcustomerEdit, string leaderEdit)
         {
             try {
                 var idcustomersel = 0;
@@ -223,26 +223,29 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
                 }
-
-                //Agregamos Team leader
-                Tb_Customers_Users newteamuserleader = new Tb_Customers_Users();
-                newteamuserleader.Id_Customer = idcustomersel;
-                newteamuserleader.Id_User = leaderEdit;
-                newteamuserleader.ID_team = tb_WorkTeams.ID_team;
-                newteamuserleader.Teamleader = true;
-                db.Tb_Customers_Users.Add(newteamuserleader);
-
-                //Le cambiamos la propiedad para que tenga mas acceso
-                try
+                 if(leaderEdit != null)
                 {
-                    var usuario = db.Sys_Users.Find(leaderEdit);
-                    usuario.Team_Leader = true;
-                    db.Entry(usuario).State = EntityState.Modified;
-                }
-                catch
-                {
+                    //Agregamos Team leader
+                    Tb_Customers_Users newteamuserleader = new Tb_Customers_Users();
+                    newteamuserleader.Id_Customer = idcustomersel;
+                    newteamuserleader.Id_User = Convert.ToInt32(leaderEdit);
+                    newteamuserleader.ID_team = tb_WorkTeams.ID_team;
+                    newteamuserleader.Teamleader = true;
+                    db.Tb_Customers_Users.Add(newteamuserleader);
 
+                    //Le cambiamos la propiedad para que tenga mas acceso
+                    try
+                    {
+                        var usuario = db.Sys_Users.Find(Convert.ToInt32(leaderEdit));
+                        usuario.Team_Leader = true;
+                        db.Entry(usuario).State = EntityState.Modified;
+                    }
+                    catch
+                    {
+
+                    }
                 }
+    
                 db.SaveChanges();
 
                 return RedirectToAction("Teams", "CRM", new { token = "success" });

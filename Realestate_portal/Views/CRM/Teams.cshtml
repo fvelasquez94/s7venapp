@@ -23,16 +23,15 @@
             Teams
         </h2>
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            @if (ViewBag.rol == "SA")
-            {
+            @if (ViewBag.rol != "Agent")
+    {
 
-            }
-            else
-            {
-                <div class="widget-options">
-                    <a class="btn btn-success" href="javascript:;" data-toggle="modal" data-target="#Newteam-modal">Add Team</a>
-                </div>
-            }
+        <div class="widget-options">
+            <a class="btn btn-success" href="javascript:;" data-toggle="modal" data-target="#Newteam-modal">Add Team</a>
+        </div>
+
+}
+
         </div>
     </div>
     <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
@@ -76,12 +75,12 @@
     else if (agent.Url_image.StartsWith("http"))
     {
                     <div class="w-12 h-12 image-fit zoom-in">
-                        <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
                     </div>
 }
 else
 { <div class="w-12 h-12 image-fit zoom-in ">
-                        <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
                     </div>
 }
 
@@ -232,7 +231,7 @@ else
                         <label for="leader" class="form-label">Team Leader</label>
                         @if (user.Team_Leader)
         {
-                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" disabled>
+                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" >
                     @foreach (var item in lstagents)
     {
                 <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>

@@ -149,8 +149,8 @@ else
                     <div class="form-group" style="display:none">
                         <label class="control-label col-md-2">Customer</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("ID_Customer", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ID_Customer, "", new { @class = "text-danger" })
+                            <input type="text" name="ID_Customer" value="@Model.ID_Customer"/>
+                       
                         </div>
                     </div>
 
@@ -190,12 +190,12 @@ else
 else
 {
                                 <option>CLOSED</option>}
-                                @if (Model.Stage == "UNDER CONTRACT")
+                                @if (Model.Stage == "ON CONTRACT")
                 {
-                    <option selected>UNDER CONTRACT</option>}
+                    <option selected>ON CONTRACT</option>}
 else
 {
-                <option>UNDER CONTRACT</option>}
+                <option>ON CONTRACT</option>}
                                 @if (Model.Stage == "FOLLOW UP")
                 {
                 <option selected>FOLLOW UP</option> }

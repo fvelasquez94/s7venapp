@@ -1378,8 +1378,25 @@ namespace Realestate_portal.Controllers
                 //    }
                 //}
              
-                    db.Entry(sys_Users).State = EntityState.Modified;
-                    db.SaveChanges();
+                if (sys_Users.Roles.Contains("Admin")) {
+                    var agents = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles.Contains("Agent")) select a).ToList();
+                    if (agents.Count() > 0)
+                    {
+                        foreach (var item in agents) {
+                            item.Brokerage_address = sys_Users.Brokerage_address;
+                            item.Brokerage_name = sys_Users.Brokerage_name;
+                            item.Broker_Contact = sys_Users.Broker_Contact;
+                            item.Broker_License = sys_Users.Broker_License;
+
+                            db.Entry(item).State = EntityState.Modified;
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+
+                db.Entry(sys_Users).State = EntityState.Modified;
+                db.SaveChanges();
 
                 Session["activeUser"] = (from a in db.Sys_Users where (a.Email == sys_Users.Email && a.Password == sys_Users.Password) select a).FirstOrDefault();
 

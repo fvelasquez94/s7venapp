@@ -241,7 +241,31 @@ else if (ViewBag.rol == "SA")
                 </div>
                 <div class="p-5">
                     <div class="grid grid-cols-12 gap-x-5">
+                        @if (Model.Roles.Contains("Admin")) {
+                                                    <div class="col-span-12 xl:col-span-6">
+                            <div>
+                                <label  class="form-label">Brokerage Name</label>
+                                <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" >
+                            </div>
+                            <div class="mt-3">
+                                <label  class="form-label">Brokerage Address</label>
+                                <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" >
+                            </div>
+                        </div>
                         <div class="col-span-12 xl:col-span-6">
+                            <div class="mt-3 xl:mt-0">
+                                <label  class="form-label">Broker Contact</label>
+                                <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" >
+                            </div>
+                            <div class="mt-3">
+                                <label  class="form-label">Broker License</label>
+                                <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" >
+                            </div>
+
+                        </div>
+                        }
+                        else {
+                                                    <div class="col-span-12 xl:col-span-6">
                             <div>
                                 <label  class="form-label">Brokerage Name</label>
                                 <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
@@ -262,6 +286,8 @@ else if (ViewBag.rol == "SA")
                             </div>
 
                         </div>
+                        }
+
                     </div>
 
                 </div>

@@ -28,16 +28,11 @@
                     Properties
                 </h2>
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
-                    @if (ViewBag.rol == "SA")
-                    {
-
-                    }
-                    else
-                    {
-                        <div class="widget-options">
+           
+                        @*<div class="widget-options">
                             <a class="btn btn-success" href="@Url.Action("Create","Properties")">Add Property</a>
-                        </div>
-                    }
+                        </div>*@
+                    
                 </div>
             </div>
             <div class="p-5" id="basic-table">
@@ -63,8 +58,9 @@
                                     Stage
                                 </th>
                                 <th class="whitespace-nowrap">
-                                    Customer
-                                </th>
+                                    Lead
+                                </th>  
+                          
                                 <th class="whitespace-nowrap">
                                     Type of Agency
                                 </th>
@@ -100,6 +96,7 @@
                                         <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
 
                                     </td>
+                       
                                     <td>
                                         @item.TypeofAgency
                                     </td>

@@ -28,6 +28,8 @@
         <h2 class="text-lg font-medium mr-auto">
             Lead's Dashboard
         </h2>
+
+        <a class="btn btn-primary" href="@Url.Action("Leads","CRM")">Back to Leads</a>
     </div>
     <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
         <!-- BEGIN: Post Content -->
@@ -649,21 +651,21 @@ else
                             {
                                 foreach (var agent in agents)
                                 {
-                                    <div class="w-12 h-12 image-fit zoom-in -ml-4">
-                                        @if (agent.Url_image == "")
-                    {
-                        <img alt="@agent.Name" class="tooltip rounded-full" src="~/Content/dist/images/preview-11.jpg" title="@agent.Name">
+                                                <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                    @if (agent.Url_image == "")
+    {
+                                                <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
 }
 else if (agent.Url_image.StartsWith("http"))
 {
-                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
 }
 else
 {
-                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
 }
 
-                                    </div>
+                                                </div>
             }
 
         }
@@ -737,7 +739,7 @@ else
                                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                         @if (item.Url_image == "")
                     {
-                        <div class="tooltip text-lg  image-fit zoom-in font-medium truncate -ml-4" title="@item.Created_By">   <p data-letters="@item.Created_By.Substring(0, 2)"></p></div>
+                        <div class="tooltip text-lg  image-fit zoom-in font-medium truncate " title="@item.Created_By">   <p data-letters="@item.Created_By.Substring(0, 1)"></p></div>
 }
 else if (item.Url_image.StartsWith("http"))
 {

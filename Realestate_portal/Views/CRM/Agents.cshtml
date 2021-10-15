@@ -24,11 +24,14 @@
                     Agents
                 </h2>
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
-         
-                        <div class="widget-options">
-                            <a class="btn btn-success" href="@Url.Action("Create","Users", new {broker=ViewBag.selbroker })">Add Agent</a>
-                        </div>
-                    
+                    @if (ViewBag.rol != "Agent")
+    {
+                <div class="widget-options">
+                    <a class="btn btn-success" href="@Url.Action("Create","Users", new {broker=ViewBag.selbroker })">Add Agent</a>
+                </div>
+}
+
+
                 </div>
             </div>
             <div class="p-5" id="basic-table">

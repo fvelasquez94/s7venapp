@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Dashboard";
     List<Realestate_portal.Models.Tb_Customers> lstleads = (List<Realestate_portal.Models.Tb_Customers>)ViewBag.leads;
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
+    List<Realestate_portal.Models.Sys_Users> lstagents = (List<Realestate_portal.Models.Sys_Users>)ViewBag.agents;
 }  
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 2xl:col-span-9">
@@ -17,7 +19,6 @@
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 xl:col-span-4">
-
                         <div class="box p-5 ">
                             @if (ViewBag.rol == "Agent")
                             {
@@ -80,14 +81,7 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         Gains Report
                     </h2>
-                    <div class="sm:ml-auto mt-3 sm:mt-0  text-gray-700 dark:text-gray-300">
-                     
-                        <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a>
-                        <div id="reportrange" class="form-control sm:w-56 box pl-10 mb-5">
-                            <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
-                            <span></span>
-                        </div>
-                    </div>
+                   
                 </div>
                 <div class="intro-y box p-5 mt-12 sm:mt-5">
                     <div class="flex flex-col xl:flex-row xl:items-center">
@@ -230,25 +224,49 @@
                         </h2>
                     </div>
                     <div class="mt-5">
-                        @if (ViewBag.rol != "Agent")
-                        {
-                        <div class="intro-x">
-                            <a href="@Url.Action("Agents", "CRM")">
-                                <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                    <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                        <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
-                                    </div>
-                                    <div class="ml-4 mr-auto">
-                                        <div class="font-medium">Agents</div>
+                        @if (ViewBag.rol == "Agent")
+        {
+            if (user.Team_Leader)
+            {
+                <div class="intro-x">
+                    <a href="@Url.Action("Agents", "CRM")">
+                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
+                            </div>
+                            <div class="ml-4 mr-auto">
+                                <div class="font-medium">Agents</div>
 
-                                    </div>
-                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
+                            </div>
+                            <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
 
-                                </div>
-                            </a>
                         </div>
-                        }
+                    </a>
+                </div>
+}
 
+}
+                        @if (ViewBag.rol != "Agent")
+        {
+
+                <div class="intro-x">
+                    <a href="@Url.Action("Agents", "CRM")">
+                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
+                            </div>
+                            <div class="ml-4 mr-auto">
+                                <div class="font-medium">Agents</div>
+
+                            </div>
+                            <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
+
+                        </div>
+                    </a>
+                </div>
+
+
+}
                         <div class="intro-x">
                             <a href="@Url.Action("Leads", "CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -264,24 +282,24 @@
                                 </div>
                             </a>
                         </div>
-                         @if (ViewBag.rol != "Agent")
-                        {
-                        <div class="intro-x">
-                            <a href="@Url.Action("Teams", "CRM")">
-                                <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                    <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                        <img alt="S7VEN" src="~/Content/dist/images/goal.png">
-                                    </div>
-                                    <div class="ml-4 mr-auto">
-                                        <div class="font-medium">Teams</div>
+                        @if (ViewBag.rol != "Agent")
+        {
+                <div class="intro-x">
+                    <a href="@Url.Action("Teams", "CRM")">
+                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                <img alt="S7VEN" src="~/Content/dist/images/goal.png">
+                            </div>
+                            <div class="ml-4 mr-auto">
+                                <div class="font-medium">Teams</div>
 
-                                    </div>
-                                    <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalteams</div>
+                            </div>
+                            <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalteams</div>
 
-                                </div>
-                            </a>
                         </div>
-                        }
+                    </a>
+                </div>
+}
                         <div class="intro-x">
                             <a href="@Url.Action("Tasks","CRM")">
                                 <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -299,6 +317,84 @@
                             </a>
                         </div>
                     </div>
+                    @if (ViewBag.rol == "Agent")
+    {
+        if (user.Team_Leader)
+        {
+                <div class="intro-x flex items-center h-10">
+                    <h2 class="text-lg font-medium truncate mr-5">
+                        Filters
+                    </h2>
+
+                </div>
+                <div class="mt-5">
+                    <label>By date</label>
+                    <div id="reportrange" class="form-control  box pl-10 mb-5">
+                        <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
+                        <span></span>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <label>By agent</label>
+                    <select class="form-control" id="filteragent">
+                        <option value="0">All Agents</option>
+                        @foreach (var item in lstagents.OrderBy(c => c.Name))
+        {
+            if (item.ID_User == ViewBag.agent)
+            {
+                <option value="@item.ID_User" selected>@item.Name @item.LastName</option>
+}
+else
+{
+                <option value="@item.ID_User">@item.Name @item.LastName</option>
+}
+
+}
+                    </select>
+                </div>
+                <div class="mt-5"> <a href="#" onclick="filterSObydate()" class="btn btn-primary">Apply filters</a>  <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a></div>
+
+}
+}
+
+                    @if (ViewBag.rol != "Agent")
+    {
+                <div class="intro-x flex items-center h-10">
+                    <h2 class="text-lg font-medium truncate mr-5">
+                        Filters
+                    </h2>
+
+                </div>
+                <div class="mt-5">
+                    <label>By date</label>
+                    <div id="reportrange" class="form-control  box pl-10 mb-5">
+                        <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
+                        <span></span>
+                    </div>
+
+                </div>
+                <div class="mt-5">
+                    <label>By agent</label>
+                    <select class="form-control" id="filteragent">
+                        <option value="0">All Agents</option>
+                        @foreach (var item in lstagents.OrderBy(c => c.Name))
+        {
+            if (item.ID_User == ViewBag.agent)
+            {
+                <option value="@item.ID_User" selected>@item.Name @item.LastName</option>
+}
+else
+{
+                <option value="@item.ID_User">@item.Name @item.LastName</option>
+}
+
+}
+                    </select>
+                </div>
+                <div class="mt-5"> <a href="#" onclick="filterSObydate()" class="btn btn-primary">Apply filters</a>  <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a></div>
+
+}
                 </div>
                 <!-- END: Transactions -->
                 <!-- BEGIN: Recent Activities -->
@@ -516,7 +612,7 @@
             if (flag == 0) {
                 flag = 1;
             } else {
-                filterSObydate();
+                //filterSObydate();
             }
 
 
@@ -539,9 +635,9 @@
 
         cb(start, end);
 
+    }
 
-
-        function filterSObydate() {
+            function filterSObydate() {
             var st = new Date($('#reportrange').data('daterangepicker').startDate);
             var ed = new Date($('#reportrange').data('daterangepicker').endDate);
 
@@ -577,19 +673,18 @@
             }
             ed = mm2 + '/' + dd2 + '/' + yyyy2;
 
-            var url = '@Url.Action("CRMDashboard", "CRM", new { fstartd = "dad", fendd="tfe" })';
+            var agent = $("#filteragent").val();
+
+            var url = '@Url.Action("CRMDashboard", "CRM", new { fstartd = "dad", fendd="tfe", agent="sss" })';
             url = url.replace('dad', st);
             var newurl = url;
             newurl = newurl.replace('tfe', ed);
+            newurl = newurl.replace('sss', agent);
 
             newurl = newurl.replace(/&amp;/g, "&");
 
             window.location.href = newurl;
         };
-
-    }
-
-    
 
 
 </script>

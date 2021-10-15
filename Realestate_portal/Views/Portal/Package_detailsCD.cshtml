@@ -16,6 +16,13 @@
 
     </div>
 </div>
+<div id="basic-non-sticky-notification-content2" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data sent successfully to the email!</div>
+
+    </div>
+</div>
 
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
@@ -32,14 +39,14 @@
                     Document Package Details
                 </h2>
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
-                    @if (Model.Count > 0)
+                    @*@if (Model.Count > 0)
                     {
                         if (Model.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
-                        {
-                            <a class="btn btn-success" id="sendtoBroker">Send to Broker</a>
-                        }
+                        {*@
+                            <input type="text" placeholder="Email to send package" id="emailsend" class="form-control" /><a href="#" class="btn btn-success" id="sendtoBroker">Send package</a>
+                             
 
-                    }
+                         
                 </div>
 
             </div>
@@ -161,6 +168,7 @@
 <!-- BEGIN: Bordered Table -->
 
 <button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+<button id="basic-non-sticky-notification-toggle2" style="display:none" class="btn btn-primary">Show Notification</button>
 
 
 <script type="text/javascript">
@@ -174,24 +182,67 @@
         broker.onclick= function () {
 
             var idpack = '@package.ID_docpackage';
-            var data = { idpackage: idpack};
-            $.ajax({
-              url:'@Url.Action("SendPackage", "Portal")',
-                type: 'POST',
-                data: data,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                processData: true,
-                success: function (response) {
-                    if (response == "SUCCESS") {
-                        var link = document.getElementById('basic-non-sticky-notification-toggle');
-                        link.click();
-                    }
+            var email = $("#emailsend").val();
+           
 
-                },
-                error: function (response) {
-                    alert(response);
-                }
-            });
+            if (email != "") {
+
+                swal.fire({
+                    title: 'Do you want to send this package to the email?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#15b178',
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: 'Yes, send it'
+                }).then((result) => {
+                    if (result.value) {
+                        $("#sendtoBroker").html("Sending package, please wait");
+                       
+                              var data = { idpackage: idpack, email: email };
+                $.ajax({
+                    url: '@Url.Action("SendPackage", "Portal")',
+                    type: 'POST',
+                    data: data,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    processData: true,
+                    success: function (response) {
+                        if (response == "SUCCESS") {
+                            Swal.fire(
+                                'Email sent successfully',
+                                'The email has been sent.',
+                                'success'
+                            )
+
+                            $("#sendtoBroker").html("Send package");
+                        } else {
+                            Swal.fire(
+                                'Email not sent',
+                                'Error when trying to send the package to the email, please check email or try again.',
+                                'error'
+                            )
+                            $("#sendtoBroker").html("Send package");
+                        }
+
+                    },
+                    error: function (response) {
+                        alert(response);
+                        $("#sendtoBroker").html("Send package");
+                    }
+                });
+
+
+      
+
+
+                    }
+                })
+
+          
+            } else {
+                alert("Type a valid email");
+            }
+
 
         }
 

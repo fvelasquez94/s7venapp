@@ -61,7 +61,7 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendPackage(int idpackage)
+        public ActionResult SendPackage(int idpackage, string email="")
         {
             var result = "";
             try
@@ -107,7 +107,14 @@ namespace Realestate_portal.Controllers
 
 
 
-                        var brokeremail = company_email;
+                        var brokeremail = "";
+                        if (email=="") {
+                            brokeremail = company_email;
+                        }
+                        else {
+                            brokeremail = email;
+                        }
+
                         try
                         {
 
@@ -116,7 +123,7 @@ namespace Realestate_portal.Controllers
                             {
                                 //Enviamos correo para notificar
                                 dynamic emailtosend = new Email("newpackage_notification");
-                                emailtosend.To = "franvelasquez194@gmail.com";
+                                emailtosend.To = brokeremail;
                                 emailtosend.From = "support@s7ven.co";
                                 emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - S7VEN Agents Portal";
                                 emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
@@ -1087,7 +1094,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstdocpacakges = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && a.original == false) select a).ToList();
+                        lstdocpacakges = (from a in db.Tb_Docpackages where (a.original == false) select a).ToList();
                     }
                     else
                     {
@@ -2176,7 +2183,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstmarketing = (from a in db.Tb_Marketing where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        lstmarketing = (from a in db.Tb_Marketing  select a).ToList();
                     }
                     else
                     {
@@ -3550,7 +3557,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstresources = (from a in db.Tb_Resources where (a.ID_Company == activeuser.ID_Company && (a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
+                        lstresources = (from a in db.Tb_Resources where ((a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
 
                     }
                     else
@@ -3868,7 +3875,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        lstnetwork = (from a in db.Tb_Network select a).ToList();
                     }
                     else
                     {

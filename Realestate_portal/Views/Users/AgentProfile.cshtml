@@ -91,8 +91,8 @@ else if (ViewBag.rol == "SA")
     <!-- END: Profile Info -->
     <div class="tab-content mt-5">
         <div id="account" class="tab-pane" role="tabpanel" aria-labelledby="account-tab">
-            @using (Html.BeginForm("EditAgent","Users", FormMethod.Post))
-    {
+            @using (Html.BeginForm("EditAgent", "Users", FormMethod.Post))
+            {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID_User)
@@ -176,23 +176,23 @@ else if (ViewBag.rol == "SA")
                                         <label  class="form-label">State</label>
                                         <select class="form-control" id="State" name="State">
                                             @foreach (var state in lstsates)
-                                    {
-                                        if (state.Abbreviations == Model.State)
-                                        {
+                                            {
+                                                if (state.Abbreviations == Model.State)
+                                                {
                                             <option value="@state.Abbreviations" selected>@state.Name</option>
-                                }
-                                else
-                                {
+                                                }
+                                                else
+                                                {
                                     <option value="@state.Abbreviations">@state.Name</option>
-                        }
-                    }
+                                                }
+                                            }
 
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div class="mt-3">
-                                        @if (ViewBag.rol == "Admin")
+                                        @if (ViewBag.rol == "Admin" || ViewBag.rol=="SA")
                                 {
                                     <label class="form-label" for="Active">Active user?</label>
                                     <div class="mt-3">
@@ -215,8 +215,8 @@ else if (ViewBag.rol == "SA")
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div class="mt-3">
-                                        @if (ViewBag.rol == "Admin")
-                                {
+                                        @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                                        {
                                     <label class="form-label" for="Team_Leader">Team Leader?</label>
                                     <div class="mt-3">
                                         @Html.EditorFor(model => model.Team_Leader)
