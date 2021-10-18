@@ -334,6 +334,7 @@ namespace Realestate_portal.Controllers
                 if (tb_Process.Loan_Officer_tel == null) { tb_Process.Loan_Officer_tel = ""; }
                 if (tb_Process.Attorneys_tel == null) { tb_Process.Attorneys_tel = ""; }
                 if (tb_Process.Notes == null) { tb_Process.Notes = ""; }
+                if (tb_Process.Source == null) { tb_Process.Source = ""; }
                 //var usuarioantes = (from a in db.Tb_Process.Where(c => c.ID_Process == tb_Process.ID_Process) select a).AsNoTracking().FirstOrDefault();                                          
                 db.Entry(tb_Process).State = EntityState.Modified;
                 db.SaveChanges();

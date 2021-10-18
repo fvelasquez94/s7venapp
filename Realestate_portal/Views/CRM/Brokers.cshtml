@@ -41,7 +41,7 @@
                                 <tr class="text-white" style="background-color:#162343">
                                     <th class="whitespace-nowrap">
                                         ID
-                                    </th >
+                                    </th>
                                     <th class="whitespace-nowrap">
                                         NAME
                                     </th>
@@ -72,12 +72,12 @@
                                                     <label>No image</label>
                                                 }
                                                 else if (item.Logo.StartsWith("http"))
-                                                {<div >
+                                                {<div>
                                                         <img alt="@item.Name" class="tooltip" src="@item.Logo" title="@item.Name" style="width:70px">
                                                     </div>
                                                 }
                                                 else
-                                                { <div >
+                                                { <div>
                                                         <img alt="@item.Name" class="tooltip " src="@Url.Content(item.Logo)" title="@item.Name" style="width:70px">
                                                     </div>
                                                 }
@@ -87,8 +87,8 @@
                                             <td>
                                                 <a class="flex items-center mr-3" href="@Url.Action("BrokerProfile", "Users", new { id = item.ID_Company})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Details </a>
 
-                                                @*<a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteBroker(@item.ID_Company)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>*@
-                                             
+                                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteBroker(@item.ID_Company)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+
                                             </td>
                                         </tr>
                                     }
@@ -108,5 +108,52 @@
         </div>
 
     </div>
-    </div>
+</div>
 
+@section scripts{
+    <script>
+        function deleteBroker(idbroker) {
+
+            swal.fire({
+                title: 'Do you want to delete?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Sys_Company/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idbroker },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
+
+
+    </script>}

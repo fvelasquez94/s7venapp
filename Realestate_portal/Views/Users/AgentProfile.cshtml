@@ -275,7 +275,9 @@ else if (ViewBag.rol == "SA")
                                 <label  class="form-label">Broker License</label>
                                 <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
                             </div>
-
+                            <div style="display:none">
+                                <input type="text" value="@Model.Image" name="Image"/>
+                            </div>
                         </div>
                     </div>
 

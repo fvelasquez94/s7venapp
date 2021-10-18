@@ -475,14 +475,125 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Sys_Company/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+   
         public ActionResult DeleteConfirmed(int id)
         {
-            Sys_Company sys_Company = db.Sys_Company.Find(id);
-            db.Sys_Company.Remove(sys_Company);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+     
+
+
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                
+                Sys_Company sys_Company = db.Sys_Company.Find(id);
+
+                if (activeuser.ID_Company != id && id!=1)
+                {
+                    int id_company = sys_Company.ID_Company;
+              
+
+
+                    var customer = db.Tb_Customers.Where(c => c.ID_Company == id_company).ToList();
+                    var customerarr = db.Tb_Customers.Where(c => c.ID_Company == id_company).Select(c => c.ID_Customer).ToArray();
+                    //Eliminar asignacion de agentes a clientes
+                    var agentsteams = db.Tb_Customers_Users.Where(c => customerarr.Contains(c.Id_Customer)).ToList();
+                    if (agentsteams.Count > 0)
+                    {
+                        db.Tb_Customers_Users.RemoveRange(agentsteams);
+                        db.SaveChanges();
+                    }
+                    //eliminar equipos
+                    var teams = db.Tb_WorkTeams.Where(c => c.ID_Company == id_company).ToList();
+                    if (teams.Count > 0)
+                    {
+                        db.Tb_WorkTeams.RemoveRange(teams);
+                        db.SaveChanges();
+                    }
+                    //Eliminar tareas
+                    var task = db.Tb_Tasks.Where(c => c.ID_Company == id_company).ToList();
+                    if (task.Count > 0)
+                    {
+                        db.Tb_Tasks.RemoveRange(task);
+                        db.SaveChanges();
+                    }
+                    //eliminar notas
+                    var notas = db.Tb_Notes.Where(c => customerarr.Contains(c.ID_Customer)).ToList();
+                    if (notas.Count > 0)
+                    {
+                        db.Tb_Notes.RemoveRange(notas);
+                        db.SaveChanges();
+                    }
+                    //eliminar documentos
+                    var docs = db.Tb_Docpackages.Where(c => c.ID_Company == id_company).ToList();
+                    var docsarr = db.Tb_Docpackages.Where(c => c.ID_Company == id_company).Select(c => c.ID_docpackage).ToArray();
+                    if (docs.Count > 0)
+                    {
+                        var details = db.Tb_Docpackages_details.Where(c => docsarr.Contains(c.ID_docpackage)).ToList();
+                        if (details.Count > 0)
+                        {
+                            db.Tb_Docpackages_details.RemoveRange(details);
+                            db.SaveChanges();
+                        }
+                        db.Tb_Docpackages.RemoveRange(docs);
+                        db.SaveChanges();
+                    }
+
+                    //eliminar propiedades
+                    var properties = db.Tb_Process.Where(c => customerarr.Contains(c.ID_Customer)).ToList();
+                    if (properties.Count > 0)
+                    {
+                        db.Tb_Process.RemoveRange(properties);
+                        db.SaveChanges();
+                    }
+                    //eliminar agentes
+                    var agents = db.Sys_Users.Where(c => c.ID_Company == id_company).ToList();
+                    var agentsarr = db.Sys_Users.Where(c => c.ID_Company == id_company).Select(c => c.ID_User).ToList();
+                    if (agents.Count > 0)
+                    {
+                        //eliminamos documentos de clientes
+                        var docsagent = db.Tb_DocuAgent.Where(c => agentsarr.Contains((int)c.Id_User)).ToList();
+                        if (docsagent.Count > 0)
+                        {
+                            db.Tb_DocuAgent.RemoveRange(docsagent);
+                            db.SaveChanges();
+                        }
+                        db.Sys_Users.RemoveRange(agents);
+                        db.SaveChanges();
+                    }
+                    //Eliminar clientes     
+                    if (customer.Count > 0)
+                    {
+                        //eliminamos documentos de clientes
+                        var docscust = db.Tb_LeadDocs.Where(c => customerarr.Contains((int)c.Id_Customer)).ToList();
+                        if (docscust.Count > 0) {
+                            db.Tb_LeadDocs.RemoveRange(docscust);
+                            db.SaveChanges();
+                        }
+                        db.Tb_Customers.RemoveRange(customer);
+                        db.SaveChanges();
+                    }
+
+         
+
+
+                    db.Sys_Company.Remove(sys_Company);
+                    db.SaveChanges();
+                    var result = "Success";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else {
+                    var result = "Error, you can not delete the selected Broker because is in use.";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
         protected override void Dispose(bool disposing)
