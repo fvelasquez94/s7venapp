@@ -21,6 +21,22 @@ namespace Realestate_portal.Models.ViewModels.CRM
         public string User_assigned { get; set; }
         public System.DateTime Creation_date { get; set; }
         public string DateString { get; set; }
-
     }
+    public class LeadsMain
+    {
+        public int ID_lead { get; set; }
+        public int ID_Company { get; set; }
+        public int? ID_team { get; set; }
+        public string Name { get; set; }
+        public string Marital_status { get; set; }
+        public string Type { get; set; }
+        public string Team { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public bool Lead { get; set; }
+        public System.DateTime Creation_date { get; set; }
+        public List<TeamsModel_Users> Agents { get; set; }
+    }
+
+
 }

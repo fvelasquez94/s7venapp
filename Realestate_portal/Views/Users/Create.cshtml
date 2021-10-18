@@ -2,293 +2,87 @@
 @using Realestate_portal.Models
 @{
     ViewBag.Title = "New Agent";
-    Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
     Realestate_portal.Models.Sys_Users activeus = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
     List<Sys_Users> leaders = ViewBag.leaders;
 }
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">AGENTS</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Page Header -->
-    <!-- Begin Widget 08 -->
-    <div class="widget widget-08" style="width: 100%;background-color:transparent">
 
-        <!-- Begin Widget -->
-        <div class="widget has-shadow">
-            <div class="widget-header bordered no-actions d-flex align-items-center">
-                @if (ViewBag.leader == true)
-                {
-                    <h4>NEW TEAM LEADER</h4>
-                }
-                else
-                {
-                    <h4>NEW AGENT</h4>
-                }
-
-            </div>
-            <!-- End Widget Header -->
-            <!-- Begin Widget Body -->
-            <div class="widget-body sliding-tabs" style="padding-bottom:250px">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                <div class="form-horizontal">
-
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Last Name</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <input type="email" name="Email" id="Emailconst" class="form-control" required />
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Telephone</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Main_telephone, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Main_telephone, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @*<input type="text" class="form-control" name="Position" id="Position" value="Real Estate Salesperson" readonly />*@
-                            <select class="form-control" name="Position" id="Position" onchange="teamChange()">
-                                <option value="Real Estate Salesperson">Real Estate Salesperson</option>
-                                @if (ViewBag.leader == true)
-                                {
-                                    <option value="Team leader" selected>Team leader</option>
-                                }
-                                else
-                                {
-                                    <option value="Team leader">Team leader</option>
-                                }
-
-                            </select>
-                            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Team Name</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="Leader_Name" id="Leader_Name" />
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Brokerage Name</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="Brokerage_name" value="@activeus.Name" readonly />
-                            @Html.ValidationMessageFor(model => model.Brokerage_name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-12">Brokerage Address</label>
-                        <div class="col-md-10">
-
-                            <input type="text" class="form-control" name="Brokerage_address" value="@activeus.Brokerage_address" readonly />
-                            @Html.ValidationMessageFor(model => model.Brokerage_address, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-12">Broker Contact</label>
-                        <div class="col-md-10">
-
-                            <input type="text" class="form-control" name="Broker_Contact" value="@activeus.Broker_Contact" readonly />
-                            @Html.ValidationMessageFor(model => model.Broker_Contact, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-12">Broker License</label>
-                        <div class="col-md-10">
-
-                            <input type="text" class="form-control" name="Broker_License" value="@activeus.Broker_License" readonly />
-                            @Html.ValidationMessageFor(model => model.Broker_License, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2" id="lblteamleader">Team leader</label>
-                        <div class="col-md-1">
-                            <div class="checkbox" onclick="hideDropDown()">
-
-                                @Html.EditorFor(model => model.Team_Leader, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                    </div>
-                    @if (leaders.Count > 0)
-                    {
-
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2" id="lblteamassignation">Team leader assignation</label>
-                            <div class="col-md-10">
-                                <select class="form-control" name="Id_Leader" id="Id_Leader" onchange="teamLeader()" onclick="teamLeader()">
-                                    <option></option>
-
-                                    @foreach (var item in leaders)
-                                    {
-
-                                        <option value="@item.ID_User">@item.Leader_Name</option>
-
-
-                                    }
-                                </select>
-
-                            </div>
-                        </div>
-                    }
-
-
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" id="submitbuttoncreate" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-                }
-
-                <input type="hidden" id="checkemail" />
-            </div>
-        </div>
-    </div>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        New Agent User
+    </h2>
 </div>
-<script type="text/javascript">
-    function hideDropDown() {
-        var checkBox = document.getElementById('Team_Leader');
-        var dropLeader = document.getElementById('Id_Leader');
-        var position = document.getElementById('Position');
-        var teamName = document.getElementById('Leader_Name');
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Input -->
+        @using (Html.BeginForm())
+        {
+        @Html.AntiForgeryToken()
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                <h2 class="font-medium text-base mr-auto">
+                    Create new account
+                </h2>
+            </div>
+            <div id="input" class="p-5">
+                <div class="preview">
+                    <div>
+                        <label for="Name" class="form-label">Name</label>
+                        <input id="Name" name="Name" type="text" class="form-control" placeholder="" required>
+                    </div>
+                    <div>
+                        <label for="LastName" class="form-label">Last Name</label>
+                        <input id="LastName" name="LastName" type="text" class="form-control" placeholder="" required>
+                    </div>
 
-        if (checkBox.checked == true) {
-            dropLeader.style.display = "none";
-            teamName.style.display = "block"
-            position.value = 'Team leader';
+                    <div class="mt-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input id="Email" type="email" name="Email" class="form-control" placeholder="" required>
+                        <div class="form-help">User password will autogenerated and send it to this email.</div>
+                    </div>
+                    <div>
+                        <label for="Address" class="form-label">Address</label>
+                        <input id="Address" name="Address" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="mt-3">
+                        <label for="Main_telephone" class="form-label">Telephone</label>
+                        <input id="Main_telephone" name="Main_telephone" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="mt-3">
+                        <label for="Position" class="form-label">Position</label>
+                        <select class="form-control" name="Position" id="Position">
+                            <option value="Real Estate Salesperson">Real Estate Salesperson</option>
+                            <option value="Team leader">Team leader</option>
 
+
+                        </select>
+                    </div>
+                    <div class="mt-3">
+                        <label for="Brokerage_name" class="form-label">Brokerage Name</label>
+                        <input type="text" class="form-control" id="Brokerage_name" name="Brokerage_name" value="@activeus.Name" readonly />
+                    </div>
+                    <div class="mt-3">
+                        <label for="Brokerage_address" class="form-label">Brokerage Address</label>
+                        <input type="text" class="form-control" id="Brokerage_address" name="Brokerage_address" value="@activeus.Brokerage_address" readonly />
+                    </div>
+                    <div class="mt-3">
+                        <label for="Broker_Contact" class="form-label">Broker Contact</label>
+                        <input type="text" class="form-control" id="Broker_Contact" name="Broker_Contact" value="@activeus.Broker_Contact" readonly />
+                    </div>
+                    <div class="mt-3">
+                        <label for="Broker_License" class="form-label">Broker License</label>
+                        <input type="text" class="form-control" id="Broker_License" name="Broker_License" value="@activeus.Broker_License" readonly />
+                    </div>
+                    <div class="mt-5">
+                        <input type="submit" value="Create new account" id="submitbuttoncreate" class="btn btn-primary" />
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
         }
-        else {
-            dropLeader.style.display = "block";
-            teamName.style.display = "none";
-            position.value ='Real Estate Salesperson';
-        }
+        <!-- END: Input -->
 
-        console.log(checkBox.checked);
-    }
-
-    function teamLeader() {
-        var dropLeader = document.getElementById('Id_Leader');
-        var teamName = document.getElementById('Leader_Name');
-
-        teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
-        console.log(dropLeader.value);
-        console.log(dropLeader.options[dropLeader.selectedIndex].text);
-
-
-    }
-
-    function teamChange() {
-        var checkBox = document.getElementById('Team_Leader');
-        var dropLeader = document.getElementById('Id_Leader');
-        var position = document.getElementById('Position');
-        var teamName = document.getElementById('Leader_Name');
-
-        if (position.value === 'Team leader') {
-            checkBox.checked = true;
-            dropLeader.style.display = "none";
-            teamName.style.display = "block"
-            teamName.value = "";
-        }
-        else {
-            checkBox.checked = false;
-            dropLeader.style.display = "block";
-            teamName.style.display = "none";
-            teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
-        }
-
-    }
-
-    window.onload = function () {
-        var teamName = document.getElementById('Leader_Name');
-        teamName.style.display = "none";
-    }
-
-    
-</script>
-@if (ViewBag.leader == true)
-{
-    <script>
-        window.onload = function () {
-            var checkBox = document.getElementById('Team_Leader');
-            var dropLeader = document.getElementById('Id_Leader');
-            var position = document.getElementById('Position');
-            var label1 = document.getElementById('lblteamleader');
-            var label2 = document.getElementById('lblteamassignation');
-            var teamName = document.getElementById('Leader_Name');
-
-            dropLeader.style.display = "none";
-            checkBox.checked = true;
-            teamName.style.display = "block";
-            position.value = "Team leader";
-            checkBox.style.display = "none"
-            label1.style.display = "none";
-            label2.style.display = "none";
-        }
-    </script>
-}
+ 
+    </div>
+    </div>

@@ -1,0 +1,775 @@
+﻿@model List<Realestate_portal.Models.Tb_Resources>
+@{
+    ViewBag.Title = "Resources";
+}
+
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">RESOURCES FOR BROKERS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Row -->
+
+
+    <div class="row">
+
+
+        <!-- Begin Widget Header -->
+        <!-- End Widget Header -->
+        <!-- Begin Widget Body -->
+        <div class="widget-body" style="width:100%">
+            <div class="widget-header bordered d-flex align-items-center">
+                <div class="today">
+                    <div class="title">CHECK</div>
+                    <div class="new-tasks">ALL RESOURCES FOR BROKERS  </div>
+                </div><h2></h2>
+                      <div class="widget-options">
+                          @if (ViewBag.rol == "SA")
+    {
+                      <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+                      <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewText">Add Campaign</a>
+                      <a class="btn btn-shadow" href="@Url.Action("Resourcesbroker_management", "Portal", new { broker=ViewBag.selbroker})">Management</a>
+}
+
+                      </div>
+            </div><br />
+ 
+                <!-- Begin Events -->
+                <div class="col-md-12" style="background-color:white">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="i-vert-tab-1" data-toggle="tab" href="#i-v-tab-1" role="tab" aria-controls="i-v-tab-1" aria-selected="true"><i class="la la-file-text" style="font-size: 50px;color:brown"></i>Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="i-vert-tab-2" data-toggle="tab" href="#i-v-tab-2" role="tab" aria-controls="i-v-tab-2" aria-selected="false"><i class="la la-weixin" style="font-size: 50px;color:coral"></i>Scripts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="i-vert-tab-3" data-toggle="tab" href="#i-v-tab-3" role="tab" aria-controls="i-v-tab-3" aria-selected="false"><i class="la la-envelope" style="font-size: 50px;color:cornflowerblue"></i>Email Campaigns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="i-vert-tab-4" data-toggle="tab" href="#i-v-tab-4" role="tab" aria-controls="i-v-tab-4" aria-selected="false"><i class="la la-book" style="font-size: 50px;color:forestgreen"></i>Text Campaigns</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content d-flex align-items-center">
+                        <div class="tab-pane fade show active" style="width:100% !important" id="i-v-tab-1" role="tabpanel" aria-labelledby="i-vert-tab-1">
+                            <div class="widget widget-20">
+                                <!-- Begin Widget Header -->
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <h2>Documents</h2>
+                                </div>
+
+                                <!-- End Widget Header -->
+                                <div class="widget-body">
+
+                                    <div class="form-group row d-flex align-items-center mt-3 mb-5">
+                                        <label class="form-control-label">By Category</label>
+                                        <select class="selectpicker show-menu-arrow" id="filterbycatDocs" multiple>
+                                            <option>Buying</option>
+                                            <option>Brokerage</option>
+                                            <option>Commercial</option>
+                                            <option>Land</option>
+                                            <option>MLS</option>
+                                            <option>Rental</option>
+                                            <option>Selling</option>
+                                        </select>
+
+                                        <div class="col-md-6">
+                                            <input type="text" id="myInputDocs" class="form-control" onkeyup="searchin_li()" placeholder="Type here to search" style="width:100%">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mr-0 ml-0">
+                                        @if (Model.Where(a => a.Type == "Documents Broker").Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Type == "Documents Broker"))
+                        {
+                            <div id="id_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center mb-4 sortableDocs" style="display:flex">
+                                <div class="media w-100">
+
+                                    @if (item.Extension_file == ".pdf")
+                {
+                    <div class="align-self-center mr-2">
+                        <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("Showpdf", "Portal", new { id = item.ID_Resource })" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+                        <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+}
+else
+{
+                    <div class="align-self-center mr-2">
+                        <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="files-title"><a style="color:#000" class="textfileDocs" href="@Url.Action("DownloadDoc", "Portal", new { id = item.ID_Resource })">@(item.Name + "" + item.Extension_file) </a></div>
+                        <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+
+}
+                                    <div class="value-progress text-info">
+                                        <label class="badge badgeDocstype">@item.Doc_type</label>
+                                    </div>
+                                </div>
+                            </div>
+    }
+}
+else
+{
+                    <label>No documents to show</label>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br /> <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="i-v-tab-2" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-2">
+                            <div class="widget widget-20">
+                                <!-- Begin Widget Header -->
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <h2>Scripts</h2>
+                                </div>
+                                <!-- End Widget Header -->
+                                <div class="widget-body">
+                                    <div class="form-group row d-flex align-items-center mt-3 mb-5">
+                                        <label class="form-control-label">By Category</label>
+                                        <select class="selectpicker show-menu-arrow" id="filterbycatScripts" multiple>
+                                            <option>Buying</option>
+                                            <option>Brokerage</option>
+                                            <option>Commercial</option>
+                                            <option>Land</option>
+                                            <option>MLS</option>
+                                            <option>Rental</option>
+                                            <option>Selling</option>
+                                        </select>
+                                        <div class="col-md-6">
+                                            <input type="text" id="myInputScripts" class="form-control" onkeyup="searchin_liScripts()" placeholder="Type here to search" style="width:100%">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5 mr-0 ml-0">
+                                        @if (Model.Where(a => a.Type == "Scripts Broker").Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Type == "Scripts Broker"))
+                        {
+                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                <div class="media w-100">
+                                    @if (item.Extension_file == ".pdf")
+                {
+                    <div class="align-self-center mr-2">
+                        <i class="la la-file-pdf-o" style="font-size:45px;color:cadetblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+
+
+                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("Showpdf","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+
+                        <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+}
+else
+{
+                    <div class="align-self-center mr-2">
+                        <i class="la la-file-word-o" style="font-size:45px;color:dodgerblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("DownloadDoc","Portal", new { id=item.ID_Resource})">@(item.Name + "" + item.Extension_file) </a></div>
+                        <div class="files-number">Size: @item.Size <label>|</label> Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+}
+
+                                    <div class="value-progress text-info">
+                                        <label class="badge badgeScriptstype">@item.Doc_type</label>
+                                    </div>
+                                </div>
+                            </div>
+
+    }
+}
+else
+{
+                    <label>No documents to show</label>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br /> <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="i-v-tab-3" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-3">
+                            <div class="widget widget-20">
+                                <!-- Begin Widget Header -->
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <h2>EMAIL CAMPAIGN</h2>
+                                </div>
+                                <!-- End Widget Header -->
+                                <div class="widget-body">
+                                    <div class="form-group row d-flex align-items-center mt-3 mb-5">
+                             
+                                    </div>
+                                    <div class="row mt-5 mr-0 ml-0">
+                                        @if (Model.Where(a => a.Type == "EMAIL CAMPAIGN Broker").Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Type == "EMAIL CAMPAIGN Broker"))
+                        {
+                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                <div class="media w-100">
+
+                    <div class="align-self-center mr-2">
+                        <i class="la la-envelope-o" style="font-size:45px;color:cadetblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+
+
+                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+
+                        <div class="files-number">Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+
+
+
+                                </div>
+                            </div>
+
+    }
+}
+else
+{
+                    <label>No campaigns to show</label>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br /> <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="i-v-tab-4" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-4">
+                            <div class="widget widget-20">
+                                <!-- Begin Widget Header -->
+                                <div class="widget-header bordered d-flex align-items-center">
+                                    <h2>TEXT CAMPAIGN</h2>
+                                </div>
+                                <!-- End Widget Header -->
+                                <div class="widget-body">
+                                    <div class="form-group row d-flex align-items-center mt-3 mb-5">
+              
+                                    </div>
+                                    <div class="row mt-5 mr-0 ml-0">
+                                        @if (Model.Where(a => a.Type == "TEXT CAMPAIGN Broker").Count() > 0)
+                    {
+                        foreach (var item in Model.Where(a => a.Type == "TEXT CAMPAIGN Broker"))
+                        {
+                            <div id="idscr_@item.ID_Resource" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 justify-content-center mb-4 sortableScripts" style="display:flex">
+                                <div class="media w-100">
+<div class="align-self-center mr-2">
+                        <i class="la la-book" style="font-size:45px;color:cadetblue"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+
+
+                        <div class="files-title"><a style="color:#000" class="textfileScripts" href="@Url.Action("ShowCampaign","Portal", new { id=item.ID_Resource})" target="_blank">@(item.Name + "" + item.Extension_file) </a></div>
+
+                        <div class="files-number"> Last update: @item.Last_update.ToShortDateString()</div>
+                    </div>
+
+
+
+                                </div>
+                            </div>
+
+    }
+}
+else
+{
+                    <label>No documents to show</label>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br /> <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+          
+
+        </div>
+        <!-- End Widget Body -->
+
+
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Container -->
+
+
+
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Document</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Type *</label>
+                                <select id="typevideo" class="form-control" required>
+                                    <option value="Documents Broker">DOCUMENT</option>
+                                    <option value="Scripts Broker">SCRIPT</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo" class="form-control" required>
+                                    <option value="Buying">BUYING</option>
+                                    <option value="Brokerage">BROKERAGE</option>
+                                    <option value="Commercial">COMMERCIAL</option>
+                                    <option value="Email">EMAIL</option>
+                                    <option value="Land">LAND</option>
+                                    <option value="Marketing">MARKETING</option>
+                                    <option value="MLS">MLS</option>
+                                    <option value="Rental">RENTAL</option>
+                                    <option value="Selling">SELLING</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Document file</label>
+                                <input type="file" id="imageUpload" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalNewText" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Campaign</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform2" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlecampaign" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Type *</label>
+                                <select id="typecampaign" class="form-control" required>
+                                    <option value="Email Campaign Broker">EMAIL CAMPAIGN</option>
+                                    <option value="Text Campaign Broker">TEXT CAMPAIGN</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                          
+                                <textarea id="summernote" name="editordata"></textarea>
+                         
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviarText" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+
+        $('#summernote').summernote({
+            minHeight: 400});
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var type = $("#typevideo").val();
+
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("type", type);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadDocument',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#preloader").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Document uploaded successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#preloader").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#preloader").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+        $('#htmlform2').on('submit', function (event) {
+            $("#subbtnenviarText").attr("disabled", true);
+            event.preventDefault();
+
+         
+            var myHtml = $('#summernote').summernote('code');
+            var formData = new FormData();
+            var title = $("#titlecampaign").val();
+            var type = $("#typecampaign").val();
+
+
+            formData.append("title", title);
+            formData.append("type", type);
+            formData.append("htmlformat", myHtml);
+
+
+
+            $("#preloader").show();
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadCampaign',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#preloader").hide();
+                        $("#subbtnenviarText").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Campaign uploaded successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#preloader").hide();
+                        $("#subbtnenviarText").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#preloader").hide();
+                    $("#subbtnenviarText").attr("disabled", false);
+                    alert("Error uploading Campaign");
+                }
+            });
+        });
+
+        $(function () {
+            $('#filterbycatDocs').change(function (e) {
+                var selected = $(e.target).val();
+                if (selected == "") {
+
+                } else {
+                    $("#myInputDocs").val('');
+                }
+
+                
+
+                filterbycategory(selected);
+            });
+        });
+
+        $(function () {
+            $('#filterbycatScripts').change(function (e) {
+                var selected = $(e.target).val();
+                if (selected == "") {
+
+                } else {
+                    $("#myInputScripts").val('');
+                }
+
+
+
+                filterbycategoryScript(selected);
+            });
+        });
+
+
+
+    }
+
+
+
+    function searchin_li() {
+        // Declare variables
+
+        if ($('#filterbycatDocs').val() != "") {
+            $('#filterbycatDocs').val(-1).trigger("change");
+        }
+
+
+
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputDocs');
+        filter = input.value.toUpperCase();
+
+        li = document.getElementsByClassName('sortableDocs');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByClassName('textfileDocs');
+            txtValue = a[0].text;
+
+            if (filter == "") {
+                $(li[i].closest("div.sortableDocs")).css('display', 'flex');
+            } else {
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', 'flex');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+        
+        
+
+
+    }
+
+
+    function filterbycategory(values) {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputDocs');
+        filter = values;
+
+
+        li = document.getElementsByClassName('badgeDocstype');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i];
+            txtValue = a.innerHTML;
+   
+            if (filter == "") {
+                $(li[i].closest("div.sortableDocs")).css('display', 'flex');
+            } else {
+
+                if (filter.indexOf(txtValue) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+          
+                    $(iddiv).css('display', 'flex');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+           
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+    }
+      
+    function filterbycategoryScript(values) {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputScripts');
+        filter = values;
+
+
+        li = document.getElementsByClassName('badgeScriptstype');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i];
+            txtValue = a.innerHTML;
+
+            if (filter == "") {
+                $(li[i].closest("div.sortableScripts")).css('display', 'flex');
+            } else {
+
+                if (filter.indexOf(txtValue) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableScripts")).attr("id");
+
+                    $(iddiv).css('display', 'flex');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableScripts")).attr("id");
+
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+    }
+
+    function searchin_liScripts() {
+        // Declare variables
+
+        if ($('#filterbycatScripts').val() != "") {
+            $('#filterbycatScripts').val(-1).trigger("change");
+        }
+
+
+
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputScripts');
+        filter = input.value.toUpperCase();
+
+        li = document.getElementsByClassName('sortableScripts');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByClassName('textfileScripts');
+            txtValue = a[0].text;
+
+            if (filter == "") {
+                $(li[i].closest("div.sortableScripts")).css('display', 'flex');
+            } else {
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableScripts")).attr("id");
+
+                    $(iddiv).css('display', 'flex');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableScripts")).attr("id");
+
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+
+
+
+
+    }
+
+ 
+</script>

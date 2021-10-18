@@ -73,10 +73,16 @@
     <Reference Include="Google.Apis.PlatformServices, Version=1.46.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.46.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -94,6 +100,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -180,22 +189,27 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BlobStorage\ConnectionString.cs" />
+    <Compile Include="Controllers\BlobStorage\UploadService.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\clsGeneral.cs" />
     <Compile Include="Controllers\Cls_GoogleCalendar.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomResourcesController.cs" />
+    <Compile Include="Controllers\LeadDocsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\Sys_CompanyController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\Tb_Customers_UsersController.cs" />
     <Compile Include="Controllers\Tb_OptionsController.cs" />
     <Compile Include="Controllers\Tb_SourceController.cs" />
     <Compile Include="Controllers\Tb_StatusController.cs" />
+    <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -309,7 +323,7 @@
     <Compile Include="Models\Tb_Status.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tb_TemplatesCatalogo.cs">
+    <Compile Include="Models\Tb_Tasks.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tb_Videos.cs">
@@ -318,11 +332,17 @@
     <Compile Include="Models\Tb_Webinars.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tb_WorkTeams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\AgentsView.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerCRMDashboard.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerTableViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerViewModel.cs" />
+    <Compile Include="Models\ViewModels\CRM\TeamsModel.cs" />
     <Compile Include="Models\ViewModels\NotesView.cs" />
     <Compile Include="Models\ViewModels\ReviewView.cs" />
+    <Compile Include="Models\ViewModels\TasksView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1322,6 +1342,87 @@
     <Content Include="Content\common\library\air-datepicker-master\dist\js\datepicker.min.js" />
     <Content Include="Content\common\library\air-datepicker-master\dist\js\i18n\datepicker.en.js" />
     <Content Include="Content\common\library\jquery.steps.js" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\dist\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\dist\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\dist\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\dist\css\app.css" />
+    <Content Include="Content\dist\css\bootstrap.css" />
+    <Content Include="Content\dist\fonts\roboto\LICENSE.txt" />
+    <Content Include="Content\dist\images\bg-login-page-dark.svg" />
+    <Content Include="Content\dist\images\bg-login-page.svg" />
+    <Content Include="Content\dist\images\bg-main-dark.svg" />
+    <Content Include="Content\dist\images\bg-main.svg" />
+    <Content Include="Content\dist\images\error-illustration.svg" />
+    <Content Include="Content\dist\images\file.png" />
+    <Content Include="Content\dist\images\goal.png" />
+    <Content Include="Content\dist\images\Group 1.svg" />
+    <Content Include="Content\dist\images\Group 2.svg" />
+    <Content Include="Content\dist\images\illustration.svg" />
+    <Content Include="Content\dist\images\illustration2.svg" />
+    <Content Include="Content\dist\images\logo-1.png" />
+    <Content Include="Content\dist\images\logo.svg" />
+    <Content Include="Content\dist\images\map-marker-region.png" />
+    <Content Include="Content\dist\images\map-marker.png" />
+    <Content Include="Content\dist\images\Marketanalysis.png" />
+    <Content Include="Content\dist\images\nodata-found.png" />
+    <Content Include="Content\dist\images\noimageavailable.jpg" />
+    <Content Include="Content\dist\images\papel.png" />
+    <Content Include="Content\dist\images\pdf.png" />
+    <Content Include="Content\dist\images\phone-illustration.svg" />
+    <Content Include="Content\dist\images\placeholders\200x200.jpg" />
+    <Content Include="Content\dist\images\placeholders\800x800.jpg" />
+    <Content Include="Content\dist\images\preview-1.jpg" />
+    <Content Include="Content\dist\images\preview-10.jpg" />
+    <Content Include="Content\dist\images\preview-11.jpg" />
+    <Content Include="Content\dist\images\preview-12.jpg" />
+    <Content Include="Content\dist\images\preview-13.jpg" />
+    <Content Include="Content\dist\images\preview-14.jpg" />
+    <Content Include="Content\dist\images\preview-15.jpg" />
+    <Content Include="Content\dist\images\preview-16.jpg" />
+    <Content Include="Content\dist\images\preview-17.jpg" />
+    <Content Include="Content\dist\images\preview-18.jpg" />
+    <Content Include="Content\dist\images\preview-19.jpg" />
+    <Content Include="Content\dist\images\preview-2.jpg" />
+    <Content Include="Content\dist\images\preview-3.jpg" />
+    <Content Include="Content\dist\images\preview-4.jpg" />
+    <Content Include="Content\dist\images\preview-5.jpg" />
+    <Content Include="Content\dist\images\preview-6.jpg" />
+    <Content Include="Content\dist\images\preview-7.jpg" />
+    <Content Include="Content\dist\images\preview-8.jpg" />
+    <Content Include="Content\dist\images\preview-9.jpg" />
+    <Content Include="Content\dist\images\profile-1.jpg" />
+    <Content Include="Content\dist\images\profile-10.jpg" />
+    <Content Include="Content\dist\images\profile-11.jpg" />
+    <Content Include="Content\dist\images\profile-12.jpg" />
+    <Content Include="Content\dist\images\profile-13.jpg" />
+    <Content Include="Content\dist\images\profile-14.jpg" />
+    <Content Include="Content\dist\images\profile-15.jpg" />
+    <Content Include="Content\dist\images\profile-16.jpg" />
+    <Content Include="Content\dist\images\profile-17.jpg" />
+    <Content Include="Content\dist\images\profile-18.jpg" />
+    <Content Include="Content\dist\images\profile-19.jpg" />
+    <Content Include="Content\dist\images\profile-2.jpg" />
+    <Content Include="Content\dist\images\profile-3.jpg" />
+    <Content Include="Content\dist\images\profile-4.jpg" />
+    <Content Include="Content\dist\images\profile-5.jpg" />
+    <Content Include="Content\dist\images\profile-6.jpg" />
+    <Content Include="Content\dist\images\profile-7.jpg" />
+    <Content Include="Content\dist\images\profile-8.jpg" />
+    <Content Include="Content\dist\images\profile-9.jpg" />
+    <Content Include="Content\dist\images\realtor.png" />
+    <Content Include="Content\dist\images\recruitment.png" />
+    <Content Include="Content\dist\images\to-do-list.png" />
+    <Content Include="Content\dist\images\woman-illustration.svg" />
+    <Content Include="Content\dist\js\app.js" />
+    <Content Include="Content\dist\js\app.js.LICENSE.txt" />
+    <Content Include="Content\dist\js\ckeditor-balloon-block.js" />
+    <Content Include="Content\dist\js\ckeditor-balloon.js" />
+    <Content Include="Content\dist\js\ckeditor-classic.js" />
+    <Content Include="Content\dist\js\ckeditor-document.js" />
+    <Content Include="Content\dist\js\ckeditor-inline.js" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -1347,6 +1448,128 @@
     <Content Include="Content\pgrlogos\S7VENLogoBlack.png" />
     <Content Include="Content\pgrlogos\S7VENLogoWhite.png" />
     <Content Include="Content\pgrlogos\S7VENStandalone.png" />
+    <Content Include="Content\video_ms\css\all.min.css" />
+    <Content Include="Content\video_ms\css\animate.min.css" />
+    <Content Include="Content\video_ms\css\bootstrap.min.css" />
+    <Content Include="Content\video_ms\css\flaticon\flaticon.css" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\flaticon.html" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.svg" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.svg" />
+    <Content Include="Content\video_ms\css\fontawesome.min.css" />
+    <Content Include="Content\video_ms\css\ionicons.min.css" />
+    <Content Include="Content\video_ms\css\magnific-popup.min.css" />
+    <Content Include="Content\video_ms\css\owl.carousel.min.css" />
+    <Content Include="Content\video_ms\css\responsive.css" />
+    <Content Include="Content\video_ms\css\slick.min.css" />
+    <Content Include="Content\video_ms\css\style.css" />
+    <Content Include="Content\video_ms\css\swiper-bundle.min.css" />
+    <Content Include="Content\video_ms\css\v4-shims.min.css" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.svg" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.svg" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.svg" />
+    <Content Include="Content\video_ms\fonts\flaticon.html" />
+    <Content Include="Content\video_ms\fonts\Flaticon.svg" />
+    <Content Include="Content\video_ms\images\asset-0.png" />
+    <Content Include="Content\video_ms\images\asset-2.png" />
+    <Content Include="Content\video_ms\images\asset-35.png" />
+    <Content Include="Content\video_ms\images\asset-36.png" />
+    <Content Include="Content\video_ms\images\background\asset-1.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-10.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-11.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-12.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-13.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-14.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-15.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-16.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-17.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-18.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-19.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-2.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-20.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-21.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-22.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-23.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-24.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-25.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-26.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-27.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-28.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-29.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-3.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-30.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-31.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-32.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-33.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-34.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-35.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-36.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-37.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-38.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-39.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-4.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-41.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-42.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-43.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-44.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-45.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-46.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-47.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-48.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-49.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-5.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-50.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-51.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-52.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-53.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-54.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-55.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-56.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-57.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-58.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-59.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-6.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-60.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-61.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-62.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-63.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-64.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-65.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-66.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-68.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-69.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-7.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-70.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-71.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-72.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-73.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-74.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-75.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-76.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-77.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-78.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-79.jpg" />
+    <Content Include="Content\video_ms\images\background\asset-8.jpeg" />
+    <Content Include="Content\video_ms\images\background\asset-9.jpeg" />
+    <Content Include="Content\video_ms\images\favicon.ico" />
+    <Content Include="Content\video_ms\images\fondovideos.jpg" />
+    <Content Include="Content\video_ms\images\logo-1.png" />
+    <Content Include="Content\video_ms\images\S7VENLogoPLAY.png" />
+    <Content Include="Content\video_ms\images\svg\asset-38.svg" />
+    <Content Include="Content\video_ms\js\asyncloader.min.js" />
+    <Content Include="Content\video_ms\js\bootstrap.min.js" />
+    <Content Include="Content\video_ms\js\isotope.pkgd.min.js" />
+    <Content Include="Content\video_ms\js\jquery-3.5.1.min.js" />
+    <Content Include="Content\video_ms\js\jquery-3.6.0.min.js" />
+    <Content Include="Content\video_ms\js\jquery.counterup.min.js" />
+    <Content Include="Content\video_ms\js\jquery.magnific-popup.min.js" />
+    <Content Include="Content\video_ms\js\jquery.waypoints.min.js" />
+    <Content Include="Content\video_ms\js\loadmore.js" />
+    <Content Include="Content\video_ms\js\owl.carousel.min.js" />
+    <Content Include="Content\video_ms\js\popper.min.js" />
+    <Content Include="Content\video_ms\js\script.js" />
+    <Content Include="Content\video_ms\js\slick.min.js" />
+    <Content Include="Content\video_ms\js\streamlab-core.js" />
+    <Content Include="Content\video_ms\js\swiper-bundle.min.js" />
     <Content Include="Content\wizardform\css\bootstrap.css" />
     <Content Include="Content\wizardform\css\bootstrap.min.css" />
     <Content Include="Content\wizardform\css\custom.css" />
@@ -1783,9 +2006,88 @@
     <Content Include="img\Open House Sign.jpg" />
     <Content Include="img\Rider.jpg" />
     <Content Include="img\Stand Up Banner.jpg" />
+    <Content Include="Views\Emails\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\dist\fonts\roboto\Roboto-Black.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-BlackItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-BoldItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Italic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-LightItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-MediumItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-ThinItalic.ttf" />
+    <Content Include="Content\dist\images\.DS_Store" />
+    <Content Include="Content\dist\images\placeholders\.DS_Store" />
+    <Content Include="Content\dist\json\location.json" />
+    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Views\Shared\Partials\Menu\Mobile_menu.cshtml" />
+    <Content Include="Views\Shared\Partials\Menu\Top_bar.cshtml" />
+    <Content Include="Views\Shared\Partials\Menu\Top_menu.cshtml" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.eot" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.ttf" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff2" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.eot" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.ttf" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.woff" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\_flaticon.scss" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.eot" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.woff" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.eot" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.woff" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.woff2" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.eot" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.woff" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\video_ms\fonts\Flaticon.eot" />
+    <Content Include="Content\video_ms\fonts\Flaticon.ttf" />
+    <Content Include="Content\video_ms\fonts\Flaticon.woff" />
+    <Content Include="Content\video_ms\fonts\Flaticon.woff2" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\video_ms\fonts\FontAwesome.otf" />
+    <Content Include="Content\video_ms\fonts\_flaticon.scss" />
+    <Content Include="Content\video_ms\images\background\Thumbs.db" />
+    <Content Include="Content\video_ms\images\Thumbs.db" />
+    <Content Include="Views\Shared\_Layout_videos.cshtml" />
+    <Content Include="Views\Shared\Partials\Video_ms\Menu\header_menu.cshtml" />
+    <Content Include="Views\Shared\Partials\Video_ms\Menu\footer_menu.cshtml" />
+    <Content Include="Views\CRM\Tasks.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\Delete.cshtml" />
+    <Content Include="Views\Tasks\Details.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\CRM\Teams.cshtml" />
+    <Content Include="Views\Teams\Create.cshtml" />
+    <Content Include="Views\Teams\Delete.cshtml" />
+    <Content Include="Views\Teams\Details.cshtml" />
+    <Content Include="Views\Teams\Edit.cshtml" />
+    <Content Include="Views\Teams\Index.cshtml" />
+    <Content Include="Views\CRM\CustomerDashboard - Copy.cshtml" />
+    <Content Include="Views\CRM\Agents.cshtml" />
+    <Content Include="Views\Emails\NewNotification_task.cshtml" />
+    <Content Include="Views\Portal\Package_detailsCD.cshtml" />
+    <Content Include="Views\Portal\Resources_broker.cshtml" />
+    <Content Include="Views\Portal\Notfound.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\Users\AgentProfile.cshtml" />
+    <Content Include="Content\dist\bootstrap\config.json" />
+    <Content Include="Views\Users\BrokerProfile.cshtml" />
+    <Content Include="Views\Users\CreateBroker.cshtml" />
+    <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1821,7 +2123,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Portal\Login.cshtml" />
     <Content Include="Views\CRM\Leads.cshtml" />
-    <Content Include="Views\Users\Brokers.cshtml" />
+    <Content Include="Views\CRM\Brokers.cshtml" />
     <Content Include="Views\CRM\CRMDashboardCopy.cshtml" />
     <Content Include="Views\Shared\PartialTables\DocumentsTemplate.cshtml" />
     <Content Include="Views\Tb_Source\Create.cshtml" />
@@ -1840,6 +2142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Uploads\DocumentsAgent\" />
     <Folder Include="Content\Uploads\DocumentsLead\" />
     <Folder Include="Content\Uploads\DocumentsPackages\" />
     <Folder Include="Content\Uploads\Images\logos\" />
@@ -1850,6 +2153,7 @@
     <Folder Include="Content\Uploads\Resources\Documents\" />
     <Folder Include="Content\Uploads\Resources\Scripts\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\LeadDocs\" />
     <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>
@@ -2060,7 +2364,6 @@
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\newNotification_lead.cshtml" />
     <Content Include="Views\Emails\newNotification_propertyAgent.cshtml" />
     <Content Include="Views\Portal\Documents_upload_management.cshtml" />
@@ -2096,7 +2399,7 @@
     <Content Include="Views\Portal\Videosbroker_management.cshtml" />
     <Content Include="Views\Portal\Videos_broker.cshtml" />
     <Content Include="Views\Portal\Resourcesbroker_management.cshtml" />
-    <Content Include="Views\Portal\Resources_broker.cshtml" />
+    <Content Include="Views\Portal\Resources_broker_old.cshtml" />
     <Content Include="Views\Portal\Reservations.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\Delete.cshtml" />

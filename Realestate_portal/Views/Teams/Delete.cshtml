@@ -1,0 +1,80 @@
+﻿@model Realestate_portal.Models.Tb_WorkTeams
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Tb_WorkTeams</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ID_Company)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ID_Company)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Active)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Active)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Creation_date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Creation_date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Last_update)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Last_update)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

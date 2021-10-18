@@ -2,160 +2,156 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_CRM.cshtml";
+
 }
 
-<div class="container-fluid">
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">PROPERTIES</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Page Header -->
-    <!-- Begin Widget 08 -->
-    <div class="widget widget-08" style="width: 100%;background-color:transparent">
-
-
-
-        <!-- Begin Widget -->
-        <div class="widget has-shadow">
-
-            <!-- End Widget Header -->
-            <!-- Begin Widget Body -->
-            <div class="widget-body" style="padding-bottom:250px">
-                <div>
-                    <h4>Are you sure you want to delete this?</h4>
-                    <hr />
-                    <dl class="dl-horizontal">
-
-
-                        <dt>
-                            ID PROPERTY
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.ID_Process)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Property)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Property)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Tb_Customers.Name)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Tb_Customers.Name)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Description)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Description)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Address)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Address)
-                        </dd>
-
-                        <dt>
-                            Purchase price
-                        </dt>
-
-                        <dd>
-                            $@Html.DisplayFor(model => model.Purchase_price)
-                        </dd>
-
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Stage)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Stage)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Source)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Source)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TypeofAgency)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.TypeofAgency)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Loan_Officer_name)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Loan_Officer_name)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Attorneys_name)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Attorneys_name)
-                        </dd>
-
-
-                        <dt>
-                           Last update
-                        </dt>
-
-                        <dd>
-                            @Model.Last_update.ToShortDateString()
-                        </dd>
-
-
-                    </dl>
-
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="form-actions no-color">
-                            <input type="submit" value="Delete" class="btn btn-default" /> 
-                        </div>
-                    }
-                </div>
-            </div>
-            <!-- End Widget -->
-
-
-
-        </div>
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
 
     </div>
 </div>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+       Delete Property
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Input -->
+      
+            <div class="intro-y box">
+                <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                    <h2 class="font-medium text-base mr-auto">
+                        Delete Property 
+                    </h2>
+                </div>
+                <div id="input" class="p-5">
+                    <div class="preview">
+                        <h4>Are you sure you want to delete this?</h4>
+                        <hr />
+                        <dl class="dl-horizontal">
 
-<!-- End Container -->
+
+                            <dt>
+                                ID PROPERTY
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ID_Process)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Property)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Property)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Tb_Customers.Name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Tb_Customers.Name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Address)
+                            </dd>
+
+                            <dt>
+                                Purchase price
+                            </dt>
+
+                            <dd>
+                                $@Html.DisplayFor(model => model.Purchase_price)
+                            </dd>
+
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Stage)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Stage)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Source)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Source)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TypeofAgency)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TypeofAgency)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Loan_Officer_name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Loan_Officer_name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Attorneys_name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Attorneys_name)
+                            </dd>
+
+
+                            <dt>
+                                Last update
+                            </dt>
+
+                            <dd>
+                                @Model.Last_update.ToShortDateString()
+                            </dd>
+
+
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color mt-3">
+                                <input type="submit" value="Delete Property" class="btn btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- End Widget -->
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- End Container -->

@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
+using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Models.ViewModels.CRM;
 
 namespace Realestate_portal.Controllers
@@ -43,23 +44,17 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Dashboard";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+              
+                //ROLES
+                //FIN HEADER
+
                 ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles== "Agent" || u.Roles =="Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
              
                 ViewBag.rol = "";
@@ -73,14 +68,14 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
@@ -104,18 +99,6 @@ namespace Realestate_portal.Controllers
 
                 }
                 ViewBag.selbroker = broker;
-                var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
-                var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
-                var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
-
-                decimal totalprojectedgains = 0;
-                decimal totalgains = 0;
-                if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
-                if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
-
-                ViewBag.totalcustomers = totalproperties;
-                ViewBag.totalgainsprojected = totalprojectedgains;
-                ViewBag.totalgains = totalgains;
 
 
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name");
@@ -140,6 +123,7 @@ namespace Realestate_portal.Controllers
         {
             Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             if (tb_Customers.Birthday == null) { tb_Customers.Birthday = DateTime.UtcNow; }
+            if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
             var birthdemo = Convert.ToDateTime(tb_Customers.Birthday);
             var theDate = new DateTime(1900, 01, 01, 00, 00, 00);
             if (birthdemo < theDate) {
@@ -149,7 +133,7 @@ namespace Realestate_portal.Controllers
         
            
             tb_Customers.ID_Company = activeuser.ID_Company;
-            tb_Customers.Lead = false;
+            tb_Customers.Lead = true;
             if (tb_Customers.Zipcode == null) { tb_Customers.Zipcode = ""; }
             if (tb_Customers.Mobile == null) { tb_Customers.Mobile = ""; }
             if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
@@ -157,15 +141,56 @@ namespace Realestate_portal.Controllers
             if (tb_Customers.Email == null) { tb_Customers.Email = ""; }
             tb_Customers.Active = true;
             tb_Customers.Creation_date = DateTime.UtcNow;
+            tb_Customers.ID_team = 0;
+            tb_Customers.Gender = "";
+            
 
         
                 db.Tb_Customers.Add(tb_Customers);
                 db.SaveChanges();
 
-           
+            //asignamos agente
+            try
+            {
+
+                var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
+                if (agentsassigned.Count() > 0)
+                {
+                    db.Tb_Customers_Users.RemoveRange(agentsassigned);
+                }
+                db.SaveChanges();
+                if (activeuser != null)
+                {
+
+                    Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+
+                    customerUsers.Id_Customer = tb_Customers.ID_Customer;
+                    customerUsers.Id_User = activeuser.ID_User;
+                    customerUsers.ID_team = 0;
+                    customerUsers.Teamleader = false;
+                    db.Tb_Customers_Users.Add(customerUsers);
+                    db.SaveChanges();
+
+                    Sys_Notifications newnotification = new Sys_Notifications();
+                    newnotification.Active = true;
+                    newnotification.Date = DateTime.UtcNow;
+                    newnotification.Title = "Customer assigned.";
+                    newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                    newnotification.ID_user = activeuser.ID_User;
+                    db.Sys_Notifications.Add(newnotification);
+                    db.SaveChanges();
+
+                }
 
 
-            return RedirectToAction("AssignList", "Tb_Customers_Users", new { id = tb_Customers.ID_Customer, broker = 0});
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+
+            return RedirectToAction("Leads", "CRM");
             
                 
             
@@ -453,30 +478,24 @@ namespace Realestate_portal.Controllers
 
         // GET: Tb_Customers/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id, int broker=0)
+        public ActionResult Edit(int? id, int broker=0, string token="")
         {
 
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Portal";
-                ViewData["Page"] = "Dashboard";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
+                //ROLES
+                //FIN HEADER
 
+ 
 
                 Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
 
@@ -491,47 +510,33 @@ namespace Realestate_portal.Controllers
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
+                List<Sys_Users> lstagents = new List<Sys_Users>();
 
-
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                          // where (t.Roles.Contains("Agent"))
-                                                      select new
-                                                      {
-                                                          ID = t.ID_User,
-                                                          FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName");
+
+                    lstagents = (from t in db.Sys_Users where (t.ID_Company == activeuser.ID_Company) select t).ToList();
+                                                  
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        lstagents = (from t in db.Sys_Users where (t.ID_Company == activeuser.ID_Company) select t).ToList();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
-                        ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                              // where (t.Roles.Contains("Agent"))
-                                                          select new
-                                                          {
-                                                              ID = t.ID_User,
-                                                              FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName");
+                    
                     }
                     else
                     {
                         ViewBag.rol = "Admin";
                         if (broker == 0)
                         {
-                            ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                                  where (t.ID_Company == activeuser.ID_Company || t.ID_User==4)
-                                                              select new
-                                                              {
-                                                                  ID = t.ID_User,
-                                                                  FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName");
+                            lstagents = (from t in db.Sys_Users where  (t.ID_Company == activeuser.ID_Company || t.ID_User == 4)  select t).ToList();
+               
                         }
                         else
                         {
@@ -544,20 +549,81 @@ namespace Realestate_portal.Controllers
 
 
                 }
-
+                ViewBag.users = lstagents;
                 ViewBag.selbroker = broker;
-                var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "UNDER CONTRACT") select f).ToList();
-                var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED") select f).ToList();
-                var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User) select f).Count();
 
-                decimal totalprojectedgains = 0;
-                decimal totalgains = 0;
-                if (propertiesprojectedgains.Count > 0) { totalprojectedgains = propertiesprojectedgains.Select(c => c.Commission_amount).Sum(); }
-                if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
 
-                ViewBag.totalcustomers = totalproperties;
-                ViewBag.totalgainsprojected = totalprojectedgains;
-                ViewBag.totalgains = totalgains;
+                List<US_State> states;
+
+                states = new List<US_State>(50);
+                states.Add(new US_State("AL", "Alabama"));
+                states.Add(new US_State("AK", "Alaska"));
+                states.Add(new US_State("AZ", "Arizona"));
+                states.Add(new US_State("AR", "Arkansas"));
+                states.Add(new US_State("CA", "California"));
+                states.Add(new US_State("CO", "Colorado"));
+                states.Add(new US_State("CT", "Connecticut"));
+                states.Add(new US_State("DE", "Delaware"));
+                states.Add(new US_State("DC", "District Of Columbia"));
+                states.Add(new US_State("FL", "Florida"));
+                states.Add(new US_State("GA", "Georgia"));
+                states.Add(new US_State("HI", "Hawaii"));
+                states.Add(new US_State("ID", "Idaho"));
+                states.Add(new US_State("IL", "Illinois"));
+                states.Add(new US_State("IN", "Indiana"));
+                states.Add(new US_State("IA", "Iowa"));
+                states.Add(new US_State("KS", "Kansas"));
+                states.Add(new US_State("KY", "Kentucky"));
+                states.Add(new US_State("LA", "Louisiana"));
+                states.Add(new US_State("ME", "Maine"));
+                states.Add(new US_State("MD", "Maryland"));
+                states.Add(new US_State("MA", "Massachusetts"));
+                states.Add(new US_State("MI", "Michigan"));
+                states.Add(new US_State("MN", "Minnesota"));
+                states.Add(new US_State("MS", "Mississippi"));
+                states.Add(new US_State("MO", "Missouri"));
+                states.Add(new US_State("MT", "Montana"));
+                states.Add(new US_State("NE", "Nebraska"));
+                states.Add(new US_State("NV", "Nevada"));
+                states.Add(new US_State("NH", "New Hampshire"));
+                states.Add(new US_State("NJ", "New Jersey"));
+                states.Add(new US_State("NM", "New Mexico"));
+                states.Add(new US_State("NY", "New York"));
+                states.Add(new US_State("NC", "North Carolina"));
+                states.Add(new US_State("ND", "North Dakota"));
+                states.Add(new US_State("OH", "Ohio"));
+                states.Add(new US_State("OK", "Oklahoma"));
+                states.Add(new US_State("OR", "Oregon"));
+                states.Add(new US_State("PA", "Pennsylvania"));
+                states.Add(new US_State("RI", "Rhode Island"));
+                states.Add(new US_State("SC", "South Carolina"));
+                states.Add(new US_State("SD", "South Dakota"));
+                states.Add(new US_State("TN", "Tennessee"));
+                states.Add(new US_State("TX", "Texas"));
+                states.Add(new US_State("UT", "Utah"));
+                states.Add(new US_State("VT", "Vermont"));
+                states.Add(new US_State("VA", "Virginia"));
+                states.Add(new US_State("WA", "Washington"));
+                states.Add(new US_State("WV", "West Virginia"));
+                states.Add(new US_State("WI", "Wisconsin"));
+                states.Add(new US_State("WY", "Wyoming"));
+
+                ViewBag.states = states;
+                //Verificamos si hay un agente directo asignado
+                TeamsModel_Users assigneduser = new TeamsModel_Users();
+                assigneduser = (from cu in db.Tb_Customers_Users
+                              join u in db.Sys_Users on cu.Id_User equals u.ID_User
+                              where ((cu.Id_Customer == id) && cu.ID_team == 0)
+                              select new TeamsModel_Users
+                              {
+                                  Id_User = cu.Id_User,
+                                  Name = u.Name,
+                                  Lastname = u.LastName,
+                                  Email = u.Email,
+                                  Url_image = u.Image
+                              }).FirstOrDefault();
+
+                ViewBag.assigneduser = assigneduser;
                 return View(tb_Customers);
 
             }
@@ -580,7 +646,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers)
+        public ActionResult Edit([Bind(Include = "ID_Customer,Name,LastName,Gender,Birthday,Marital_status,Type,Email,Phone,Mobile,State,Address,Zipcode,Lead,Active,ID_Company,Creation_date,Source")] Tb_Customers tb_Customers, int id_agent)
         {
             try
             {               
@@ -589,34 +655,60 @@ namespace Realestate_portal.Controllers
                 if (tb_Customers.Address == null) { tb_Customers.Address = ""; }
                 if (tb_Customers.State == null) { tb_Customers.State = ""; }
                 if (tb_Customers.Type == null) { tb_Customers.Type = ""; }
+                if (tb_Customers.Gender == null) { tb_Customers.Gender = ""; }
                 tb_Customers.Creation_date = DateTime.UtcNow;
-                Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
-                tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);
-                tb_Customers.Tb_Process = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
+                //Tb_Customers customer = (from a in db.Tb_Customers.Where(a=> a.ID_Customer==tb_Customers.ID_Customer) select a ).AsNoTracking().FirstOrDefault();
+                //tb_Customers.Sys_Company = db.Sys_Company.Find(tb_Customers.ID_Company);
+                //tb_Customers.Tb_Process = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
                
 
                 db.Entry(tb_Customers).State=EntityState.Modified;
                 db.SaveChanges();
-                TempData["exito"] = "Customer info updated successfully.";
 
-              
-                       
-           
-                    //Sys_Notifications newnotification = new Sys_Notifications();
-                    //newnotification.Active = true;
-                    //newnotification.Date = DateTime.UtcNow;
-                    //newnotification.Title = "New Customer assigned.";
-                    //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-                    //newnotification.ID_user = tb_Customers.ID_User;
-                    //db.Sys_Notifications.Add(newnotification);
-                    //db.SaveChanges();                                       
-               
+                //asignamos agente
+                try
+                {
 
-                return RedirectToAction("CustomerDashboard", "CRM", new {id=tb_Customers.ID_Customer, broker= 0 });
+                    var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
+                    if (agentsassigned.Count() > 0)
+                    {
+                        db.Tb_Customers_Users.RemoveRange(agentsassigned);
+                    }
+                    db.SaveChanges();
+                    if (id_agent != 0)
+                    {
+
+                        Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+
+                        customerUsers.Id_Customer = tb_Customers.ID_Customer;
+                        customerUsers.Id_User = id_agent;
+                        customerUsers.ID_team = 0;
+                        customerUsers.Teamleader = false;
+                        db.Tb_Customers_Users.Add(customerUsers);
+                        db.SaveChanges();
+
+                        Sys_Notifications newnotification = new Sys_Notifications();
+                            newnotification.Active = true;
+                            newnotification.Date = DateTime.UtcNow;
+                            newnotification.Title = "Customer assigned.";
+                            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                            newnotification.ID_user = id_agent;
+                            db.Sys_Notifications.Add(newnotification);
+                            db.SaveChanges();
+                        
+                    }
+                
+
+                   
+                }
+                catch (Exception ex)
+                {
+                }
+
+                return RedirectToAction("Edit", "Customers", new {id=tb_Customers.ID_Customer ,token="success" });
             }
             catch (Exception ex) {
-                TempData["advertencia"] = "Something went wrong, the customer info could not be updated, please try again";
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Customers.ID_Customer, broker = 0 });
+                return RedirectToAction("Edit", "Customers", new { id = tb_Customers.ID_Customer, token = "error" });
             }        
         }
 
@@ -628,23 +720,16 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "CRM";
-                ViewData["Page"] = "Properties";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+              
+                //ROLES
+                //FIN HEADER
                 ViewBag.rol = "";
 
                 //Filtros SA
@@ -655,14 +740,14 @@ namespace Realestate_portal.Controllers
 
 
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
 
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
@@ -707,14 +792,29 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Tb_Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+    
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
-            db.Tb_Customers.Remove(tb_Customers);
-            db.SaveChanges();
-            return RedirectToAction("Customers", "CRM");
+            try
+            {
+                Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
+                db.Tb_Customers.Remove(tb_Customers);
+                db.SaveChanges();
+
+                Tb_Customers_UsersController tb_Customers_Users = new Tb_Customers_UsersController();
+                var delete_Custo = tb_Customers_Users.Delete(id);
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception EX)
+            {
+                var result2 = "error";
+                return Json(result2, JsonRequestBehavior.AllowGet);
+            }
+        
+           
         }
 
       [HttpPost]

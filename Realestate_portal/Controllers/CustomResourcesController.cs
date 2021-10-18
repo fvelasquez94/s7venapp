@@ -54,131 +54,131 @@ namespace Realestate_portal.Controllers
 
 
         
-        public ActionResult Step_one()
-        {
-            if (generalClass.checkSession())
-            {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+        //public ActionResult Step_one()
+        //{
+        //    if (generalClass.checkSession())
+        //    {
+        //        Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Custom Resources";
-                ViewData["Page"] = "Index";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
-                //NOTIFICATIONS
-                DateTime now = DateTime.Today;
-                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                //FIN HEADER
-                List<Tb_TemplatesCatalogo> lsttemplates = new List<Tb_TemplatesCatalogo>();
-                lsttemplates = (from a in db.Tb_TemplatesCatalogo where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+        //        //HEADER
+        //        //ACTIVE PAGES
+        //        ViewData["Menu"] = "Custom Resources";
+        //        ViewData["Page"] = "Index";
+        //        ViewBag.menunameid = "";
+        //        ViewBag.submenunameid = "";
+        //        List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+        //        List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+        //        //NOTIFICATIONS
+        //        DateTime now = DateTime.Today;
+        //        List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+        //        ViewBag.notifications = lstAlerts;
+        //        ViewBag.userID = activeuser.ID_User;
+        //        ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+        //        //FIN HEADER
+        //        List<Tb_TemplatesCatalogo> lsttemplates = new List<Tb_TemplatesCatalogo>();
+        //        lsttemplates = (from a in db.Tb_TemplatesCatalogo where (a.ID_Company == activeuser.ID_Company) select a).ToList();
 
-                return View(lsttemplates);
+        //        return View(lsttemplates);
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-                return RedirectToAction("Login", "Portal", new { access = false });
+        //        return RedirectToAction("Login", "Portal", new { access = false });
 
-            }
-        }
-
-      
-
+        //    }
+        //}
 
       
-        public ActionResult Shop()
-        {
-            if (generalClass.checkSession())
-            {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Custom Resources";
-                ViewData["Page"] = "Index";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
-                //NOTIFICATIONS
-                DateTime now = DateTime.Today;
-                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                //FIN HEADER
-                List<Tb_TemplatesCatalogo> lsttemplates = new List<Tb_TemplatesCatalogo>();
-                lsttemplates = (from a in db.Tb_TemplatesCatalogo where (a.ID_Company==activeuser.ID_Company && a.Resource!="") select a ).ToList();
 
-                return View(lsttemplates);
+      
+        //public ActionResult Shop()
+        //{
+        //    if (generalClass.checkSession())
+        //    {
+        //        Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-            }
-            else
-            {
+        //        //HEADER
+        //        //ACTIVE PAGES
+        //        ViewData["Menu"] = "Custom Resources";
+        //        ViewData["Page"] = "Index";
+        //        ViewBag.menunameid = "";
+        //        ViewBag.submenunameid = "";
+        //        List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+        //        List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+        //        //NOTIFICATIONS
+        //        DateTime now = DateTime.Today;
+        //        List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+        //        ViewBag.notifications = lstAlerts;
+        //        ViewBag.userID = activeuser.ID_User;
+        //        ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+        //        //FIN HEADER
+        //        List<Tb_TemplatesCatalogo> lsttemplates = new List<Tb_TemplatesCatalogo>();
+        //        lsttemplates = (from a in db.Tb_TemplatesCatalogo where (a.ID_Company==activeuser.ID_Company && a.Resource!="") select a ).ToList();
 
-                return RedirectToAction("Login", "Portal", new { access = false });
+        //        return View(lsttemplates);
 
-            }
-        }
+        //    }
+        //    else
+        //    {
+
+        //        return RedirectToAction("Login", "Portal", new { access = false });
+
+        //    }
+        //}
 
        
 
 
        
-        public ActionResult Editor(int id)
-        {
-            if (generalClass.checkSession())
-            {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+        //public ActionResult Editor(int id)
+        //{
+        //    if (generalClass.checkSession())
+        //    {
+        //        Sys_Users activeuser = Session["activeUser"] as Sys_Users;
 
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "Custom Resources";
-                ViewData["Page"] = "Index";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
-                //NOTIFICATIONS
-                DateTime now = DateTime.Today;
-                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
-                //FIN HEADER
+        //        //HEADER
+        //        //ACTIVE PAGES
+        //        ViewData["Menu"] = "Custom Resources";
+        //        ViewData["Page"] = "Index";
+        //        ViewBag.menunameid = "";
+        //        ViewBag.submenunameid = "";
+        //        List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
+        //        List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
+        //        ViewBag.lstRoles = JsonConvert.SerializeObject(r);
+        //        //NOTIFICATIONS
+        //        DateTime now = DateTime.Today;
+        //        List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+        //        ViewBag.notifications = lstAlerts;
+        //        ViewBag.userID = activeuser.ID_User;
+        //        ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+        //        //FIN HEADER
 
-                var template = (from a in db.Tb_TemplatesCatalogo where (a.ID_Template == id) select a).FirstOrDefault();
+        //        var template = (from a in db.Tb_TemplatesCatalogo where (a.ID_Template == id) select a).FirstOrDefault();
 
-                int preloadhtml = 0;
-                if (template.htmltext != "") {
-                    preloadhtml = 1;
-                }
-                ViewBag.preloadhtml = preloadhtml;
-                ViewBag.htmlcode = ReplaceNewlines(template.htmltext,"");
+        //        int preloadhtml = 0;
+        //        if (template.htmltext != "") {
+        //            preloadhtml = 1;
+        //        }
+        //        ViewBag.preloadhtml = preloadhtml;
+        //        ViewBag.htmlcode = ReplaceNewlines(template.htmltext,"");
 
-                return View(template);
+        //        return View(template);
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-                return RedirectToAction("Login", "Portal", new { access = false });
+        //        return RedirectToAction("Login", "Portal", new { access = false });
 
-            }
-        }
+        //    }
+        //}
 
 
 
@@ -348,28 +348,28 @@ namespace Realestate_portal.Controllers
 
 
       
-        public ActionResult crearPlantilla()
-        {
+        //public ActionResult crearPlantilla()
+        //{
 
-            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-            Tb_TemplatesCatalogo nuevaplantilla = new Tb_TemplatesCatalogo();
-            nuevaplantilla.Broker_name = activeuser.Sys_Company.Name;
-            nuevaplantilla.Template_name = "New template";
-            nuevaplantilla.Resource = "";
-            nuevaplantilla.Style = 1;
-            nuevaplantilla.Price = 0;
-            nuevaplantilla.Status = "";
-            nuevaplantilla.visible = true;
-            nuevaplantilla.Url_image = "";
-            nuevaplantilla.original = true;
-            nuevaplantilla.ID_Company = activeuser.ID_Company;
-            nuevaplantilla.htmltext = "";
-            db.Tb_TemplatesCatalogo.Add(nuevaplantilla);
-            db.SaveChanges();
+        //    Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+        //    Tb_TemplatesCatalogo nuevaplantilla = new Tb_TemplatesCatalogo();
+        //    nuevaplantilla.Broker_name = activeuser.Sys_Company.Name;
+        //    nuevaplantilla.Template_name = "New template";
+        //    nuevaplantilla.Resource = "";
+        //    nuevaplantilla.Style = 1;
+        //    nuevaplantilla.Price = 0;
+        //    nuevaplantilla.Status = "";
+        //    nuevaplantilla.visible = true;
+        //    nuevaplantilla.Url_image = "";
+        //    nuevaplantilla.original = true;
+        //    nuevaplantilla.ID_Company = activeuser.ID_Company;
+        //    nuevaplantilla.htmltext = "";
+        //    db.Tb_TemplatesCatalogo.Add(nuevaplantilla);
+        //    db.SaveChanges();
 
-            return RedirectToAction("Editor", "CustomResources", new { id=nuevaplantilla.ID_Template});
+        //    return RedirectToAction("Editor", "CustomResources", new { id=nuevaplantilla.ID_Template});
 
-        }
+        //}
 
         
         public class htmlModel
@@ -383,29 +383,29 @@ namespace Realestate_portal.Controllers
 
      
 
-        [HttpPost]
-        public ActionResult guardarPlantilla(htmlModel plantilla)
-        {
-            try {
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                Tb_TemplatesCatalogo nuevaplantilla = db.Tb_TemplatesCatalogo.Find(plantilla.id_template); 
-                nuevaplantilla.Template_name = plantilla.title;
-                nuevaplantilla.Resource = plantilla.type;
-                nuevaplantilla.htmltext = plantilla.htmlformat;
+        //[HttpPost]
+        //public ActionResult guardarPlantilla(htmlModel plantilla)
+        //{
+        //    try {
+        //        Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+        //        Tb_TemplatesCatalogo nuevaplantilla = db.Tb_TemplatesCatalogo.Find(plantilla.id_template); 
+        //        nuevaplantilla.Template_name = plantilla.title;
+        //        nuevaplantilla.Resource = plantilla.type;
+        //        nuevaplantilla.htmltext = plantilla.htmlformat;
 
-                db.Entry(nuevaplantilla).State = EntityState.Modified;
-                db.SaveChanges();
+        //        db.Entry(nuevaplantilla).State = EntityState.Modified;
+        //        db.SaveChanges();
 
-                var result = "SUCCESS";
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                var result = ex.Message;
-                return Json(result, JsonRequestBehavior.AllowGet);
+        //        var result = "SUCCESS";
+        //        return Json(result, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var result = ex.Message;
+        //        return Json(result, JsonRequestBehavior.AllowGet);
 
-            }
-        }
+        //    }
+        //}
 
       
         public ActionResult DoorHanger()

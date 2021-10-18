@@ -17,4 +17,12 @@ namespace Realestate_portal.Models.ViewModels.CRM
 
 
     }
+
+    public class GainsReport
+    {
+        public string monthyear { get; set; }
+
+        public decimal projected { get; set; }
+        public decimal gains { get; set; }
+    }
 }

@@ -45,23 +45,13 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "CRM";
-                ViewData["Page"] = "Properties";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.rol = "";
 
                 //Filtros SA
@@ -70,7 +60,7 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.ID_User = new SelectList((from t in db.Sys_Users
@@ -91,7 +81,7 @@ namespace Realestate_portal.Controllers
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
@@ -174,7 +164,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateProperty([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process, int broker)
+        public ActionResult CreateProperty([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process)
         {
             if (tb_Process.Address == null) { tb_Process.Address = ""; }
             if (tb_Process.TypeofAgency == null) { tb_Process.TypeofAgency = ""; }
@@ -199,10 +189,16 @@ namespace Realestate_portal.Controllers
             {
                 tb_Process.Stage = customer.Marital_status;
             }
-               db.Tb_Process.Add(tb_Process);
-                db.SaveChanges();
-            TempData["exito"] = "Property created successfully.";
-            return RedirectToAction("CustomerDashboard", "CRM", new { id = customer.ID_Customer,broker=broker });
+            if (customer.Source == null)
+            {
+                tb_Process.Source = "";
+            }
+            customer.Address = tb_Process.Address;
+            db.Entry(customer).State = EntityState.Modified;
+            db.Tb_Process.Add(tb_Process);
+            db.SaveChanges();
+  
+            return RedirectToAction("CustomerDashboard", "CRM", new { id = customer.ID_Customer, token="success" });
         }
 
         // GET: Properties/Edit/5
@@ -212,23 +208,13 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "CRM";
-                ViewData["Page"] = "Properties";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 //Filtros SA
 
@@ -238,7 +224,7 @@ namespace Realestate_portal.Controllers
                 Tb_Process tb_Process = db.Tb_Process.Find(id);
                 ViewBag.rol = "";
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
                     ViewBag.ID_User = new SelectList((from t in db.Sys_Users
@@ -250,7 +236,7 @@ namespace Realestate_portal.Controllers
                                                       }), "ID", "FullName");
 
                     ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
-                                                          where (t.Lead == false)
+                                                          
                                                           select new
                                                           {
                                                               ID = t.ID_Customer,
@@ -263,7 +249,7 @@ namespace Realestate_portal.Controllers
             }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
@@ -285,7 +271,7 @@ namespace Realestate_portal.Controllers
 
 
                         ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
-                                                              where (t.Lead == false && t.ID_Company == activeuser.ID_Company)
+                                                              where (t.ID_Company == activeuser.ID_Company)
                                                               select new
                                                               {
                                                                   ID = t.ID_Customer,
@@ -336,7 +322,7 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process, int broker)
+        public ActionResult Edit([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process)
         {
             try
             {
@@ -348,65 +334,66 @@ namespace Realestate_portal.Controllers
                 if (tb_Process.Loan_Officer_tel == null) { tb_Process.Loan_Officer_tel = ""; }
                 if (tb_Process.Attorneys_tel == null) { tb_Process.Attorneys_tel = ""; }
                 if (tb_Process.Notes == null) { tb_Process.Notes = ""; }
-                var usuarioantes = (from a in db.Tb_Process.Where(c => c.ID_Process == tb_Process.ID_Process) select a).AsNoTracking().FirstOrDefault();                                          
+                if (tb_Process.Source == null) { tb_Process.Source = ""; }
+                //var usuarioantes = (from a in db.Tb_Process.Where(c => c.ID_Process == tb_Process.ID_Process) select a).AsNoTracking().FirstOrDefault();                                          
                 db.Entry(tb_Process).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["exito"] = "Property updated successfully.";
 
-                if (usuarioantes.ID_User != tb_Process.ID_User)
-                {
-                    var customerislead = (from h in db.Tb_Customers where (h.ID_Customer == tb_Process.ID_Customer) select h).AsNoTracking().FirstOrDefault();
-                    if (customerislead != null) {
-                        if (customerislead.Lead == true) {
-                            customerislead.Lead = false;
-                            db.Entry(customerislead).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
+                //if (usuarioantes.ID_User != tb_Process.ID_User)
+                //{
+                    //var customerislead = (from h in db.Tb_Customers where (h.ID_Customer == tb_Process.ID_Customer) select h).AsNoTracking().FirstOrDefault();
+                    //if (customerislead != null) {
+                    //    if (customerislead.Lead == true) {
+                    //        customerislead.Lead = false;
+                    //        db.Entry(customerislead).State = EntityState.Modified;
+                    //        db.SaveChanges();
+                    //    }
                    
-                    }
+                    //}
 
 
-                            Sys_Notifications newnotification = new Sys_Notifications();
-                            newnotification.Active = true;
-                            newnotification.Date = DateTime.UtcNow;
-                            newnotification.Title = "New property assigned.";
-                            newnotification.Description = "Property ID: " + tb_Process.ID_Property + ".";
-                            newnotification.ID_user = tb_Process.ID_User;
-                            db.Sys_Notifications.Add(newnotification);
-                        db.SaveChanges();
+                        //    Sys_Notifications newnotification = new Sys_Notifications();
+                        //    newnotification.Active = true;
+                        //    newnotification.Date = DateTime.UtcNow;
+                        //    newnotification.Title = "New property assigned.";
+                        //    newnotification.Description = "Property ID: " + tb_Process.ID_Property + ".";
+                        //    newnotification.ID_user = tb_Process.ID_User;
+                        //    db.Sys_Notifications.Add(newnotification);
+                        //db.SaveChanges();
 
-                    if (tb_Process.ID_User !=4) {
-                        try
-                        {
-                            var user = (db.Sys_Users.Where(d => d.ID_User == tb_Process.ID_User).Select(d => d.Email)).FirstOrDefault();
+                    //if (tb_Process.ID_User !=4) {
+                    //    try
+                    //    {
+                    //        var user = (db.Sys_Users.Where(d => d.ID_User == tb_Process.ID_User).Select(d => d.Email)).FirstOrDefault();
 
-                            //Enviamos correo para notificar
-                            dynamic emailtosend = new Email("newNotification_propertyAgent");
-                            emailtosend.To = user;
-                            emailtosend.From = "customercare@premiumgrealty.com";
-                            emailtosend.IDproperty = tb_Process.ID_Property;
-                            emailtosend.property = tb_Process.Property;
-                            emailtosend.listingtype = tb_Process.Description;
-                            emailtosend.price = tb_Process.Purchase_price;
-                            emailtosend.customerID = tb_Process.ID_Customer;
+                    //        //Enviamos correo para notificar
+                    //        dynamic emailtosend = new Email("newNotification_propertyAgent");
+                    //        emailtosend.To = user;
+                    //        emailtosend.From = "customercare@premiumgrealty.com";
+                    //        emailtosend.IDproperty = tb_Process.ID_Property;
+                    //        emailtosend.property = tb_Process.Property;
+                    //        emailtosend.listingtype = tb_Process.Description;
+                    //        emailtosend.price = tb_Process.Purchase_price;
+                    //        emailtosend.customerID = tb_Process.ID_Customer;
 
-                            emailtosend.subject = "New property assigned - S7VEN WEB";
-                            emailtosend.Send();
-                        }
-                        catch(Exception ex)
-                        {
+                    //        emailtosend.subject = "New property assigned - S7VEN WEB";
+                    //        emailtosend.Send();
+                    //    }
+                    //    catch(Exception ex)
+                    //    {
 
-                        }
-                    }
+                    //    }
+                    //}
 
 
-                }
+                //}
 
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+                return RedirectToAction("Edit", "Properties", new { id = tb_Process.ID_Process });
             }
             catch (Exception ex) {
                 TempData["advertencia"] = "Something went wrong." + ex.Message;
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+                return RedirectToAction("Edit", "Properties", new { id = tb_Process.ID_Process});
             }
           
         }
@@ -418,23 +405,13 @@ namespace Realestate_portal.Controllers
             if (generalClass.checkSession())
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-
-                //HEADER
-                //ACTIVE PAGES
-                ViewData["Menu"] = "CRM";
-                ViewData["Page"] = "Properties";
-                ViewBag.menunameid = "";
-                ViewBag.submenunameid = "";
-                List<string> s = new List<string>(activeuser.Department.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstDepartments = JsonConvert.SerializeObject(s);
-                List<string> r = new List<string>(activeuser.Roles.Split(new string[] { "," }, StringSplitOptions.None));
-                ViewBag.lstRoles = JsonConvert.SerializeObject(r);
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
-                ViewBag.userID = activeuser.ID_User;
-                ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.rol = "";
 
                 //Filtros SA
@@ -443,14 +420,14 @@ namespace Realestate_portal.Controllers
                 ViewBag.lstCompanies = lstCompanies;
 
 
-                if (r.Contains("Agent"))
+                if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
 
                 }
                 else
                 {
-                    if (r.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
@@ -498,16 +475,15 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Properties/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id, int broker = 0)
+
+        public ActionResult DeleteConfirmed(int id)
         {
             Tb_Process tb_Process = db.Tb_Process.Find(id);
             try
             {               
                 db.Tb_Process.Remove(tb_Process);
                 db.SaveChanges();
-                TempData["exito"] = "Property deleted successfully.";
+             
 
                 var packages = (from a in db.Tb_Docpackages where (a.ID_Process == id) select a).ToList();
                 if (packages.Count > 0)
@@ -516,12 +492,14 @@ namespace Realestate_portal.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
             {
-                TempData["advertencia"] = "Property could not be deleted... Try again";
-                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Process.ID_Customer, broker = broker });
+
+                var result = "error";
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
           
 

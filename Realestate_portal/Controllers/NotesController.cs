@@ -316,28 +316,26 @@ namespace Realestate_portal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_note,Text,Date,ID_Property,ID_Customer,ID_User")] Tb_Notes tb_Notes, int broker)
+        public ActionResult Create([Bind(Include = "ID_note,Text,Date,ID_Property,ID_Customer,ID_User")] Tb_Notes tb_Notes)
         {
-            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-            if (ModelState.IsValid)
+            try
             {
-                tb_Notes.Date = DateTime.Now;
-                var property = (from a in db.Tb_Process.Where(a => a.ID_Customer == tb_Notes.ID_Customer) select a).FirstOrDefault();
-                if (property != null)
-                {
-                    tb_Notes.ID_Property = property.ID_Process;
-                }
-                else
-                {
-                    tb_Notes.ID_Property =-1;
-                }
-                tb_Notes.Created_By = activeuser.Name + " " + activeuser.LastName;
-                db.Tb_Notes.Add(tb_Notes);
-                db.SaveChanges();
-                return RedirectToAction("CustomerDashboard", "CRM",new {id=tb_Notes.ID_Customer,broker=broker});
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+              
+                    tb_Notes.Date = DateTime.Now;
+                    tb_Notes.ID_Property = 0;
+                    tb_Notes.ID_User = activeuser.ID_User;
+                    tb_Notes.Created_By = activeuser.Name + " " + activeuser.LastName;
+                    db.Tb_Notes.Add(tb_Notes);
+                    db.SaveChanges();
+                    return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Notes.ID_Customer, token = "success" });
+                
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("CustomerDashboard", "CRM", new { id = tb_Notes.ID_Customer, token = "error" });
             }
 
-            return View(tb_Notes);
         }
 
         // GET: Notes/Edit/5
@@ -490,13 +488,13 @@ namespace Realestate_portal.Controllers
                 ID_Customer=a.ID_Customer,
                     ID_note = a.ID_note,
                     Text=a.Text,
-                    DateDate=a.Date,
+                    Date=a.Date,
                     Created_By = a.Created_By
                 }).ToList();
                      
                 foreach(var item in notes)
                 {
-                    item.Date = item.DateDate.ToShortDateString();
+                    item.Date = item.Date;
                 }
 
 
@@ -527,13 +525,13 @@ namespace Realestate_portal.Controllers
                                  ID_Customer = a.ID_Customer,
                                  ID_note = a.ID_note,
                                  Text = a.Text,
-                                 DateDate = a.Date,
+                                 Date = a.Date,
                                  Created_By=a.Created_By
                              }).ToList();
 
                 foreach (var item in notes)
                 {
-                    item.Date = item.DateDate.ToShortDateString();
+                    item.Date = item.Date;
                 }
 
                 return Json(notes);
@@ -571,11 +569,26 @@ namespace Realestate_portal.Controllers
 
         }
 
-        public void DeleteNote(int id) {
-            
+        public ActionResult DeleteNote(int id) {
+            int idcustomer = 0;
             Tb_Notes tb_Notes = db.Tb_Notes.Find(id);
-            db.Tb_Notes.Remove(tb_Notes);
-            db.SaveChanges();
+            idcustomer = tb_Notes.ID_Customer;
+            try
+            {
+                    db.Tb_Notes.Remove(tb_Notes);
+                    db.SaveChanges();
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
         }
         protected override void Dispose(bool disposing)
         {

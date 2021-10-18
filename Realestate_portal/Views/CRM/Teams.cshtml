@@ -1,0 +1,530 @@
+﻿@model List<Realestate_portal.Models.ViewModels.CRM.TeamsModel>
+
+@{
+    ViewBag.Title = "Work Teams";
+    List<Realestate_portal.Models.Sys_Users> lstagents = (List<Realestate_portal.Models.Sys_Users>)ViewBag.agents;
+    List<Realestate_portal.Models.Tb_Customers> lstcustomers = (List<Realestate_portal.Models.Tb_Customers>)ViewBag.leads;
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
+}
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+
+<!-- BEGIN: Weekly Top Products -->
+<div class="col-span-12 mt-6">
+    <div class="intro-y block sm:flex items-center h-10">
+        <h2 class="text-lg font-medium truncate mr-5">
+            Teams
+        </h2>
+        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+            @if (ViewBag.rol != "Agent")
+    {
+
+        <div class="widget-options">
+            <a class="btn btn-success" href="javascript:;" data-toggle="modal" data-target="#Newteam-modal">Add Team</a>
+        </div>
+
+}
+
+        </div>
+    </div>
+    <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-report sm:mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">TEAM</th>
+                        <th class="whitespace-nowrap">AGENTS</th>
+
+
+
+                        <th class="whitespace-nowrap">LEADS</th>
+
+                        <th class="text-center whitespace-nowrap">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr class="intro-x">
+                        <td>
+                            <a href="" class="font-medium whitespace-nowrap">@item.Name</a>
+
+                        </td>
+                        <td>
+                            <div class=" whitespace-nowrap">
+                                <label class="font-medium">Leader</label>
+                                <div class="flex">
+                                    @if (item.Teamleader.Count() > 0)
+                {
+                    foreach (var agent in item.Teamleader)
+                    {
+
+                        if (agent.Url_image == "")
+                        {
+                            <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
+
+    }
+    else if (agent.Url_image.StartsWith("http"))
+    {
+                    <div class="w-12 h-12 image-fit zoom-in">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
+                    </div>
+}
+else
+{ <div class="w-12 h-12 image-fit zoom-in ">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
+                    </div>
+}
+
+
+}
+
+}
+else
+{
+                    <label> Not assigned </label>
+}
+                                </div>
+                            </div>
+                            <div class="text-gray-600 text-xs whitespace-nowrap mt-3">
+                                <label>Agents</label>
+                                <div class="flex">
+                                    @if (item.Users.Count() > 0)
+                {
+                    foreach (var agent in item.Users)
+                    {
+
+                        if (agent.Url_image == "")
+                        {
+                            <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
+
+    }
+    else if (agent.Url_image.StartsWith("http"))
+    {
+                    <div class="w-12 h-12 image-fit zoom-in">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                    </div>
+}
+else
+{ <div class="w-12 h-12 image-fit zoom-in ">
+                        <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                    </div>
+}
+
+
+}
+
+}
+else
+{
+                    <label> Not assigned </label>
+}
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            @if (item.Leads.Count > 0)
+        {
+
+            foreach (var le in item.Leads)
+            {
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-theme-25 dark:bg-theme-10 rounded-full mr-3"></div>
+                        <span class="truncate">@le.Name</span>
+                    </div>
+}
+
+
+
+}
+else
+{
+                    <label> Not Assigned </label>
+}
+
+
+                        </td>
+
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#Editteam-modal" onclick="editData('@item.ID_team', '@item.Name','@item.Description','@Html.Raw(Json.Encode(item.Users.Select(c=>c.Id_User)))','@Html.Raw(Json.Encode(item.Leads.Select(c=>c.Id_Lead)))','@Html.Raw(Json.Encode(item.Teamleader.Select(c=>c.Id_User)))')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit</a>
+
+                                <a class="flex items-center text-theme-21" href="javascript:void(0)" onclick="deleteTeam(@item.ID_team)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+}
+
+
+</tbody>
+            </table>
+        }
+        else
+        {
+
+            <div class="sm:flex items-center">
+                <img src="~/Content/dist/images/nodata-found.png" style="width:600px" />
+
+                <div class="preview">
+
+                    <div class="alert alert-outline-secondary alert-dismissible show flex items-center mb-2" role="alert">
+                        <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i> Start adding a new Team
+
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+</div>
+<!-- END: Weekly Top Products -->
+<!-- BEGIN: Slide Over Content -->
+<div id="Editteam-modal" class="modal modal-slide-over" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Edit", "Teams", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input style="display:none" type="text" id="ID_team" name="ID_team" />
+                <!-- BEGIN: Slide Over Header -->
+                <div class="modal-header">
+                    <h2 class="font-medium text-base mr-auto">
+                        Edit Team
+                    </h2>
+
+                    <div class="dropdown sm:hidden">
+                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                        <div class="dropdown-menu w-40">
+                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Slide Over Header -->
+                <!-- BEGIN: Slide Over Body -->
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+                    <div>
+                        <label for="NameEdit" class="form-label">Name</label>
+                        <input id="NameEdit" name="NameEdit" type="text" class="form-control" required>
+                    </div>
+                    <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        @if (user.Team_Leader)
+        {
+                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit" >
+                    @foreach (var item in lstagents)
+    {
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+
+                </select>
+}
+else
+{
+                <select data-placeholder="Search here.." class="w-full" id="leaderEdit" name="leaderEdit">
+                    @foreach (var item in lstagents)
+    {
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+
+                </select>
+}
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="agentsEdit" class="form-label">Agents</label>
+                        <select data-placeholder="Search here.." class="w-full" id="agentsEdit" name="agentsEdit" multiple>
+                            @foreach (var item in lstagents)
+            {
+                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
+}
+
+                        </select>
+                    </div>
+                    <div class="mt-3">
+                        <label for="idcustomerEdit" class="form-label">Lead</label>
+                        <select data-placeholder="Search here.." class="w-full" id="idcustomerEdit" name="idcustomerEdit" multiple>
+
+                            @foreach (var item in lstcustomers)
+            {
+                if (item.ID_team != 0)
+                {
+                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
+}
+else
+{
+                <option value="@item.ID_Customer">@item.Name @item.LastName</option>
+}
+
+}
+
+                        </select>
+                    </div>
+
+                </div>
+                <!-- END: Slide Over Body -->
+                <!-- BEGIN: Slide Over Footer -->
+                <div class="modal-footer text-right w-full absolute bottom-0">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button type="submit" class="btn btn-success w-20">Save</button>
+                </div>
+                <!-- END: Slide Over Footer -->
+            }
+        </div>
+    </div>
+
+</div>
+
+<!-- END: Slide Over Content -->
+<!-- BEGIN: Slide Over Content -->
+<div id="Newteam-modal" class="modal modal-slide-over" data-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Create", "Teams", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- BEGIN: Slide Over Header -->
+                <div class="modal-header">
+                    <h2 class="font-medium text-base mr-auto">
+                        New Team
+                    </h2>
+
+                    <div class="dropdown sm:hidden">
+                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                        <div class="dropdown-menu w-40">
+                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Slide Over Header -->
+                <!-- BEGIN: Slide Over Body -->
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+                    <div>
+                        <label for="Name" class="form-label">Name</label>
+                        <input id="Name" name="Name" type="text" class="form-control" required>
+                    </div>
+                    <div class="mt-3">
+                        <label for="leader" class="form-label">Team Leader</label>
+                        <select data-placeholder="Search here.." class="tom-select w-full" id="leader" name="leader">
+                            @if (user.Team_Leader)
+            {
+                foreach (var item in lstagents.Where(c => c.ID_User == user.ID_User))
+                {
+
+                    <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+}
+else
+{
+foreach (var item in lstagents)
+{
+
+                <option value="@item.ID_User">@item.Name @item.LastName - @item.Email</option>
+}
+}
+
+
+                        </select>
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="agents" class="form-label">Agents</label>
+                        <select data-placeholder="Search here.." class="tom-select w-full" id="agents" name="agents" multiple>
+                            @foreach (var item in lstagents)
+            {
+                <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
+}
+
+                        </select>
+                    </div>
+                    <div class="mt-3">
+                        <label for="idcustomer" class="form-label">Lead</label>
+                        <select data-placeholder="Search here.." class="tom-select w-full" id="idcustomer" name="idcustomer" multiple>
+
+                            @foreach (var item in lstcustomers)
+            {
+                if (item.ID_team != 0)
+                {
+                    <option value="@item.ID_Customer" disabled>@item.Name @item.LastName (This Lead is already assigned to another team)</option>
+}
+else
+{
+                <option value="@item.ID_Customer">@item.Name @item.LastName</option>
+}
+
+}
+
+                        </select>
+                    </div>
+
+                </div>
+                <!-- END: Slide Over Body -->
+                <!-- BEGIN: Slide Over Footer -->
+                <div class="modal-footer text-right w-full absolute bottom-0">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button type="submit" class="btn btn-success w-20">Save</button>
+                </div>
+                <!-- END: Slide Over Footer -->
+            }
+        </div>
+    </div>
+</div>
+<!-- END: Slide Over Content -->
+
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
+
+
+        </script>
+    }
+
+}
+
+@section scripts{
+        <script>
+            function deleteTeam(idteam) {
+
+                swal.fire({
+                    title: 'Do you really want to delete these record?',
+                    text: "This process cannot be undone.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#C83232',
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: 'Delete'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/Teams/DeleteConfirmed',
+                            type: 'POST',
+                            data: { 'id': idteam },
+                            cache: false,
+                            global: false,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    Swal.fire(
+                                        'Record deleted',
+                                        'The record has been deleted.',
+                                        'success'
+                                    )
+                                    window.location.reload(true);
+                                } else {
+                                    alert(result);
+                                }
+
+
+                            },
+                            error: function (request) {
+                                alert("Something went wrong.");
+
+                            }
+                        });
+
+
+                    }
+                })
+            }
+            var control;
+            var control2;
+            var control3;
+            function editData(idteam, name, description,agents, leads, teamleader) {
+            
+                if (typeof control === 'undefined') {
+                    // variable is undefined
+                    control = new TomSelect('#agentsEdit', {
+                   plugins: ['remove_button'],
+                    });
+                } else {
+                    control.clear(false);
+
+                }
+                if (typeof control2 === 'undefined') {
+                    // variable is undefined
+                    control2 = new TomSelect('#idcustomerEdit', {
+                        plugins: ['remove_button'],
+                    });
+                } else {
+                    control2.clear(false);
+
+                }
+
+                if (typeof control3 === 'undefined') {
+                    // variable is undefined
+                    control3 = new TomSelect('#leaderEdit', {
+                        
+                    });
+                } else {
+                    control3.clear(false);
+
+                }
+
+                $("#ID_team").val(idteam);
+                $("#NameEdit").val(name);
+                //$("#DescriptionEdit").val(description);
+                var result = agents.substring(1, agents.length - 1);
+                if (result.length > 0) {
+                    var res = result.split(",");         
+                    if (res.length > 0) {
+                        control.setValue(res, true)
+                    }
+                   
+                }
+
+                var result2 = leads.substring(1, leads.length - 1);
+                if (result2.length > 0) {
+                    var res2 = result2.split(",");
+                    if (res2.length > 0) {
+                        control2.setValue(res2, true)
+                    }
+
+                }
+
+                var result3 = teamleader.substring(1, teamleader.length - 1);
+                if (result3.length > 0) {
+                    var res3 = result3.split(",");
+                    if (res3.length > 0) {
+                        control3.setValue(res3, true)
+                    }
+
+                }
+            }
+
+           
+        </script>
+    }

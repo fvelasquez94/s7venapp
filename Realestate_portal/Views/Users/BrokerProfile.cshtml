@@ -1,0 +1,291 @@
+﻿@model Realestate_portal.Models.Sys_Company
+
+@{
+    ViewBag.Title = "Edit";
+
+    Realestate_portal.Models.Sys_Users brokeruser = (Realestate_portal.Models.Sys_Users)ViewBag.users;
+
+}
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<!-- BEGIN: Content -->
+<div class="content content--top-nav ">
+    <div class="intro-y flex items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">
+            Broker
+        </h2>
+    </div>
+    <!-- BEGIN: Profile Info -->
+    <div class="intro-y box px-5 pt-5 mt-5">
+        <div class="flex flex-col lg:flex-row border-b border-gray-200 dark:border-dark-5 pb-5 -mx-5">
+            <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                    @if (Model.Logo == "")
+                    {
+                        <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-6.jpg">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content(Model.Logo)" alt="S7VEN" class="rounded-full">
+                    }
+                    <div class="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-theme-25 rounded-full p-2" id="OpenImgUpload" style="cursor:pointer"> <i class="w-4 h-4 text-white" data-feather="camera"></i> </div>
+                </div>
+                <div class="ml-5">
+                    <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">@Model.Name</div>
+                    <div class="text-gray-600">
+
+                        <span>Broker</span>
+
+                    </div>
+                </div>
+                <input type="file" class="img1" id="imgupload" style="display:none" />
+            </div>
+            <div class="mt-6 lg:mt-0 flex-1 dark:text-gray-300 px-5 border-l border-r border-gray-200 dark:border-dark-5 border-t lg:border-t-0 pt-5 lg:pt-0">
+                <div class="font-medium text-center lg:text-left lg:mt-3">Web Address</div>
+                <div class="flex flex-col justify-center items-center lg:items-start mt-4">
+                    <div class="truncate sm:whitespace-normal flex items-center"> <i data-feather="globe" class="w-4 h-4 mr-2"></i> @Model.Web    </div>
+
+                </div>
+            </div>
+            <div class="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 dark:border-dark-5 pt-5 lg:pt-0">
+                @*<div class="text-center rounded-md w-20 py-3">
+                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">201</div>
+                        <div class="text-gray-600">Leads</div>
+                    </div>
+                    <div class="text-center rounded-md w-20 py-3">
+                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">1k</div>
+                        <div class="text-gray-600">Properties</div>
+                    </div>
+                    <div class="text-center rounded-md w-20 py-3">
+                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">492</div>
+                        <div class="text-gray-600">Tasks</div>
+                    </div>*@
+            </div>
+        </div>
+        <div class="nav nav-tabs flex-col sm:flex-row justify-center lg:justify-start" role="tablist">
+            @*<a id="profile-tab" data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active" role="tab" aria-controls="profile" aria-selected="true"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Profile </a>*@
+            <a id="account-tab" data-toggle="tab" data-target="#account" href="javascript:;" class="py-4 sm:mr-8 flex items-center active" role="tab" aria-selected="true"> <i class="w-4 h-4 mr-2" data-feather="shield"></i> Account </a>
+            @*<a id="documents-tab" data-toggle="tab" data-target="#documents" href="javascript:;" class="py-4 sm:mr-8 flex items-center" role="tab" aria-selected="false"> <i class="w-4 h-4 mr-2" data-feather="file"></i> Documents</a>
+                <a id="notes-tab" data-toggle="tab" data-target="#notes" href="javascript:;" class="py-4 sm:mr-8 flex items-center" role="tab" aria-selected="false"> <i class="w-4 h-4 mr-2" data-feather="edit"></i> Notes </a>*@
+        </div>
+    </div>
+    <!-- END: Profile Info -->
+    <div class="tab-content mt-5">
+        <div id="account" class="tab-pane active" role="tabpanel" aria-labelledby="account-tab">
+            @using (Html.BeginForm("EditBroker", "Users", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID_Company)
+                <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+                    <!-- BEGIN: Personal Information -->
+                    <div class="intro-y box mt-5">
+                        <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Broker Information
+                            </h2>
+                        </div>
+                        <div class="p-5">
+                            <div class="grid grid-cols-12 gap-x-5">
+                                <div class="col-span-6 md:col-span-3">
+                                    <div>
+                                        <label class="form-label">Name</label>
+                                        <input name="BrokerName" type="text" class="form-control" value="@Model.Name" required>
+                                    </div>
+
+                                </div>
+                                <div class="col-span-6 md:col-span-3 ml-2">
+                                    <div>
+                                        <label class="form-label">Web</label>
+                                        <input name="Web" type="text" class="form-control" value="@Model.Web" required>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- BEGIN: Display Information -->
+                    <div class="intro-y box lg:mt-5">
+                        <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Admin User Information
+                            </h2>
+
+                        </div>
+                        <div class="p-5">
+                            <div class="flex flex-col-reverse xl:flex-row flex-col">
+                                <div class="flex-1 mt-6 xl:mt-0">
+                                    <div class="grid grid-cols-12 ">
+                                        <div class="col-span-6 md:col-span-3">
+                                            <div>
+                                                <label class="form-label">Name</label>
+                                                <input type="text" name="Name" class="form-control" value="@brokeruser.Name" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+                                            <div>
+                                                <label class="form-label">Last Name</label>
+                                                <input type="text" name="LastName" class="form-control" value="@brokeruser.LastName" >
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+                                            <div>
+                                                <label class="form-label">Email</label>
+                                                <input type="email" name="Email" class="form-control" value="@brokeruser.Email" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+
+                                            <div>
+                                                <label class="form-label">Password</label>
+                                                <input type="password" name="Password" id="Password" class="form-control" value="@brokeruser.Password" required>
+                                                <input type="checkbox" id="check" /> <label for="check">Show</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button type="submit" class="btn btn-primary ">Save information</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Display Information -->
+
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+<!-- END: Content -->
+
+
+
+
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+<script type="text/javascript">
+            window.onload = function () {
+
+
+            $('#OpenImgUpload').click(function () { $('#imgupload').trigger('click'); });
+
+
+                $('input[type="file"].img1').change(function () {
+
+               var fileData = new FormData();
+            var iduser = @Model.ID_Company;
+            var file = document.getElementById("imgupload").files[0];
+
+
+        // Adding one more key to FormData object
+            fileData.append('id', iduser);
+            fileData.append("imgupload", file);
+
+        //if true rotate to the right
+        //$('#maindivprogress_' + ID).show();
+        $.ajax({
+            url: '/Sys_Company/changeCompanyImg',
+            //xhr: function () {
+            //    var xhr = new window.XMLHttpRequest();
+            //    xhr.upload.addEventListener("progress", function (evt) {
+            //        if (evt.lengthComputable) {
+            //            var percentComplete = (evt.loaded / evt.total) * 100;
+
+            //            $('#divprogress_' + ID).width(percentComplete + '%');
+            //            $('#imgprogress_' + ID).html(percentComplete.toFixed(2) + "%");
+
+            //        }
+            //    }, false);
+            //    return xhr;
+            //},
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            //async: true,
+            timeout: 80000,
+            data: fileData,
+            success: function (result) {
+                //$("#modal_demoform_saving").modal('hide');
+                if (result == "SUCCESS") {
+                    var link = document.getElementById('basic-non-sticky-notification-toggle');
+                    link.click();
+                    window.location.reload(true);
+                } else {
+                    console.log(result);
+                }
+                //$("#loading").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error uploading image. " + errorThrown );
+            }
+        });
+        });
+
+                $("#tableresources").DataTable();
+
+                $('#check').click(function () {
+                    if ('password' == $('#Password').attr('type')) {
+                        $('#Password').prop('type', 'text');
+                    } else {
+                        $('#Password').prop('type', 'password');
+                    }
+                });
+    }
+
+
+
+
+
+    //here we extract all the elements with the class specified
+    var uploadfile = document.querySelectorAll(".fileToUpload");
+
+    //here we listen for the even on every html element
+    for (const file of uploadfile) {
+        file.addEventListener('change', handleChange);
+    }
+    //variables to store the file and id arrays
+    var files = [];
+    var ids = [];
+
+
+    //we capture the data we need from the html attribute
+    function handleChange(e) {
+        var id = $(this).attr("id");
+        var idtosave = id.substring(5);
+        console.log(files.length);
+        if (files.length > 0) {
+            files.pop(files[0]);
+            files.push(e.target.files[0]);
+            ids.pop(ids[0]);
+            ids.push(idtosave);
+        }
+        else {
+            files.push(e.target.files[0]);
+            ids.push(idtosave);
+
+        }
+
+
+    }
+
+
+</script>

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_CRM.cshtml";
+  
 }
 
 <div class="container-fluid">
@@ -13,16 +13,18 @@
                 <h2 class="page-header-title"></h2>
                 <div>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">PROPERTIES</li>
+                   
+                       
                     </ul>
                 </div>
+                <a class="btn btn-primary" href="@Url.Action("CustomerDashboard","CRM", new { id=Model.ID_Customer})">Back to Lead Dashboard</a>
+                <a class="btn btn-primary" href="@Url.Action("Properties","CRM")">Back to Properties</a>
             </div>
         </div>
     </div>
     <!-- End Page Header -->
     <!-- Begin Widget 08 -->
-    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+    <div class="mt-6" >
 
         @if (TempData["advertencia"] != null)
     {
@@ -68,7 +70,7 @@
                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group" style="display:none">
+                    <div class="form-group" >
                         <label class="control-label col-md-2">Status</label>
                         <div class="col-md-10">
                             <select class="form-control" id="Property" name="Property">
@@ -144,11 +146,11 @@ else
                 </div>
 }
 
-                    <div class="form-group">
+                    <div class="form-group" style="display:none">
                         <label class="control-label col-md-2">Customer</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("ID_Customer", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ID_Customer, "", new { @class = "text-danger" })
+                            <input type="text" name="ID_Customer" value="@Model.ID_Customer"/>
+                       
                         </div>
                     </div>
 
@@ -188,12 +190,12 @@ else
 else
 {
                                 <option>CLOSED</option>}
-                                @if (Model.Stage == "UNDER CONTRACT")
+                                @if (Model.Stage == "ON CONTRACT")
                 {
-                    <option selected>UNDER CONTRACT</option>}
+                    <option selected>ON CONTRACT</option>}
 else
 {
-                <option>UNDER CONTRACT</option>}
+                <option>ON CONTRACT</option>}
                                 @if (Model.Stage == "FOLLOW UP")
                 {
                 <option selected>FOLLOW UP</option> }
@@ -380,12 +382,12 @@ else
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                        
                         <div class="col-md-10">
                             <a class="btn btn-info" href="@Url.Action("Index","Notes", new {ID_Propery=Model.ID_Process, module="Properties" })">Go to notes</a>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="form-group" style="display:none">
                         @Html.LabelFor(model => model.Creation_date, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -405,7 +407,7 @@ else
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
