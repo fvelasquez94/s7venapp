@@ -167,7 +167,7 @@
           
                 </div>
                 <div class="modal-body">
-                    <form id="htmlform" method="post">
+                    <form id="htmlform" method="post" onsubmit="checkRegistration()">
 
                         <div class="row">
                             <div class="col-6">
@@ -476,103 +476,103 @@
             }
         };
 
-        window.onload = function () {
+    window.onload = function () {
+
+
+
             $(".owl-carousel").owlCarousel({
                 center: false,
                 onInitialize: function (event) { if (event.item.count <= 4) { this.options.mouseDrag = false; this.options.touchDrag = false; } else { this.options.mouseDrag = true; this.options.touchDrag = true; } },
                 items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true" style="font-size: 30px;"></i>', '<i  style="font-size: 30px;"class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 3 } }
             });
 
-            $('#htmlform').on('submit', function (event) {
-                $("#subbtnenviar").attr("disabled", true);
-                event.preventDefault();
+   
 
-                $("#preloader").show();
+    }
 
-
-                var formData = new FormData();
-                var photo = document.getElementById("imageUpload");
-                var photoSize = photo.files[0].size;
-                var photoType = photo.files[0].type;
-
-                if (photoSize < 25600) {
-                    var file = photo.files[0];
-
-                    var title = $("#titlevideo").val();
-                    var category = $("#categoryvideo").val();
+    function checkRegistration(e) {
+        $("#subbtnenviar").attr("disabled", true);
+        console.log("hola");
+        event.preventDefault();
 
 
-                    var company = $("#company").val();
-                    var contact = $("#contact").val();
-                    var email = $("#email").val();
-                    var website = $("#website").val();
-                    var address = $("#address").val();
+        var formData = new FormData();
+        var photo = document.getElementById("imageUpload");
+        var photoSize = photo.files[0].size;
+        var photoType = photo.files[0].type;
 
-                    var txtArea = document.getElementById("descriptionvideo");
-                    txtArea.value = "";
-                    txtArea.value += company + '\r\n';
-                    txtArea.value += contact + '\r\n';
-                    txtArea.value += email + '\r\n';
-                    txtArea.value += website + '\r\n';
-                    txtArea.value += address + '\r\n';
+        if (photoSize < 25600) {
+            var file = photo.files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
 
 
-                    var description = $.trim($("#descriptionvideo").val());
-                    var url = website;
+            var company = $("#company").val();
+            var contact = $("#contact").val();
+            var email = $("#email").val();
+            var website = $("#website").val();
+            var address = $("#address").val();
 
-                    formData.append("imageUploadForm", file);
-                    formData.append("title", title);
-                    formData.append("category", category);
-                    formData.append("description", description);
-                    formData.append("url", url);
+            var txtArea = document.getElementById("descriptionvideo");
+            txtArea.value = "";
+            txtArea.value += company + '\r\n';
+            txtArea.value += contact + '\r\n';
+            txtArea.value += email + '\r\n';
+            txtArea.value += website + '\r\n';
+            txtArea.value += address + '\r\n';
 
 
-                    $.ajax({
-                        type: "POST",
-                        url: '/Portal/UploadNetwork',
-                        data: formData,
-                        dataType: 'json',
-                        contentType: false,
-                        processData: false,
-                        success: function (response) {
-                            if (response == "SUCCESS") {
-                                $("#loader_form").hide();
-                                $("#subbtnenviar").attr("disabled", false);
+            var description = $.trim($("#descriptionvideo").val());
+            var url = website;
 
-                                new Noty({
-                                    type: 'success',
-                                    layout: 'topRight',
-                                    text: 'Information added successfully',
-                                    progressBar: true,
-                                    timeout: 2500
-                                }).show()
-                                setTimeout(function () {
-                                    window.location.reload(true);
-                                }, 2000);
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+            formData.append("url", url);
 
-                            } else {
-                                $("#loader_form").hide();
-                                $("#subbtnenviar").attr("disabled", false);
-                                alert(response);
-                            }
-                        },
-                        error: function (error) {
-                            $("#loader_form").hide();
-                            $("#subbtnenviar").attr("disabled", false);
-                            alert("Error uploading information");
-                        }
-                    });
 
-                }
-                else {
-                    $("#loader_form").hide();
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadNetwork',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        Swal.fire(
+                            'Network Added ',
+                            'The record has been added.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                  
                     $("#subbtnenviar").attr("disabled", false);
-                    alert("The photo must be lower than 25KB");
-                    window.location.reload(true);
+                    alert("Error uploading information");
                 }
-
-
             });
 
         }
+        else {
+        
+            $("#subbtnenviar").attr("disabled", false);
+            alert("The photo must be lower than 25KB");
+            window.location.reload(true);
+        }
+    }
 </script>
