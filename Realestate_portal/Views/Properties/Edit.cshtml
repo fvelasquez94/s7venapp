@@ -218,8 +218,7 @@ else
                         </div>
                     </div>
 
-                    @if (Model.Stage == "UNDER CONTRACT")
-    {
+ 
                 <div id="stagediv">
 
                     <div class="form-group">
@@ -238,41 +237,15 @@ else
                     <div class="form-group">
                         <label class="control-label col-md-2">Commission ($)</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Commission_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.EditorFor(model => model.Commission_amount, new { htmlAttributes = new { @class = "form-control"} })
                             @Html.ValidationMessageFor(model => model.Commission_amount, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
 
                 </div>
-}
-else
-{
-                <div id="stagediv" style="display:none;">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Under Contract Date</label>
-                        <div class="col-md-10">
-                            <input type="date" class="form-control" name="Under_contract_date" id="Under_contract_date" value="@Model.Under_contract_date.ToString("yyyy-MM-dd")" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Commission (%)</label>
-                        <div class="col-md-10">
-                            <input type="number" class="form-control" value="@Model.Commissionperc" step="0.1" name="Commissionperc" id="Commissionperc" min="0" max="100" />
-                            @Html.ValidationMessageFor(model => model.Commissionperc, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Commission ($)</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Commission_amount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.Commission_amount, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
 
-                </div>
-}
 
 
 
@@ -422,17 +395,17 @@ else
         window.onload = function () {
 
             $(function () {
-                $('#stage').change(function (e) {
-                    var selected = $(e.target).val();
-                    if (selected == "UNDER CONTRACT") {
-                        $("#stagediv").show();
-                    } else {
-                        $("#stagediv").hide();
-                    }
+                //$('#stage').change(function (e) {
+                //    var selected = $(e.target).val();
+                //    if (selected == "UNDER CONTRACT") {
+                //        $("#stagediv").show();
+                //    } else {
+                //        $("#stagediv").hide();
+                //    }
 
 
 
-                });
+                //});
             });
 
             $(document).on('keyup mouseup', '#Commissionperc', function () {

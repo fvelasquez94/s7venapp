@@ -1913,7 +1913,7 @@ namespace Realestate_portal.Controllers
                         if (assigned.Length > 0)
                         {
                             var equipo = (from e in db.Tb_Customers_Users where (assigned.Contains(e.ID_team)) select e.Id_User).ToArray();
-                            Tb_Process = db.Tb_Process.Where(a => equipo.Contains(a.ID_User)).Include(t => t.Tb_Customers);
+                            Tb_Process = db.Tb_Process.Where(a => equipo.Contains(a.ID_User) || a.ID_User == activeuser.ID_User).Include(t => t.Tb_Customers);
                         }
                         else
                         {
@@ -2241,9 +2241,9 @@ namespace Realestate_portal.Controllers
                     ViewBag.rol = "Agent";
                     ViewBag.selbroker = 0;
 
-                    var propertiesprojectedgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "ON CONTRACT" && f.ID_Customer==tb_Customers.ID_Customer) select f).ToList();
-                    var propertiesgains = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.Stage == "CLOSED" && f.ID_Customer == tb_Customers.ID_Customer) select f).ToList();
-                    var totalproperties = (from f in db.Tb_Process where (f.ID_User == activeuser.ID_User && f.ID_Customer == tb_Customers.ID_Customer) select f).Count();
+                    var propertiesprojectedgains = (from f in db.Tb_Process where (f.Stage == "ON CONTRACT" && f.ID_Customer==tb_Customers.ID_Customer) select f).ToList();
+                    var propertiesgains = (from f in db.Tb_Process where (f.Stage == "CLOSED" && f.ID_Customer == tb_Customers.ID_Customer) select f).ToList();
+                    var totalproperties = (from f in db.Tb_Process where (f.ID_Customer == tb_Customers.ID_Customer) select f).Count();
 
                     decimal totalprojectedgains = 0;
                     decimal totalgains = 0;
@@ -2251,7 +2251,7 @@ namespace Realestate_portal.Controllers
                     if (propertiesgains.Count > 0) { totalgains = propertiesgains.Select(c => c.Commission_amount).Sum(); }
 
 
-                    lstlistings = (from f in db.Tb_Process where (f.ID_Customer == id && f.ID_User==activeuser.ID_User) select f).ToList();
+                    lstlistings = (from f in db.Tb_Process where (f.ID_Customer == id ) select f).ToList();
 
 
                     if (lstlistings.Count > 0)
@@ -2288,10 +2288,55 @@ namespace Realestate_portal.Controllers
                 else if (activeuser.Roles.Contains("SA"))
                 {
                     ViewBag.rol = "SA";
-                    ViewBag.selbroker = 1;
-                    ViewBag.totalcustomers = 0;
-                    ViewBag.totalgainsprojected = 0;
-                    ViewBag.totalgains = 0;
+            
+                    ViewBag.selbroker = 0;
+
+
+                    decimal comission = 0;
+                    decimal gains = 0;
+                    int totalcustomer = 0;
+
+
+                    var listComission = (from f in db.Tb_Process.Where(f => f.Stage == "ON CONTRACT" && f.ID_Customer == tb_Customers.ID_Customer) select f).ToList();
+                    if (listComission.Count > 0) { comission = listComission.Select(c => c.Commission_amount).Sum(); }
+
+                    var listgains = (from f in db.Tb_Process where (f.Stage == "CLOSED" && f.ID_Customer == tb_Customers.ID_Customer) select f).ToList();
+                    if (listgains.Count > 0) { gains = listgains.Select(c => c.Commission_amount).Sum(); }
+                    totalcustomer = (from f in db.Tb_Process where (f.ID_Customer == tb_Customers.ID_Customer) select f).Count();
+
+                    ViewBag.totalgainsprojected = comission.ToString("N2");
+                    ViewBag.totalgains = gains.ToString("N2");
+                    ViewBag.totalcustomers = totalcustomer;
+
+                    lstlistings = (from f in db.Tb_Process where (f.ID_Customer == id) select f).ToList();
+
+
+                    if (lstlistings.Count > 0)
+                    {
+
+                        var staritem = lstlistings.OrderBy(c => c.Creation_date).FirstOrDefault();
+                        var enditem = lstlistings.OrderByDescending(c => c.Creation_date).FirstOrDefault();
+
+                        var startdate = new DateTime(staritem.Creation_date.Year, staritem.Creation_date.Month, 1, 0, 0, 0);
+                        var enddate = new DateTime(enditem.Creation_date.Year, enditem.Creation_date.Month, enditem.Creation_date.AddMonths(1).AddDays(-1).Day, 0, 0, 0);
+
+                        var months = MonthsBetween(startdate, enddate);
+
+                        foreach (var item in months)
+                        {
+                            GainsReport data = new GainsReport();
+                            data.monthyear = item.Month + " - " + item.Year;
+
+                            var StartDay = new DateTime(item.Year, item.montint, 1);
+                            var EndDay = StartDay.AddMonths(1).AddDays(-1);
+
+                            data.projected = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "ON CONTRACT") select f.Commission_amount).Sum();
+                            data.gains = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "CLOSED") select f.Commission_amount).Sum();
+
+                            lstgainsreport.Add(data);
+
+                        }
+                    }
                 }
                 else if (activeuser.Roles.Contains("Admin"))
                 {

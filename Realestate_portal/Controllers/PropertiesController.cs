@@ -166,8 +166,18 @@ namespace Realestate_portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateProperty([Bind(Include = "ID_Process,Description,ID_User,ID_Customer,ID_Property,Property,Address,Purchase_price,Commission_amount,Commissionperc,Closing_date,Under_contract_date,Offer_accepted_date,Inspection_date,Stage,Source,TypeofAgency,Loan_Officer_name,Attorneys_name,Notes,Creation_date,Last_update,Loan_Officer_tel,Attorneys_tel")] Tb_Process tb_Process)
         {
-            if (tb_Process.Address == null) { tb_Process.Address = ""; }
+            
+if (tb_Process.Address == null) { tb_Process.Address = ""; }
             if (tb_Process.TypeofAgency == null) { tb_Process.TypeofAgency = ""; }
+            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+            if (activeuser != null)
+            {
+                tb_Process.ID_User = activeuser.ID_User;
+            }
+            else {
+                tb_Process.ID_User = 4;
+            }
             if (tb_Process.Loan_Officer_name == null) { tb_Process.Loan_Officer_name = ""; }
             if (tb_Process.Loan_Officer_tel == null) { tb_Process.Loan_Officer_tel = ""; }
             if (tb_Process.Attorneys_tel == null) { tb_Process.Attorneys_tel = ""; }
