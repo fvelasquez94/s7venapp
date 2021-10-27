@@ -16,19 +16,31 @@
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA") { 
+            @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+    {
 
-            <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add New Network</a>
-            <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
+        <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add New Network</a>
+        <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
 
-            }
+}
 
             <div class="hidden md:block mx-auto text-gray-600">&nbsp;</div>
-            <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-                @*<div class="w-56 relative text-gray-700 dark:text-gray-300">
+            @*<div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-5">
+                <div class="w-56 relative text-gray-700 dark:text-gray-300">
                     <input type="text" class="form-control w-100 box pr-10 placeholder-theme-13" placeholder="Search...">
                     <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
-                </div>*@
+                </div>
+            </div>*@
+            <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-5">
+                <select class="form-control" id="filternetwork" onchange="filternetwork(this.value)">
+                    <option value="0">SHOW ALL</option>
+                    @foreach (var category in lstcategories)
+        {
+
+            <option value="@category.ID_option">@category.Description</option>
+
+}
+                </select>
             </div>
         </div>
 
@@ -46,7 +58,7 @@
         }
         @foreach (var category in lstcategories)
         {
-            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 @category.ID_option toshowhide">
                 <div class=" md:block mx-auto text-gray-600">
                     <div class="pricing-tabs nav nav-tabs box rounded-full overflow-hidden" role="tablist"> <a style="width: 100%;padding-left: 20px;padding-right:20px" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center active">@category.Description</a> </div>
                 </div>
@@ -60,7 +72,7 @@
             {
                 foreach (var item in Model.Where(a => a.Category == category.Description))
                 {
-                    <div class="intro-y col-span-12 md:col-span-3 lg:col-span-3">
+                    <div class="intro-y col-span-12 md:col-span-3 lg:col-span-3 @category.ID_option toshowhide">
                         <div class="box">
                             <div class="flex items-start px-5 pt-5">
                                 <div class="w-full flex flex-col lg:flex-row items-center">
@@ -476,19 +488,39 @@
             }
         };
 
+
     window.onload = function () {
 
 
+        //$('#filternetwork').change(function () {
+        //    alert($(this).val()); //will work here
+        //});
 
-            $(".owl-carousel").owlCarousel({
-                center: false,
-                onInitialize: function (event) { if (event.item.count <= 4) { this.options.mouseDrag = false; this.options.touchDrag = false; } else { this.options.mouseDrag = true; this.options.touchDrag = true; } },
-                items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true" style="font-size: 30px;"></i>', '<i  style="font-size: 30px;"class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 3 } }
-            });
+            //$(".owl-carousel").owlCarousel({
+            //    center: false,
+            //    onInitialize: function (event) { if (event.item.count <= 4) { this.options.mouseDrag = false; this.options.touchDrag = false; } else { this.options.mouseDrag = true; this.options.touchDrag = true; } },
+            //    items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true" style="font-size: 30px;"></i>', '<i  style="font-size: 30px;"class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 3 } }
+            //});
 
-   
+      
+    }
+
+
+    function filternetwork(cat) {
+        if (cat != "0") {
+            $('.toshowhide').hide();
+            $(".toshowhide." + cat).show();
+            window.scrollTo(0, document.body.scrollHeight);
+            $('html,body').scrollTop(0);
+        } else {
+            $('.toshowhide').show();
+           
+            window.scrollTo(0, document.body.scrollHeight);
+            $('html,body').scrollTop(0);
+        }
 
     }
+
 
     function checkRegistration(e) {
         $("#subbtnenviar").attr("disabled", true);

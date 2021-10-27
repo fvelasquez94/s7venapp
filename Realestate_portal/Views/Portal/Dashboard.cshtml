@@ -58,6 +58,9 @@
                                         @if (user.Roles.Contains("Agent"))
                                         {
                                     <span>Real Estate Agent</span>
+                                    if (user.Team_Leader) {
+                                        <br /><span class="text-theme-20">Team Leader</span>
+                                    }
                                         }
                                         else if (user.Roles.Contains("Admin"))
                                         { <span>Broker</span>}

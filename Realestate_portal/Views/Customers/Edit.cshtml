@@ -251,17 +251,11 @@ else
                             </div>
 
 
-                            <div class="form-group" style="display:none;">
-                                @Html.LabelFor(model => model.Creation_date, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.Creation_date, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                     
                         }
                         else
                         {
-                            <div>
+                            <div style="display:none">
                                 <label class="form-label">Assigned Agent</label>
                                 <select class="form-control" name="ID_agent" id="ID_agent">
                                     <option value="0">Not assigned</option>
@@ -297,13 +291,15 @@ else
                                 </select>
                             </div>
 
+                        
+
+
+                        }
                             <div>
                                 <label class="form-label">Created</label>
                                 @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </div>
 
-
-                        }
                         <div class="mt-6">
                             <button type="submit" id="submitbuttoncreate" class="btn btn-primary">Save changes</button>
                         </div>

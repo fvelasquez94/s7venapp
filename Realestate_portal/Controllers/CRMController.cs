@@ -1303,7 +1303,7 @@ namespace Realestate_portal.Controllers
         }
 
 
-        public ActionResult Leads(string token = "")
+        public ActionResult Leads(string fstartd, string fendd, string token = "")
         {
             if (generalClass.checkSession())
             {
@@ -1315,7 +1315,23 @@ namespace Realestate_portal.Controllers
                 ViewBag.activeuser = activeuser;
                 ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
+                //FILTROS VARIABLES
+                DateTime filtrostartdate;
+                DateTime filtroenddate;
                 List<LeadsMain> leads = new List<LeadsMain>();
+                ////filtros de fecha 
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, 1, 1);
+                var lastDayOfMonth = new DateTime(DateTime.Today.Year, 12, 31);
+
+                if (fstartd == null || fstartd == "") { filtrostartdate = firstDayOfMonth; } else { filtrostartdate = Convert.ToDateTime(fstartd); }
+                if (fendd == null || fendd == "") { filtroenddate = lastDayOfMonth; } else { filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59); }
+
+                var startDate = filtrostartdate;
+                var endDate = filtroenddate;
+                //importante
+      
+                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
                 //ROLES
                 if (activeuser.Roles.Contains("Agent"))
                 {
@@ -1337,7 +1353,7 @@ namespace Realestate_portal.Controllers
 
 
                             leads = (from a in db.Tb_Customers
-                                     where (a.Lead == true && leadsassigned.Contains(a.ID_Customer))
+                                     where (a.Lead == true && leadsassigned.Contains(a.ID_Customer) && a.Creation_date >= startDate && a.Creation_date <= endDate)
                                      select new LeadsMain
                                      {
                                          ID_lead = a.ID_Customer,
@@ -1359,6 +1375,7 @@ namespace Realestate_portal.Controllers
                                                        Name = u.Name,
                                                        Lastname = u.LastName,
                                                        Email = u.Email,
+                                                       Id_Team=cu.ID_team,
                                                        Url_image = u.Image
                                                    }).Distinct().ToList(),
 
@@ -1371,7 +1388,7 @@ namespace Realestate_portal.Controllers
 
 
                             leads = (from a in db.Tb_Customers
-                                     where (a.Lead == true && leadsassigned.Contains(a.ID_Customer))
+                                     where (a.Lead == true && leadsassigned.Contains(a.ID_Customer) && a.Creation_date >= startDate && a.Creation_date <= endDate)
                                      select new LeadsMain
                                      {
                                          ID_lead = a.ID_Customer,
@@ -1393,6 +1410,7 @@ namespace Realestate_portal.Controllers
                                                        Name = u.Name,
                                                        Lastname = u.LastName,
                                                        Email = u.Email,
+                                                       Id_Team = cu.ID_team,
                                                        Url_image = u.Image
                                                    }).Distinct().ToList(),
 
@@ -1405,7 +1423,7 @@ namespace Realestate_portal.Controllers
 
 
                         leads = (from a in db.Tb_Customers
-                                 where (a.Lead == true && leadsassigned.Contains(a.ID_Customer))
+                                 where (a.Lead == true && leadsassigned.Contains(a.ID_Customer) && a.Creation_date >= startDate && a.Creation_date <= endDate)
                                  select new LeadsMain
                                  {
                                      ID_lead = a.ID_Customer,
@@ -1425,6 +1443,7 @@ namespace Realestate_portal.Controllers
                                                {
                                                    Id_User = cu.Id_User,
                                                    Name = u.Name,
+                                                   Id_Team = cu.ID_team,
                                                    Lastname = u.LastName,
                                                    Email = u.Email,
                                                    Url_image = u.Image
@@ -1441,7 +1460,7 @@ namespace Realestate_portal.Controllers
                     ViewBag.selbroker = 1;
                   
                     leads = (from a in db.Tb_Customers
-                             where (a.Lead == true && a.ID_Company == activeuser.ID_Company)
+                             where (a.Lead == true && a.ID_Company == activeuser.ID_Company && a.Creation_date >= startDate && a.Creation_date <= endDate)
                              select new LeadsMain
                              {
                                  ID_lead = a.ID_Customer,
@@ -1461,6 +1480,7 @@ namespace Realestate_portal.Controllers
                                            {
                                                Id_User = cu.Id_User,
                                                Name = u.Name,
+                                               Id_Team = cu.ID_team,
                                                Lastname = u.LastName,
                                                Email = u.Email,
                                                Url_image = u.Image
@@ -1477,7 +1497,7 @@ namespace Realestate_portal.Controllers
                     ViewBag.selbroker = 0;
 
                     leads = (from a in db.Tb_Customers
-                             where (a.Lead == true && a.ID_Company==activeuser.ID_Company)
+                             where (a.Lead == true && a.ID_Company==activeuser.ID_Company && a.Creation_date >= startDate && a.Creation_date <= endDate)
                              select new LeadsMain
                              {
                                  ID_lead = a.ID_Customer,
@@ -1498,6 +1518,7 @@ namespace Realestate_portal.Controllers
                                            {
                                                Id_User = cu.Id_User,
                                                Name = u.Name,
+                                               Id_Team = cu.ID_team,
                                                Lastname = u.LastName,
                                                Email = u.Email,
                                                Url_image = u.Image
@@ -1521,7 +1542,8 @@ namespace Realestate_portal.Controllers
                                                      Name = u.Name,
                                                      Lastname = u.LastName,
                                                      Email = u.Email,
-                                                     Url_image = u.Image
+                                                     Url_image = u.Image,
+                                                       Id_Team = cu.ID_team,
                                                  }).Distinct().ToList();
 
                                 if (agentsadd.Count > 0) {
@@ -1589,6 +1611,7 @@ namespace Realestate_portal.Controllers
                                               Name = d.Name,
                                               Lastname = d.LastName,
                                               Id_User = u.Id_User,
+                                              Id_Team = u.ID_team,
                                               Email = d.Email,
                                               Url_image = d.Image
                                           }).ToList(),
@@ -1601,6 +1624,7 @@ namespace Realestate_portal.Controllers
                                                    Name = d.Name,
                                                    Lastname = d.LastName,
                                                    Id_User = u.Id_User,
+                                                   Id_Team = u.ID_team,
                                                    Email = d.Email,
                                                    Url_image = d.Image
                                                }).ToList()
@@ -1640,6 +1664,7 @@ namespace Realestate_portal.Controllers
                                               Name = d.Name,
                                               Lastname = d.LastName,
                                               Id_User = u.Id_User,
+                                              Id_Team = u.ID_team,
                                               Email = d.Email,
                                               Url_image = d.Image
                                           }).ToList(),
@@ -1652,6 +1677,7 @@ namespace Realestate_portal.Controllers
                                                    Name = d.Name,
                                                    Lastname = d.LastName,
                                                    Id_User = u.Id_User,
+                                                   Id_Team = u.ID_team,
                                                    Email = d.Email,
                                                    Url_image = d.Image
                                                }).ToList()
@@ -1688,6 +1714,7 @@ namespace Realestate_portal.Controllers
                                               Name = d.Name,
                                               Lastname = d.LastName,
                                               Id_User = u.Id_User,
+                                              Id_Team = u.ID_team,
                                               Email = d.Email,
                                               Url_image = d.Image
                                           }).ToList(),
@@ -1700,6 +1727,7 @@ namespace Realestate_portal.Controllers
                                                    Name = d.Name,
                                                    Lastname = d.LastName,
                                                    Id_User = u.Id_User,
+                                                   Id_Team = u.ID_team,
                                                    Email = d.Email,
                                                    Url_image = d.Image
                                                }).ToList()
@@ -1946,7 +1974,10 @@ namespace Realestate_portal.Controllers
 
 
                 }
-     
+                var usuarios = db.Sys_Users.ToList();
+                foreach (var item in Tb_Process) {
+                    item.Attorneys_name = usuarios.Where(c => c.ID_User == item.ID_User).Select(c => c.Name + " " + c.LastName).FirstOrDefault();
+                }
 
                 ViewBag.selbroker = broker;
      
@@ -2161,7 +2192,11 @@ namespace Realestate_portal.Controllers
                 ViewBag.docpackages = lstdocpack;
                 Tb_WorkTeams Team = new Tb_WorkTeams();
                 List<TeamsModel_Users> Agents = new List<TeamsModel_Users>();
+                List<Sys_Users> agents2 = new List<Sys_Users>();
 
+
+                agents2 = db.Sys_Users.Where(c => c.Roles.Contains("Agent") && c.Active && c.ID_User != 4 && c.ID_Company == activeuser.ID_Company).ToList();
+                ViewBag.agentsadd = agents2;
                 List<TasksView> lst_tasks = new List<TasksView>();
  
                     lst_tasks = (from a in db.Tb_Tasks
@@ -2196,6 +2231,7 @@ namespace Realestate_portal.Controllers
                                                              Id_User = cu.Id_User,
                                                              Name = u.Name,
                                                              Lastname= u.LastName,
+                                                             Id_Team = cu.ID_team,
                                                              Email = u.Email,
                                                              Url_image = u.Image
                                                          }).Distinct().ToList();
@@ -2210,6 +2246,7 @@ namespace Realestate_portal.Controllers
                                       Id_User = cu.Id_User,
                                       Name = u.Name,
                                       Lastname = u.LastName,
+                                      Id_Team = cu.ID_team,
                                       Email = u.Email,
                                       Url_image = u.Image
                                   }).Distinct().ToList();
@@ -2224,6 +2261,7 @@ namespace Realestate_portal.Controllers
                               {
                                   Id_User = cu.Id_User,
                                   Name = u.Name,
+                                  Id_Team = cu.ID_team,
                                   Lastname = u.LastName,
                                   Email = u.Email,
                                   Url_image = u.Image

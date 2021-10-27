@@ -12,7 +12,7 @@
         <!-- BEGIN: Logo -->
         <a href="#" class="-intro-x hidden md:flex">
             <img alt="S7VEN" style="width:130px" src="~/Content/pgrlogos/S7VENLogoWhite.png">
-            <span class="text-white text-lg ml-3" style="font-size:11px"> REAL STATE AGENT PORTAL<span class="font-medium"></span> </span>
+            <span class="text-white text-lg ml-3" style="font-size:11px"> REAL ESTATE AGENT PORTAL<span class="font-medium"></span> </span>
         </a>
         <!-- END: Logo -->
         <!-- BEGIN: Breadcrumb -->
@@ -169,6 +169,9 @@ else
                         @if (ViewBag.rol == "Agent")
                     {
                         <span>Real Estate Agent</span>
+                         if (user.Team_Leader) {
+                                        <br /><span class="text-theme-20">Team Leader</span>
+                                    }
                 }
                 else if (ViewBag.rol == "Admin")
                 { <span>Broker</span>}

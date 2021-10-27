@@ -1364,6 +1364,7 @@
     <Content Include="Content\dist\images\illustration2.svg" />
     <Content Include="Content\dist\images\logo-1.png" />
     <Content Include="Content\dist\images\logo.svg" />
+    <Content Include="Content\dist\images\logosiete.png" />
     <Content Include="Content\dist\images\map-marker-region.png" />
     <Content Include="Content\dist\images\map-marker.png" />
     <Content Include="Content\dist\images\Marketanalysis.png" />
@@ -1414,6 +1415,7 @@
     <Content Include="Content\dist\images\profile-9.jpg" />
     <Content Include="Content\dist\images\realtor.png" />
     <Content Include="Content\dist\images\recruitment.png" />
+    <Content Include="Content\dist\images\S7VENLogoWhite.ico" />
     <Content Include="Content\dist\images\to-do-list.png" />
     <Content Include="Content\dist\images\woman-illustration.svg" />
     <Content Include="Content\dist\js\app.js" />
@@ -2088,6 +2090,7 @@
     <Content Include="Views\Users\BrokerProfile.cshtml" />
     <Content Include="Views\Users\CreateBroker.cshtml" />
     <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
+    <Content Include="Views\Portal\Taxes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

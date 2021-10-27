@@ -6,12 +6,14 @@
     List<Realestate_portal.Models.Tb_Docpackages> packages = (List<Realestate_portal.Models.Tb_Docpackages>)ViewBag.docpackages;
     List<Realestate_portal.Models.Tb_LeadDocs> lstotherdocs = (List<Realestate_portal.Models.Tb_LeadDocs>)ViewBag.otherDocs;
     List<Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users> agents = (List<Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users>)ViewBag.Agents;
+    List<Realestate_portal.Models.Sys_Users> agentsadd = (List<Realestate_portal.Models.Sys_Users>)ViewBag.agentsadd;
     Realestate_portal.Models.Tb_WorkTeams team = (Realestate_portal.Models.Tb_WorkTeams)ViewBag.Team;
     List<Realestate_portal.Models.ViewModels.NotesView> lstnotes = (List<Realestate_portal.Models.ViewModels.NotesView>)ViewBag.notes;
     List<Realestate_portal.Models.Tb_Status> lststatus = (List<Realestate_portal.Models.Tb_Status>)ViewBag.lststatus;
     List<Realestate_portal.Models.Tb_Source> lstsource = (List<Realestate_portal.Models.Tb_Source>)ViewBag.lstsource;
     List<Realestate_portal.Models.Tb_Docpackages> lstdockpackages = (List<Realestate_portal.Models.Tb_Docpackages>)ViewBag.docpackages;
-    List <Realestate_portal.Models.ViewModels.TasksView> lsttasks = (List<Realestate_portal.Models.ViewModels.TasksView>)ViewBag.tasks;
+    List<Realestate_portal.Models.ViewModels.TasksView> lsttasks = (List<Realestate_portal.Models.ViewModels.TasksView>)ViewBag.tasks;
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
 }
 <div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
     <i class="text-theme-20" data-feather="check-circle"></i>
@@ -29,7 +31,7 @@
             Lead's Dashboard
         </h2>
 
-        <a class="btn btn-primary" href="@Url.Action("Leads","CRM")">Back to Leads</a>
+        <a class="btn btn-primary" href="@Url.Action("Leads", "CRM")">Back to Leads</a>
     </div>
     <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
         <!-- BEGIN: Post Content -->
@@ -41,8 +43,172 @@
                     <a data-toggle="tab" data-target="#properties"  href="javascript:;" class=" w-full sm:w-40 py-4 text-center flex justify-center items-center" id="properties-tab" role="tab" aria-selected="false"> <i data-feather="home" class="w-4 h-4 mr-2"></i> Properties </a>
                     <a  data-toggle="tab" data-target="#documents" href="javascript:;" class=" w-full sm:w-40 py-4 text-center flex justify-center items-center" id="documents-tab" role="tab" aria-selected="false"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Documents </a>
                     <a  data-toggle="tab" data-target="#tasks" href="javascript:;" class=" w-full sm:w-40 py-4 text-center flex justify-center items-center" id="tasks-tab" role="tab" aria-selected="false"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Tasks </a>
+                 
+                    <a  data-toggle="tab" data-target="#teams" href="javascript:;" class=" w-full sm:w-40 py-4 text-center flex justify-center items-center" id="teams-tab" role="tab" aria-selected="false"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Agents </a>
                 </div>
                 <div class="post__content tab-content">
+                    <div id="teams" class="tab-pane p-5 " role="tabpanel" aria-labelledby="teams-tab">
+                        <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+                            <h2 class="text-lg font-medium mr-auto">
+                                Team
+                            </h2>
+                             @if (user.Team_Leader)
+                            {
+                                  <a href="@Url.Action("Teams","CRM")"  class="btn btn-primary block w-40 mx-auto mt-5">Go to Teams</a>
+                            }
+                            else {
+                                if (!user.Roles.Contains("Agent")) {
+                                      <a href="@Url.Action("Teams","CRM")" class="btn btn-primary block w-40 mx-auto mt-5">Go to Teams</a>
+                                }
+                            }
+                           
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                            <div class="text-gray-600 dark:text-gray-500">Assigned Team</div>
+                            <div class="mt-1.5 flex items-center">
+
+                                @if (team.Name == null)
+            {
+                    <div class="text-lg"> - </div>
+}
+else
+{
+if (team.Name == "")
+{
+                    <div class="text-lg"> - </div>
+}
+else
+{
+                    <div class="text-lg"> @team.Name </div>
+}
+}
+                            </div>
+                        </div>
+
+                        <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+                            <h2 class="text-lg font-medium mr-auto">
+                                Agents
+                            </h2>
+                            @if (user.Team_Leader)
+                            {
+                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#NewAgent-modal" class="btn btn-success block w-40 mx-auto mt-5">Assign Agent</a>
+                            }
+                            else {
+                                if (!user.Roles.Contains("Agent")) {
+                                      <a href="javascript:void(0);" data-toggle="modal" data-target="#NewAgent-modal" class="btn btn-success block w-40 mx-auto mt-5">Assign Agent</a>
+                                }
+                            }
+                          
+                        </div>
+                        <div id="NewAgent-modal" class="modal modal-slide-over" data-backdrop="static" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    @using (Html.BeginForm("AddAgentToCustomer", "Teams", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <!-- BEGIN: Slide Over Header -->
+                    <div class="modal-header">
+                        <h2 class="font-medium text-base mr-auto">
+                            Assign agents
+                        </h2>
+
+                        <div class="dropdown sm:hidden">
+                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                            <div class="dropdown-menu w-40">
+                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                    <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Slide Over Header -->
+                    <!-- BEGIN: Slide Over Body -->
+                    <div class="modal-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <input type="text" value="@Model.ID_Customer" name="idcustomer" id="idcustomer"/>
+                        <div class="mt-3">
+                            <label for="agents" class="form-label">Agents</label>
+                            <select data-placeholder="Search here.." class="tom-select w-full" id="agents" name="agents" multiple>
+                                @foreach (var item in agentsadd)
+            {
+                    <option value="@item.ID_User">@item.Name @item.LastName - (@item.Email)</option>
+}
+
+                            </select>
+                        </div>
+                        
+
+                    </div>
+                    <!-- END: Slide Over Body -->
+                    <!-- BEGIN: Slide Over Footer -->
+                    <div class="modal-footer text-right w-full absolute bottom-0">
+                        <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                        <button type="submit" class="btn btn-success w-20">Save</button>
+                    </div>
+                    <!-- END: Slide Over Footer -->
+}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
+                            <div class="text-gray-600 dark:text-gray-500">Assigned Agents</div>
+                            <div class="flex ml-4">
+                                @if (agents.Count() > 0)
+            {
+                    <table class="table table-report sm:mt-2">
+                        <thead>
+                            <tr class="text-white" style="background-color:#162343">
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var agent in agents.Where(c=>c.Id_Team == 0))
+        {
+                    <tr>
+                        <td>
+                            <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                @if (agent.Url_image == "")
+            {
+                    <div class="tooltip text-lg image-fit zoom-in font-medium truncate" title="@agent.Name @agent.Lastname"> <p data-letters="@agent.Name.Substring(0,1) @agent.Lastname.Substring(0, 1)"></p></div>
+}
+else if (agent.Url_image.StartsWith("http"))
+{
+                    <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
+}
+else
+{
+                    <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
+}
+
+                            </div>
+                        </td>
+                        <td>@agent.Name @agent.Lastname</td>
+                        <td>@agent.Email</td>
+                        <td>
+                            <a class="flex items-center text-theme-21" href="javascript:void(0)" onclick="deleteagent(@Model.ID_Customer,@agent.Id_User)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete</a>
+                        </td>
+                    </tr>
+
+}
+                        </tbody>
+                    </table>
+
+
+}
+else
+{
+                    <label>Not assigned</label>
+}
+                            </div>
+                        </div>
+
+                    </div>                  
                     <div id="tasks" class="tab-pane p-5 " role="tabpanel" aria-labelledby="tasks-tab">
                         <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
                             <h2 class="text-lg font-medium mr-auto">
@@ -658,11 +824,11 @@ else
 }
 else if (agent.Url_image.StartsWith("http"))
 {
-                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name">
+                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
 }
 else
 {
-                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name">
+                                                <img alt="@agent.Name" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
 }
 
                                                 </div>
@@ -1151,7 +1317,48 @@ else
 
     @section scripts{
         <script>
+            function deleteagent(idcustomer, id_user) {
 
+                swal.fire({
+                    title: 'Do you want to delete these record?',
+                    text: "This process cannot be undone.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#C83232',
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: 'Delete'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/Teams/DeleteConfirmedAgentFromLead',
+                            type: 'POST',
+                            data: { 'idcustomer': idcustomer, 'id_user' : id_user },
+                            cache: false,
+                            global: false,
+                            success: function (result) {
+                                if (result == "Success") {
+                                    Swal.fire(
+                                        'Record deleted',
+                                        'The record has been deleted.',
+                                        'success'
+                                    )
+                                    window.location.reload(true);
+                                } else {
+                                    alert(result);
+                                }
+
+
+                            },
+                            error: function (request) {
+                                alert("Something went wrong.");
+
+                            }
+                        });
+
+
+                    }
+                })
+            }
             function deleteTask(idtask) {
 
                 swal.fire({
@@ -1198,7 +1405,7 @@ else
         function deleteNote(idnote) {
 
             swal.fire({
-                title: 'Do you really want to delete these record?',
+                title: 'Do you want to delete these record?',
                 text: "This process cannot be undone.",
                 icon: 'error',
                 showCancelButton: true,
@@ -1240,7 +1447,7 @@ else
         function deleteListing(idlisting) {
 
             swal.fire({
-                title: 'Do you really want to delete these record?',
+                title: 'Do you want to delete these record?',
                 text: "This process cannot be undone.",
                 icon: 'error',
                 showCancelButton: true,

@@ -140,6 +140,88 @@ namespace Realestate_portal.Controllers
           
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAgentToCustomer(int[] agents, int idcustomer)
+        {
+
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                var customer = db.Tb_Customers.Where(c => c.ID_Customer == idcustomer).FirstOrDefault();
+                //guardamos agentes
+                if (agents != null)
+                {
+                    if (agents.Length > 0)
+                    {
+                        foreach (var user in agents)
+                        {
+                            //Agregamos agentes a equipo
+                            Tb_Customers_Users newteamuser = new Tb_Customers_Users();
+                            newteamuser.Id_Customer = idcustomer;
+                            newteamuser.Id_User = user;
+                            newteamuser.ID_team = 0;
+                            newteamuser.Teamleader = false;
+                            db.Tb_Customers_Users.Add(newteamuser);
+
+                            Sys_Notifications newnotification = new Sys_Notifications();
+                            newnotification.Active = true;
+                            newnotification.Date = DateTime.UtcNow;
+                            newnotification.Title = "Customer assigned.";
+                            newnotification.Description = "Customer: " + customer.Name + " " + customer.LastName + ".";
+                            newnotification.ID_user = user;
+                            db.Sys_Notifications.Add(newnotification);
+                            db.SaveChanges();
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+              
+
+
+                return RedirectToAction("CustomerDashboard", "CRM", new {id=idcustomer,token = "success" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("CustomerDashboard", "CRM", new { id = idcustomer, token = "error" });
+            }
+
+
+
+
+        }
+
+
+        public ActionResult DeleteConfirmedAgentFromLead(int idcustomer, int id_user)
+        {
+            try
+            {
+
+  
+                var agents = db.Tb_Customers_Users.Where(c => c.Id_Customer == idcustomer && c.Id_User==id_user).FirstOrDefault();
+                if (agents !=null)
+                {
+                    db.Tb_Customers_Users.Remove(agents);
+                    db.SaveChanges();
+
+                }
+
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+
+        }
+
         // GET: Teams/Edit/5
         public ActionResult Edit(int? id)
         {

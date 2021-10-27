@@ -21,6 +21,7 @@ namespace Realestate_portal.Models.ViewModels.CRM
     public class TeamsModel_Users
     {
         public int Id_User { get; set; }
+        public int? Id_Team { get; set; }
         public string Name { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }

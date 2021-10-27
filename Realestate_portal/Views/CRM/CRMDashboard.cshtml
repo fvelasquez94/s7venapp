@@ -13,7 +13,7 @@
             <div class="col-span-12 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
-                        CRM
+                        Reports
                     </h2>
 
                 </div>
@@ -21,14 +21,14 @@
                     <div class="col-span-12 xl:col-span-4">
                         <div class="box p-5 ">
                             @if (ViewBag.rol == "Agent")
-                            {
-                                <img src="~/Content/crm/AGENTPROFILE.png" style="width: 100%;" />}
+            {
+                <img src="~/Content/crm/AGENTPROFILE.png" style="width: 100%;" />}
                             @if (ViewBag.rol == "Admin")
-                            {
-                                <img src="~/Content/crm/BROKERPROFILE.png" style="width: 100%;" />}
+            {
+                <img src="~/Content/crm/BROKERPROFILE.png" style="width: 100%;" />}
                             @if (ViewBag.rol == "SA")
-                            {
-                                <img src="~/Content/crm/ADMINPROFILE.png" style="width: 100%;" />}
+            {
+                <img src="~/Content/crm/ADMINPROFILE.png" style="width: 100%;" />}
 
                         </div>
                     </div>
@@ -44,19 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
-                            <div class="box p-5">
-                                <div class="flex">
-                                    <i data-feather="shopping-cart" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
-
-                                </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "CLOSED").Sum(f => f.Commission_amount)).ToString("N2")</div>
-                                <div class="text-base text-gray-600 mt-1">Gains</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
                         <a href="@Url.Action("Properties","CRM")">
                             <div class="report-box zoom-in">
                                 <div class="box p-5">
@@ -70,6 +58,31 @@
                             </div>
                         </a>
                     </div>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                        <div class="report-box zoom-in">
+                            <div class="box p-5">
+                                <div class="flex">
+                                    <i data-feather="activity" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
+
+                                </div>
+                                <div class="text-2xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "ON CONTRACT").Sum(f => f.Commission_amount)).ToString("N2") </div>
+                                <div class="text-base text-gray-600 mt-1">Projected Gains</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                        <div class="report-box zoom-in">
+                            <div class="box p-5">
+                                <div class="flex">
+                                    <i data-feather="activity" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
+
+                                </div>
+                                <div class="text-2xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "CLOSED").Sum(f => f.Commission_amount)).ToString("N2") </div>
+                                <div class="text-base text-gray-600 mt-1">Gains</div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                 </div>
@@ -317,24 +330,25 @@
                             </a>
                         </div>
                     </div>
+                    <div class="intro-x flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Filters
+                        </h2>
+
+                    </div>
+                    <div class="mt-5">
+                        <label>By date</label>
+                        <div id="reportrange" class="form-control  box pl-10 mb-5">
+                            <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
+                            <span></span>
+                        </div>
+
+                    </div>
                     @if (ViewBag.rol == "Agent")
     {
         if (user.Team_Leader)
         {
-                <div class="intro-x flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        Filters
-                    </h2>
 
-                </div>
-                <div class="mt-5">
-                    <label>By date</label>
-                    <div id="reportrange" class="form-control  box pl-10 mb-5">
-                        <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
-                        <span></span>
-                    </div>
-
-                </div>
                 <div class="mt-5">
                     <label>By agent</label>
                     <select class="form-control" id="filteragent">
@@ -353,27 +367,13 @@ else
 }
                     </select>
                 </div>
-                <div class="mt-5"> <a href="#" onclick="filterSObydate()" class="btn btn-primary">Apply filters</a>  <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a></div>
+
 
 }
 }
 
                     @if (ViewBag.rol != "Agent")
     {
-                <div class="intro-x flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        Filters
-                    </h2>
-
-                </div>
-                <div class="mt-5">
-                    <label>By date</label>
-                    <div id="reportrange" class="form-control  box pl-10 mb-5">
-                        <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
-                        <span></span>
-                    </div>
-
-                </div>
                 <div class="mt-5">
                     <label>By agent</label>
                     <select class="form-control" id="filteragent">
@@ -392,9 +392,10 @@ else
 }
                     </select>
                 </div>
-                <div class="mt-5"> <a href="#" onclick="filterSObydate()" class="btn btn-primary">Apply filters</a>  <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a></div>
+
 
 }
+                    <div class="mt-5"> <a href="#" onclick="filterSObydate()" class="btn btn-primary">Apply filters</a>  <a href="@Url.Action("CRMDashboard","CRM")" class="btn btn-light">Clear </a></div>
                 </div>
                 <!-- END: Transactions -->
                 <!-- BEGIN: Recent Activities -->

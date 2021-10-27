@@ -666,44 +666,44 @@ namespace Realestate_portal.Controllers
                 db.SaveChanges();
 
                 //asignamos agente
-                try
-                {
+                //try
+                //{
 
-                    var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
-                    if (agentsassigned.Count() > 0)
-                    {
-                        db.Tb_Customers_Users.RemoveRange(agentsassigned);
-                    }
-                    db.SaveChanges();
-                    if (id_agent != 0)
-                    {
+                //    var agentsassigned = (from c in db.Tb_Customers_Users where (c.Id_Customer == tb_Customers.ID_Customer && c.ID_team == 0) select c).ToList();
+                //    if (agentsassigned.Count() > 0)
+                //    {
+                //        db.Tb_Customers_Users.RemoveRange(agentsassigned);
+                //    }
+                //    db.SaveChanges();
+                //    if (id_agent != 0)
+                //    {
 
-                        Tb_Customers_Users customerUsers = new Tb_Customers_Users();
+                //        Tb_Customers_Users customerUsers = new Tb_Customers_Users();
 
-                        customerUsers.Id_Customer = tb_Customers.ID_Customer;
-                        customerUsers.Id_User = id_agent;
-                        customerUsers.ID_team = 0;
-                        customerUsers.Teamleader = false;
-                        db.Tb_Customers_Users.Add(customerUsers);
-                        db.SaveChanges();
+                //        customerUsers.Id_Customer = tb_Customers.ID_Customer;
+                //        customerUsers.Id_User = id_agent;
+                //        customerUsers.ID_team = 0;
+                //        customerUsers.Teamleader = false;
+                //        db.Tb_Customers_Users.Add(customerUsers);
+                //        db.SaveChanges();
 
-                        Sys_Notifications newnotification = new Sys_Notifications();
-                            newnotification.Active = true;
-                            newnotification.Date = DateTime.UtcNow;
-                            newnotification.Title = "Customer assigned.";
-                            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-                            newnotification.ID_user = id_agent;
-                            db.Sys_Notifications.Add(newnotification);
-                            db.SaveChanges();
+                //        Sys_Notifications newnotification = new Sys_Notifications();
+                //            newnotification.Active = true;
+                //            newnotification.Date = DateTime.UtcNow;
+                //            newnotification.Title = "Customer assigned.";
+                //            newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                //            newnotification.ID_user = id_agent;
+                //            db.Sys_Notifications.Add(newnotification);
+                //            db.SaveChanges();
                         
-                    }
+                //    }
                 
 
                    
-                }
-                catch (Exception ex)
-                {
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //}
 
                 return RedirectToAction("Edit", "Customers", new {id=tb_Customers.ID_Customer ,token="success" });
             }
@@ -798,11 +798,21 @@ namespace Realestate_portal.Controllers
             try
             {
                 Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
-                db.Tb_Customers.Remove(tb_Customers);
-                db.SaveChanges();
+
+                var docscust = db.Tb_LeadDocs.Where(c => (int)c.Id_Customer ==id).ToList();
+                if (docscust.Count > 0)
+                {
+                    db.Tb_LeadDocs.RemoveRange(docscust);
+                    db.SaveChanges();
+                }
 
                 Tb_Customers_UsersController tb_Customers_Users = new Tb_Customers_UsersController();
                 var delete_Custo = tb_Customers_Users.Delete(id);
+
+                db.Tb_Customers.Remove(tb_Customers);
+                db.SaveChanges();
+
+             
 
                 var result = "Success";
                 return Json(result, JsonRequestBehavior.AllowGet);
