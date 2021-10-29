@@ -45,42 +45,68 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
-                        <a href="@Url.Action("Properties","CRM")">
+                        @using (Html.BeginForm("PropertiesFiltered", "CRM", FormMethod.Post,
+new { enctype = "multipart/form-data", @id="form1" }))
+    {
+                        <a href="javascript:;" onclick="document.getElementById('form1').submit();">
                             <div class="report-box zoom-in">
                                 <div class="box p-5">
                                     <div class="flex">
-                                        <i data-feather="home" class="report-box__icon text-theme-29"></i>
-
+                                        <i data-feather="home" class="report-box__icon text-theme-29 dark:text-theme-25"></i>
+                                        <input type="text" name="properties" value="@string.Join(",", Model.Where(c => c.Description != null).Select(c=>c.ID_Process))" hidden />
                                     </div>
-                                    <div class="text-3xl font-medium leading-8 mt-6">@Model.Where(c => c.Description != null).Count()</div>
+                                    <div class="text-2xl font-medium leading-8 mt-6">@Model.Where(c => c.Description != null).Count() </div>
                                     <div class="text-base text-gray-600 mt-1">Properties</div>
                                 </div>
                             </div>
                         </a>
+                
+}
+
+
+
                     </div>
-                        <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                        @using (Html.BeginForm("PropertiesFiltered", "CRM", FormMethod.Post,
+new { enctype = "multipart/form-data", @id = "form2" }))
+    {
+                    <a href="javascript:;" onclick="document.getElementById('form2').submit();">
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="activity" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
-
+                                    <input type="text" name="properties" value="@string.Join(",", Model.Where(f => f.Stage == "ON CONTRACT").Select(c=>c.ID_Process))" hidden />
                                 </div>
                                 <div class="text-2xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "ON CONTRACT").Sum(f => f.Commission_amount)).ToString("N2") </div>
                                 <div class="text-base text-gray-600 mt-1">Projected Gains</div>
                             </div>
                         </div>
+                        </a>
+}
+
+
+
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
+                        @using (Html.BeginForm("PropertiesFiltered", "CRM", FormMethod.Post,
+new { enctype = "multipart/form-data", @id = "form3" }))
+    {
+                    <a href="javascript:;" onclick="document.getElementById('form3').submit();">
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-feather="activity" class="report-box__icon text-theme-24 dark:text-theme-25"></i>
-
+                                    <input type="text" name="properties" value="@string.Join(",", Model.Where(f => f.Stage == "CLOSED").Select(c=>c.ID_Process))" hidden />
                                 </div>
                                 <div class="text-2xl font-medium leading-8 mt-6">$@Convert.ToDecimal(Model.Where(f => f.Stage == "CLOSED").Sum(f => f.Commission_amount)).ToString("N2") </div>
-                                <div class="text-base text-gray-600 mt-1">Gains</div>
+                                <div class="text-base text-gray-600 mt-1">Projected Gains</div>
                             </div>
                         </div>
+                        </a>
+}
+
+
+
                     </div>
 
 

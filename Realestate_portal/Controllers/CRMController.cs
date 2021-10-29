@@ -1993,6 +1993,80 @@ namespace Realestate_portal.Controllers
 
             }
         }
+        public ActionResult PropertiesFiltered(string properties,int broker = 0)
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                //FIN HEADER
+
+                //Filtros SA
+
+                var lstCompanies = (from a in db.Sys_Company select a).ToList();
+                ViewBag.lstCompanies = lstCompanies;
+
+                ViewBag.rol = "";
+                List<Tb_Process> Tb_Process= new List<Tb_Process>();
+
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+
+                }
+                else
+                {
+
+                    ViewBag.rol = "Admin";
+
+                    if (broker == 0)
+                    {
+
+  
+                    }
+                    else
+                    {
+      
+                    }
+
+
+                }
+                var props = properties.Split(',').Select(int.Parse);
+
+           
+
+                var usuarios = db.Sys_Users.ToList();
+                if (properties!="")
+                {
+                    Tb_Process = db.Tb_Process.Where(t => props.Contains(t.ID_Process)).ToList();
+                    foreach (var item in Tb_Process)
+                    {
+                        item.Attorneys_name = usuarios.Where(c => c.ID_User == item.ID_User).Select(c => c.Name + " " + c.LastName).FirstOrDefault();
+                    }
+                }
+                
+
+                ViewBag.selbroker = broker;
+
+
+
+                return View(Tb_Process.ToList());
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+        }
+
         [HttpPost]
         public ActionResult UpdateByAjaxSideBard(int? id, string stage)
         {

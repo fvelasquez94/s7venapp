@@ -242,9 +242,6 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Sys_Company.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -324,6 +321,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tb_Tasks.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tb_ToVerifyTaxes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tb_Videos.cs">
@@ -2091,6 +2091,8 @@
     <Content Include="Views\Users\CreateBroker.cshtml" />
     <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
     <Content Include="Views\Portal\Taxes.cshtml" />
+    <Content Include="Views\CRM\PropertiesFiltered.cshtml" />
+    <Content Include="Views\Portal\ToVerifyTaxes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2155,6 +2157,7 @@
     <Folder Include="Content\Uploads\Images\Videos_img\" />
     <Folder Include="Content\Uploads\Resources\Documents\" />
     <Folder Include="Content\Uploads\Resources\Scripts\" />
+    <Folder Include="Content\Uploads\Resources\Taxes\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\LeadDocs\" />
     <Folder Include="Views\Session\" />

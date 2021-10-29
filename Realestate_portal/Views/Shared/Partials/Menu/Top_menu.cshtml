@@ -142,6 +142,23 @@
         }
 
                 </li>
+                                <li>
+                    @if (user.Roles.Contains("SA"))
+                {
+                    <a href="@Url.Action("Resources", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Resources</div>
+                    </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Resources", "Portal")" class="top-menu">
+                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                    <div class="top-menu__title">Resources</div>
+                </a>
+        }
+
+                </li>
                 @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
             {
                 <li>

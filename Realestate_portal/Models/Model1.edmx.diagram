@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Company" Width="1.5" PointX="0.625" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Notifications" Width="1.5" PointX="5.125" PointY="25.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Sys_Roles" Width="1.5" PointX="2.875" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Realstate_agentsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Appointments" Width="1.5" PointX="2.875" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_Conversation" Width="1.5" PointX="2.875" PointY="31.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Realstate_agentsModel.Tb_docCategies" Width="1.5" PointX="2.625" PointY="1.25" IsExpanded="true" />
@@ -60,6 +59,7 @@
         <AssociationConnector Association="Realstate_agentsModel.FK_Tb_Customers_Sys_Company" />
         <AssociationConnector Association="Realstate_agentsModel.FK_CustomerDoc" />
         <AssociationConnector Association="Realstate_agentsModel.FK_Tb_Process_Tb_Customers" />
+        <EntityTypeShape EntityType="Realstate_agentsModel.Tb_ToVerifyTaxes" Width="1.5" PointX="5.375" PointY="10.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

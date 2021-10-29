@@ -32,7 +32,6 @@ namespace Realestate_portal.Models
         public virtual DbSet<Sys_Company> Sys_Company { get; set; }
         public virtual DbSet<Sys_Notifications> Sys_Notifications { get; set; }
         public virtual DbSet<Sys_Roles> Sys_Roles { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tb_Appointments> Tb_Appointments { get; set; }
         public virtual DbSet<Tb_Conversation> Tb_Conversation { get; set; }
         public virtual DbSet<Tb_docCategies> Tb_docCategies { get; set; }
@@ -60,6 +59,7 @@ namespace Realestate_portal.Models
         public virtual DbSet<Sys_Users> Sys_Users { get; set; }
         public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
         public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
+        public virtual DbSet<Tb_ToVerifyTaxes> Tb_ToVerifyTaxes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

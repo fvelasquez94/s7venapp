@@ -12,12 +12,14 @@ namespace Realestate_portal.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Tb_ToVerifyTaxes
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Id_Document { get; set; }
+        public string Doc_Name { get; set; }
+        public string Url { get; set; }
+        public string Size { get; set; }
+        public System.DateTime Upload_Date { get; set; }
+        public int Id_User { get; set; }
+        public string Extension { get; set; }
     }
 }

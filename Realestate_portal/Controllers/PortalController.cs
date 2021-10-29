@@ -2992,6 +2992,63 @@ namespace Realestate_portal.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult UploadTaxfile(string title)
+        {
+            var path = "";
+            var fileName = "";
+            string extension = "";
+            string size = "";
+            try
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    extension = Path.GetExtension(Request.Files[i].FileName).ToLower();
+                    size = ConvertBytesToMegabytes(Request.Files[i].ContentLength).ToString("0.00");
+                    fileName = Path.GetFileName(file.FileName);
+
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/Resources/Taxes/"), fileName);
+
+                    file.SaveAs(path);
+                }
+            }
+            catch
+            {
+
+            }
+
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+
+                Tb_ToVerifyTaxes newresource = new Tb_ToVerifyTaxes();
+                newresource.Doc_Name = title;
+                newresource.Url = "~/Content/Uploads/Resources/Taxes/" + fileName;
+                newresource.Size = size + " MB";
+                newresource.Upload_Date = DateTime.UtcNow;
+                newresource.Extension = extension;
+                newresource.Id_User = activeuser.ID_User;
+
+
+                db.Tb_ToVerifyTaxes.Add(newresource);
+                db.SaveChanges();
+
+                var result = "SUCCESS";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+
         public ActionResult Video_watch(int id, int broker = 0)
         {
             if (generalClass.checkSession())
@@ -3520,6 +3577,41 @@ namespace Realestate_portal.Controllers
             }
         }
 
+        public ActionResult ToVerifyTaxes(int broker = 0, string token = "")
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
+                //FIN HEADER
+
+                //Filtros SA
+
+                List<Tb_ToVerifyTaxes> lstresources = new List<Tb_ToVerifyTaxes>();
+
+
+                lstresources = (from a in db.Tb_ToVerifyTaxes where (a.Id_User==activeuser.ID_User) select a).ToList();
+
+
+
+                return View(lstresources);
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+        }
+
 
         public ActionResult Resources_management(int broker = 0, string token="")
         {
@@ -3936,6 +4028,28 @@ namespace Realestate_portal.Controllers
            
      
         }
+
+        public ActionResult ShowpdfTaxes(int id)
+        {
+
+            var fileDB = (from a in db.Tb_ToVerifyTaxes where (a.Id_Document == id) select a).FirstOrDefault();
+
+            var path = fileDB.Url;
+            var file = Server.MapPath(path);
+
+            if (System.IO.File.Exists(file))
+            {
+                return File(file, "application/pdf");
+            }
+            else
+            {
+                return RedirectToAction("Notfound", "Portal", null);
+            }
+
+
+
+        }
+
         public ActionResult ShowAgentpdf(int id)
         {
 
@@ -4270,6 +4384,29 @@ namespace Realestate_portal.Controllers
             {
 
                 return RedirectToAction("Resources_management", "Portal", new { token = "error" });
+            }
+
+
+        }
+
+
+        public ActionResult DeleteTax(int id)
+        {
+            try
+            {
+               Tb_ToVerifyTaxes tb_Resources = db.Tb_ToVerifyTaxes.Find(id);
+                db.Tb_ToVerifyTaxes.Remove(tb_Resources);
+                db.SaveChanges();
+
+
+                var result = "SUCCESS";
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                var result = "Error";
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
 
 

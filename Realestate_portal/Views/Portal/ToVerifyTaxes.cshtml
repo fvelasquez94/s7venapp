@@ -1,0 +1,340 @@
+﻿@model List<Realestate_portal.Models.Tb_ToVerifyTaxes>
+@{
+    ViewBag.Title = "Resources";
+
+}
+
+<div class="grid grid-cols-12 gap-6 mt-8">
+    
+    <div class="col-span-12 lg:col-span-12 2xl:col-span-12">
+        <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+            To Verify Taxes
+        </h2>
+        <!-- BEGIN: File Manager Filter -->
+        <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
+
+            <div class="w-full sm:w-auto relative mr-auto mt-3 sm:mt-0">
+                <i class="w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700 dark:text-gray-300" data-feather="search"></i>
+                <input type="text" id="myInputDocs" onkeyup="searchin_li()" class="form-control w-full sm:w-64 box px-10 text-gray-700 dark:text-gray-300 placeholder-theme-13" placeholder="Search files">
+
+            </div>
+            <div class="w-full sm:w-auto flex">
+                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+            </div>
+        </div>
+        <!-- END: File Manager Filter -->
+
+
+        <div class="tab-content">
+            <div id="resources_documents" class="tab-pane flex flex-col lg:flex-row active" role="tabpanel" aria-labelledby="resources_documents">
+                <!-- BEGIN: Directory & Files -->
+
+                @if (Model.Count() > 0)
+            {<div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
+                    @foreach (var item in Model.OrderByDescending(c => c.Upload_Date))
+                {
+                    <div id="id_@item.Id_Document" class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2 sortableDocs">
+                        <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                            <div class="absolute left-0 top-0 mt-3 ml-3">
+
+                 
+
+                            </div>
+
+                            @if (item.Extension == ".pdf")
+                        {
+                            <a href="@Url.Action("ShowpdfTaxes", "Portal", new { id = item.Id_Document })" class="w-3/5 file__icon file__icon--image mx-auto">
+                                <div class="file__icon--image__preview image-fit">
+                                    <img alt="S7VEN" src="~/Content/dist/images/pdf.png">
+                                </div>
+                            </a>
+                            <a href="@Url.Action("ShowpdfTaxes", "Portal", new { id = item.Id_Document })" class="block font-medium mt-4 text-center truncate textfileDocs">@(item.Doc_Name + "" + item.Extension)</a>
+                    }
+
+
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Size</div>
+
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Upload_Date.ToString("MM/dd/yyyy")</div>
+                            <div class="text-gray-600 text-xs text-center mt-0.5"> <a href="javascript:void(0)" onclick="deleteDoc(@item.Id_Document)" class="btn btn-danger mt-2">Delete</a></div>
+                            
+                           
+                        </div>
+                    </div>
+
+            }
+                </div>
+        }
+        else
+        {
+            <div class="items-center">
+                <img src="~/Content/dist/images/nodata-found.png" />
+            </div>
+
+
+
+    }
+                <!-- END: Directory & Files -->
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+<div id="modalNewvideo" class="modal fade"  data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Document</h4>
+
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required />
+                            </div>
+                        </div>
+                   
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Document file (pdf)</label>
+                                <input type="file" id="imageUpload" class="form-control" accept="application/pdf" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+ 
+    window.onload = function () {
+      
+       
+
+        $('a.filtertype').on('click', function () {
+
+
+            $('a.filtertype').removeClass('selectedresourcetype');
+            $(this).addClass('selectedresourcetype');
+        });
+
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+     
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var type = $("#typevideo").val();
+
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadTaxfile',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#preloader").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        Swal.fire(
+                            'Document uploaded successfully',
+                            'The document has been created.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 1000);
+
+                    } else {
+                 
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+             
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+       
+        $(function () {
+            $('#filterbycatDocs').change(function (e) {
+                var selected = $(e.target).val();
+
+                filterbycategory(selected);
+            });
+        });
+
+        //$(function () {
+        //    $('#filterbycatScripts').change(function (e) {
+        //        var selected = $(e.target).val();
+        //        if (selected == "") {
+
+        //        } else {
+        //            $("#myInputScripts").val('');
+        //        }
+
+
+
+        //        filterbycategoryScript(selected);
+        //    });
+        //});
+
+
+
+    }
+
+
+
+    function searchin_li() {
+        // Declare variables
+
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputDocs');
+        filter = input.value.toUpperCase();
+
+        li = document.getElementsByClassName('sortableDocs');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByClassName('textfileDocs');
+            txtValue = a[0].text;
+
+            if (filter == "") {
+                $(li[i].closest("div.sortableDocs")).css('display', '');
+            } else {
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', '');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+
+
+
+
+    }
+
+
+    function filterbycategory(values) {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInputDocs');
+        filter = values;
+
+        $("#myInputDocs").val("");
+
+        li = document.getElementsByClassName('sortableDocs');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByClassName('categorydoc');
+            txtValue = a[0].innerHTML;
+
+            if (filter == "0") {
+                $(li[i].closest("div.sortableDocs")).css('display', '');
+            } else {
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', '');
+                } else {
+                    var iddiv = "#" + $(li[i].closest("div.sortableDocs")).attr("id");
+
+                    $(iddiv).css('display', 'none');
+                }
+            }
+
+
+        }
+
+        window.location.href = "#";
+    }
+
+    function deleteDoc(id) {
+
+        swal.fire({
+            title: 'Do you want to delete this?',
+            text: "This process cannot be undone.",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#C83232',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/Portal/DeleteTax',
+                    type: 'POST',
+                    data: { 'id': id },
+                    cache: false,
+                    global: false,
+                    success: function (result) {
+                        if (result == "SUCCESS") {
+                            Swal.fire(
+                                'Record deleted',
+                                'The record has been deleted.',
+                                'success'
+                            )
+                            window.location.reload(true);
+                        } else {
+                            alert(result);
+                        }
+
+
+                    },
+                    error: function (request) {
+                        alert("Something went wrong.");
+
+                    }
+                });
+
+
+            }
+        })
+    }
+</script>
