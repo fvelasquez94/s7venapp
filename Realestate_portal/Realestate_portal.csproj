@@ -2093,6 +2093,7 @@
     <Content Include="Views\Portal\Taxes.cshtml" />
     <Content Include="Views\CRM\PropertiesFiltered.cshtml" />
     <Content Include="Views\Portal\ToVerifyTaxes.cshtml" />
+    <Content Include="Views\CRM\CRMDashboard_Teams.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

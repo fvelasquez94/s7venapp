@@ -777,6 +777,357 @@ namespace Realestate_portal.Controllers
         }
 
 
+        public ActionResult CRMDashboard_Teams(string fstartd, string fendd, int broker = 0, int team = 0)
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                //FILTROS VARIABLES
+                DateTime filtrostartdate;
+                DateTime filtroenddate;
+                ////filtros de fecha 
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, 1, 1);
+                var lastDayOfMonth = new DateTime(DateTime.Today.Year, 12, 31);
+
+                if (fstartd == null || fstartd == "") { filtrostartdate = firstDayOfMonth; } else { filtrostartdate = Convert.ToDateTime(fstartd); }
+                if (fendd == null || fendd == "") { filtroenddate = lastDayOfMonth; } else { filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59); }
+
+                var startDate = filtrostartdate;
+                var endDate = filtroenddate;
+                //importante
+                var months = MonthsBetween(startDate, endDate);
+                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                List<GainsReport> lstgainsreport = new List<GainsReport>();
+                ViewBag.rol = "";
+
+                int totalagents = 0;
+                int totalteams = 0;
+                int totaltasks = 0;
+
+                List<Tb_Process> lstlistings = new List<Tb_Process>();
+                List<Tb_Customers> lstleads = new List<Tb_Customers>();
+                List<Tb_WorkTeams> lstteams = new List<Tb_WorkTeams>();
+
+                    if (activeuser.Roles.Contains("Admin"))
+                    {
+                        ViewBag.rol = "Admin";
+
+                        if (team != 0)
+                        {
+                        //filtramos equipo
+                            var leadsassigned = (from c in db.Tb_Customers_Users where (c.ID_team == team) select c.Id_Customer).Distinct().ToArray();
+                            var agentsassigned = (from c in db.Tb_Customers_Users where (c.ID_team == team) select c.Id_User).Distinct().ToArray();
+                            lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer)) select f).ToList();
+
+                            lstteams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                            totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && agentsassigned.Contains(f.ID_User)) select f).Count();
+                            totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
+
+                            var idscustomer = lstleads.Select(c => c.ID_Customer).Distinct().ToArray();
+
+                            lstlistings = (from f in db.Tb_Process where (agentsassigned.Contains(f.ID_User) && f.Creation_date >= startDate && f.Creation_date <= endDate) select f).ToList();
+
+
+                            if (lstlistings.Count > 0)
+                            {
+                                //reporte
+                                if (months.Count() > 0)
+                                {
+                                    if (months.Count() == 1)
+                                    { //como solo mostraria un mes la grafica no se desplegaria correctamente
+                                        var actual = months.FirstOrDefault();
+                                        var fechaactual = new DateTime(actual.Year, actual.montint, 1);
+                                        var fechaant = fechaactual.AddMonths(-1);
+                                        var fechapost = fechaactual.AddMonths(1);
+                                        GainsReport datacero = new GainsReport();
+                                        datacero.monthyear = fechaant.ToString("MMMM") + " - " + fechaant.Year;
+
+                                        datacero.projected = 0;
+                                        datacero.gains = 0;
+
+                                        lstgainsreport.Add(datacero);
+
+
+                                    }
+                                }
+
+
+                                foreach (var item in months)
+                                {
+                                    GainsReport data = new GainsReport();
+                                    data.monthyear = item.Month + " - " + item.Year;
+
+                                    var StartDay = new DateTime(item.Year, item.montint, 1);
+                                    var EndDay = StartDay.AddMonths(1).AddDays(-1);
+
+                                    data.projected = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "ON CONTRACT") select f.Commission_amount).Sum();
+                                    data.gains = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "CLOSED") select f.Commission_amount).Sum();
+
+                                    lstgainsreport.Add(data);
+
+                                    if (months.Count() == 1)
+                                    {
+                                        //para finalizar la grafica
+                                        GainsReport datacero2 = new GainsReport();
+                                        datacero2.monthyear = StartDay.AddMonths(1).ToString("MMMM") + " - " + StartDay.AddMonths(1).Year;
+
+                                        datacero2.projected = 0;
+                                        datacero2.gains = 0;
+
+                                        lstgainsreport.Add(datacero2);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+
+                        //filtramos por todos los equipos del broker 
+                        var teams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select (int?)a.ID_team).ToArray();
+                        var leadsassigned = (from c in db.Tb_Customers_Users where (teams.Contains(c.ID_team)) select c.Id_Customer).Distinct().ToArray();
+                        var agentsassigned = (from c in db.Tb_Customers_Users where (teams.Contains(c.ID_team)) select c.Id_User).Distinct().ToArray();
+                        lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer)) select f).ToList();
+
+                        lstteams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                        totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && agentsassigned.Contains(f.ID_User)) select f).Count();
+                        totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
+
+                        var idscustomer = lstleads.Select(c => c.ID_Customer).Distinct().ToArray();
+
+                        lstlistings = (from f in db.Tb_Process where (agentsassigned.Contains(f.ID_User) && f.Creation_date >= startDate && f.Creation_date <= endDate) select f).ToList();
+
+                        if (lstlistings.Count > 0)
+                            {
+                                //reporte
+                                if (months.Count() > 0)
+                                {
+                                    if (months.Count() == 1)
+                                    { //como solo mostraria un mes la grafica no se desplegaria correctamente
+                                        var actual = months.FirstOrDefault();
+                                        var fechaactual = new DateTime(actual.Year, actual.montint, 1);
+                                        var fechaant = fechaactual.AddMonths(-1);
+                                        var fechapost = fechaactual.AddMonths(1);
+                                        GainsReport datacero = new GainsReport();
+                                        datacero.monthyear = fechaant.ToString("MMMM") + " - " + fechaant.Year;
+
+                                        datacero.projected = 0;
+                                        datacero.gains = 0;
+
+                                        lstgainsreport.Add(datacero);
+
+
+                                    }
+                                }
+
+
+                                foreach (var item in months)
+                                {
+                                    GainsReport data = new GainsReport();
+                                    data.monthyear = item.Month + " - " + item.Year;
+
+                                    var StartDay = new DateTime(item.Year, item.montint, 1);
+                                    var EndDay = StartDay.AddMonths(1).AddDays(-1);
+
+                                    data.projected = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "ON CONTRACT") select f.Commission_amount).Sum();
+                                    data.gains = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "CLOSED") select f.Commission_amount).Sum();
+
+                                    lstgainsreport.Add(data);
+
+                                    if (months.Count() == 1)
+                                    {
+                                        //para finalizar la grafica
+                                        GainsReport datacero2 = new GainsReport();
+                                        datacero2.monthyear = StartDay.AddMonths(1).ToString("MMMM") + " - " + StartDay.AddMonths(1).Year;
+
+                                        datacero2.projected = 0;
+                                        datacero2.gains = 0;
+
+                                        lstgainsreport.Add(datacero2);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        ViewBag.rol = "SA";
+
+                        if (team != 0)
+                        {
+                        //filtramos equipo
+                        var leadsassigned = (from c in db.Tb_Customers_Users where (c.ID_team == team) select c.Id_Customer).Distinct().ToArray();
+                        var agentsassigned = (from c in db.Tb_Customers_Users where (c.ID_team == team) select c.Id_User).Distinct().ToArray();
+                        lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer)) select f).ToList();
+
+                        lstteams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                        totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && agentsassigned.Contains(f.ID_User)) select f).Count();
+                        totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
+
+                        var idscustomer = lstleads.Select(c => c.ID_Customer).Distinct().ToArray();
+
+                        lstlistings = (from f in db.Tb_Process where (agentsassigned.Contains(f.ID_User) && f.Creation_date >= startDate && f.Creation_date <= endDate) select f).ToList();
+
+
+                        if (lstlistings.Count > 0)
+                            {
+                                //reporte
+                                if (months.Count() > 0)
+                                {
+                                    if (months.Count() == 1)
+                                    { //como solo mostraria un mes la grafica no se desplegaria correctamente
+                                        var actual = months.FirstOrDefault();
+                                        var fechaactual = new DateTime(actual.Year, actual.montint, 1);
+                                        var fechaant = fechaactual.AddMonths(-1);
+                                        var fechapost = fechaactual.AddMonths(1);
+                                        GainsReport datacero = new GainsReport();
+                                        datacero.monthyear = fechaant.ToString("MMMM") + " - " + fechaant.Year;
+
+                                        datacero.projected = 0;
+                                        datacero.gains = 0;
+
+                                        lstgainsreport.Add(datacero);
+
+
+                                    }
+                                }
+
+
+                                foreach (var item in months)
+                                {
+                                    GainsReport data = new GainsReport();
+                                    data.monthyear = item.Month + " - " + item.Year;
+
+                                    var StartDay = new DateTime(item.Year, item.montint, 1);
+                                    var EndDay = StartDay.AddMonths(1).AddDays(-1);
+
+                                    data.projected = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "ON CONTRACT") select f.Commission_amount).Sum();
+                                    data.gains = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "CLOSED") select f.Commission_amount).Sum();
+
+                                    lstgainsreport.Add(data);
+
+                                    if (months.Count() == 1)
+                                    {
+                                        //para finalizar la grafica
+                                        GainsReport datacero2 = new GainsReport();
+                                        datacero2.monthyear = StartDay.AddMonths(1).ToString("MMMM") + " - " + StartDay.AddMonths(1).Year;
+
+                                        datacero2.projected = 0;
+                                        datacero2.gains = 0;
+
+                                        lstgainsreport.Add(datacero2);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                        //filtramos por todos los equipos del broker 
+                        var teams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select (int?)a.ID_team).ToArray();
+                        var leadsassigned = (from c in db.Tb_Customers_Users where (teams.Contains(c.ID_team)) select c.Id_Customer).Distinct().ToArray();
+                        var agentsassigned = (from c in db.Tb_Customers_Users where (teams.Contains(c.ID_team)) select c.Id_User).Distinct().ToArray();
+                        lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer)) select f).ToList();
+
+                        lstteams = (from a in db.Tb_WorkTeams where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                        totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && agentsassigned.Contains(f.ID_User)) select f).Count();
+                        totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
+
+                        var idscustomer = lstleads.Select(c => c.ID_Customer).Distinct().ToArray();
+
+                        lstlistings = (from f in db.Tb_Process where (agentsassigned.Contains(f.ID_User) && f.Creation_date >= startDate && f.Creation_date <= endDate) select f).ToList();
+
+
+                        if (lstlistings.Count > 0)
+                            {
+                                //reporte
+                                if (months.Count() > 0)
+                                {
+                                    if (months.Count() == 1)
+                                    { //como solo mostraria un mes la grafica no se desplegaria correctamente
+                                        var actual = months.FirstOrDefault();
+                                        var fechaactual = new DateTime(actual.Year, actual.montint, 1);
+                                        var fechaant = fechaactual.AddMonths(-1);
+                                        var fechapost = fechaactual.AddMonths(1);
+                                        GainsReport datacero = new GainsReport();
+                                        datacero.monthyear = fechaant.ToString("MMMM") + " - " + fechaant.Year;
+
+                                        datacero.projected = 0;
+                                        datacero.gains = 0;
+
+                                        lstgainsreport.Add(datacero);
+
+
+                                    }
+                                }
+
+
+                                foreach (var item in months)
+                                {
+                                    GainsReport data = new GainsReport();
+                                    data.monthyear = item.Month + " - " + item.Year;
+
+                                    var StartDay = new DateTime(item.Year, item.montint, 1);
+                                    var EndDay = StartDay.AddMonths(1).AddDays(-1);
+
+                                    data.projected = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "ON CONTRACT") select f.Commission_amount).Sum();
+                                    data.gains = (from f in lstlistings where ((f.Creation_date >= StartDay && f.Creation_date <= EndDay) && f.Stage == "CLOSED") select f.Commission_amount).Sum();
+
+                                    lstgainsreport.Add(data);
+
+                                    if (months.Count() == 1)
+                                    {
+                                        //para finalizar la grafica
+                                        GainsReport datacero2 = new GainsReport();
+                                        datacero2.monthyear = StartDay.AddMonths(1).ToString("MMMM") + " - " + StartDay.AddMonths(1).Year;
+
+                                        datacero2.projected = 0;
+                                        datacero2.gains = 0;
+
+                                        lstgainsreport.Add(datacero2);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                
+                ViewBag.leads = lstleads;
+                ViewBag.totalagents = totalagents;
+                ViewBag.totalteams = totalteams;
+                ViewBag.totaltasks = totaltasks;
+                ViewBag.teams = lstteams;
+                ViewBag.gainsreport_dates = lstgainsreport.Select(c => c.monthyear).ToArray();
+                ViewBag.gainsreport_projected = lstgainsreport.Select(c => c.projected).ToArray();
+                ViewBag.gainsreport_gains = lstgainsreport.Select(c => c.gains).ToArray();
+                ViewBag.selbroker = broker;
+                ViewBag.team = team;
+                if (lstlistings.Count == 0)
+                {
+                    Tb_Process newblank = new Tb_Process();
+                    lstlistings.Add(newblank);
+                }
+                return View(lstlistings);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Portal", new { access = false });
+            }
+        }
+
+
         public static IEnumerable<(string Month, int montint, int Year)> MonthsBetween(
         DateTime startDate,
         DateTime endDate)
