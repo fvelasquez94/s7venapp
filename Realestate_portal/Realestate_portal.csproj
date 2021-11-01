@@ -2094,6 +2094,7 @@
     <Content Include="Views\CRM\PropertiesFiltered.cshtml" />
     <Content Include="Views\Portal\ToVerifyTaxes.cshtml" />
     <Content Include="Views\CRM\CRMDashboard_Teams.cshtml" />
+    <Content Include="Views\CRM\Agents_properties.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

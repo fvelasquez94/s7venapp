@@ -54,9 +54,7 @@
                                 <th class="whitespace-nowrap">
                                     Purchase price
                                 </th>
-                                <th class="whitespace-nowrap">
-                                    Stage
-                                </th>
+                            
                                 <th class="whitespace-nowrap">
                                     Lead
                                 </th>
@@ -80,7 +78,7 @@
                                         <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.ID_Process</a>
                                     </td>
                                     <td>
-                                        @item.Property
+                                        @item.Stage
                                     </td>
                                     <td>
                                         <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.Address</a>
@@ -89,9 +87,7 @@
                                     <td>
                                         $@Convert.ToDecimal(item.Purchase_price).ToString("N2")
                                     </td>
-                                    <td>
-                                        @item.Stage
-                                    </td>
+                                
                                     <td>
                                         <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
 

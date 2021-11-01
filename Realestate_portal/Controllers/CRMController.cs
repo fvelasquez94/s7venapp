@@ -2585,6 +2585,146 @@ namespace Realestate_portal.Controllers
 
         }
 
+        public ActionResult Agents_properties(int broker = 0, string token = "")
+        {
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts;
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.token = token;
+                ViewBag.selbroker = broker;
+
+
+                List<AgentsProperties_View> lstAgentes = new List<AgentsProperties_View>();
+
+
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+                    ViewBag.teamleader = activeuser.Team_Leader;
+
+                    if (activeuser.Team_Leader == true)
+                    {
+
+                        var assigned = (from f in db.Tb_Customers_Users where (f.Id_User == activeuser.ID_User && f.ID_team != 0) select f.ID_team).ToArray();
+
+                        if (assigned.Length > 0)
+                        {
+
+                            var equipo = (from e in db.Tb_Customers_Users where (assigned.Contains(e.ID_team)) select e.Id_User).ToArray();
+
+                            lstAgentes = db.Sys_Users.Where(t => equipo.Contains(t.ID_User)).Select(c => new AgentsProperties_View
+                            {
+                                ID_User = c.ID_User,
+                                Active = c.Active,
+                                Brokerage_name = c.Brokerage_name,
+                                Email = c.Email,
+                                ID_Company = c.ID_Company,
+                                Image = c.Image,
+                                LastName = c.LastName,
+                                Main_telephone = c.Main_telephone,
+                                Member_since = c.Member_since,
+                                My_License = c.My_License,
+                                Name = c.Name,
+                                Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
+                                properties = (from det in db.Tb_Process
+                                         where (det.ID_User == c.ID_User)
+
+                                         select new PropertiesAgents
+                                         {
+                                             id_process = det.ID_Process,
+                                             address = det.Address
+                                         }).ToList()
+
+                            }).OrderBy(t => t.LastName).ToList();
+                        }
+
+                    }
+                }
+                else
+                {
+                    ViewBag.rol = "Admin";
+                    if (activeuser.Roles.Contains("Admin"))
+                    {
+                        // se utiliza id = 4 para registros no asignados
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_View
+                        {
+                     ID_User = c.ID_User,
+                     Active = c.Active,
+                     Brokerage_name = c.Brokerage_name,
+                     Email = c.Email,
+                     ID_Company = c.ID_Company,
+                     Image = c.Image,
+                     LastName = c.LastName,
+                     Main_telephone = c.Main_telephone,
+                     Member_since = c.Member_since,
+                     My_License = c.My_License,
+                     Name = c.Name,
+                     Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
+                     properties = (from det in db.Tb_Process
+                                   where (det.ID_User == c.ID_User)
+
+                                   select new PropertiesAgents
+                                   {
+                                       id_process = det.ID_Process,
+                                       address = det.Address
+                                   }).ToList()
+
+                 }).OrderBy(t => t.LastName).ToList();
+
+                    }
+                    else
+                    {
+                        // se utiliza id = 4 para registros no asignados
+                        ViewBag.rol = "SA";
+                        // se utiliza id = 4 para registros no asignados
+                        lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_View
+                        {
+                            ID_User = c.ID_User,
+                            Active = c.Active,
+                            Brokerage_name = c.Brokerage_name,
+                            Email = c.Email,
+                            ID_Company = c.ID_Company,
+                            Image = c.Image,
+                            LastName = c.LastName,
+                            Main_telephone = c.Main_telephone,
+                            Member_since = c.Member_since,
+                            My_License = c.My_License,
+                            Name = c.Name,
+                            Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
+                            properties = (from det in db.Tb_Process
+                                          where (det.ID_User == c.ID_User)
+
+                                          select new PropertiesAgents
+                                          {
+                                              id_process = det.ID_Process,
+                                              address = det.Address
+                                          }).ToList()
+
+                        }).OrderBy(t => t.LastName).ToList();
+
+                    }
+
+
+                }
+
+
+                return View(lstAgentes);
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+        }
+
         public ActionResult CustomerDashboard(int? id, int broker=0, string token="")
         {
             if (generalClass.checkSession())

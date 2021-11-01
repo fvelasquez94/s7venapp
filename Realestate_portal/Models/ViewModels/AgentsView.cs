@@ -29,6 +29,25 @@ namespace Realestate_portal.Models.ViewModels
         public List<TeamsAgents> Teams { get; set; }
 
     }
+
+    public class AgentsProperties_View
+    {
+        public int ID_User { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Main_telephone { get; set; }
+        public string Image { get; set; }
+        public int ID_Company { get; set; }
+        public bool Active { get; set; }
+        public string Brokerage_name { get; set; }
+        public string My_License { get; set; }
+        public System.DateTime Member_since { get; set; }
+
+        public List<LeadsAgents> Leads { get; set; }
+        public List<PropertiesAgents> properties { get; set; }
+
+    }
     public class LeadsAgents
     {
         public int ID_lead { get; set; }
@@ -38,6 +57,11 @@ namespace Realestate_portal.Models.ViewModels
     {
         public int id_team { get; set; }
         public string Name { get; set; }
+    }
+    public class PropertiesAgents
+    {
+        public int id_process { get; set; }
+        public string address { get; set; }
     }
 
     public class US_State

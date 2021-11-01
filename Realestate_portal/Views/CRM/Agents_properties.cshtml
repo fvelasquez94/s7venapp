@@ -1,0 +1,200 @@
+﻿@model List<Realestate_portal.Models.ViewModels.AgentsProperties_View>
+@{
+    ViewBag.Title = "Agents";
+
+}
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Agents Stats
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Agents
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+
+
+                </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
+
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th>
+
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        NAME
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        EMAIL
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        TEL
+                                    </th>
+
+
+
+                                    <th class="whitespace-nowrap">
+                                        AGENT LICENSE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        MEMBER SINCE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        STATUS
+                                    </th>
+                                  
+                                    <th class="whitespace-nowrap">
+                                       No. Properties assigned
+                                    </th> <th class="whitespace-nowrap">
+                                       No. Leads assigned
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @if (item.Image == "")
+                                            {
+                                                <div class="tooltip text-lg font-medium truncate" title="@item.Name @item.LastName">   <p data-letters="@item.Name.Substring(0, 1) @item.LastName.Substring(0, 1)"></p></div>
+
+                                            }
+                                            else if (item.Image.StartsWith("http"))
+                                            { <div class="w-12 h-12 image-fit zoom-in ">
+                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@item.Image" title="@item.Name @item.LastName">
+                                                </div>
+                                            }
+                                            else
+                                            { <div class="w-12 h-12 image-fit zoom-in ">
+                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@Url.Content(item.Image)" title="@item.Name @item.LastName">
+                                                </div>
+                                            }
+
+
+                                        </td>
+                                        <td> <a href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})">@item.Name @item.LastName</a>  </td>
+                                        <td>@item.Email</td>
+                                    
+                                   
+                                        <td>@item.Main_telephone</td>
+
+
+                                        <td>@item.My_License</td>
+                                        <td>@item.Member_since.ToShortDateString()</td>
+                                        <td>
+                                            @if (item.Active)
+                                            {<div class="flex items-center justify-center text-theme-20"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div> }
+                                            else
+                                            {<div class="flex items-center justify-center text-theme-21"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>}
+                                        </td>
+                                    <td>@item.properties.Count()</td>
+                                    <td>@item.Leads.Count()</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
+
+<!-- End table Container -->
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
+
+
+        </script>
+    }
+
+}
+<!--table scripts starts here to pull all data from controller by datable ajax -->
+@section scripts{
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+
+            table = $("#tableresources").DataTable({
+                "order": [[7, "desc"]],
+                dom: 'lBfrtip',
+                "iDisplayLength": 25,
+                buttons: [
+                    'colvis',
+                    {
+                        text: 'Show All Columns <i class="fa-lg fas fa-check-square"></i>',
+                        className: 'show-all-columns',
+                        action: function (e, dt) {
+                            dt.columns([0, 1, 2, 3, 4, 5]).visible(true, false); // show selected columns, false is to disable redraw calcs for speed
+
+                        }
+                    }
+                ]
+            });
+
+            $('#selecttable').on('change', function () {
+                if (this.value == "ALL") {
+                    table.columns(4).search('').draw();
+                } else {
+                    table.columns(4).search(this.value).draw();
+                }
+
+            });
+
+
+
+            //$(".accordion-collapse").removeClass("show");
+            //$(".accordion-collapse").removeClass("collapsed");
+            //$(".accordion-collapse").css("display", "none");
+            //$(".accordion-button").attr("aria-expanded", false);
+            //$(".accordion-button").addClass("collapsed");
+
+
+        });
+    </script>
+}
+
+
+
+
+
+

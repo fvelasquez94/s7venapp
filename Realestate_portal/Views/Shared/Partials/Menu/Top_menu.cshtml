@@ -36,24 +36,42 @@
                             </a>
                         </li>
                         @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin"))
-    {
-                    <li>
-                        <a href="@Url.Action("CRMDashboard_Teams", "CRM")" class="top-menu">
-                            <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                            <div class="top-menu__title">By Teams</div>
-                        </a>
-                    </li>}
+            {
+                <li>
+                    <a href="@Url.Action("CRMDashboard_Teams", "CRM")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">By Teams</div>
+                    </a>
+                </li>}
                     </ul>
                 </li>
-                @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
+                             @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
     {
-            <li>
-                <a href="@Url.Action("Agents", "CRM")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">Agents</div>
-                </a>
-            </li>
-}
+                <li>
+                    <a href="javascript:void(0)" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="user"></i> </div>
+                        <div class="top-menu__title">Agents <i data-feather="chevron-down" class="top-menu__sub-icon"></i></div>
+                    </a>
+
+
+                    <ul class="">
+                        <li>
+                            <a href="@Url.Action("Agents", "CRM")" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                <div class="top-menu__title">List</div>
+                            </a>
+                        </li>
+                     
+                <li>
+                    <a href="@Url.Action("Agents_properties", "CRM")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Stats</div>
+                    </a>
+                </li>
+                    </ul>
+                </li>
+                }
+
                 <li>
                     <a href="@Url.Action("Leads", "CRM")" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
