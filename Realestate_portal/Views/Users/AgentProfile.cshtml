@@ -9,6 +9,7 @@
     List<Tb_Customers> leads = ViewBag.leads;
     List<Realestate_portal.Models.ViewModels.TasksView> lsttasks = ViewBag.lsttask;
     List<Realestate_portal.Models.ViewModels.US_State> lstsates = (List<Realestate_portal.Models.ViewModels.US_State>)ViewBag.states;
+    IQueryable<Realestate_portal.Models.Tb_Process> lstproperties = (IQueryable<Realestate_portal.Models.Tb_Process>)ViewBag.lstproperties;
 
 
 }
@@ -467,45 +468,45 @@ else
                         <h2 class="font-medium text-base mr-auto">
                             Assigned Leads
                         </h2>
-                   
+
                         @*<button class="btn btn-outline-secondary hidden sm:flex">All Files</button>*@
                     </div>
-                             <div class="p-5" id="basic-table">
-                <div class="preview">
-                    <div class="overflow-x-auto">
-                        @*<label>Filter by Status</label>
-                        <select id="selecttable" class="form-control" style="width:150px">
-                            <option>ALL</option>
-                            @foreach (var item in leads.Select(c => c.Marital_status).Distinct())
-                            {
-                                <option>@item</option>
-                            }
-                        </select><br /><br />*@
-                        <table class="table table-report sm:mt-2" id="tableresources">
+                    <div class="p-5" id="basic-table">
+                        <div class="preview">
+                            <div class="overflow-x-auto">
+                                @*<label>Filter by Status</label>
+                            <select id="selecttable" class="form-control" style="width:150px">
+                                <option>ALL</option>
+                                @foreach (var item in leads.Select(c => c.Marital_status).Distinct())
+                                {
+                                    <option>@item</option>
+                                }
+                            </select><br /><br />*@
+                                <table class="table table-report sm:mt-2" id="tableresources">
 
-                            <thead>
-                                <tr class="text-white" style="background-color:#162343">
-                                    <th class="whitespace-nowrap">
-                                        NAME
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        PHONE
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        EMAIL
-                                    </th>
+                                    <thead>
+                                        <tr class="text-white" style="background-color:#162343">
+                                            <th class="whitespace-nowrap">
+                                                NAME
+                                            </th>
+                                            <th class="whitespace-nowrap">
+                                                PHONE
+                                            </th>
+                                            <th class="whitespace-nowrap">
+                                                EMAIL
+                                            </th>
 
-                                    <th class="whitespace-nowrap">
-                                        TYPE
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        STAGE
-                                    </th>
-                         
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in leads)
+                                            <th class="whitespace-nowrap">
+                                                TYPE
+                                            </th>
+                                            <th class="whitespace-nowrap">
+                                                STAGE
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in leads)
                                 {
                                     <tr>
                                         <td>  <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_Customer})" class="font-medium whitespace-nowrap"><i data-feather="link" class="w-4 h-4 mr-1"></i> @item.Name @item.LastName</a></td>
@@ -513,51 +514,136 @@ else
                                         <td>@item.Email</td>
                                         <td>@item.Type</td>
                                         <td>@item.Marital_status</td>
-                            
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-            </div>
+                                    </tr>
+                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <!-- END: Latest Uploads -->
                 <!-- BEGIN: Work In Progress -->
                 <div class="intro-y box col-span-12 lg:col-span-6">
-         
-                <!-- BEGIN: Daily Sales -->
-                <div class="intro-y box col-span-12 lg:col-span-6">
-                    <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                           Assigned Tasks
-                        </h2>
-          
-                        @*<button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Excel </button>*@
-                    </div>
-                    <div class="p-5">
-                        @if (lsttasks.Count() > 0)
-    {
-        foreach (var task in lsttasks)
-        {
-                    <div class="flex items-center">
-                        <div class="border-l-2 border-theme-25 pl-4">
-                            <a href="" class="font-medium">@task.Title</a>
-                            <div class="text-gray-600">@task.Lastupdate.ToShortDateString()</div>
-                        </div>
 
+                    <!-- BEGIN: Daily Sales -->
+                    <div class="intro-y box col-span-12 lg:col-span-6">
+                        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Assigned Tasks
+                            </h2>
+
+                            @*<button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Excel </button>*@
+                        </div>
+                        <div class="p-5">
+                            @if (lsttasks.Count() > 0)
+                    {
+                        foreach (var task in lsttasks)
+                        {
+                            <div class="flex items-center">
+                                <div class="border-l-2 border-theme-25 pl-4">
+                                    <a href="" class="font-medium">@task.Title</a>
+                                    <div class="text-gray-600">@task.Lastupdate.ToShortDateString()</div>
+                                </div>
+
+                            </div>
+                }
+            }
+                        </div>
                     </div>
-}
-}
+
+
+                </div>
+            </div>
+            <div class="intro-y box col-span-12 lg:col-span-12 mt-10">
+                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                    <h2 class="font-medium text-base mr-auto">
+                        Assigned Properties
+                    </h2>
+
+                    @*<button class="btn btn-outline-secondary hidden sm:flex">All Files</button>*@
+                </div>
+                <div class="p-5" id="basic-table2">
+                
+                    <div class="preview">
+                        <table class="table table-report sm:mt-2" id="tableresources2">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        Status
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        Address
+                                    </th>
+
+
+                                    <th class="whitespace-nowrap">
+                                        Purchase price
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        Lead
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        Type of Agency
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        Last Update
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in lstproperties)
+                        {
+                            <tr style="color:black">
+                                <td>
+                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.ID_Process</a>
+                                </td>
+                                <td>
+                                    @item.Stage
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})">@item.Address</a>
+                                </td>
+
+                                <td>
+                                    $@Convert.ToDecimal(item.Purchase_price).ToString("N2")
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("Edit","Customers", new { id=item.ID_Customer})">  @item.Tb_Customers.Name  @item.Tb_Customers.LastName</a>
+
+                                </td>
+
+                                <td>
+                                    @item.TypeofAgency
+                                </td>
+
+                                <td>
+                                    @item.Last_update.ToShortDateString()
+                                </td>
+
+                            </tr>
+                }
+                            </tbody>
+                        </table>
+
+
                     </div>
                 </div>
-         
-
+                </div>
+                <!-- End Calendar -->
             </div>
         </div>
-    </div>
-</div>
 <!-- END: Content -->
 
 
@@ -566,7 +652,7 @@ else
 <button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
 <script type="text/javascript">
             window.onload = function () {
-           
+                $("#tableresources2").DataTable();
 
             $('#OpenImgUpload').click(function () { $('#imgupload').trigger('click'); });
 

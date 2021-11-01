@@ -62,6 +62,7 @@ namespace Realestate_portal.Models.ViewModels
     {
         public int id_process { get; set; }
         public string address { get; set; }
+        public string stage { get; set; }
     }
 
     public class US_State

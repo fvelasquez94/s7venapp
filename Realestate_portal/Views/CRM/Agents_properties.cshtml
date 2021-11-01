@@ -61,11 +61,13 @@
                                     <th class="whitespace-nowrap">
                                         STATUS
                                     </th>
-                                  
                                     <th class="whitespace-nowrap">
-                                       No. Properties assigned
+                                       No. Closed Properties Contracts
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                       No. Assigned Properties
                                     </th> <th class="whitespace-nowrap">
-                                       No. Leads assigned
+                                       No. Assigned Leads
                                     </th>
 
 
@@ -110,6 +112,7 @@
                                             else
                                             {<div class="flex items-center justify-center text-theme-21"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>}
                                         </td>
+                                    <td>@item.properties.Where(c=>c.stage=="CLOSED").Count()</td>
                                     <td>@item.properties.Count()</td>
                                     <td>@item.Leads.Count()</td>
 
@@ -170,6 +173,8 @@
                     }
                 ]
             });
+
+         
 
             $('#selecttable').on('change', function () {
                 if (this.value == "ALL") {

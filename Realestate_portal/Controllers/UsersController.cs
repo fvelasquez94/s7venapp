@@ -834,6 +834,10 @@ namespace Realestate_portal.Controllers
                              }).ToList();
 
                 ViewBag.lsttask = lst_tasks;
+
+                IQueryable<Tb_Process> Tb_Process;
+                Tb_Process = db.Tb_Process.Where(a => a.ID_User == id).Include(t => t.Tb_Customers);
+                ViewBag.lstproperties = Tb_Process;
                 return View(sys_Users);
 
             }

@@ -2638,7 +2638,8 @@ namespace Realestate_portal.Controllers
                                          select new PropertiesAgents
                                          {
                                              id_process = det.ID_Process,
-                                             address = det.Address
+                                             address = det.Address,
+                                             stage=det.Stage
                                          }).ToList()
 
                             }).OrderBy(t => t.LastName).ToList();
@@ -2672,7 +2673,8 @@ namespace Realestate_portal.Controllers
                                    select new PropertiesAgents
                                    {
                                        id_process = det.ID_Process,
-                                       address = det.Address
+                                       address = det.Address,
+                                       stage = det.Stage
                                    }).ToList()
 
                  }).OrderBy(t => t.LastName).ToList();
@@ -2703,7 +2705,8 @@ namespace Realestate_portal.Controllers
                                           select new PropertiesAgents
                                           {
                                               id_process = det.ID_Process,
-                                              address = det.Address
+                                              address = det.Address,
+                                              stage = det.Stage
                                           }).ToList()
 
                         }).OrderBy(t => t.LastName).ToList();
