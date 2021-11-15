@@ -1,10 +1,12 @@
 ﻿@model Realestate_portal.Models.Tb_Customers
-
+@using Realestate_portal.Models
 @{
     ViewBag.Title = "Premium Group Realty";
     List<Realestate_portal.Models.Sys_Users> lstusers = (List<Realestate_portal.Models.Sys_Users>)ViewBag.users;
     Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users assigned = (Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users)ViewBag.assigneduser;
     List<Realestate_portal.Models.ViewModels.US_State> lstsates = (List<Realestate_portal.Models.ViewModels.US_State>)ViewBag.states;
+    List<Tb_Source> source = ViewBag.lstSource;
+    List<Tb_Status> lststage = ViewBag.lstStatus;
 }
 
 
@@ -61,39 +63,19 @@
                             <input type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.Birthday.ToString("yyyy-MM-dd")" />
                         </div>
                         <div>
-                            <label class="form-label">Status</label>
+                            <label class="form-label">Stage</label>
                             <select name="Marital_status" id="Marital_status" class="form-control">
-
-                                @if (Model.Marital_status == "ACTIVE")
-                                {
-                                    <option selected>ACTIVE</option>}
-                                else
-                                {
-                                    <option>ACTIVE</option>}
-                                @if (Model.Marital_status == "ON CONTRACT")
-                                {
-                                    <option selected>ON CONTRACT</option>}
-                                else
-                                {
-                                    <option>ON CONTRACT</option>}
-                                @if (Model.Marital_status == "FOLLOW UP")
-                                {
-                                    <option selected>FOLLOW UP</option>}
-                                else
-                                {
-                                    <option>FOLLOW UP</option>}
-                                @if (Model.Marital_status == "CLOSED")
-                                {
-                                    <option selected>CLOSED</option>}
-                                else
-                                {
-                                    <option>CLOSED</option>}
-                                @if (Model.Marital_status == "DEAD")
-                                {
-                                    <option selected>DEAD</option>}
-                                else
-                                {
-                                    <option>DEAD</option>}
+                                @if (lststage.Count > 0) {
+                                    foreach (var item in lststage) {
+                                        if (item.Stage_name == Model.Marital_status) {
+                                            <option selected>@item.Stage_name</option>
+                                        }
+                                        else {
+                                            <option>@item.Stage_name</option>
+                                        }
+                                    }
+                                }
+                                
                             </select>
                         </div>
                         <div>
@@ -162,19 +144,19 @@
                             <label for="State" class="form-label">State</label>
                             <select class="form-control" id="State" name="State">
                                 @foreach (var state in lstsates)
-        {
-            if (state.Abbreviations == Model.State)
-            {
-                        <option value="@state.Abbreviations" selected>@state.Name</option>
-}
-else
-{
-                        <option value="@state.Abbreviations">@state.Name</option>
-}
-}
+                                {
+                                    if (state.Abbreviations == Model.State)
+                                    {
+                                        <option value="@state.Abbreviations" selected>@state.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@state.Abbreviations">@state.Name</option>
+                                    }
+                                }
 
                             </select>
-   
+
                         </div>
                         <div class="form-group" style="display:none;">
                             @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -206,6 +188,7 @@ else
 
 
                         <div class="form-group" style="display:none;">
+                            @Html.EditorFor(model => model.Source, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.LabelFor(model => model.ID_Company, "ID_Company", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("ID_Company", null, htmlAttributes: new { @class = "form-control" })
@@ -216,10 +199,10 @@ else
                         @if (ViewBag.rol == "Agent")
                         {
                             <div class="form-group" style="display:none">
-                                                                <select class="form-control" name="ID_agent" id="ID_agent">
+                                <select class="form-control" name="ID_agent" id="ID_agent">
                                     <option value="0">Not assigned</option>
 
-                                    
+
                                     @foreach (var item in lstusers)
                                     {
                                         if (assigned != null)
@@ -228,11 +211,11 @@ else
                                             {
                                                 if (assigned.Id_User == item.ID_User)
                                                 {
-                                <option selected value="@item.ID_User">@item.Name @item.LastName</option>
+                                                    <option selected value="@item.ID_User">@item.Name @item.LastName</option>
                                                 }
                                                 else
                                                 {
-                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
                                                 }
                                             }
                                             else
@@ -242,7 +225,8 @@ else
 
 
                                         }
-                                        else {
+                                        else
+                                        {
                                             <option value="@item.ID_User">@item.Name @item.LastName</option>
                                         }
                                     }
@@ -251,7 +235,7 @@ else
                             </div>
 
 
-                     
+
                         }
                         else
                         {
@@ -260,7 +244,7 @@ else
                                 <select class="form-control" name="ID_agent" id="ID_agent">
                                     <option value="0">Not assigned</option>
 
-                                    
+
                                     @foreach (var item in lstusers)
                                     {
                                         if (assigned != null)
@@ -269,11 +253,11 @@ else
                                             {
                                                 if (assigned.Id_User == item.ID_User)
                                                 {
-                                <option selected value="@item.ID_User">@item.Name @item.LastName</option>
+                                                    <option selected value="@item.ID_User">@item.Name @item.LastName</option>
                                                 }
                                                 else
                                                 {
-                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
                                                 }
                                             }
                                             else
@@ -283,7 +267,8 @@ else
 
 
                                         }
-                                        else {
+                                        else
+                                        {
                                             <option value="@item.ID_User">@item.Name @item.LastName</option>
                                         }
                                     }
@@ -291,14 +276,14 @@ else
                                 </select>
                             </div>
 
-                        
+
 
 
                         }
-                            <div>
-                                <label class="form-label">Created</label>
-                                @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                            </div>
+                        <div>
+                            <label class="form-label">Created</label>
+                            @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
 
                         <div class="mt-6">
                             <button type="submit" id="submitbuttoncreate" class="btn btn-primary">Save changes</button>
@@ -319,7 +304,7 @@ else
     {
         <script>
             window.onload = function () {
-              
+
                 var link = document.getElementById('basic-non-sticky-notification-toggle');
                 link.click();
             };

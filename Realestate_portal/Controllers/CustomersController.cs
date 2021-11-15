@@ -60,9 +60,9 @@ namespace Realestate_portal.Controllers
                 ViewBag.rol = "";
 
                 //Filtros SA
-                var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company || o.Id_Company == null) select o).ToList();
+                var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company) select o).ToList();
                 ViewBag.lstSource = lstsource;
-                var lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company || t.Id_Company == null) select t).ToList();
+                var lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company) select t).ToList();
                 ViewBag.lstStatus = lststatus;
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
@@ -500,9 +500,12 @@ namespace Realestate_portal.Controllers
                 Tb_Customers tb_Customers = db.Tb_Customers.Find(id);
 
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name", tb_Customers.ID_Company);
-        
 
 
+                var lstsource = (from o in db.Tb_Source where (o.Id_Company == activeuser.ID_Company) select o).ToList();
+                ViewBag.lstSource = lstsource;
+                var lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company) select t).ToList();
+                ViewBag.lstStatus = lststatus;
 
                 ViewBag.rol = "";
 

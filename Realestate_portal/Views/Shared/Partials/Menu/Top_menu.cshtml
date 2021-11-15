@@ -36,17 +36,17 @@
                             </a>
                         </li>
                         @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin"))
-            {
-                <li>
-                    <a href="@Url.Action("CRMDashboard_Teams", "CRM")" class="top-menu">
-                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                        <div class="top-menu__title">By Teams</div>
-                    </a>
-                </li>}
+                    {
+                        <li>
+                            <a href="@Url.Action("CRMDashboard_Teams", "CRM")" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                                <div class="top-menu__title">By Teams</div>
+                            </a>
+                        </li>}
                     </ul>
                 </li>
-                             @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
-    {
+                @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
+            {
                 <li>
                     <a href="javascript:void(0)" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="user"></i> </div>
@@ -61,16 +61,16 @@
                                 <div class="top-menu__title">List</div>
                             </a>
                         </li>
-                     
-                <li>
-                    <a href="@Url.Action("Agents_properties", "CRM")" class="top-menu">
-                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                        <div class="top-menu__title">Stats</div>
-                    </a>
-                </li>
+
+                        <li>
+                            <a href="@Url.Action("Agents_properties", "CRM")" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="award"></i> </div>
+                                <div class="top-menu__title">Best Sellers</div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                }
+        }
 
                 <li>
                     <a href="@Url.Action("Leads", "CRM")" class="top-menu">
@@ -85,14 +85,14 @@
                     </a>
                 </li>
                 @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
-    {
-            <li>
-                <a href="@Url.Action("Teams", "CRM")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">Teams</div>
-                </a>
-            </li>
-}
+            {
+                <li>
+                    <a href="@Url.Action("Teams", "CRM")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Teams</div>
+                    </a>
+                </li>
+        }
 
                 <li>
                     <a href="@Url.Action("Properties", "CRM")" class="top-menu">
@@ -101,14 +101,14 @@
                     </a>
                 </li>
                 @if (user.Roles.Contains("SA"))
-    {
-            <li>
-                <a href="@Url.Action("Brokers", "CRM")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">Brokers</div>
-                </a>
-            </li>
-}
+            {
+                <li>
+                    <a href="@Url.Action("Brokers", "CRM")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Brokers</div>
+                    </a>
+                </li>
+        }
             </ul>
         </li>
         <li>
@@ -180,19 +180,19 @@
                 </li>
                 <li>
                     @if (user.Roles.Contains("SA"))
-    {
+                {
+                    <a href="@Url.Action("ToVerifyTaxes", "Portal")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">To verify Taxes</div>
+                    </a>
+            }
+            else
+            {
                 <a href="@Url.Action("ToVerifyTaxes", "Portal")" class="top-menu">
                     <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
                     <div class="top-menu__title">To verify Taxes</div>
                 </a>
-}
-else
-{
-                <a href="@Url.Action("ToVerifyTaxes", "Portal")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">To verify Taxes</div>
-                </a>
-}
+        }
 
                 </li>
                 @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
@@ -220,58 +220,50 @@ else
 
         <li>
             @if (user.Roles.Contains("SA"))
-    {
-
-        <a href="javascript:void(0);" class="top-menu">
-            <div class="top-menu__icon"> <i data-feather="tv"></i> </div>
-            <div class="top-menu__title"> Videos <i data-feather="chevron-down" class="top-menu__sub-icon"></i></div>
-        </a>
-
-        <ul class="top-menu__sub-open">
-            <li>
-
-                <a target="_blank" href="@Url.Action("Videos", "Portal")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">Videos</div>
-                </a>
-
-            </li>
-            <li>
-                <a href="@Url.Action("Videos_management", "Portal")" class="top-menu">
-                    <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                    <div class="top-menu__title">Management Videos</div>
-                </a>
-
-            </li>
-        </ul>
-
-        }
-        else
         {
-            <a target="_blank" href="@Url.Action("Videos", "Portal")" class="top-menu">
+
+            <a href="javascript:void(0);" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="tv"></i> </div>
-                <div class="top-menu__title"> Videos </div>
+                <div class="top-menu__title"> Videos <i data-feather="chevron-down" class="top-menu__sub-icon"></i></div>
             </a>
-    }
 
-            </li>
+            <ul class="top-menu__sub-open">
+                <li>
 
-      
-        <li>
-            @if (user.Roles.Contains("SA"))
-        {
-            <a href="@Url.Action("Marketing", "Portal", new { broker = ViewBag.selbroker })" class="top-menu">
-                <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
-                <div class="top-menu__title"> Marketing </div>
-            </a>
+                    <a target="_blank" href="@Url.Action("Videos", "Portal")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Videos</div>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="@Url.Action("Videos_management", "Portal")" class="top-menu">
+                        <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
+                        <div class="top-menu__title">Management Videos</div>
+                    </a>
+
+                </li>
+            </ul>
+
     }
     else
     {
-        <a href="@Url.Action("Marketing", "Portal")" class="top-menu">
-            <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
-            <div class="top-menu__title"> Marketing </div>
+        <a target="_blank" href="@Url.Action("Videos", "Portal")" class="top-menu">
+            <div class="top-menu__icon"> <i data-feather="tv"></i> </div>
+            <div class="top-menu__title"> Videos </div>
         </a>
 }
+
+        </li>
+
+
+        <li>
+
+            <a href="https://market.s7ven.co/Portal/Log_in?email=@user.Email&password=@user.Password" target="_blank" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="briefcase"></i> </div>
+                <div class="top-menu__title"> Marketing </div>
+            </a>
+
 
 
         </li>
@@ -293,6 +285,7 @@ else
 }
 
         </li>
+
         <li>
             <a href="https://www.lirealtor.com/" target="_blank" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="home"></i> </div>
@@ -305,5 +298,13 @@ else
                 <div class="top-menu__title"> Your CMA </div>
             </a>
         </li>
+        <li>
+            <a href="https://www.worknetify.com/" target="_blank" class="top-menu">
+                <div class="top-menu__icon"> <i data-feather="layers"></i> </div>
+                <div class="top-menu__title">Your Work Space </div>
+            </a>
+        </li>
+  
+
     </ul>
 </nav>

@@ -754,6 +754,30 @@ namespace Realestate_portal.Controllers
 
                     }
                 }
+
+                List<AgentsProperties_ViewDashboard> lstAgentes = new List<AgentsProperties_ViewDashboard>();
+
+                lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_ViewDashboard
+                {
+                    ID_User = c.ID_User,
+                    Active = c.Active,
+                    Brokerage_name = c.Brokerage_name,
+                    Email = c.Email,
+                    ID_Company = c.ID_Company,
+                    Image = c.Image,
+                    LastName = c.LastName,
+                    Main_telephone = c.Main_telephone,
+                    Member_since = c.Member_since,
+                    My_License = c.My_License,
+                    Name = c.Name,
+                    properties = (from det in db.Tb_Process
+                                  where (det.ID_User == c.ID_User)
+                                  select det).Count()
+
+                }).OrderByDescending(t => t.properties).Take(3).ToList();
+
+                ViewBag.bestsellers = lstAgentes;
+
                 ViewBag.leads = lstleads;
                 ViewBag.totalagents = totalagents;
                 ViewBag.totalteams = totalteams;

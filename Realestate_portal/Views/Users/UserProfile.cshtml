@@ -32,7 +32,7 @@
             <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
                 <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
                     @if (Model.Image == "")
-        {
+                    {
             <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-6.jpg">
 }
 else
@@ -45,7 +45,7 @@ else
                     <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">@Model.Name @Model.LastName</div>
                     <div class="text-gray-600">
                         @if (ViewBag.rol == "Agent")
-            {
+                        {
                 <span>Real Estate Agent</span>
 }
 else if (ViewBag.rol == "Admin")
@@ -90,8 +90,8 @@ else if (ViewBag.rol == "SA")
     <!-- END: Profile Info -->
     <div class="tab-content mt-5">
         <div id="account" class="tab-pane active" role="tabpanel" aria-labelledby="account-tab">
-            @using (Html.BeginForm("Edit","Users", FormMethod.Post))
-    {
+            @using (Html.BeginForm("Edit", "Users", FormMethod.Post))
+            {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID_User)
@@ -110,7 +110,7 @@ else if (ViewBag.rol == "SA")
                             <div class="grid grid-cols-12 ">
                                 <div class="col-span-6 md:col-span-3">
                                     <div>
-                                        <label  class="form-label">Name</label>
+                                        <label class="form-label">Name</label>
                                         <input type="text" name="Name" class="form-control" value="@Model.Name" required>
                                     </div>
                                     <div class="mt-3">
@@ -120,12 +120,12 @@ else if (ViewBag.rol == "SA")
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div>
-                                        <label  class="form-label">Last Name</label>
-                                        <input  type="text" name="LastName" class="form-control" value="@Model.LastName" required>
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" name="LastName" class="form-control" value="@Model.LastName" required>
                                     </div>
 
                                     <div class="mt-3">
-                                        <label  class="form-label">Phone Number</label>
+                                        <label class="form-label">Phone Number</label>
                                         <input name="Main_telephone" type="text" class="form-control" value="@Model.Main_telephone" required>
                                     </div>
                                 </div>
@@ -135,8 +135,8 @@ else if (ViewBag.rol == "SA")
                                         <input type="email" name="Email" class="form-control" value="@Model.Email" required>
                                     </div>
                                     <div class="mt-3">
-                                        <label  class="form-label">Birthday</label>
-                                        <input  type="date" name="Birth" class="form-control" value="@Model.Birth.ToString("yyyy-MM-dd")" required>
+                                        <label class="form-label">Birthday</label>
+                                        <input type="date" name="Birth" class="form-control" value="@Model.Birth.ToString("yyyy-MM-dd")" required>
                                     </div>
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
@@ -153,24 +153,24 @@ else if (ViewBag.rol == "SA")
                                 <div class="col-span-6 md:col-span-3">
                                     <div class="mt-3">
                                         <label class="form-label">Address</label>
-                                        <textarea class="form-control" name="Address" >@Model.Address</textarea>
+                                        <textarea class="form-control" name="Address">@Model.Address</textarea>
                                     </div>
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div class="mt-3">
-                                        <label  class="form-label">State</label>
+                                        <label class="form-label">State</label>
                                         <select class="form-control" id="State" name="State">
                                             @foreach (var state in lstsates)
-                                    {
-                                        if (state.Abbreviations == Model.State)
-                                        {
+                                            {
+                                                if (state.Abbreviations == Model.State)
+                                                {
                                             <option value="@state.Abbreviations" selected>@state.Name</option>
-                                }
-                                else
-                                {
+                                                }
+                                                else
+                                                {
                                     <option value="@state.Abbreviations">@state.Name</option>
-                        }
-                    }
+                                                }
+                                            }
 
                                         </select>
                                     </div>
@@ -178,7 +178,7 @@ else if (ViewBag.rol == "SA")
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div class="mt-3">
                                         @if (ViewBag.rol == "Admin")
-                                {
+                                        {
                                     <label class="form-label" for="Active">Active user?</label>
                                     <div class="mt-3">
                                         @Html.EditorFor(model => model.Active)
@@ -186,22 +186,22 @@ else if (ViewBag.rol == "SA")
                                     </div>
 
 
-                        }
-                        else
-                        {
+                                        }
+                                        else
+                                        {
 
                             <div class="mt-3" style="display:none">
                                 @Html.EditorFor(model => model.Active)
                                 @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                             </div>
 
-                }
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
                                     <div class="mt-3">
                                         @if (ViewBag.rol == "Admin")
-                                {
+                                        {
                                     <label class="form-label" for="Team_Leader">Team Leader?</label>
                                     <div class="mt-3">
                                         @Html.EditorFor(model => model.Team_Leader)
@@ -209,16 +209,16 @@ else if (ViewBag.rol == "SA")
                                     </div>
 
 
-                        }
-                        else
-                        {
+                                        }
+                                        else
+                                        {
 
                             <div class="mt-3" style="display:none">
                                 @Html.EditorFor(model => model.Team_Leader)
                                 @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
                             </div>
 
-                }
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -241,55 +241,57 @@ else if (ViewBag.rol == "SA")
                 </div>
                 <div class="p-5">
                     <div class="grid grid-cols-12 gap-x-5">
-                        @if (Model.Roles.Contains("Admin")) {
-                                                    <div class="col-span-12 xl:col-span-6">
-                            <div>
-                                <label  class="form-label">Brokerage Name</label>
-                                <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" >
-                            </div>
-                            <div class="mt-3">
-                                <label  class="form-label">Brokerage Address</label>
-                                <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" >
-                            </div>
+                        @if (Model.Roles.Contains("Admin"))
+                        {
+                    <div class="col-span-12 xl:col-span-6">
+                        <div>
+                            <label class="form-label">Brokerage Name</label>
+                            <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name">
                         </div>
-                        <div class="col-span-12 xl:col-span-6">
-                            <div class="mt-3 xl:mt-0">
-                                <label  class="form-label">Broker Contact</label>
-                                <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" >
-                            </div>
-                            <div class="mt-3">
-                                <label  class="form-label">Broker License</label>
-                                <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" >
-                            </div>
+                        <div class="mt-3">
+                            <label class="form-label">Brokerage Address</label>
+                            <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address">
+                        </div>
+                    </div>
+                    <div class="col-span-12 xl:col-span-6">
+                        <div class="mt-3 xl:mt-0">
+                            <label class="form-label">Broker Contact</label>
+                            <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact">
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label">Broker License</label>
+                            <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License">
+                        </div>
 
-                        </div>
+                    </div>
                         }
-                        else {
-                                                    <div class="col-span-12 xl:col-span-6">
-                            <div>
-                                <label  class="form-label">Brokerage Name</label>
-                                <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
-                            </div>
-                            <div class="mt-3">
-                                <label  class="form-label">Brokerage Address</label>
-                                <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" disabled>
-                            </div>
-                        </div>
-                        <div class="col-span-12 xl:col-span-6">
-                            <div class="mt-3 xl:mt-0">
-                                <label  class="form-label">Broker Contact</label>
-                                <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" disabled>
-                            </div>
-                            <div class="mt-3">
-                                <label  class="form-label">Broker License</label>
-                                <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
-                            </div>
+                        else
+                        {
+            <div class="col-span-12 xl:col-span-6">
+                <div>
+                    <label class="form-label">Brokerage Name</label>
+                    <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Brokerage Address</label>
+                    <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" disabled>
+                </div>
+            </div>
+            <div class="col-span-12 xl:col-span-6">
+                <div class="mt-3 xl:mt-0">
+                    <label class="form-label">Broker Contact</label>
+                    <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" disabled>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Broker License</label>
+                    <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
+                </div>
 
-                        </div>
+            </div>
                         }
-                           <div style="display:none">
-                                <input type="text" value="@Model.Image" name="Image"/>
-                            </div>
+                        <div style="display:none">
+                            <input type="text" value="@Model.Image" name="Image" />
+                        </div>
                     </div>
 
                 </div>
@@ -325,17 +327,17 @@ else if (ViewBag.rol == "SA")
 
                         </div>        <div class="col-span-6 md:col-span-3 ml-2" style="display:none !important">
 
-    <input type="text" name="Roles" class="form-control" value="@Model.Roles">
-    <input type="text" name="ID_Company" class="form-control" value="@Model.ID_Company">
-    <input type="text" name="Gender" class="form-control" value="@Model.Gender">
-    <input type="text" name="Last_login" class="form-control" value="@Model.Last_login">
-    <input type="text" name="Last_update" class="form-control" value="@Model.Last_update">
-    <input type="text" name="Creation_date" class="form-control" value="@Model.Creation_date">
-    <input type="text" name="Member_since" class="form-control" value="@Model.Member_since">
+                            <input type="text" name="Roles" class="form-control" value="@Model.Roles">
+                            <input type="text" name="ID_Company" class="form-control" value="@Model.ID_Company">
+                            <input type="text" name="Gender" class="form-control" value="@Model.Gender">
+                            <input type="text" name="Last_login" class="form-control" value="@Model.Last_login">
+                            <input type="text" name="Last_update" class="form-control" value="@Model.Last_update">
+                            <input type="text" name="Creation_date" class="form-control" value="@Model.Creation_date">
+                            <input type="text" name="Member_since" class="form-control" value="@Model.Member_since">
 
 
 
-</div>
+                        </div>
                     </div>
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="btn btn-primary">Save information</button>
@@ -353,30 +355,30 @@ else if (ViewBag.rol == "SA")
                     <div class="grid grid-cols-12 gap-x-5">
                         <div class="col-span-12 xl:col-span-6">
                             <div>
-                                <label  class="form-label">Bank</label>
+                                <label class="form-label">Bank</label>
                                 <input name="Bank" type="text" class="form-control" value="@Model.Bank">
                             </div>
                             <div class="mt-3">
-                                <label  class="form-label">Bank Number</label>
+                                <label class="form-label">Bank Number</label>
                                 <input name="Bank_number" type="text" class="form-control" value="@Model.Bank_number">
                             </div>
                             <div class="mt-3">
-                                <label  class="form-label">Account Type</label>
+                                <label class="form-label">Account Type</label>
                                 <input name="Bank_typeaccount" type="text" class="form-control" value="@Model.Bank_typeaccount">
                             </div>
 
                         </div>
                         <div class="col-span-12 xl:col-span-6">
                             <div class="mt-3 xl:mt-0">
-                                <label  class="form-label">Credit Card Number</label>
+                                <label class="form-label">Credit Card Number</label>
                                 <input name="Credit_number" type="text" class="form-control" value="@Model.Credit_number">
                             </div>
                             <div class="mt-3">
-                                <label  class="form-label">Credit Card Owner Name</label>
+                                <label class="form-label">Credit Card Owner Name</label>
                                 <input name="Credit_name" type="text" class="form-control" value="@Model.Credit_name">
                             </div>
                             <div class="mt-3">
-                                <label  class="form-label">Credit Card Type</label>
+                                <label class="form-label">Credit Card Type</label>
                                 <input name="Credit_classification" type="text" class="form-control" value="@Model.Credit_classification">
                             </div>
 
@@ -390,711 +392,48 @@ else if (ViewBag.rol == "SA")
             </div>
         </div>
 }
-        </div>       
-        @*<div id="documents" class="tab-pane" role="tabpanel" aria-labelledby="documets-tab">
-            <!-- BEGIN: Directory & Files -->
+            @if (activeusr.Roles.Contains("Admin") || activeusr.Roles.Contains("SA"))  {
+            <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+                <div class="intro-y box mt-5">
+                    <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                        <h2 class="font-medium text-base mr-auto">
+                            Close account (This action will deactivate all existing accounts for your company)
+                        </h2>
 
-            <div class="col-12" style="margin:auto">
-                <input type="file" class="form-control fileToUpload" id="file" />
-                <button id="uploadall" class="btn btn-info">Upload file</button>
-            </div>
+                        
 
-            @if (documents.Count()>0)
-    {<div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
-            @foreach (var item in documents)
-    {
-        <div id="id_@item.Id_Document" class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2 sortableDocs">
-            <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
-                <div class="absolute left-0 top-0 mt-3 ml-3">
-
-                    <a href="javascript:void(0)" class="flex items-center px-3 py-2 rounded-md">
-                        <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
-                    </a>
-
-                </div>
-
-                @if (item.Extension == ".pdf")
-        {
-            <a href="@Url.Action("ShowAgentpdf", "Portal", new { id = item.Id_Document })" class="w-3/5 file__icon file__icon--image mx-auto">
-                <div class="file__icon--image__preview image-fit">
-                    <img alt="S7VEN" src="~/Content/dist/images/pdf.png">
-                </div>
-            </a>
-            <a href="@Url.Action("ShowAgentpdf", "Portal", new { id = item.Id_Document })" class="block font-medium mt-4 text-center truncate textfileDocs">@(item.Doc_Name + "" + item.Extension)</a>
-}
-else
-{
-        <a href="@Url.Action("DownloadAgentDoc", "Portal", new { id = item.Id_Document })" class="w-3/5 file__icon file__icon--image mx-auto">
-            <div class="file__icon--image__preview image-fit">
-                <img alt="S7VEN" src="~/Content/dist/images/file.png">
-            </div>
-        </a>
-        <a href="@Url.Action("DownloadAgentDoc", "Portal", new { id = item.Id_Document })" class="block font-medium mt-4 text-center truncate textfileDocs">@(item.Doc_Name + "" + item.Extension)</a>
-}
-
-                <div class="text-gray-600 text-xs text-center mt-0.5">@item.Size</div>
-
-                <div class="text-gray-600 text-xs text-center mt-0.5 categorydoc">@item.Upload_Date.Value.ToShortDateString()</div>
-
-            </div>
-        </div>
-
-}
-        </div>
-}
-else
-{
-        <div class="items-center">
-            <img src="~/Content/dist/images/nodata-found.png" />
-        </div>
-
-
-
-}
-            <!-- END: Directory & Files -->
-        </div>*@        
-        @*<div id="notes" class="tab-pane" role="tabpanel" aria-labelledby="notes-tab">
-            <form id="noteForm" class="media-body align-self-center text-align-center">
-                <h4>Write your note...</h4>
-                <br />
-                <textarea class="form-control-lg align-self-center" style="width: 100%" id="noteComment" cols="50" rows="5" placeholder="Write your note..."></textarea>
-                <a class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addNote">Add Note</a>
-            </form>
-            <br />
-            <div id="accordion">
-                @foreach (var item in notes)
-            {
-                <div class="card">
-                    <div class="card-header" id="heading_@item.ID_note">
-                        <h5 class="mb-0">
-                            <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse_@item.ID_note" aria-expanded="false" aria-controls="collapse_@item.ID_note">
-                                Note @item.Date
-                            </a>
-                        </h5>
                     </div>
-                    <div id="collapse_@item.ID_note" class="collapse" aria-labelledby="heading_@item.ID_note" data-parent="#accordion">
-                        <div class="card-body">
-                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="noteComment" cols="50" rows="5" disabled>@item.Text</textarea>
+                    <div class="p-5">
+                        <label class="form-label">Type your email and password to confirm this action</label>
+                        <div class="grid grid-cols-12 gap-x-5">
+
+                            <div class="col-span-12 xl:col-span-6">
+
+
+
+                                <div class="mt-3">
+                                    <label class="form-label">Email</label>
+                                    <input id="close_email" type="text" class="form-control" >
+                                </div>
+                                <div class="mt-3">
+                                    <label class="form-label">Password</label>
+                                    <input id="close_password" type="text" class="form-control" >
+                                </div>
+
+                            </div>
+                           
+                        <div class=" mt-4">
+                            <button type="button" onclick="closeaccount()" class="btn btn-danger ">Close account</button>
+
                         </div>
                     </div>
                 </div>
+            </div>
+
+        </div>      
             }
-
-            </div>
-        </div>*@
-        @*<div id="profile" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="grid grid-cols-12 gap-6">
-                <!-- BEGIN: Latest Uploads -->
-                <div class="intro-y box col-span-12 lg:col-span-6">
-                    <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            Latest Uploads
-                        </h2>
-                        <div class="dropdown ml-auto sm:hidden">
-                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                            <div class="dropdown-menu w-40">
-                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2"> <a href="javascript:;" class="block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">All Files</a> </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-secondary hidden sm:flex">All Files</button>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="file"> <a href="" class="w-12 file__icon file__icon--directory"></a> </div>
-                            <div class="ml-4">
-                                <a class="font-medium" href="">Documentation</a>
-                                <div class="text-gray-600 text-xs mt-0.5">40 KB</div>
-                            </div>
-                            <div class="dropdown ml-auto">
-                                <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                                <div class="dropdown-menu w-40">
-                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Share File </a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-5">
-                            <div class="file">
-                                <a href="" class="w-12 file__icon file__icon--file">
-                                    <div class="file__icon__file-name text-xs">MP3</div>
-                                </a>
-                            </div>
-                            <div class="ml-4">
-                                <a class="font-medium" href="">Celine Dion - Ashes</a>
-                                <div class="text-gray-600 text-xs mt-0.5">40 KB</div>
-                            </div>
-                            <div class="dropdown ml-auto">
-                                <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                                <div class="dropdown-menu w-40">
-                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Share File </a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-5">
-                            <div class="file"> <a href="" class="w-12 file__icon file__icon--empty-directory"></a> </div>
-                            <div class="ml-4">
-                                <a class="font-medium" href="">Resources</a>
-                                <div class="text-gray-600 text-xs mt-0.5">0 KB</div>
-                            </div>
-                            <div class="dropdown ml-auto">
-                                <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                                <div class="dropdown-menu w-40">
-                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Share File </a>
-                                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: Latest Uploads -->
-                <!-- BEGIN: Work In Progress -->
-                <div class="intro-y box col-span-12 lg:col-span-6">
-                    <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            Work In Progress
-                        </h2>
-                        <div class="dropdown ml-auto sm:hidden">
-                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                            <div class="nav nav-tabs dropdown-menu w-40" role="tablist">
-                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2"> <a id="work-in-progress-new-tab" href="javascript:;" data-toggle="tab" data-target="#work-in-progress-new" class="block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md" role="tab" aria-controls="work-in-progress-new" aria-selected="true">New</a> <a id="work-in-progress-last-week-tab" href="javascript:;" data-toggle="tab" data-target="#work-in-progress-last-week" class="block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md" role="tab" aria-selected="false">Last Week</a> </div>
-                            </div>
-                        </div>
-                        <div class="nav nav-tabs ml-auto hidden sm:flex" role="tablist"> <a id="work-in-progress-mobile-new-tab" data-toggle="tab" data-target="#work-in-progress-new" href="javascript:;" class="py-5 ml-6 active" role="tab" aria-selected="true">New</a> <a id="week-work-in-progress-mobile-last-week-tab" data-toggle="tab" data-target="#work-in-progress-last-week" href="javascript:;" class="py-5 ml-6" role="tab" aria-selected="false">Last Week</a> </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="tab-content">
-                            <div id="work-in-progress-new" class="tab-pane active" role="tabpanel" aria-labelledby="work-in-progress-new-tab">
-                                <div>
-                                    <div class="flex">
-                                        <div class="mr-auto">Pending Tasks</div>
-                                        <div>20%</div>
-                                    </div>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar w-1/2 bg-theme-25" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="mt-5">
-                                    <div class="flex">
-                                        <div class="mr-auto">Completed Tasks</div>
-                                        <div>2 / 20</div>
-                                    </div>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar w-1/4 bg-theme-25" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="mt-5">
-                                    <div class="flex">
-                                        <div class="mr-auto">Tasks In Progress</div>
-                                        <div>42</div>
-                                    </div>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar w-3/4 bg-theme-25" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <a href="" class="btn btn-secondary block w-40 mx-auto mt-5">View More Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: Work In Progress -->
-                <!-- BEGIN: Daily Sales -->
-                <div class="intro-y box col-span-12 lg:col-span-6">
-                    <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            Daily Sales
-                        </h2>
-                        <div class="dropdown ml-auto sm:hidden">
-                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                            <div class="dropdown-menu w-40">
-                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                    <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Excel </a>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Excel </button>
-                    </div>
-                    <div class="p-5">
-                        <div class="relative flex items-center">
-                            <div class="w-12 h-12 flex-none image-fit">
-                                <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
-                            </div>
-                            <div class="ml-4 mr-auto">
-                                <a href="" class="font-medium">Leonardo DiCaprio</a>
-                                <div class="text-gray-600 mr-5 sm:mr-5">Bootstrap 4 HTML Admin Template</div>
-                            </div>
-                            <div class="font-medium text-gray-700 dark:text-gray-600">+$19</div>
-                        </div>
-                        <div class="relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit">
-                                <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
-                            </div>
-                            <div class="ml-4 mr-auto">
-                                <a href="" class="font-medium">Tom Cruise</a>
-                                <div class="text-gray-600 mr-5 sm:mr-5">Tailwind HTML Admin Template</div>
-                            </div>
-                            <div class="font-medium text-gray-700 dark:text-gray-600">+$25</div>
-                        </div>
-                        <div class="relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit">
-                                <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-6.jpg">
-                            </div>
-                            <div class="ml-4 mr-auto">
-                                <a href="" class="font-medium">Tom Cruise</a>
-                                <div class="text-gray-600 mr-5 sm:mr-5">Vuejs HTML Admin Template</div>
-                            </div>
-                            <div class="font-medium text-gray-700 dark:text-gray-600">+$21</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: Daily Sales -->
-                <!-- BEGIN: Latest Tasks -->
-                <div class="intro-y box col-span-12 lg:col-span-6">
-                    <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            Latest Tasks
-                        </h2>
-                        <div class="dropdown ml-auto sm:hidden">
-                            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i> </a>
-                            <div class="nav nav-tabs dropdown-menu w-40" role="tablist">
-                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2"> <a id="latest-tasks-new-tab" href="javascript:;" data-toggle="tab" data-target="#latest-tasks-new" class="block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md" role="tab" aria-controls="latest-tasks-new" aria-selected="true">New</a> <a id="latest-tasks-last-week-tab" href="javascript:;" data-toggle="tab" data-target="#latest-tasks-last-week" class="block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md" role="tab" aria-selected="false">Last Week</a> </div>
-                            </div>
-                        </div>
-                        <div class="nav nav-tabs ml-auto hidden sm:flex" role="tablist"> <a id="latest-tasks-mobile-new-tab" data-toggle="tab" data-target="#latest-tasks-new" href="javascript:;" class="py-5 ml-6 active" role="tab" aria-selected="true">New</a> <a id="latest-tasks-mobile-last-week-tab" data-toggle="tab" data-target="#latest-tasks-last-week" href="javascript:;" class="py-5 ml-6" role="tab" aria-selected="false">Last Week</a> </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="tab-content">
-                            <div id="latest-tasks-new" class="tab-pane active" role="tabpanel" aria-labelledby="latest-tasks-new-tab">
-                                <div class="flex items-center">
-                                    <div class="border-l-2 border-theme-25 pl-4">
-                                        <a href="" class="font-medium">Create New Campaign</a>
-                                        <div class="text-gray-600">10:00 AM</div>
-                                    </div>
-                                    <input class="form-check-switch ml-auto" type="checkbox">
-                                </div>
-                                <div class="flex items-center mt-5">
-                                    <div class="border-l-2 border-theme-25 pl-4">
-                                        <a href="" class="font-medium">Meeting With Client</a>
-                                        <div class="text-gray-600">02:00 PM</div>
-                                    </div>
-                                    <input class="form-check-switch ml-auto" type="checkbox">
-                                </div>
-                                <div class="flex items-center mt-5">
-                                    <div class="border-l-2 border-theme-25 pl-4">
-                                        <a href="" class="font-medium">Create New Repository</a>
-                                        <div class="text-gray-600">04:00 PM</div>
-                                    </div>
-                                    <input class="form-check-switch ml-auto" type="checkbox">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: Latest Tasks -->
-                <!-- BEGIN: New Products -->
-                <div class="intro-y box col-span-12">
-                    <div class="flex items-center px-5 py-3 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            New Products
-                        </h2>
-                        <button data-carousel="new-products" data-target="prev" class="tiny-slider-navigator btn btn-outline-secondary px-2 mr-2"> <i data-feather="chevron-left" class="w-4 h-4"></i> </button>
-                        <button data-carousel="new-products" data-target="next" class="tiny-slider-navigator btn btn-outline-secondary px-2"> <i data-feather="chevron-right" class="w-4 h-4"></i> </button>
-                    </div>
-                    <div id="new-products" class="tiny-slider py-5">
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-7.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Samsung Q90 QLED TV</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">36</div>
-                                        <div class="text-gray-600">Orders</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">32k</div>
-                                        <div class="text-gray-600">Purchases</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">36</div>
-                                        <div class="text-gray-600">Reviews</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">22 April 2022</div>
-                                    <div class="text-gray-600">Date of Release</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Preview</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-9.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Nike Tanjun</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">27</div>
-                                        <div class="text-gray-600">Orders</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">43k</div>
-                                        <div class="text-gray-600">Purchases</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">27</div>
-                                        <div class="text-gray-600">Reviews</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">19 December 2020</div>
-                                    <div class="text-gray-600">Date of Release</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Preview</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-10.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Nike Tanjun</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">198</div>
-                                        <div class="text-gray-600">Orders</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">35k</div>
-                                        <div class="text-gray-600">Purchases</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">198</div>
-                                        <div class="text-gray-600">Reviews</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">13 May 2021</div>
-                                    <div class="text-gray-600">Date of Release</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Preview</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-3.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Oppo Find X2 Pro</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">146</div>
-                                        <div class="text-gray-600">Orders</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">47k</div>
-                                        <div class="text-gray-600">Purchases</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">146</div>
-                                        <div class="text-gray-600">Reviews</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">16 June 2022</div>
-                                    <div class="text-gray-600">Date of Release</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Preview</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-3.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Sony Master Series A9G</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">91</div>
-                                        <div class="text-gray-600">Orders</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">56k</div>
-                                        <div class="text-gray-600">Purchases</div>
-                                    </div>
-                                    <div class="text-center rounded-md w-20 py-3">
-                                        <div class="font-medium text-theme-25 dark:text-theme-22 text-xl">91</div>
-                                        <div class="text-gray-600">Reviews</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">9 May 2021</div>
-                                    <div class="text-gray-600">Date of Release</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Preview</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: New Products -->
-                <!-- BEGIN: New Authors -->
-                <div class="intro-y box col-span-12">
-                    <div class="flex items-center px-5 py-3 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-medium text-base mr-auto">
-                            New Authors
-                        </h2>
-                        <button data-carousel="new-authors" data-target="prev" class="tiny-slider-navigator btn btn-outline-secondary px-2 mr-2"> <i data-feather="chevron-left" class="w-4 h-4"></i> </button>
-                        <button data-carousel="new-authors" data-target="next" class="tiny-slider-navigator btn btn-outline-secondary px-2"> <i data-feather="chevron-right" class="w-4 h-4"></i> </button>
-                    </div>
-                    <div id="new-authors" class="tiny-slider py-5">
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Leonardo DiCaprio</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Frontend Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex flex-col justify-center items-center lg:items-start px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="flex items-center">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="facebook"></i> </a>
-                                        leonardodicaprioleft4code.com
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="twitter"></i> </a>
-                                        Leonardo DiCaprio
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">22 April 2022</div>
-                                    <div class="text-gray-600">Joined Date</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Message</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Profile</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Tom Cruise</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Frontend Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex flex-col justify-center items-center lg:items-start px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="flex items-center">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="facebook"></i> </a>
-                                        tomcruiseleft4code.com
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="twitter"></i> </a>
-                                        Tom Cruise
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">19 December 2020</div>
-                                    <div class="text-gray-600">Joined Date</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Message</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Profile</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-6.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Tom Cruise</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Frontend Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex flex-col justify-center items-center lg:items-start px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="flex items-center">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="facebook"></i> </a>
-                                        tomcruiseleft4code.com
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="twitter"></i> </a>
-                                        Tom Cruise
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">13 May 2021</div>
-                                    <div class="text-gray-600">Joined Date</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Message</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Profile</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-15.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Arnold Schwarzenegger</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Software Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex flex-col justify-center items-center lg:items-start px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="flex items-center">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="facebook"></i> </a>
-                                        arnoldschwarzeneggerleft4code.com
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="twitter"></i> </a>
-                                        Arnold Schwarzenegger
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">16 June 2022</div>
-                                    <div class="text-gray-600">Joined Date</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Message</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Profile</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-5">
-                            <div class="flex flex-col lg:flex-row items-center pb-5">
-                                <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-gray-200 dark:border-dark-5">
-                                    <div class="sm:mr-5">
-                                        <div class="w-20 h-20 image-fit">
-                                            <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                        <a href="" class="font-medium text-lg">Nicolas Cage</a>
-                                        <div class="text-gray-600 mt-1 sm:mt-0">Frontend Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex flex-col justify-center items-center lg:items-start px-5 border-t lg:border-t-0 border-gray-200 dark:border-dark-5">
-                                    <div class="flex items-center">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="facebook"></i> </a>
-                                        nicolascageleft4code.com
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border mr-2 text-gray-500"> <i class="w-3 h-3 fill-current" data-feather="twitter"></i> </a>
-                                        Nicolas Cage
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center border-t border-gray-200 dark:border-dark-5 pt-5">
-                                <div class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-gray-200 dark:border-dark-5 pb-5 sm:pb-0">
-                                    <div class="px-3 py-2 bg-theme-19 dark:bg-dark-5 dark:text-gray-300 text-theme-22 rounded font-medium mr-3">9 May 2021</div>
-                                    <div class="text-gray-600">Joined Date</div>
-                                </div>
-                                <div class="flex sm:ml-auto mt-5 sm:mt-0">
-                                    <button class="btn btn-secondary w-20 ml-auto">Message</button>
-                                    <button class="btn btn-secondary w-20 ml-2">Profile</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: New Authors -->
-            </div>
-        </div>*@
+ 
+  
     </div>
 </div>
 <!-- END: Content -->
@@ -1180,63 +519,60 @@ else
                 //}
     }
 
-    //function hideDropDown() {
-    //    var checkBox = document.getElementById('Team_Leader');
-    //    var dropLeader = document.getElementById('Id_Leader');
-    //    var position = document.getElementById('Position');
-    //    var teamName = document.getElementById('Leader_Name');
+    function closeaccount() {
+        var email = $('#close_email').val();
+        var pass = $('#close_password').val();
 
-    //    if (checkBox.checked == true) {
-    //        dropLeader.style.display = "none";
-    //        position.value = "Team leader";
-    //        teamName.style.display = "block"
-    //        teamName.value = "";
 
-    //    }
-    //    else {
-    //        dropLeader.style.display = "block";
-    //        position.value = "Real Estate Salesperson";
-    //        teamName.style.display = "none";
-    //        teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
-    //    }
+        if (email=="" || pass=="") {
+            alert("Email and password are mandatory");
+        }
+        else {
+            swal.fire({
+                title: 'Do you really want to deactivate these account?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Close account'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Users/DeactivateBroker',
+                        type: 'POST',
+                        data: { 'user': email, 'pass': pass},
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Account closed',
+                                    'The account has been deleted.',
+                                    'success'
+                                )
+                                window.location.href = "/Portal/Log_out";
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
 
         
-    //}
+    }
 
-    //function teamLeader() {
-    //    var dropLeader = document.getElementById('Id_Leader');
-    //    var teamName = document.getElementById('Leader_Name');
-
-    //    teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
-    //    console.log(dropLeader.value);
-    //    console.log(dropLeader.options[dropLeader.selectedIndex].text);
-
-
-    //}
-
-    //function teamChange() {
-    //    var checkBox = document.getElementById('Team_Leader');
-    //    var dropLeader = document.getElementById('Id_Leader');
-    //    var position = document.getElementById('Position');
-    //    var teamName = document.getElementById('Leader_Name');
-
-
-    //    if (position.value === 'Team leader') {
-    //        checkBox.checked = true;
-    //        dropLeader.style.display = "none";
-    //        teamName.style.display = "block";
-    //        teamName.value = "";
-    //    }
-    //    else {
-    //        checkBox.checked = false;
-    //        dropLeader.style.display = "block";
-    //        teamName.style.display = "none";
-    //        teamName.value = dropLeader.options[dropLeader.selectedIndex].text;
-    //    }
-
-    //}
-
-
+   
 
     //here we extract all the elements with the class specified
     var uploadfile = document.querySelectorAll(".fileToUpload");

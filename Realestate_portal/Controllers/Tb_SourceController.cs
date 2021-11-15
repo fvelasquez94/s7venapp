@@ -39,47 +39,11 @@ namespace Realestate_portal.Controllers
                     ViewBag.notifications = lstAlerts;
                     ViewBag.userID = activeuser.ID_User;
                     ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
+                    ViewBag.activeuser = activeuser;
                     //FIN HEADER
-                    if (r.Contains("Agent"))
-                    {
-                        ViewBag.rol = "Agent";
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
-
-                    }
-                    else
-                    {
-                        if (r.Contains("SA") && broker == 0)
-                        {
-                            ViewBag.rol = "SA";
-                            ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
-                            var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                            RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
-                        }
-                        else
-                        {
-                            ViewBag.rol = "Admin";
-                            if (broker == 0)
-                            {
-                                ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
-
-                            }
-                            else
-                            {
-
-                                ViewBag.rol = "SA";
-
-                                ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == broker && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                                var brokersel = (from b in db.Sys_Users where (b.ID_Company == broker && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-
-                            }
-                        }
-
-
-
-                    }
+     
                     ViewBag.selbroker = broker;
-                    return View(db.Tb_Source.ToList());
+                    return View(db.Tb_Source.Where(c=>c.Id_Company==activeuser.ID_Company).ToList());
                 }
                 else
                 {
@@ -139,16 +103,10 @@ namespace Realestate_portal.Controllers
             {
                 Sys_Users activeUser = Session["activeUser"] as Sys_Users;
                 Tb_Source newSource = new Tb_Source();
-                if (activeUser.Roles == "Admin")
-                {
+             
                     newSource.Source_name = source;
                     newSource.Id_Company = activeUser.ID_Company;
-                }
-                else
-                {
-                    newSource.Source_name = source;
-                 
-                }
+         
                 db.Tb_Source.Add(newSource);
                 db.SaveChanges();
                 var result = "SUCCESS";
@@ -282,14 +240,27 @@ namespace Realestate_portal.Controllers
         }
 
         // POST: Tb_Source/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+  
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_Source tb_Source = db.Tb_Source.Find(id);
-            db.Tb_Source.Remove(tb_Source);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Tb_Source tb_Source = db.Tb_Source.Find(id);
+                db.Tb_Source.Remove(tb_Source);
+                db.SaveChanges();
+
+
+                var result = "Success";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception EX)
+            {
+                var result2 = "error";
+                return Json(result2, JsonRequestBehavior.AllowGet);
+            }
+    
+ 
         }
 
         protected override void Dispose(bool disposing)

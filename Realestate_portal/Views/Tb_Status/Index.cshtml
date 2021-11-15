@@ -2,67 +2,96 @@
 
 @{
     ViewBag.Title = "Index";
- 
+
 }
 
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
 
-<div class="container-fluid">
+    </div>
+</div>
 
-    <!-- Begin Page Header-->
-    <div class="row">
-        <div class="page-header">
-            <div class="d-flex align-items-center">
-                <h2 class="page-header-title"></h2>
-                <div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
-                        <li class="breadcrumb-item active">STATUS</li>
-                    </ul>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Customer Stages
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Stages
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+                    <div class="widget-options">
+                        <a class="btn btn-success" href="#" data-toggle="modal" data-target="#mstatusModal">Add Stage</a>
+                    </div>
+
                 </div>
+            </div>
+
+
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="">
+
+                        <table class="table table-report sm:mt-2" id="tableresources">
+
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        NAME
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ACTIONS
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Stage_name</td>
+                                        <td>
+                                            <div class="flex">
+                                                @*<a class="flex items-center mr-3" href="@Url.Action("Edit","Tb_status", new { id=item.Id_Status})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>*@
+
+                                                <a class="flex text-theme-21" href="javascript:void(0);" onclick="deleteStage(@item.Id_Status)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- End Page Header -->
-    <div>
-        <p>
-            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#mstatusModal">Add Customer Status</a>
-        </p>
-        <table class="table">
-            <tr>
-                <th>
-                    <label>Customer Status</label>
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Stage_name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id_Status }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id_Status })
-                    </td>
-                </tr>
-            }
-
-        </table>
-    </div>
 </div>
+
 <div class="modal" id="mstatusModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add status</h5>
+                <h5 class="modal-title">Add Stage</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Status name:</label>
+                    <label>Stage name:</label>
                     <input type="text" class="form-control" id="statusName" required />
                 </div>
             </div>
@@ -77,14 +106,16 @@
      document.getElementById("buttonNewStatus").onclick = function () {
          var statusName = $("#statusName").val();
 
+
          statusName = statusName.toUpperCase();
 
-        $.ajax({
+
+         $.ajax({
             type: "POST",
             url: '@Url.Action("CreateStatus","Tb_Status")',
             contentType: 'application/json',
             data: JSON.stringify({
-                source: sourceName
+                mstatus: statusName
             }),
             success: function (response) {
                 $('#selectStatus').append($('<option>', {
@@ -94,13 +125,13 @@
                 }));
                 var closeModal = $('#closeButton');
                 closeModal.trigger('click');
-                new Noty({
-                    type: 'success',
-                    layout: 'topRight',
-                    text: 'Information added successfully',
-                    progressBar: true,
-                    timeout: 2500
-                }).show()
+
+                Swal.fire(
+                    'Record added',
+                    'Information added successfully.',
+                    'success'
+                )
+
                 window.location.reload();
             },
             error: function (error) {
@@ -111,5 +142,48 @@
                 window.location.reload();
             }
         });
+    }
+
+    function deleteStage(idstage) {
+
+        swal.fire({
+            title: 'Do you want to delete these record?',
+            text: "This process cannot be undone.",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#C83232',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/Tb_Status/DeleteConfirmed',
+                    type: 'POST',
+                    data: { 'id': idstage },
+                    cache: false,
+                    global: false,
+                    success: function (result) {
+                        if (result == "Success") {
+                            Swal.fire(
+                                'Record deleted',
+                                'The record has been deleted.',
+                                'success'
+                            )
+                            window.location.reload(true);
+                        } else {
+                            alert(result);
+                        }
+
+
+                    },
+                    error: function (request) {
+                        alert("Something went wrong.");
+
+                    }
+                });
+
+
+            }
+        })
     }
 </script>

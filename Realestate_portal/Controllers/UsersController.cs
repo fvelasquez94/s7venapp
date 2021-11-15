@@ -1445,6 +1445,64 @@ namespace Realestate_portal.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeactivateBroker(string user, string pass)
+        {
+            try
+            {
+                Sys_Users activeUser = Session["activeUser"] as Sys_Users;
+                Sys_Users sys_Users = db.Sys_Users.Where(c=>c.Email==user && c.Password==pass).FirstOrDefault();
+
+
+                if (activeUser != null)
+                {
+                    if (sys_Users != null)
+                    {
+                        if (activeUser.ID_Company == sys_Users.ID_Company)
+                        {
+                            var agents = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company) select a).ToList();
+                            if (agents.Count > 0)
+                            {
+                                foreach (var item in agents)
+                                {
+                                    item.Active = false;
+                                }
+                                db.SaveChanges();
+                            }
+                            //desactivamos usuario
+                            sys_Users.Active = false;
+                            db.SaveChanges();
+
+                            var result = "Success";
+                            return Json(result);
+                        }
+                        else
+                        {
+                            var result = "error";
+                            return Json(result);
+                        }
+
+                    }
+                    else
+                    {
+                        var result = "error";
+                        return Json(result);
+                    }
+                }
+                else {
+                    var result = "error";
+                    return Json(result);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                var result = ex.Message;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public void SetToBroker(int id) {
             try
             {
