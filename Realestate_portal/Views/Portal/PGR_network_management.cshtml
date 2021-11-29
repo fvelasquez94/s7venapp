@@ -68,7 +68,7 @@
                                         <td>
                                             <div class="flex justify-center items-center">
 
-                                                <a class="flex items-center mr-3" data-toggle="modal" data-target="#modalEditvideo" onclick="editimage('@item.ID_Network','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                                <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#modalEditvideo" onclick="editimage('@item.ID_Network','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
 
                                                 <a class="flex items-center text-theme-21" href="@Url.Action("DeleteNetwork","Portal", new { id=item.ID_Network })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                             </div>
@@ -201,13 +201,11 @@
                                 $("#loader_form").hide();
                                 $("#subbtnenviar").attr("disabled", false);
 
-                                new Noty({
-                                    type: 'success',
-                                    layout: 'topRight',
-                                    text: 'Information updated successfully',
-                                    progressBar: true,
-                                    timeout: 2500
-                                }).show()
+                                Swal.fire(
+                                    'Network Updated ',
+                                    'The record has been updated.',
+                                    'success'
+                                )
                                 setTimeout(function () {
                                     window.location.reload(true);
                                 }, 2000);
@@ -288,13 +286,11 @@ else
                             $("#loader_form").hide();
                             $("#subbtnenviar").attr("disabled", false);
 
-                            new Noty({
-                                type: 'success',
-                                layout: 'topRight',
-                                text: 'Information updated successfully',
-                                progressBar: true,
-                                timeout: 2500
-                            }).show()
+                            Swal.fire(
+                                'Network Updated ',
+                                'The record has been updated.',
+                                'success'
+                            )
                             setTimeout(function () {
                                 window.location.reload(true);
                             }, 2000);

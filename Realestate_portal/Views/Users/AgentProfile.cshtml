@@ -542,9 +542,10 @@ else
                     {
                         foreach (var task in lsttasks)
                         {
-                            <div class="flex items-center">
+                            <div class="flex items-center mb-3">
                                 <div class="border-l-2 border-theme-25 pl-4">
                                     <a href="" class="font-medium">@task.Title</a>
+                                    <p>@task.Description</p>
                                     <div class="text-gray-600">@task.Lastupdate.ToShortDateString()</div>
                                 </div>
 

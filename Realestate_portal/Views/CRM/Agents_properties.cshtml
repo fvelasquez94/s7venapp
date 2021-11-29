@@ -12,120 +12,237 @@
 </div>
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-        Agents
+        Company Overview
     </h2>
 </div>
-<div class="grid grid-cols-12 gap-12 mt-5">
-    <div class="intro-y col-span-12 lg:col-span-12">
-        <!-- BEGIN: Basic Table -->
-        <div class="intro-y box">
-            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
-                <h2 class="font-medium text-base mr-auto">
-                    Best Sellers
-                </h2>
-                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+<!-- BEGIN: Chat Side Menu -->
+<div class="col-span-12 lg:col-span-12 2xl:col-span-12 mt-5">
+    <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+   
+        <div id="reportrange" class="form-control box pl-10" style="width:300px">
+            <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
+            <span></span>
+
+        </div>  <a href="@Url.Action("Agents_properties","CRM")" class="btn btn-light">Clear </a>
+
+    </div>
+    <div class="chat__tabs nav nav-tabs justify-center" role="tablist">
+        <a id="chats-tab" data-toggle="tab" data-target="#chats" href="javascript:;" class="flex-1 py-2 rounded-md text-center active" role="tab" aria-controls="chats" aria-selected="true">Closed Properties</a>
+        <a id="friends-tab" data-toggle="tab" data-target="#friends" href="javascript:;" class="flex-1 py-2 rounded-md text-center" role="tab" aria-controls="friends" aria-selected="false">On Contract Properties</a>
+    </div>
+
+
+    <div class="tab-content">
+        <div id="chats" class="tab-pane active" role="tabpanel" aria-labelledby="chats-tab">
+            <div class="grid grid-cols-12 gap-12 mt-5">
+                <div class="intro-y col-span-12 lg:col-span-12">
+                    <!-- BEGIN: Basic Table -->
+                    <div class="intro-y box">
+
+                        <div class="p-5" id="basic-table">
+                            <div class="preview">
+                                <div class="overflow-x-auto">
+                                    <table class="table table-report sm:mt-2" id="tableresources">
+
+                                        <thead>
+                                            <tr class="text-white" style="background-color:#162343">
+                                                <th>
+
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    NAME
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    EMAIL
+                                                </th>
+
+                                                <th class="whitespace-nowrap">
+                                                    TEL
+                                                </th>
 
 
 
-                </div>
-            </div>
-            <div class="p-5" id="basic-table">
-                <div class="preview">
-                    <div class="overflow-x-auto">
-                        <table class="table table-report sm:mt-2" id="tableresources">
-
-                            <thead>
-                                <tr class="text-white" style="background-color:#162343">
-                                    <th>
-
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        NAME
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        EMAIL
-                                    </th>
-
-                                    <th class="whitespace-nowrap">
-                                        TEL
-                                    </th>
+                                                <th class="whitespace-nowrap">
+                                                    AGENT LICENSE
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    MEMBER SINCE
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    STATUS
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    No. Closed Properties
+                                                </th>
 
 
 
-                                    <th class="whitespace-nowrap">
-                                        AGENT LICENSE
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        MEMBER SINCE
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                        STATUS
-                                    </th>
-                                    <th class="whitespace-nowrap">
-                                       No. Closed Properties
-                                    </th>
-                              
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-
-                                            @if (item.Image == "")
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(f => f.properties.Any(d => d.stage == "CLOSED")))
                                             {
-                                                <div class="tooltip text-lg font-medium truncate" title="@item.Name @item.LastName">   <p data-letters="@item.Name.Substring(0, 1) @item.LastName.Substring(0, 1)"></p></div>
+                                                <tr>
+                                                    <td>
 
+                                                        @if (item.Image == "")
+                                                        {
+                                                            <div class="tooltip text-lg font-medium truncate" title="@item.Name @item.LastName">   <p data-letters="@item.Name.Substring(0, 1) @item.LastName.Substring(0, 1)"></p></div>
+
+                                                        }
+                                                        else if (item.Image.StartsWith("http"))
+                                                        { <div class="w-12 h-12 image-fit zoom-in ">
+                                                                <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@item.Image" title="@item.Name @item.LastName">
+                                                            </div>
+                                                        }
+                                                        else
+                                                        { <div class="w-12 h-12 image-fit zoom-in ">
+                                                                <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@Url.Content(item.Image)" title="@item.Name @item.LastName">
+                                                            </div>
+                                                        }
+
+
+                                                    </td>
+                                                    <td> <a href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})">@item.Name @item.LastName</a>  </td>
+                                                    <td>@item.Email</td>
+
+
+                                                    <td>@item.Main_telephone</td>
+
+
+                                                    <td>@item.My_License</td>
+                                                    <td>@item.Member_since.ToShortDateString()</td>
+                                                    <td>
+                                                        @if (item.Active)
+                                                        {<div class="flex items-center justify-center text-theme-20"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div> }
+                                                        else
+                                                        {<div class="flex items-center justify-center text-theme-21"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>}
+                                                    </td>
+                                                    <td>@item.properties.Where(c => c.stage == "CLOSED").Count()</td>
+
+
+
+                                                </tr>
                                             }
-                                            else if (item.Image.StartsWith("http"))
-                                            { <div class="w-12 h-12 image-fit zoom-in ">
-                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@item.Image" title="@item.Name @item.LastName">
-                                                </div>
-                                            }
-                                            else
-                                            { <div class="w-12 h-12 image-fit zoom-in ">
-                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@Url.Content(item.Image)" title="@item.Name @item.LastName">
-                                                </div>
-                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-
-                                        </td>
-                                        <td> <a href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})">@item.Name @item.LastName</a>  </td>
-                                        <td>@item.Email</td>
-                                    
-                                   
-                                        <td>@item.Main_telephone</td>
-
-
-                                        <td>@item.My_License</td>
-                                        <td>@item.Member_since.ToShortDateString()</td>
-                                        <td>
-                                            @if (item.Active)
-                                            {<div class="flex items-center justify-center text-theme-20"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div> }
-                                            else
-                                            {<div class="flex items-center justify-center text-theme-21"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>}
-                                        </td>
-                                    <td>@item.properties.Where(c=>c.stage=="CLOSED").Count()</td>
-                                  
-                        
-
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="friends" class="tab-pane" role="tabpanel" aria-labelledby="friends-tab">
+            <div class="grid grid-cols-12 gap-12 mt-5">
+                <div class="intro-y col-span-12 lg:col-span-12">
+                    <!-- BEGIN: Basic Table -->
+                    <div class="intro-y box">
 
+                        <div class="p-5" id="basic-table2">
+                            <div class="preview">
+                                <div class="overflow-x-auto">
+                                    <table class="table table-report sm:mt-2" id="tableresources2">
+
+                                        <thead>
+                                            <tr class="text-white" style="background-color:#162343">
+                                                <th>
+
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    NAME
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    EMAIL
+                                                </th>
+
+                                                <th class="whitespace-nowrap">
+                                                    TEL
+                                                </th>
+
+
+
+                                                <th class="whitespace-nowrap">
+                                                    AGENT LICENSE
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    MEMBER SINCE
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    STATUS
+                                                </th>
+                                                <th class="whitespace-nowrap">
+                                                    No. On Contract Properties
+                                                </th>
+
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(f => f.properties.Any(d => d.stage == "ON CONTRACT")))
+                                            {
+                                                <tr>
+                                                    <td>
+
+                                                        @if (item.Image == "")
+                                                        {
+                                                            <div class="tooltip text-lg font-medium truncate" title="@item.Name @item.LastName">   <p data-letters="@item.Name.Substring(0, 1) @item.LastName.Substring(0, 1)"></p></div>
+
+                                                        }
+                                                        else if (item.Image.StartsWith("http"))
+                                                        { <div class="w-12 h-12 image-fit zoom-in ">
+                                                                <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@item.Image" title="@item.Name @item.LastName">
+                                                            </div>
+                                                        }
+                                                        else
+                                                        { <div class="w-12 h-12 image-fit zoom-in ">
+                                                                <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@Url.Content(item.Image)" title="@item.Name @item.LastName">
+                                                            </div>
+                                                        }
+
+
+                                                    </td>
+                                                    <td> <a href="@Url.Action("AgentProfile","Users", new { id=item.ID_User})">@item.Name @item.LastName</a>  </td>
+                                                    <td>@item.Email</td>
+
+
+                                                    <td>@item.Main_telephone</td>
+
+
+                                                    <td>@item.My_License</td>
+                                                    <td>@item.Member_since.ToShortDateString()</td>
+                                                    <td>
+                                                        @if (item.Active)
+                                                        {<div class="flex items-center justify-center text-theme-20"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div> }
+                                                        else
+                                                        {<div class="flex items-center justify-center text-theme-21"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>}
+                                                    </td>
+                                                    <td>@item.properties.Where(c => c.stage == "ON CONTRACT").Count()</td>
+
+
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<!-- END: Chat Side Menu -->
+
+
 <!-- END: Basic Table -->
 <!-- BEGIN: Bordered Table -->
-
 <!-- End table Container -->
 <button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
 
@@ -170,7 +287,24 @@
                 ]
             });
 
-         
+
+            table = $("#tableresources2").DataTable({
+                "order": [[7, "desc"]],
+                dom: 'lBfrtip',
+                "iDisplayLength": 25,
+                buttons: [
+                    'colvis',
+                    {
+                        text: 'Show All Columns <i class="fa-lg fas fa-check-square"></i>',
+                        className: 'show-all-columns',
+                        action: function (e, dt) {
+                            dt.columns([0, 1, 2, 3, 4, 5]).visible(true, false); // show selected columns, false is to disable redraw calcs for speed
+
+                        }
+                    }
+                ]
+            });
+
 
             $('#selecttable').on('change', function () {
                 if (this.value == "ALL") {
@@ -188,9 +322,96 @@
             //$(".accordion-collapse").css("display", "none");
             //$(".accordion-button").attr("aria-expanded", false);
             //$(".accordion-button").addClass("collapsed");
+                     var flag = 0;
+       //DATETIMEPICKER
+ var t1 = "@ViewBag.filtrofechastart";
+        var t2 = "@ViewBag.filtrofechaend";
 
+        var start = moment(t1, "MM-DD-YYYY");
+        var end = moment(t2, "MM-DD-YYYY");
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            if (flag == 0) {
+                flag = 1;
+            } else {
+                filterSObydate();
+            }
+
+
+        }
+
+        $('#reportrange').daterangepicker({
+            linkedCalendars: false,
+            startDate: start,
+            endDate: end,
+            autoApply: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
 
         });
+
+
+
+    
+
+            function filterSObydate() {
+            var st = new Date($('#reportrange').data('daterangepicker').startDate);
+            var ed = new Date($('#reportrange').data('daterangepicker').endDate);
+
+            //st = st.toLocaleDateString();
+            //ed = ed.toLocaleDateString();
+            ////colocamos la url de la demo
+
+
+
+            var today = st;
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            st = mm + '/' + dd + '/' + yyyy;
+
+            var today2 = ed;
+            var dd2 = today2.getDate();
+            var mm2 = today2.getMonth() + 1; //January is 0!
+
+            var yyyy2 = today2.getFullYear();
+            if (dd2 < 10) {
+                dd2 = '0' + dd2;
+            }
+            if (mm2 < 10) {
+                mm2 = '0' + mm2;
+            }
+            ed = mm2 + '/' + dd2 + '/' + yyyy2;
+
+            var agent = $("#filteragent").val();
+
+            var url = '@Url.Action("Agents_properties", "CRM", new { fstartd = "dad", fendd="tfe"})';
+            url = url.replace('dad', st);
+            var newurl = url;
+            newurl = newurl.replace('tfe', ed);
+            newurl = newurl.replace('sss', agent);
+
+            newurl = newurl.replace(/&amp;/g, "&");
+
+            window.location.href = newurl;
+        };
     </script>
 }
 

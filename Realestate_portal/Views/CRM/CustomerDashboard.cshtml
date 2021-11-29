@@ -31,7 +31,8 @@
             Lead's Dashboard
         </h2>
 
-        <a class="btn btn-primary" href="@Url.Action("Leads", "CRM")">Back to Leads</a>
+        <a class="btn btn-primary" onclick="history.back(-1)">Back</a>
+        <a class="btn btn-primary ml-5" href="@Url.Action("Leads", "CRM")">Back to Leads</a>
     </div>
     <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
         <!-- BEGIN: Post Content -->
@@ -379,7 +380,7 @@ else
                     <div class="intro-y col-span-12 md:col-span-6 xl:col-span-4 box">
                         <div class="flex items-center border-b border-gray-200 dark:border-dark-5 px-5 py-4">
                             <div class="ml-3 mr-auto">
-                                <a href="" class="font-medium">@item.Address</a>
+                                <a href="@Url.Action("Edit","Properties", new { id=item.ID_Process})" class="font-medium">@item.Address</a>
                             </div>
                             <div class="dropdown ml-3">
                                 <a href="javascript:;" class="dropdown-toggle w-5 h-5 text-gray-600 dark:text-gray-300" aria-expanded="false"> <i data-feather="more-vertical" class="w-4 h-4"></i> </a>
@@ -909,7 +910,13 @@ else
                                     <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
                                         @if (item.Url_image == "")
                     {
-                        <div class="tooltip text-lg  image-fit zoom-in font-medium truncate " title="@item.Created_By">   <p data-letters="@item.Created_By.Substring(0, 1)"></p></div>
+                                        <div class="tooltip text-lg  image-fit zoom-in font-medium truncate " title="@item.Created_By">
+                                            @if (item.Created_By != null)
+    {
+                                        <p data-letters="@item.Created_By.Substring(0, 1)"></p>
+}
+
+                                        </div>
 }
 else if (item.Url_image.StartsWith("http"))
 {

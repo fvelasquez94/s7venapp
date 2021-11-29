@@ -485,9 +485,9 @@ namespace Realestate_portal.Controllers
                             var leadsassigned = (from c in db.Tb_Customers_Users where (c.Id_User == agent) select c.Id_Customer).Distinct().ToArray();
                             lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer) ) select f).ToList();
 
-                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).ToList();
+                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).ToList();
 
-                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).Count();
                             totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && f.ID_User== agent) select f).Count();
                             totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
 
@@ -551,9 +551,9 @@ namespace Realestate_portal.Controllers
                         {
                             lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && f.Lead) select f).ToList();
 
-                        lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).ToList();
+                        lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).ToList();
 
-                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                        totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).Count();
                         totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company) select f).Count();
                         totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
 
@@ -623,9 +623,9 @@ namespace Realestate_portal.Controllers
                             var leadsassigned = (from c in db.Tb_Customers_Users where (c.Id_User == agent) select c.Id_Customer).Distinct().ToArray();
                             lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && leadsassigned.Contains(f.ID_Customer)) select f).ToList();
 
-                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).ToList();
+                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).ToList();
 
-                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).Count();
                             totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company && f.ID_User == agent) select f).Count();
                             totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
 
@@ -689,9 +689,9 @@ namespace Realestate_portal.Controllers
                         {
                             lstleads = (from f in db.Tb_Customers where (f.ID_Company == activeuser.ID_Company && f.Lead) select f).ToList();
 
-                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).ToList();
+                            lstagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).ToList();
 
-                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company && f.Roles.Contains("Agent")) select f).Count();
+                            totalagents = (from f in db.Sys_Users where (f.ID_Company == activeuser.ID_Company) select f).Count();
                             totaltasks = (from f in db.Tb_Tasks where (f.ID_Company == activeuser.ID_Company) select f).Count();
                             totalteams = (from f in db.Tb_WorkTeams where (f.ID_Company == activeuser.ID_Company) select f).Count();
 
@@ -755,28 +755,28 @@ namespace Realestate_portal.Controllers
                     }
                 }
 
-                List<AgentsProperties_ViewDashboard> lstAgentes = new List<AgentsProperties_ViewDashboard>();
+                //List<AgentsProperties_ViewDashboard> lstAgentes = new List<AgentsProperties_ViewDashboard>();
 
-                lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_ViewDashboard
-                {
-                    ID_User = c.ID_User,
-                    Active = c.Active,
-                    Brokerage_name = c.Brokerage_name,
-                    Email = c.Email,
-                    ID_Company = c.ID_Company,
-                    Image = c.Image,
-                    LastName = c.LastName,
-                    Main_telephone = c.Main_telephone,
-                    Member_since = c.Member_since,
-                    My_License = c.My_License,
-                    Name = c.Name,
-                    properties = (from det in db.Tb_Process
-                                  where (det.ID_User == c.ID_User)
-                                  select det).Count()
+                //lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_ViewDashboard
+                //{
+                //    ID_User = c.ID_User,
+                //    Active = c.Active,
+                //    Brokerage_name = c.Brokerage_name,
+                //    Email = c.Email,
+                //    ID_Company = c.ID_Company,
+                //    Image = c.Image,
+                //    LastName = c.LastName,
+                //    Main_telephone = c.Main_telephone,
+                //    Member_since = c.Member_since,
+                //    My_License = c.My_License,
+                //    Name = c.Name,
+                //    properties = (from det in db.Tb_Process
+                //                  where (det.ID_User == c.ID_User)
+                //                  select det).Count()
 
-                }).OrderByDescending(t => t.properties).Take(3).ToList();
+                //}).OrderByDescending(t => t.properties).Take(3).ToList();
 
-                ViewBag.bestsellers = lstAgentes;
+                //ViewBag.bestsellers = lstAgentes;
 
                 ViewBag.leads = lstleads;
                 ViewBag.totalagents = totalagents;
@@ -1732,7 +1732,7 @@ namespace Realestate_portal.Controllers
                                      select new LeadsMain
                                      {
                                          ID_lead = a.ID_Customer,
-                                         Name = a.LastName + " " + a.Name,
+                                         Name = a.Name + " " + a.LastName,
                                          Marital_status = a.Marital_status,
                                          Type = a.Type,
                                          Email = a.Email,
@@ -1767,7 +1767,7 @@ namespace Realestate_portal.Controllers
                                      select new LeadsMain
                                      {
                                          ID_lead = a.ID_Customer,
-                                         Name = a.LastName + " " + a.Name,
+                                         Name = a.Name + " " + a.LastName,
                                          Marital_status = a.Marital_status,
                                          Type = a.Type,
                                          Email = a.Email,
@@ -1802,7 +1802,7 @@ namespace Realestate_portal.Controllers
                                  select new LeadsMain
                                  {
                                      ID_lead = a.ID_Customer,
-                                     Name = a.LastName + " " + a.Name,
+                                     Name = a.Name + " " + a.LastName,
                                      Marital_status = a.Marital_status,
                                      Type = a.Type,
                                      Email = a.Email,
@@ -1839,7 +1839,7 @@ namespace Realestate_portal.Controllers
                              select new LeadsMain
                              {
                                  ID_lead = a.ID_Customer,
-                                 Name = a.LastName + " " + a.Name,
+                                 Name = a.Name + " " + a.LastName,
                                  Marital_status = a.Marital_status,
                                  Type = a.Type,
                                  Email = a.Email,
@@ -1876,7 +1876,7 @@ namespace Realestate_portal.Controllers
                              select new LeadsMain
                              {
                                  ID_lead = a.ID_Customer,
-                                 Name = a.LastName + " " + a.Name,
+                                 Name = a.Name + " " + a.LastName,
                                  Marital_status = a.Marital_status,
                                  Type = a.Type,
                                  Email = a.Email,
@@ -2609,7 +2609,7 @@ namespace Realestate_portal.Controllers
 
         }
 
-        public ActionResult Agents_properties(int broker = 0, string token = "")
+        public ActionResult Agents_properties(string fstartd, string fendd, int broker = 0, string token = "")
         {
             if (generalClass.checkSession())
             {
@@ -2622,7 +2622,21 @@ namespace Realestate_portal.Controllers
                 ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 ViewBag.selbroker = broker;
+                //FILTROS VARIABLES
+                DateTime filtrostartdate;
+                DateTime filtroenddate;
+                ////filtros de fecha 
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, 1, 1);
+                var lastDayOfMonth = new DateTime(DateTime.Today.Year, 12, 31);
 
+                if (fstartd == null || fstartd == "") { filtrostartdate = firstDayOfMonth; } else { filtrostartdate = Convert.ToDateTime(fstartd); }
+                if (fendd == null || fendd == "") { filtroenddate = lastDayOfMonth; } else { filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59); }
+
+                var startDate = filtrostartdate;
+                var endDate = filtroenddate;
+
+                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
 
                 List<AgentsProperties_View> lstAgentes = new List<AgentsProperties_View>();
 
@@ -2632,44 +2646,32 @@ namespace Realestate_portal.Controllers
                     ViewBag.rol = "Agent";
                     ViewBag.teamleader = activeuser.Team_Leader;
 
-                    if (activeuser.Team_Leader == true)
+                    // se utiliza id = 4 para registros no asignados
+                    lstAgentes = db.Sys_Users.Where(t => t.ID_User != 4 && t.Roles.Contains("Agent") && t.ID_Company == activeuser.ID_Company).Select(c => new AgentsProperties_View
                     {
+                        ID_User = c.ID_User,
+                        Active = c.Active,
+                        Brokerage_name = c.Brokerage_name,
+                        Email = c.Email,
+                        ID_Company = c.ID_Company,
+                        Image = c.Image,
+                        LastName = c.LastName,
+                        Main_telephone = c.Main_telephone,
+                        Member_since = c.Member_since,
+                        My_License = c.My_License,
+                        Name = c.Name,
+                        Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
+                        properties = (from det in db.Tb_Process
+                                      where (det.ID_User == c.ID_User && det.Creation_date >= startDate && det.Creation_date <= endDate)
 
-                        var assigned = (from f in db.Tb_Customers_Users where (f.Id_User == activeuser.ID_User && f.ID_team != 0) select f.ID_team).ToArray();
+                                      select new PropertiesAgents
+                                      {
+                                          id_process = det.ID_Process,
+                                          address = det.Address,
+                                          stage = det.Stage
+                                      }).ToList()
 
-                        if (assigned.Length > 0)
-                        {
-
-                            var equipo = (from e in db.Tb_Customers_Users where (assigned.Contains(e.ID_team)) select e.Id_User).ToArray();
-
-                            lstAgentes = db.Sys_Users.Where(t => equipo.Contains(t.ID_User)).Select(c => new AgentsProperties_View
-                            {
-                                ID_User = c.ID_User,
-                                Active = c.Active,
-                                Brokerage_name = c.Brokerage_name,
-                                Email = c.Email,
-                                ID_Company = c.ID_Company,
-                                Image = c.Image,
-                                LastName = c.LastName,
-                                Main_telephone = c.Main_telephone,
-                                Member_since = c.Member_since,
-                                My_License = c.My_License,
-                                Name = c.Name,
-                                Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
-                                properties = (from det in db.Tb_Process
-                                         where (det.ID_User == c.ID_User)
-
-                                         select new PropertiesAgents
-                                         {
-                                             id_process = det.ID_Process,
-                                             address = det.Address,
-                                             stage=det.Stage
-                                         }).ToList()
-
-                            }).OrderBy(t => t.LastName).ToList();
-                        }
-
-                    }
+                    }).OrderBy(t => t.LastName).ToList();
                 }
                 else
                 {
@@ -2692,7 +2694,7 @@ namespace Realestate_portal.Controllers
                      Name = c.Name,
                      Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
                      properties = (from det in db.Tb_Process
-                                   where (det.ID_User == c.ID_User)
+                                   where (det.ID_User == c.ID_User && det.Creation_date >= startDate && det.Creation_date <= endDate)
 
                                    select new PropertiesAgents
                                    {
@@ -2724,7 +2726,7 @@ namespace Realestate_portal.Controllers
                             Name = c.Name,
                             Leads = (from det in db.Tb_Customers_Users join ag in db.Tb_Customers on det.Id_Customer equals ag.ID_Customer where (det.Id_User == c.ID_User) select new LeadsAgents { ID_lead = det.Id_Customer, Name = ag.Name + " " + ag.LastName }).ToList(),
                             properties = (from det in db.Tb_Process
-                                          where (det.ID_User == c.ID_User)
+                                          where (det.ID_User == c.ID_User && det.Creation_date >= startDate && det.Creation_date <= endDate)
 
                                           select new PropertiesAgents
                                           {
@@ -2776,9 +2778,9 @@ namespace Realestate_portal.Controllers
                 ViewBag.listings = properties;
                 List<Tb_LeadDocs> otherDocs = (from doc in db.Tb_LeadDocs where (doc.Id_Customer == id) select doc).ToList();
                 ViewBag.otherDocs = otherDocs;
-                List<Tb_Source> lstSource = (from o in db.Tb_Source select o).ToList();
+                List<Tb_Source> lstSource = (from o in db.Tb_Source where (o.Id_Company==activeuser.ID_Company) select o).ToList();
                 ViewBag.lstsource = lstSource;
-                List<Tb_Status> lststatus = (from t in db.Tb_Status select t).ToList();
+                List<Tb_Status> lststatus = (from t in db.Tb_Status where (t.Id_Company == activeuser.ID_Company) select t).ToList();
                 ViewBag.lststatus = lststatus;
                 List<Tb_Docpackages> lstdocpack = (from a in db.Tb_Docpackages.Where(a => a.ID_Customer == tb_Customers.ID_Customer) select a).ToList();
                 ViewBag.docpackages = lstdocpack;

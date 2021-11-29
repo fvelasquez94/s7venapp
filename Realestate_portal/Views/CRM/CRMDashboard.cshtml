@@ -5,7 +5,7 @@
     List<Realestate_portal.Models.Tb_Customers> lstleads = (List<Realestate_portal.Models.Tb_Customers>)ViewBag.leads;
     Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
     List<Realestate_portal.Models.Sys_Users> lstagents = (List<Realestate_portal.Models.Sys_Users>)ViewBag.agents;
-    List<Realestate_portal.Models.ViewModels.AgentsProperties_ViewDashboard> lstbest = (List<Realestate_portal.Models.ViewModels.AgentsProperties_ViewDashboard>)ViewBag.bestsellers;
+    //List<Realestate_portal.Models.ViewModels.AgentsProperties_ViewDashboard> lstbest = (List<Realestate_portal.Models.ViewModels.AgentsProperties_ViewDashboard>)ViewBag.bestsellers;
 }  
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 2xl:col-span-9">
@@ -34,6 +34,7 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-3 xl:col-span-2 intro-y">
+                          <a href="@Url.Action("Leads","CRM")">
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
@@ -44,6 +45,7 @@
                                 <div class="text-base text-gray-600 mt-1">Leads</div>
                             </div>
                         </div>
+                        </a>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-2 intro-y">
                         @using (Html.BeginForm("PropertiesFiltered", "CRM", FormMethod.Post,
@@ -334,50 +336,7 @@ else
                 <!-- END: Important Notes -->
                 <!-- BEGIN: Schedules -->
                 <!-- END: Schedules -->
-                <!-- BEGIN: Weekly Best Sellers -->
-                <div class="col-span-12 xl:col-span-12 mt-6">
-                    <div class="intro-y flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">
-                            Best Sellers
-                        </h2>
-                    </div>
-                    <div class="mt-5">
-                        @foreach (var item in lstbest) {
-                        <div class="intro-y">
-                            <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-                                <div class="w-12 h-12 image-fit rounded-md overflow-hidden">
-                                    
-                                            @if (item.Image == "")
-                                            {
-                                                <div class="tooltip text-lg font-medium truncate" title="@item.Name @item.LastName">   <p data-letters="@item.Name.Substring(0, 1) @item.LastName.Substring(0, 1)"></p></div>
 
-                                            }
-                                            else if (item.Image.StartsWith("http"))
-                                            { <div class="w-12 h-12 image-fit zoom-in ">
-                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@item.Image" title="@item.Name @item.LastName">
-                                                </div>
-                                            }
-                                            else
-                                            { <div class="w-12 h-12 image-fit zoom-in ">
-                                                    <img alt="@item.Name @item.LastName" class="tooltip rounded-full" src="@Url.Content(item.Image)" title="@item.Name @item.LastName">
-                                                </div>
-                                            }
-
-                               
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">@item.Name @item.LastName</div>
-                         
-                                </div>
-                                <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@item.properties Closed</div>
-                            </div>
-                        </div>
-                        }
-
-   
-                        <a href="@Url.Action("Agents_properties","CRM")" class="intro-y w-full block text-center rounded-md py-4 border border-dotted border-theme-32 dark:border-dark-5 text-theme-33 dark:text-gray-600">View More</a>
-                    </div>
-                </div>
                 <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3 2xl:mt-8">
                     <div class="intro-x flex items-center h-10">
                         <h2 class="text-lg font-medium truncate mr-5">
@@ -386,9 +345,9 @@ else
                     </div>
                     <div class="mt-5">
                         @if (ViewBag.rol == "Agent")
-            {
-                if (user.Team_Leader)
-                {
+    {
+        if (user.Team_Leader)
+        {
                     <div class="intro-x">
                         <a href="@Url.Action("Agents", "CRM")">
                             <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
@@ -404,27 +363,27 @@ else
                             </div>
                         </a>
                     </div>
-    }
+}
 
 }
                         @if (ViewBag.rol != "Agent")
-            {
+    {
 
-                <div class="intro-x">
-                    <a href="@Url.Action("Agents", "CRM")">
-                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
+                    <div class="intro-x">
+                        <a href="@Url.Action("Agents", "CRM")">
+                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                    <img alt="S7VEN" src="~/Content/dist/images/realtor.png">
+                                </div>
+                                <div class="ml-4 mr-auto">
+                                    <div class="font-medium">Agents</div>
+
+                                </div>
+                                <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
+
                             </div>
-                            <div class="ml-4 mr-auto">
-                                <div class="font-medium">Agents</div>
-
-                            </div>
-                            <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalagents</div>
-
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
 
 
 }
@@ -444,22 +403,22 @@ else
                             </a>
                         </div>
                         @if (ViewBag.rol != "Agent")
-            {
-                <div class="intro-x">
-                    <a href="@Url.Action("Teams", "CRM")">
-                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                <img alt="S7VEN" src="~/Content/dist/images/goal.png">
-                            </div>
-                            <div class="ml-4 mr-auto">
-                                <div class="font-medium">Teams</div>
+    {
+                    <div class="intro-x">
+                        <a href="@Url.Action("Teams", "CRM")">
+                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                    <img alt="S7VEN" src="~/Content/dist/images/goal.png">
+                                </div>
+                                <div class="ml-4 mr-auto">
+                                    <div class="font-medium">Teams</div>
+
+                                </div>
+                                <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalteams</div>
 
                             </div>
-                            <div class="py-1 px-2 rounded-full text-xs bg-theme-20 text-white cursor-pointer font-medium">@ViewBag.totalteams</div>
-
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
 }
                         <div class="intro-x">
                             <a href="@Url.Action("Tasks","CRM")">
@@ -477,6 +436,8 @@ else
                                 </div>
                             </a>
                         </div>
+                        <a href="@Url.Action("Agents_properties","CRM")" class="intro-y w-full block text-center rounded-md py-4 btn  btn-primary">Company Overview</a>
+
                     </div>
                 </div>
                 <!-- END: Weekly Best Sellers -->

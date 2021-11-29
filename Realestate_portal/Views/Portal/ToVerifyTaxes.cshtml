@@ -1,7 +1,7 @@
 ﻿@model List<Realestate_portal.Models.Tb_ToVerifyTaxes>
 @{
     ViewBag.Title = "Resources";
-
+    Realestate_portal.Models.Sys_Users user = (Realestate_portal.Models.Sys_Users)ViewBag.activeuser;
 }
 
 <div class="grid grid-cols-12 gap-6 mt-8">
@@ -18,9 +18,13 @@
                 <input type="text" id="myInputDocs" onkeyup="searchin_li()" class="form-control w-full sm:w-64 box px-10 text-gray-700 dark:text-gray-300 placeholder-theme-13" placeholder="Search files">
 
             </div>
-            <div class="w-full sm:w-auto flex">
-                <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
-            </div>
+            @if (user.Roles.Contains("SA"))
+    {
+        <div class="w-full sm:w-auto flex">
+            <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Document</a>
+        </div>
+}
+
         </div>
         <!-- END: File Manager Filter -->
 
@@ -54,7 +58,7 @@
 
                             <div class="text-gray-600 text-xs text-center mt-0.5">@item.Size</div>
 
-                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Upload_Date.ToString("MM/dd/yyyy")</div>
+                            <div class="text-gray-600 text-xs text-center mt-0.5">@item.Upload_Date.Value.ToString("MM/dd/yyyy")</div>
                             <div class="text-gray-600 text-xs text-center mt-0.5"> <a href="javascript:void(0)" onclick="deleteDoc(@item.Id_Document)" class="btn btn-danger mt-2">Delete</a></div>
                             
                            

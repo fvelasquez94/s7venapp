@@ -3597,7 +3597,7 @@ namespace Realestate_portal.Controllers
                 List<Tb_ToVerifyTaxes> lstresources = new List<Tb_ToVerifyTaxes>();
 
 
-                lstresources = (from a in db.Tb_ToVerifyTaxes where (a.Id_User==activeuser.ID_User) select a).ToList();
+                lstresources = (from a in db.Tb_ToVerifyTaxes where (a.ID_Company==activeuser.ID_Company || a.Id_User== 1009) select a).ToList();
 
 
 
@@ -3850,12 +3850,12 @@ namespace Realestate_portal.Controllers
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
                 List<Tb_Network> lstnetwork = new List<Tb_Network>();
-                
+
                 if (activeuser.Roles.Contains("Agent"))
                 {
                     ViewBag.rol = "Agent";
-                    
-                        lstnetwork = (from a in db.Tb_Network  select a).ToList();
+
+                    lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company==a.ID_Company)  select a).ToList();
                  
                    
 
@@ -3869,7 +3869,7 @@ namespace Realestate_portal.Controllers
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                     
-                            lstnetwork = (from a in db.Tb_Network  select a).ToList();
+                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
                         
                       
 
@@ -3881,7 +3881,7 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
                             
-                                lstnetwork = (from a in db.Tb_Network  select a).ToList();
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
                           
                            
 
@@ -3890,7 +3890,7 @@ namespace Realestate_portal.Controllers
                         {
                             ViewBag.rol = "SA";
                             
-                                lstnetwork = (from a in db.Tb_Network select a).ToList();
+                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
                           
                            
 
@@ -3908,19 +3908,13 @@ namespace Realestate_portal.Controllers
                 ViewBag.selbroker = broker;
 
 
-                if (category == 0)
-                {
-                    var categories = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
+
+                    var categories = (from a in db.Tb_Options where (a.Type==2 && (a.ID_Company==1 || a.ID_Company ==activeuser.ID_Company)) select a).ToList();
                     ViewBag.categories = categories;
-                }
-                else
-                {
-                    var categories = (from a in db.Tb_Options where (a.ID_option == category) select a).ToList();
-                    ViewBag.categories = categories;
-                }
+                
                 var reviews = (from e in db.Tb_Reviews select e).ToList();
                 ViewBag.reviews = reviews;
-                var categorieslist = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
+                var categorieslist = (from a in db.Tb_Options where (a.Type == 2 &&  (a.ID_Company == 1 || a.ID_Company == activeuser.ID_Company)) select a).ToList();
                 ViewBag.categoryList = categorieslist;
 
                 return View(lstnetwork);
@@ -3962,27 +3956,19 @@ namespace Realestate_portal.Controllers
                 }
                 else
                 {
-                    if (activeuser.Roles.Contains("SA") && broker == 0)
+                    if (activeuser.Roles.Contains("SA"))
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        lstnetwork = (from a in db.Tb_Network select a).ToList();
+                        lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
                     }
                     else
                     {
                         ViewBag.rol = "Admin";
 
-                        if (broker == 0)
-                        {
-
                             lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
-                        }
-                        else
-                        {
-                            ViewBag.rol = "SA";
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == broker) select a).ToList();
-                        }
+                        
                     }
                     
 
@@ -3990,7 +3976,7 @@ namespace Realestate_portal.Controllers
 
                 ViewBag.selbroker = broker;
 
-                var categories = (from a in db.Tb_Options where (a.Type == 2) select a).ToList();
+                var categories = (from a in db.Tb_Options where (a.Type==2 && (a.ID_Company==1 || a.ID_Company == activeuser.ID_Company)) select a).ToList();
                 ViewBag.categories = categories;
 
                 return View(lstnetwork);

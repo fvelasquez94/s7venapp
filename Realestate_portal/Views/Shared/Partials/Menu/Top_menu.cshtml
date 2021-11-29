@@ -48,27 +48,10 @@
                 @if (user.Roles.Contains("SA") || user.Roles.Contains("Admin") || user.Team_Leader)
             {
                 <li>
-                    <a href="javascript:void(0)" class="top-menu">
+                    <a href="@Url.Action("Agents", "CRM")" class="top-menu">
                         <div class="top-menu__icon"> <i data-feather="user"></i> </div>
-                        <div class="top-menu__title">Agents <i data-feather="chevron-down" class="top-menu__sub-icon"></i></div>
+                        <div class="top-menu__title">Agents </div>
                     </a>
-
-
-                    <ul class="">
-                        <li>
-                            <a href="@Url.Action("Agents", "CRM")" class="top-menu">
-                                <div class="top-menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="top-menu__title">List</div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="@Url.Action("Agents_properties", "CRM")" class="top-menu">
-                                <div class="top-menu__icon"> <i data-feather="award"></i> </div>
-                                <div class="top-menu__title">Best Sellers</div>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
         }
 
@@ -301,7 +284,7 @@
         <li>
             <a href="https://www.worknetify.com/" target="_blank" class="top-menu">
                 <div class="top-menu__icon"> <i data-feather="layers"></i> </div>
-                <div class="top-menu__title">Your Work Space </div>
+                <div class="top-menu__title">Bookings </div>
             </a>
         </li>
   

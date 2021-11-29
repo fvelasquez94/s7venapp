@@ -18,8 +18,9 @@ namespace Realestate_portal.Models
         public string Doc_Name { get; set; }
         public string Url { get; set; }
         public string Size { get; set; }
-        public System.DateTime Upload_Date { get; set; }
-        public int Id_User { get; set; }
+        public Nullable<System.DateTime> Upload_Date { get; set; }
+        public Nullable<int> Id_User { get; set; }
         public string Extension { get; set; }
+        public Nullable<int> ID_Company { get; set; }
     }
 }

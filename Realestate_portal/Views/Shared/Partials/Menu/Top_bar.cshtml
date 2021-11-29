@@ -190,6 +190,7 @@ else if (ViewBag.rol == "SA")
                     @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
     {
                 <div class="p-2">
+                                            <a href="@Url.Action("BrokerProfile","Users", new { id=user.ID_Company})" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Broker Information </a>
 
                     <div id="faq-accordion-1" class="accordion">
                         <div class="accordion-item">
@@ -199,8 +200,10 @@ else if (ViewBag.rol == "SA")
 
                             </div>
                             <div id="faq-accordion-collapse-4" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-4" data-bs-parent="#faq-accordion-1">
-                                <a href="@Url.Action("Index","Tb_Status")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Stages </a>
+                                <a href="@Url.Action("Index","Tb_Options")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Categories </a>
                                 <a href="@Url.Action("Index","Tb_Source")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Sources </a>
+                                <a href="@Url.Action("Index","Tb_Status")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Stages </a>
+
                             </div>
                         </div>
                     </div>

@@ -450,12 +450,13 @@
             <PropertyRef Name="Id_Document" />
           </Key>
           <Property Name="Id_Document" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Doc_Name" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Url" Type="varchar(max)" Nullable="false" />
-          <Property Name="Size" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Upload_Date" Type="datetime" Nullable="false" />
-          <Property Name="Id_User" Type="int" Nullable="false" />
-          <Property Name="Extension" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Doc_Name" Type="varchar" MaxLength="250" />
+          <Property Name="Url" Type="varchar(max)" />
+          <Property Name="Size" Type="varchar" MaxLength="50" />
+          <Property Name="Upload_Date" Type="datetime" />
+          <Property Name="Id_User" Type="int" />
+          <Property Name="Extension" Type="varchar" MaxLength="15" />
+          <Property Name="ID_Company" Type="int" />
         </EntityType>
         <EntityType Name="Tb_Videos">
           <Key>
@@ -1933,12 +1934,13 @@
             <PropertyRef Name="Id_Document" />
           </Key>
           <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Doc_Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Size" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Upload_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Id_User" Type="Int32" Nullable="false" />
-          <Property Name="Extension" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Doc_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+          <Property Name="Id_User" Type="Int32" />
+          <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Company" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2469,6 +2471,7 @@
           <EntitySetMapping Name="Tb_ToVerifyTaxes">
             <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_ToVerifyTaxes">
               <MappingFragment StoreEntitySet="Tb_ToVerifyTaxes">
+                <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
                 <ScalarProperty Name="Id_User" ColumnName="Id_User" />
                 <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
