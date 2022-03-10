@@ -1,0 +1,36 @@
+﻿
+@{ ViewBag.Title = "Market";
+
+}
+
+<style>
+    .checkout-btn {       
+        background: #162343;
+        width: 200px;
+        height:60px !important;
+        margin: auto;
+        padding: 10px;
+        padding-left: 10px;
+        font-size: 25px;
+        font-weight:400;
+        border-radius: 2em;
+        color: white;
+    }
+</style>
+<br />
+<br />
+<div class="grid grid-cols-12">
+    <div class="col-span-12">
+        <div class="col-md-12 text-center">
+            <h2 style="font-weight: bold; color: black ">Welcome to your market, check out the signs and brands we have for You </h2>
+            <br />
+            <a href="@Url.Action("Brands", "Market")" style="color:white" class="checkout-btn btn rounded shadow"> Enter Market </a>
+            <br />
+            <br />
+            <a href="@Url.Action("Brands", "Market")">
+                <img class="img-fluid image" src="~/Content/images/marketing/module_marketing.PNG" alt="Click to see available brands" />
+            </a>
+        </div>
+    </div>
+
+</div>

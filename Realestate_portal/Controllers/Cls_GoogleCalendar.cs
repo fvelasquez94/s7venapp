@@ -2,6 +2,7 @@
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
+using Realestate_portal.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +13,8 @@ using System.Web;
 namespace Realestate_portal.Controllers
 {
     public class Cls_GoogleCalendar
-    {
+    {       
+
         public void Test_googleEvents() {
             string jsonFile = HttpContext.Current.Server.MapPath("~/Content/api-calendar-app-s7ven-745b1ec4f3eb.json");
             string calendarId = @"c_qia8qjvjo4g3b5ab7hcgv10f9c@group.calendar.google.com";

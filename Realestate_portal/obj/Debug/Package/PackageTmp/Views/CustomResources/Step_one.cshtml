@@ -1,0 +1,92 @@
+﻿@model List<Realestate_portal.Models.Tb_TemplatesCatalogo>
+@{
+    ViewBag.Title = "Step_onoe";
+    Layout = "~/Views/Shared/_Layout_store.cshtml";
+}
+
+
+<!-- Start Bradcaump area -->
+<div class="ht__bradcaump__area bg-image--6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bradcaump__inner text-center">
+                    <h2 class="bradcaump-title">My Templates</h2>
+                    <nav class="bradcaump-content">
+                        <a class="breadcrumb_item" href="#">Home</a>
+                        <span class="brd-separetor">/</span>
+                        <span class="breadcrumb_item active">Templates</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Bradcaump area -->
+<!-- Start Shop Page -->
+<div class="page-shop-sidebar left--sidebar bg--white section-padding--lg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12 order-1 order-lg-2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shop__list__wrapper d-flex flex-wrap flex-md-nowrap justify-content-between">
+                            <a href="@Url.Action("crearPlantilla","CustomResources")" class="btn btn-gradient-02">New template</a>
+                            <p>Showing @Model.Count() results</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab__container">
+                
+
+                        <div class="shop-grid tab-pane fade show active" id="nav-list" role="tabpanel">
+                            <div class="list__view__wrapper">
+                                <!-- Start Single Product -->
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+           <div class="list__view" style="margin-top:10px;">
+                                    <div class="thumb">
+                                        <a class="first__img" href="#"><img style="width:100px" src="~/Content/assetsStore/images/product/sm-3/2.jpg" alt="product images"></a>
+
+                                    </div>
+                                    <div class="content">
+                                        <h2><a href="#">@item.Template_name</a></h2>
+                                        @*<ul class="rating d-flex">
+                                            <li class="on"><i class="fa fa-star-o"></i></li>
+                                            <li class="on"><i class="fa fa-star-o"></i></li>
+                                            <li class="on"><i class="fa fa-star-o"></i></li>
+                                            <li class="on"><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                        </ul>
+                                        <ul class="prize__box">
+                                            <li>$111.00</li>
+                                            <li class="old__prize">$220.00</li>
+                                        </ul>*@
+<p>@item.Resource</p>                                        <ul class="cart__action d-flex">
+              
+                                            <li class="cart"><a href="@Url.Action("Editor","CustomResources",new { id=item.ID_Template})">Continue editing</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- End Single Product -->
+                                    }
+                                }
+                                else {
+                                    <label>No data to show</label>
+                                }
+                     
+
+
+                            </div>
+                        </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- End Shop Page -->

@@ -8,13 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Realestate_portal.Models;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
     public class BookingController : Controller
     {
+        private Imarket repo;
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
+
+        public BookingController()
+        {
+        }
+
+        public BookingController(Imarket _repo)
+        {
+            repo = _repo;
+        }
 
         // GET: Booking
         public ActionResult Index()
@@ -84,6 +95,7 @@ namespace Realestate_portal.Controllers
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
                 ViewBag.notifications = lstAlerts;
+                ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER

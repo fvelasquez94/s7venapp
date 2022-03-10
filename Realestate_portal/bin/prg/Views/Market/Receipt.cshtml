@@ -1,0 +1,152 @@
+﻿@model List<Realestate_portal.Models.Saved_Templates>
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/Content/assets/vendors/css/base/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/vendors/css/base/elisyam-1.5.1.css">
+</head>
+<style>
+    .label-color {
+        font-weight: bold;
+        color: #236386;
+    }
+
+    hr {
+        width: 80%;
+    }
+
+    a div .card {
+        text-align: center;
+        width: 255px;
+        height: 350px;
+    }
+
+    h3 {
+        font-weight: bold;
+        color: black;
+    }
+
+    h2 {
+        color: #236386;
+        font-weight: bold;
+    }
+
+    .checkout-btn {
+        background-color: #236386;
+        width: 140px;
+        margin: auto;
+        padding: 10px;
+        padding-left: 10px;
+    }
+
+    h3 span:nth-of-type(1) {
+        font-weight: bold;
+        color: #236386;
+    }
+</style>
+<br />
+<div class="row">
+    <div class="col-12">
+        <br />
+        <br />
+        <div class="text-center">
+            <h1 style="font-weight: bold; color: black ">Payment Receipt</h1>
+            <br />
+            <div class="brand-image brand-small">
+                <img src="~/Content/pgrlogos/S7VENLogoBlack.png" alt="logo" style="width:100px;" class="logo-big">
+            </div>
+            <br />
+            <h2 style="font-weight: bold; color: black ">Order number: #@ViewBag.orderid</h2>
+        </div>
+    </div>
+    <br />
+</div>
+<div class="row">
+    <div class="col-md-1 col-sm-12"></div>
+    <div class="col-md-10 col-sm-12">
+        <h2 style="float: left;"><span class="label-color"> Purchase Date : @ViewBag.purchasedate </span> </h2>
+        @{ decimal? total = @Model.Sum(p => p.price) + 24.95M;}
+        <h2 style="float: right;"><span class="label-color"> Total price : $@total </span> </h2>
+    </div>
+    <div class="col-md-1 col-sm-12"></div>
+</div>
+<hr />
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-1 col-sm-12"></div>
+        <div class="col-md-5 col-sm-12 text-center">
+            <h2>Item#: @item.Templateid</h2>
+            <br />
+            <br />
+            <img src="~/@item.location" height="300" width="400" alt="Alternate Text" />
+            <br />
+        </div>
+        <div class="col-md-1 col-sm-12"></div>
+        <div class="col-md-4 col-sm-3 text-center">
+            <div class="font-size-short">
+                <br />
+                <h2>Especifications </h2>
+                <br />
+                <h2>Type : </h2>
+                <h2 style="color:black"> @item.Template_dimensions.dimensions </h2>
+                <br />
+                @foreach (var it in ViewBag.descriptions)
+                {
+                    if (it.dimension == item.dimension)
+                    {
+                        <h2>description : </h2>
+                        if (it.description != null)
+                        {
+                            <h2 style="color:black">@it.description  </h2>
+                        }
+                        else
+                        {
+                            <h2 style="color:black">NONE  </h2>
+                        }
+
+                    }
+
+                }
+
+
+            </div>
+            <br />
+            <div>
+                <h2> Qty and Price </h2>
+                <br />
+                <h2> Items:</h2>
+                <h2 style="color:black">@item.amount  </h2>
+                <br />
+                <h2> Price per unit: </h2>
+                @{ 
+                    var ttl = @item.price / @item.amount;
+                }
+                <h2 style="color:black">$@ttl </h2>
+                <br />
+                <h2> total : </h2>
+                <h2 style="color:black">$@item.price </h2>
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-12"></div>
+    </div>
+    <hr />
+    <br />
+}
+<br />
+<br />
+<div class="row">
+    <div class="col-md-10 col-sm-12 text-center">
+        <h2 class="label-color">Payment Details : </h2>
+        <h3><span style="float:left">Subtotal:</span><span style="float:right">@Model.Sum(p => p.price)</span></h3><br />       
+        <hr />
+        <h3><span style="float:left">NY Sales Tax:</span><span style="float:right">$00.00</span></h3><br />
+        <hr />
+        <h3><span style="float:left">Shipping:</span><span style="float:right">$24.95</span></h3><br />
+        <hr />
+        <h3><span style="float:left"><strong>Total:</strong></span><span style="float:right"><strong>$@Model.Sum(p => p.price + 24.95M)</strong></span></h3><br />
+    </div>
+    <div class="col-md-2 col-sm-12"></div>
+</div>

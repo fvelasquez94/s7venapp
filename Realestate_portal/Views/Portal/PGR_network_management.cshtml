@@ -51,6 +51,18 @@
                                         CATEGORY
                                     </th>
                                     <th class="whitespace-nowrap">
+                                        EMAIL
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        CONTACT
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ADRESS
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        BROKER COMPANY
+                                    </th>
+                                    <th class="whitespace-nowrap">
                                         ACTIONS
                                     </th>
                                 </tr>
@@ -58,24 +70,26 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@item.ID_Network</td>
-                                        <td>@item.Name</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.Category</td>
-                                        <td>@item.Url</td>
+                                <tr>
+                                    <td>@item.ID_Network</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Url</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Contact</td>
+                                    <td>@item.Adress</td>
+                                    <td>@item.name_company</td>
+                                    <td>
+                                        <div class="flex justify-center items-center">
 
-                                        <td>
-                                            <div class="flex justify-center items-center">
+                                            <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#modalEditvideo" onclick="editimage('@item.ID_Network')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                            <a class="flex items-center text-theme-21" href="@Url.Action("DeleteNetwork","Portal", new { id=item.ID_Network })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                        </div>
 
-                                                <a class="flex items-center mr-3" href="javascript:void(0);" data-toggle="modal" data-target="#modalEditvideo" onclick="editimage('@item.ID_Network','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                    </td>
 
-                                                <a class="flex items-center text-theme-21" href="@Url.Action("DeleteNetwork","Portal", new { id=item.ID_Network })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -93,11 +107,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit PGR Network</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">close</span>
-                </button>
+                <h4 class="modal-title" id="edittitle">Edit PGR Network</h4>              
             </div>
             <form id="htmlform" method="post">
                 <div class="modal-body">
@@ -107,6 +117,16 @@
                                 <label>Title *</label>
                                 <input type="text" class="form-control" id="titlevideo" required />
                                 <input type="text" class="form-control" id="idvideo" hidden />
+                                <label>Email *</label>
+                                <input type="text" class="form-control" id="emailvideo"  />
+                                <label>Contact *</label>
+                                <input type="text" class="form-control" id="contactvideo" />
+                                <label>Address *</label>
+                                <input type="text" class="form-control" id="adressvideo" />
+                                <label>URL *</label>
+                                <input type="text" class="form-control" id="urlvideo" required />
+                                <label>Broker Name *</label>
+                                <input type="text" class="form-control" id="namecompanyvideo" readonly />
                             </div>
                         </div>
                         <div class="col-6">
@@ -124,7 +144,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Description *</label><br /><small class="text-danger">Please, check text format before you save the changes</small>
+                                <label>Description *</label><br />
                                 <textarea id="descriptionvideo" class="form-control" style="white-space: pre-line !important" required></textarea>
                             </div>
                         </div>
@@ -179,7 +199,10 @@
                     var title = $("#titlevideo").val();
                     var category = $("#categoryvideo").val();
                     var description = $.trim($("#descriptionvideo").val());
-                    var url = "-";
+                    var url = "-";                   
+                    var email = $.trim($("#emailvideo").val());
+                    var contact = $.trim($("#contactvideo").val());
+                    var adress = $.trim($("#adressvideo").val());
 
                     formData.append("imageUploadForm", file);
                     formData.append("title", title);
@@ -187,6 +210,11 @@
                     formData.append("category", category);
                     formData.append("description", description);
                     formData.append("url", url);
+                    formData.append("email", email);
+                    formData.append("contact", contact);
+                    formData.append("adress", adress);
+
+                   
 
 
                     $.ajax({
@@ -206,6 +234,8 @@
                                     'The record has been updated.',
                                     'success'
                                 )
+                                const swal = document.querySelector(".swal2-container");
+                                swal.style.zIndex = "10000";
                                 setTimeout(function () {
                                     window.location.reload(true);
                                 }, 2000);
@@ -224,20 +254,56 @@
                     });
                 });
             }
-            function editimage(id, title, cat, descr) {
+            function editimage(id) {
 
-                var ID_video = id;// Extract info from data-* attributes
-                var title = title;// Extract info from data-* attributes
-                var Category = cat;
-                var Description = descr;
+                $("#edittitle").text("Loading Data...");
+                alert("here");
+                var video;               
+                $.ajax({
+                    type: "POST",
+                    url: '/Portal/GetNetwork?id='+id,
+                data: null,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.msg == "SUCCESS") {
+                            video = response.video;
+                            $("#edit-title").html("Edit PGR Network");
+
+                            var ID_video = video.ID_Network;// Extract info from data-* attributes
+                            var title = video.Name;// Extract info from data-* attributes
+                            var Category = video.Category;
+                            var Description = video.Description;
+                            var ema = video.Email;
+                            var cont = video.Contact;
+                            var adr = video.Adress;
+                            var company = video.name_company;
+                            var url = video.url;
 
 
-                $("#idvideo").val(ID_video);
-                $("#titlevideo").val(title);
-                $("#categoryvideo").val(Category);
-                $("#descriptionvideo").text(Description);
+                            $("#idvideo").val(ID_video);
+                            $("#titlevideo").val(title);
+                            $("#categoryvideo").val(Category);
+                            $("#descriptionvideo").val(Description);
+                            $("#emailvideo").val(ema);
+                            $("#contactvideo").val(cont);
+                            $("#adressvideo").val(adr);
+                            $("#namecompanyvideo").val(company);
+                            $("#urlvideo").val(url);                            
+
+                        } else {
+                            $("#edit-title").html("Please reload the page and try again...");
+                        }
+                    },
+                    error: function (error) {
+                        $("#edit-title").html("Please reload the page and try again...");
+                    }
+                });
 
 
+             
+                
 
             }
         </script>
@@ -264,7 +330,10 @@ else
                 var title = $("#titlevideo").val();
                 var category = $("#categoryvideo").val();
                 var description = $.trim($("#descriptionvideo").val());
-                var url = "-";
+                var url = $.trim($("#urlvideo").val());;
+                var email = $.trim($("#emailvideo").val());
+                var contact = $.trim($("#contactvideo").val());
+                var adress = $.trim($("#adressvideo").val());
 
                 formData.append("imageUploadForm", file);
                 formData.append("title", title);
@@ -272,7 +341,9 @@ else
                 formData.append("category", category);
                 formData.append("description", description);
                 formData.append("url", url);
-
+                formData.append("email", email);
+                formData.append("contact", contact);
+                formData.append("adress", adress);
 
                 $.ajax({
                     type: "POST",
@@ -291,6 +362,8 @@ else
                                 'The record has been updated.',
                                 'success'
                             )
+                            const swal = document.querySelector(".swal2-container");
+                            swal.style.zIndex = "10000";
                             setTimeout(function () {
                                 window.location.reload(true);
                             }, 2000);
@@ -309,19 +382,55 @@ else
                 });
             });
         }
-        function editimage(id, title, cat, descr) {
+        function editimage(id) {
 
-            var ID_video = id;// Extract info from data-* attributes
-            var title = title;// Extract info from data-* attributes
-            var Category = cat;
-            var Description = descr;
+            $("#edittitle").text("Loading Data Please Wait...");
+            alert("here");
+            var video;
+           
+            $.ajax({
+                type: "POST",
+                url: '/Portal/GetNetwork?id=' + id,
+                data: null,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.msg == "SUCCESS") {
+                        video = response.video;
+                        $("#edit-title").text("Edit PGR Network");
+
+                        var ID_video = video.ID_Network;// Extract info from data-* attributes
+                        var title = video.Name;// Extract info from data-* attributes
+                        var Category = video.Category;
+                        var Description = video.Description;
+                        var ema = video.Email;
+                        var cont = video.Contact;
+                        var adr = video.Adress;
+                        var company = video.name_company;
+                        var url = video.url;                       
+
+                        $("#idvideo").val(ID_video);
+                        $("#titlevideo").val(title);
+                        $("#categoryvideo").val(Category);
+                        $("#descriptionvideo").val(Description);
+                        $("#emailvideo").val(ema);
+                        $("#contactvideo").val(cont);
+                        $("#adressvideo").val(adr);
+                        $("#namecompanyvideo").val(company);
+                        $("#urlvideo").val(url);
+
+                    } else {
+                        $("#edit-title").text("Please reload the page and try again...");
+                    }
+                },
+                error: function (error) {
+                    $("#edit-title").text("Please reload the page and try again...");
+                }
+            });
 
 
-            $("#idvideo").val(ID_video);
-            $("#titlevideo").val(title);
-            $("#categoryvideo").val(Category);
-            $("#descriptionvideo").text(Description);
-
+        
 
 
         }

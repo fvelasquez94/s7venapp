@@ -1,0 +1,401 @@
+﻿@model List<Realestate_portal.Models.Tb_Videos>
+@{
+    ViewBag.Title = "Premium Group Realty - Management Videos";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Video management
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Videos
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+                    @if (ViewBag.rol == "SA")
+    {
+                <div class="widget-options">
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Video</a>
+                </div>
+}
+
+                </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+
+                        <table id="tableresources" class="table mb-0">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">Video ID</th>
+                                    <th class="whitespace-nowrap">Title</th>
+                                    <th class="whitespace-nowrap">Description</th>
+                                    <th class="whitespace-nowrap">URL</th>
+                                    <th class="whitespace-nowrap">Category</th>
+                                    <th class="whitespace-nowrap">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td><span class="text-primary">@item.ID_Video</span></td>
+                                        <td>@item.Name  </td>
+                                        <td>@item.Description  </td>
+                                        <td>@item.Url</td>
+                                        <td><span class="badge badge-success" style="font-size:12px;">@item.Category</span></td>
+
+                                        <td class="td-actions">
+                                            <div class="flex justify-center items-center">
+                                                <a class="flex items-center mr-3" href="#" data-toggle="modal" data-target="#modalEditvideo"  onclick="editvideo('@item.ID_Video','@item.Name','@item.Category','@item.Description.Replace("'","").Replace("\r\n", "").Replace("\n", "").Replace("\r", "")','@item.Url')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+
+                                                <a class="flex items-center text-theme-21"  href="#" onclick="deleteVideo(@item.ID_Video)" > <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                            </div>
+
+                                         
+                                      
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- End Sorting -->
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+</div>
+
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Video</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform2" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo2" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo2" class="form-control" required>
+                                    @foreach (var item in lstcategories)
+                                    {
+                                        <option value="@item.Description">@item.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Description *</label>
+                                <textarea id="descriptionvideo2" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="imageUpload2" class="form-control" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>URL *</label>
+                                <input type="text" id="urlvideo2" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar2" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Container -->
+<div id="modalEditvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Video</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required />
+                                <input type="text" class="form-control" id="idvideo" hidden />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo" class="form-control" required>
+                                    @foreach (var item in lstcategories)
+                                    {
+                                        <option value="@item.Description">@item.Description</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Description * </label><br /><small class="text-danger">Please, check text format before you save the changes</small>
+                                <textarea id="descriptionvideo" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="imageUpload" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>URL *</label>
+                                <input type="text" id="urlvideo" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function deleteVideo(idvideo) {
+
+        swal.fire({
+            title: 'Do you want to delete these record?',
+            text: "This process cannot be undone.",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#C83232',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/Portal/DeleteVideo',
+                    type: 'POST',
+                    data: { 'id': idvideo },
+                    cache: false,
+                    global: false,
+                    success: function (result) {
+                        if (result == "success") {
+                            Swal.fire(
+                                'Record deleted',
+                                'The record has been deleted.',
+                                'success'
+                            )
+                            window.location.reload(true);
+                        } else {
+                            alert(result);
+                        }
+
+
+                    },
+                    error: function (request) {
+                        alert("Something went wrong.");
+
+                    }
+                });
+
+
+            }
+        })
+    }
+    window.onload = function () {
+        $("#tableresources").DataTable();
+
+
+        $('#htmlform2').on('submit', function (event) {
+            $("#subbtnenviar2").attr("disabled", true);
+            event.preventDefault();
+
+
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload2").files[0];
+
+            var title = $("#titlevideo2").val();
+            var category = $("#categoryvideo2").val();
+            var description = $.trim($("#descriptionvideo2").val());
+            var url = $("#urlvideo2").val();
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+            formData.append("url", url);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadVideo',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                     
+                        $("#subbtnenviar2").attr("disabled", false);
+
+                        Swal.fire(
+                            'Video Added',
+                            'The videp has been added successfully.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                   
+                        $("#subbtnenviar2").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                 
+                    $("#subbtnenviar2").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+      
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var idvideo = $("#idvideo").val();
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var description = $.trim($("#descriptionvideo").val());
+            var url = $("#urlvideo").val();
+
+            formData.append("imageUploadForm", file);
+            formData.append("id", idvideo);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+            formData.append("url", url);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/EditVideo',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                      
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        Swal.fire(
+                            'Record updated',
+                            'The record has been updated.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                   
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+               
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+    }
+
+    function editvideo(id, title, cat, descr, url) {
+
+        var ID_video = id;// Extract info from data-* attributes
+        var title = title;// Extract info from data-* attributes
+        var Category = cat;
+        var Description = descr;
+        var Url = url;
+
+        $("#idvideo").val(ID_video);
+        $("#titlevideo").val(title);
+        $("#categoryvideo").val(Category);
+        $("#descriptionvideo").text(Description);
+        $("#urlvideo").val(Url);
+
+  
+    }
+</script>

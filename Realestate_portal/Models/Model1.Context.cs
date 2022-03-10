@@ -12,8 +12,6 @@ namespace Realestate_portal.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class Realstate_agentsEntities : DbContext
     {
@@ -27,14 +25,34 @@ namespace Realestate_portal.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Billing_Shipping_details> Billing_Shipping_details { get; set; }
         public virtual DbSet<crTb_OrderDetails> crTb_OrderDetails { get; set; }
         public virtual DbSet<crTb_Orders> crTb_Orders { get; set; }
+        public virtual DbSet<label_color> label_color { get; set; }
+        public virtual DbSet<labels> labels { get; set; }
+        public virtual DbSet<Market_Categ_type> Market_Categ_type { get; set; }
+        public virtual DbSet<Marketing_order_details> Marketing_order_details { get; set; }
+        public virtual DbSet<marketing_orders> marketing_orders { get; set; }
+        public virtual DbSet<Payment_Intent> Payment_Intent { get; set; }
+        public virtual DbSet<Receipts> Receipts { get; set; }
+        public virtual DbSet<saved_labels> saved_labels { get; set; }
+        public virtual DbSet<Saved_Templates> Saved_Templates { get; set; }
+        public virtual DbSet<Shipping_Details> Shipping_Details { get; set; }
+        public virtual DbSet<signs_description> signs_description { get; set; }
         public virtual DbSet<Sys_Company> Sys_Company { get; set; }
         public virtual DbSet<Sys_Notifications> Sys_Notifications { get; set; }
         public virtual DbSet<Sys_Roles> Sys_Roles { get; set; }
+        public virtual DbSet<Sys_Users> Sys_Users { get; set; }
+        public virtual DbSet<T_Company_Type> T_Company_Type { get; set; }
         public virtual DbSet<Tb_Appointments> Tb_Appointments { get; set; }
         public virtual DbSet<Tb_Conversation> Tb_Conversation { get; set; }
+        public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
+        public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
         public virtual DbSet<Tb_docCategies> Tb_docCategies { get; set; }
+        public virtual DbSet<Tb_Docpackages> Tb_Docpackages { get; set; }
+        public virtual DbSet<Tb_Docpackages_details> Tb_Docpackages_details { get; set; }
+        public virtual DbSet<Tb_DocuAgent> Tb_DocuAgent { get; set; }
+        public virtual DbSet<Tb_LeadDocs> Tb_LeadDocs { get; set; }
         public virtual DbSet<Tb_Marketing> Tb_Marketing { get; set; }
         public virtual DbSet<Tb_Message> Tb_Message { get; set; }
         public virtual DbSet<Tb_Network> Tb_Network { get; set; }
@@ -45,123 +63,20 @@ namespace Realestate_portal.Models
         public virtual DbSet<Tb_Quotes> Tb_Quotes { get; set; }
         public virtual DbSet<Tb_Reminders> Tb_Reminders { get; set; }
         public virtual DbSet<Tb_Resources> Tb_Resources { get; set; }
-        public virtual DbSet<Tb_Videos> Tb_Videos { get; set; }
-        public virtual DbSet<Tb_Webinars> Tb_Webinars { get; set; }
         public virtual DbSet<Tb_Reviews> Tb_Reviews { get; set; }
         public virtual DbSet<Tb_Source> Tb_Source { get; set; }
         public virtual DbSet<Tb_Status> Tb_Status { get; set; }
-        public virtual DbSet<Tb_LeadDocs> Tb_LeadDocs { get; set; }
-        public virtual DbSet<Tb_DocuAgent> Tb_DocuAgent { get; set; }
         public virtual DbSet<Tb_Tasks> Tb_Tasks { get; set; }
-        public virtual DbSet<Tb_Docpackages> Tb_Docpackages { get; set; }
-        public virtual DbSet<Tb_Docpackages_details> Tb_Docpackages_details { get; set; }
-        public virtual DbSet<Tb_WorkTeams> Tb_WorkTeams { get; set; }
-        public virtual DbSet<Sys_Users> Sys_Users { get; set; }
-        public virtual DbSet<Tb_Customers_Users> Tb_Customers_Users { get; set; }
-        public virtual DbSet<Tb_Customers> Tb_Customers { get; set; }
         public virtual DbSet<Tb_ToVerifyTaxes> Tb_ToVerifyTaxes { get; set; }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
+        public virtual DbSet<Tb_Videos> Tb_Videos { get; set; }
+        public virtual DbSet<Tb_Webinars> Tb_Webinars { get; set; }
+        public virtual DbSet<Tb_WorkTeams> Tb_WorkTeams { get; set; }
+        public virtual DbSet<Template_categories> Template_categories { get; set; }
+        public virtual DbSet<Template_colors> Template_colors { get; set; }
+        public virtual DbSet<Template_Details> Template_Details { get; set; }
+        public virtual DbSet<Template_dimensions> Template_dimensions { get; set; }
+        public virtual DbSet<template_pricing> template_pricing { get; set; }
+        public virtual DbSet<template_subcategories> template_subcategories { get; set; }
+        public virtual DbSet<Template_type> Template_type { get; set; }
     }
 }

@@ -1,0 +1,1789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Realstate_agentsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Billing_Shipping_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="b_Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="country" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="s_type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="s_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="s_adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="s_city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="s_state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="s_zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="s_country" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="s_suite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="b_suite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="s_phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="completed" Type="Boolean" />
+    <Property Name="userid" Type="Int32" />
+    <Property Name="orderid" Type="Int32" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_Billing_Shipping_details_marketing_orders" FromRole="Billing_Shipping_details" ToRole="marketing_orders" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Billing_Shipping_details_Sys_Users" FromRole="Billing_Shipping_details" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="crTb_OrderDetails">
+    <Key>
+      <PropertyRef Name="ID_detail" />
+    </Key>
+    <Property Name="ID_detail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Resource" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Style" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Company_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cellphone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Facebook_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="GroupQty" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ID_order" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_crTb_OrderDetails_crTb_Orders" FromRole="crTb_OrderDetails" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="crTb_Orders">
+    <Key>
+      <PropertyRef Name="ID_order" />
+    </Key>
+    <Property Name="ID_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_user" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_crTb_Orders_Sys_Company" FromRole="crTb_Orders" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="label_color">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="background" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="labelid" Type="Int32" Nullable="false" />
+    <Property Name="label_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="templateid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_label_color_label_color" FromRole="label_color" ToRole="Template_Details" />
+    <NavigationProperty Name="labels" Relationship="Self.FK_label_color_labels" FromRole="label_color" ToRole="labels" />
+  </EntityType>
+  <EntityType Name="labels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="template" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="p_top" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="p_bottom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="p_right" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="p_left" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Font" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Font_type" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="size" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="width" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="height" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="pic_bottom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="pic_left" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="font_weight" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="text_position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="shape" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="label_color" Relationship="Self.FK_label_color_labels" FromRole="labels" ToRole="label_color" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_labels_Templates" FromRole="labels" ToRole="Template_Details" />
+    <NavigationProperty Name="saved_labels" Relationship="Self.FK_saved_labels_labels" FromRole="labels" ToRole="saved_labels" />
+  </EntityType>
+  <EntityType Name="Market_Categ_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category" Type="Int32" Nullable="false" />
+    <Property Name="subcategory" Type="Int32" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="business_card" Type="Int32" />
+    <Property Name="yard_signs" Type="Int32" />
+    <Property Name="riders" Type="Int32" />
+    <Property Name="open_house" Type="Int32" />
+    <Property Name="closing_signs" Type="Int32" />
+    <Property Name="for_sale_panels" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Marketing_order_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="template" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="unit_price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="items" Type="Int32" Nullable="false" />
+    <Property Name="creation_date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_Marketing_order_details_marketing_orders" FromRole="Marketing_order_details" ToRole="marketing_orders" />
+  </EntityType>
+  <EntityType Name="marketing_orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="items" Type="Int32" Nullable="false" />
+    <Property Name="ttl_price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="taxes" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="shipping" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="creation_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="payment_intent_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Billing_Shipping_details" Relationship="Self.FK_Billing_Shipping_details_marketing_orders" FromRole="marketing_orders" ToRole="Billing_Shipping_details" />
+    <NavigationProperty Name="Marketing_order_details" Relationship="Self.FK_Marketing_order_details_marketing_orders" FromRole="marketing_orders" ToRole="Marketing_order_details" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_marketing_orders_Sys_Users" FromRole="marketing_orders" ToRole="Sys_Users" />
+    <NavigationProperty Name="Payment_Intent" Relationship="Self.FK_Payment_Intent_marketing_orders" FromRole="marketing_orders" ToRole="Payment_Intent" />
+    <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_marketing_orders" FromRole="marketing_orders" ToRole="Receipts" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Saved_Templates_marketing_orders" FromRole="marketing_orders" ToRole="Saved_Templates" />
+  </EntityType>
+  <EntityType Name="Payment_Intent">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="payment_intent_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="shipping" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="items" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="orderid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_Payment_Intent_marketing_orders" FromRole="Payment_Intent" ToRole="marketing_orders" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Payment_Intent_Sys_Users" FromRole="Payment_Intent" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="Receipts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="file_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_Receipts_marketing_orders" FromRole="Receipts" ToRole="marketing_orders" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Receipts_Sys_Users" FromRole="Receipts" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="saved_labels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="labelid" Type="Int32" Nullable="false" />
+    <Property Name="templateid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="saved_template" Type="Int32" Nullable="false" />
+    <Property Name="text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="userid" Type="Int32" />
+    <Property Name="font_size" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="labels" Relationship="Self.FK_saved_labels_labels" FromRole="saved_labels" ToRole="labels" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_saved_labels_Sys_Users" FromRole="saved_labels" ToRole="Sys_Users" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_saved_labels_Template_Details" FromRole="saved_labels" ToRole="Template_Details" />
+  </EntityType>
+  <EntityType Name="Saved_Templates">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Templateid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Material" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Size" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Holes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Laminate" Type="Boolean" />
+    <Property Name="clearcoat" Type="Boolean" />
+    <Property Name="category" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="label_num" Type="Int32" Nullable="false" />
+    <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="amount" Type="Int32" Nullable="false" />
+    <Property Name="completed" Type="Boolean" Nullable="false" />
+    <Property Name="photo_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="logo_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="orderid" Type="Int32" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="dimension" Type="Int32" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_Saved_Templates_marketing_orders" FromRole="Saved_Templates" ToRole="marketing_orders" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_Saved_Templates_Template_Details" FromRole="Saved_Templates" ToRole="Template_Details" />
+    <NavigationProperty Name="Template_dimensions" Relationship="Self.FK_Saved_Templates_Template_dimensions" FromRole="Saved_Templates" ToRole="Template_dimensions" />
+    <NavigationProperty Name="Template_type" Relationship="Self.FK_Saved_Templates_Template_type" FromRole="Saved_Templates" ToRole="Template_type" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Templates_Sys_Users" FromRole="Saved_Templates" ToRole="Sys_Users" />
+    <NavigationProperty Name="Template_categories" Relationship="Self.FK_Templates_Template_category" FromRole="Saved_Templates" ToRole="Template_categories" />
+  </EntityType>
+  <EntityType Name="Shipping_Details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="carrier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dates" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="signs_description">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dimension" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Template_dimensions" Relationship="Self.FK_signs_description_Template_dimensions" FromRole="signs_description" ToRole="Template_dimensions" />
+  </EntityType>
+  <EntityType Name="Sys_Company">
+    <Key>
+      <PropertyRef Name="ID_Company" />
+    </Key>
+    <Property Name="ID_Company" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Web" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ShortName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Agents" Type="Int32" />
+    <NavigationProperty Name="crTb_OrderDetails" Relationship="Self.FK_crTb_OrderDetails_crTb_Orders" FromRole="Sys_Company" ToRole="crTb_OrderDetails" />
+    <NavigationProperty Name="crTb_Orders" Relationship="Self.FK_crTb_Orders_Sys_Company" FromRole="Sys_Company" ToRole="crTb_Orders" />
+    <NavigationProperty Name="Sys_Roles" Relationship="Self.FK_Sys_Roles_Sys_Company" FromRole="Sys_Company" ToRole="Sys_Roles" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Sys_Users_Sys_Company" FromRole="Sys_Company" ToRole="Sys_Users" />
+    <NavigationProperty Name="Tb_Appointments" Relationship="Self.FK_Tb_Appointments_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Appointments" />
+    <NavigationProperty Name="Tb_Conversation" Relationship="Self.FK_Tb_Conversation_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Conversation" />
+    <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_Tb_Customers_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Customers" />
+    <NavigationProperty Name="Tb_Docpackages" Relationship="Self.FK_Tb_Docpackages_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Docpackages" />
+    <NavigationProperty Name="Tb_Marketing" Relationship="Self.FK_Tb_Marketing_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Marketing" />
+    <NavigationProperty Name="Tb_Network" Relationship="Self.FK_Tb_Network_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Network" />
+    <NavigationProperty Name="Tb_Resources" Relationship="Self.FK_Tb_Resources_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Resources" />
+    <NavigationProperty Name="Tb_Videos" Relationship="Self.FK_Tb_Videos_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Videos" />
+    <NavigationProperty Name="Tb_Webinars" Relationship="Self.FK_Tb_Webinars_Sys_Company" FromRole="Sys_Company" ToRole="Tb_Webinars" />
+  </EntityType>
+  <EntityType Name="Sys_Notifications">
+    <Key>
+      <PropertyRef Name="ID_notification" />
+    </Key>
+    <Property Name="ID_notification" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ID_user" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Notifications" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="Sys_Roles">
+    <Key>
+      <PropertyRef Name="ID_Rol" />
+    </Key>
+    <Property Name="ID_Rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Sys_Roles_Sys_Company" FromRole="Sys_Roles" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Sys_Users">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Birth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Last_login" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Main_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Secundary_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fb_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ins_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tw_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Other_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Email_active" Type="Boolean" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Roles" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Brokerage_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Brokerage_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Broker_Contact" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Broker_License" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="My_License" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Member_since" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Bank" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Bank_number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Bank_typeaccount" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Credit_number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Credit_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Credit_classification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Credit_month" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Credit_year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Team_Leader" Type="Boolean" Nullable="false" />
+    <Property Name="Id_Leader" Type="Int32" />
+    <Property Name="Leader_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Billing_Shipping_details" Relationship="Self.FK_Billing_Shipping_details_Sys_Users" FromRole="Sys_Users" ToRole="Billing_Shipping_details" />
+    <NavigationProperty Name="marketing_orders" Relationship="Self.FK_marketing_orders_Sys_Users" FromRole="Sys_Users" ToRole="marketing_orders" />
+    <NavigationProperty Name="Payment_Intent" Relationship="Self.FK_Payment_Intent_Sys_Users" FromRole="Sys_Users" ToRole="Payment_Intent" />
+    <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Sys_Users" FromRole="Sys_Users" ToRole="Receipts" />
+    <NavigationProperty Name="saved_labels" Relationship="Self.FK_saved_labels_Sys_Users" FromRole="Sys_Users" ToRole="saved_labels" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Templates_Sys_Users" FromRole="Sys_Users" ToRole="Saved_Templates" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Sys_Users_Sys_Company" FromRole="Sys_Users" ToRole="Sys_Company" />
+    <NavigationProperty Name="Sys_Notifications" Relationship="Self.FK_Sys_Notifications_Sys_Users" FromRole="Sys_Users" ToRole="Sys_Notifications" />
+    <NavigationProperty Name="Tb_Posts" Relationship="Self.FK_Tb_Posts_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Posts" />
+    <NavigationProperty Name="Tb_Reminders" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Sys_Users" ToRole="Tb_Reminders" />
+    <NavigationProperty Name="Tb_DocuAgent" Relationship="Self.fk_usersdoc" FromRole="Sys_Users" ToRole="Tb_DocuAgent" />
+  </EntityType>
+  <EntityType Name="T_Company_Type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <Property Name="company" Type="Int32" Nullable="false" />
+    <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Tb_Appointments">
+    <Key>
+      <PropertyRef Name="ID_Appointment" />
+    </Key>
+    <Property Name="ID_Appointment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Process" Type="Int32" Nullable="false" />
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date_end" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Appointments_Sys_Company" FromRole="Tb_Appointments" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Tb_Conversation">
+    <Key>
+      <PropertyRef Name="ID_Conversation" />
+    </Key>
+    <Property Name="ID_Conversation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Sender" Type="Int32" Nullable="false" />
+    <Property Name="ID_Receptor" Type="Int32" Nullable="false" />
+    <Property Name="Created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Conversation_Sys_Company" FromRole="Tb_Conversation" ToRole="Sys_Company" />
+    <NavigationProperty Name="Tb_Message" Relationship="Self.FK_Tb_Message_Tb_Conversation" FromRole="Tb_Conversation" ToRole="Tb_Message" />
+  </EntityType>
+  <EntityType Name="Tb_Customers">
+    <Key>
+      <PropertyRef Name="ID_Customer" />
+    </Key>
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Marital_status" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mobile" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Zipcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Lead" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Source" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="ID_team" Type="Int32" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Customers_Sys_Company" FromRole="Tb_Customers" ToRole="Sys_Company" />
+    <NavigationProperty Name="Tb_LeadDocs" Relationship="Self.FK_CustomerDoc" FromRole="Tb_Customers" ToRole="Tb_LeadDocs" />
+    <NavigationProperty Name="Tb_Process" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Customers" ToRole="Tb_Process" />
+  </EntityType>
+  <EntityType Name="Tb_Customers_Users">
+    <Key>
+      <PropertyRef Name="Id_Customer_User" />
+    </Key>
+    <Property Name="Id_Customer_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_User" Type="Int32" Nullable="false" />
+    <Property Name="Id_Customer" Type="Int32" Nullable="false" />
+    <Property Name="ID_team" Type="Int32" />
+    <Property Name="Teamleader" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Tb_docCategies">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Category" Type="Int32" Nullable="false" />
+    <Property Name="Category_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mandatory" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tb_Docpackages">
+    <Key>
+      <PropertyRef Name="ID_docpackage" />
+    </Key>
+    <Property Name="ID_docpackage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Total_docs" Type="Int32" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="original" Type="Boolean" Nullable="false" />
+    <Property Name="Total_docsf" Type="Int32" Nullable="false" />
+    <Property Name="Finished" Type="Boolean" Nullable="false" />
+    <Property Name="Sent" Type="Boolean" Nullable="false" />
+    <Property Name="ID_Process" Type="Int32" Nullable="false" />
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+    <Property Name="ID_Property" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Docpackages_Sys_Company" FromRole="Tb_Docpackages" ToRole="Sys_Company" />
+    <NavigationProperty Name="Tb_Docpackages_details" Relationship="Self.FK_Tb_Docpackages_details_Tb_Docpackages" FromRole="Tb_Docpackages" ToRole="Tb_Docpackages_details" />
+  </EntityType>
+  <EntityType Name="Tb_Docpackages_details">
+    <Key>
+      <PropertyRef Name="ID_Detail" />
+    </Key>
+    <Property Name="ID_Detail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="original" Type="Boolean" Nullable="false" />
+    <Property Name="uploaded" Type="Boolean" Nullable="false" />
+    <Property Name="sent" Type="Boolean" Nullable="false" />
+    <Property Name="mandatory" Type="Boolean" Nullable="false" />
+    <Property Name="ID_docpackage" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tb_Docpackages" Relationship="Self.FK_Tb_Docpackages_details_Tb_Docpackages" FromRole="Tb_Docpackages_details" ToRole="Tb_Docpackages" />
+  </EntityType>
+  <EntityType Name="Tb_DocuAgent">
+    <Key>
+      <PropertyRef Name="Id_Document" />
+    </Key>
+    <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Doc_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+    <Property Name="Id_User" Type="Int32" />
+    <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.fk_usersdoc" FromRole="Tb_DocuAgent" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="Tb_LeadDocs">
+    <Key>
+      <PropertyRef Name="Id_Document" />
+    </Key>
+    <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Customer" Type="Int32" />
+    <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_CustomerDoc" FromRole="Tb_LeadDocs" ToRole="Tb_Customers" />
+  </EntityType>
+  <EntityType Name="Tb_Marketing">
+    <Key>
+      <PropertyRef Name="ID_marketing" />
+    </Key>
+    <Property Name="ID_marketing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Int32" Nullable="false" />
+    <Property Name="Likes" Type="Int32" Nullable="false" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comments" Type="Int32" Nullable="false" />
+    <Property Name="T_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Marketing_Sys_Company" FromRole="Tb_Marketing" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Tb_Message">
+    <Key>
+      <PropertyRef Name="ID_message" />
+    </Key>
+    <Property Name="ID_message" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <Property Name="ID_Conversation" Type="Int32" Nullable="false" />
+    <Property Name="Created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Is_read" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Tb_Conversation" Relationship="Self.FK_Tb_Message_Tb_Conversation" FromRole="Tb_Message" ToRole="Tb_Conversation" />
+  </EntityType>
+  <EntityType Name="Tb_Network">
+    <Key>
+      <PropertyRef Name="ID_Network" />
+    </Key>
+    <Property Name="ID_Network" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Int32" Nullable="false" />
+    <Property Name="Likes" Type="Int32" Nullable="false" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comments" Type="Int32" Nullable="false" />
+    <Property Name="T_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="super_admin" Type="Boolean" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Network_Sys_Company" FromRole="Tb_Network" ToRole="Sys_Company" />
+    <NavigationProperty Name="Tb_Reviews" Relationship="Self.FK_Network" FromRole="Tb_Network" ToRole="Tb_Reviews" />
+    <Property Name="name_company" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Contact" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Adress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Tb_Notes">
+    <Key>
+      <PropertyRef Name="ID_note" />
+    </Key>
+    <Property Name="ID_note" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_Property" Type="Int32" Nullable="false" />
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Tb_Options">
+    <Key>
+      <PropertyRef Name="ID_option" />
+    </Key>
+    <Property Name="ID_option" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tb_Posts">
+    <Key>
+      <PropertyRef Name="ID_Post" />
+    </Key>
+    <Property Name="ID_Post" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Content_post" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Url_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Lat" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Lng" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Start_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Finish_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Post_type" Type="Int32" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Likes" Type="Int32" Nullable="false" />
+    <Property Name="User_likes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comments" Type="Int32" Nullable="false" />
+    <Property Name="User_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Post_parent" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Tb_Posts_Sys_Users" FromRole="Tb_Posts" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="Tb_Process">
+    <Key>
+      <PropertyRef Name="ID_Process" />
+    </Key>
+    <Property Name="ID_Process" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+    <Property Name="ID_Property" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Property" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Purchase_price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Commission_amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Commissionperc" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Closing_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Under_contract_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Offer_accepted_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Inspection_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Stage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Source" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypeofAgency" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Loan_Officer_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Attorneys_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Loan_Officer_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Attorneys_tel" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tb_Customers" Relationship="Self.FK_Tb_Process_Tb_Customers" FromRole="Tb_Process" ToRole="Tb_Customers" />
+  </EntityType>
+  <EntityType Name="Tb_Quotes">
+    <Key>
+      <PropertyRef Name="ID_quote" />
+    </Key>
+    <Property Name="ID_quote" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Author" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Date" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tb_Reminders">
+    <Key>
+      <PropertyRef Name="ID_Reminder" />
+    </Key>
+    <Property Name="ID_Reminder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Tb_Reminders_Sys_Users" FromRole="Tb_Reminders" ToRole="Sys_Users" />
+  </EntityType>
+  <EntityType Name="Tb_Resources">
+    <Key>
+      <PropertyRef Name="ID_Resource" />
+    </Key>
+    <Property Name="ID_Resource" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Doc_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Times_downloaded" Type="Int32" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Extension_file" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Id_Leader" Type="Int32" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Resources_Sys_Company" FromRole="Tb_Resources" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Tb_Reviews">
+    <Key>
+      <PropertyRef Name="Id_Review" />
+    </Key>
+    <Property Name="Id_Review" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rate_Review" Type="Int32" Nullable="false" />
+    <Property Name="Date_Review" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Network" Type="Int32" Nullable="false" />
+    <Property Name="Name_User" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tb_Network" Relationship="Self.FK_Network" FromRole="Tb_Reviews" ToRole="Tb_Network" />
+  </EntityType>
+  <EntityType Name="Tb_Source">
+    <Key>
+      <PropertyRef Name="Id_Source" />
+    </Key>
+    <Property Name="Id_Source" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Company" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tb_Status">
+    <Key>
+      <PropertyRef Name="Id_Status" />
+    </Key>
+    <Property Name="Id_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Stage_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Company" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tb_Tasks">
+    <Key>
+      <PropertyRef Name="ID_task" />
+    </Key>
+    <Property Name="ID_task" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Finished" Type="Boolean" Nullable="false" />
+    <Property Name="Createdat" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Lastupdate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_User" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="ID_Customer" Type="Int32" />
+    <Property Name="Customer" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Tb_ToVerifyTaxes">
+    <Key>
+      <PropertyRef Name="Id_Document" />
+    </Key>
+    <Property Name="Id_Document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Doc_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Upload_Date" Type="DateTime" Precision="3" />
+    <Property Name="Id_User" Type="Int32" />
+    <Property Name="Extension" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="ID_Company" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tb_Videos">
+    <Key>
+      <PropertyRef Name="ID_Video" />
+    </Key>
+    <Property Name="ID_Video" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Int32" Nullable="false" />
+    <Property Name="Likes" Type="Int32" Nullable="false" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comments" Type="Int32" Nullable="false" />
+    <Property Name="T_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Videos_Sys_Company" FromRole="Tb_Videos" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Tb_Webinars">
+    <Key>
+      <PropertyRef Name="ID_Webinar" />
+    </Key>
+    <Property Name="ID_Webinar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Max_users" Type="Int32" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date_end" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Sys_Company" Relationship="Self.FK_Tb_Webinars_Sys_Company" FromRole="Tb_Webinars" ToRole="Sys_Company" />
+  </EntityType>
+  <EntityType Name="Tb_WorkTeams">
+    <Key>
+      <PropertyRef Name="ID_team" />
+    </Key>
+    <Property Name="ID_team" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_Company" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Creation_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Last_update" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Template_categories">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="childs" Type="Boolean" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Templates_Template_category" FromRole="Template_categories" ToRole="Saved_Templates" />
+    <NavigationProperty Name="template_subcategories" Relationship="Self.FK_market_subCateg_type_Market_Categ_type" FromRole="Template_categories" ToRole="template_subcategories" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_Template_Details_Template_categories" FromRole="Template_categories" ToRole="Template_Details" />
+  </EntityType>
+  <EntityType Name="Template_colors">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="templateid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_Template_colors_Template_Details" FromRole="Template_colors" ToRole="Template_Details" />
+  </EntityType>
+  <EntityType Name="Template_Details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="category" Type="Int32" Nullable="false" />
+    <Property Name="subcategories" Type="Int32" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="width" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="height" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cleaned_path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cleaned_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="header" Type="Boolean" Nullable="false" />
+    <Property Name="company_name" Type="Boolean" Nullable="false" />
+    <Property Name="agent_name" Type="Boolean" Nullable="false" />
+    <Property Name="phone" Type="Boolean" Nullable="false" />
+    <Property Name="photo" Type="Boolean" Nullable="false" />
+    <Property Name="logo" Type="Boolean" Nullable="false" />
+    <Property Name="website" Type="Boolean" Nullable="false" />
+    <Property Name="title" Type="Boolean" Nullable="false" />
+    <Property Name="email" Type="Boolean" Nullable="false" />
+    <Property Name="message" Type="Boolean" />
+    <Property Name="other" Type="Boolean" />
+    <Property Name="adress_1" Type="Boolean" />
+    <Property Name="adress_2" Type="Boolean" />
+    <Property Name="instagram" Type="Boolean" />
+    <Property Name="facebook" Type="Boolean" />
+    <Property Name="profile_pic" Type="Boolean" Nullable="false" />
+    <Property Name="pic_path" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="original_width" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="original_height" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="saved_width" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="saved_height" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="logo_path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="pic_round" Type="Boolean" />
+    <Property Name="back" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="label_color" Relationship="Self.FK_label_color_label_color" FromRole="Template_Details" ToRole="label_color" />
+    <NavigationProperty Name="labels" Relationship="Self.FK_labels_Templates" FromRole="Template_Details" ToRole="labels" />
+    <NavigationProperty Name="saved_labels" Relationship="Self.FK_saved_labels_Template_Details" FromRole="Template_Details" ToRole="saved_labels" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Saved_Templates_Template_Details" FromRole="Template_Details" ToRole="Saved_Templates" />
+    <NavigationProperty Name="Template_categories" Relationship="Self.FK_Template_Details_Template_categories" FromRole="Template_Details" ToRole="Template_categories" />
+    <NavigationProperty Name="Template_colors" Relationship="Self.FK_Template_colors_Template_Details" FromRole="Template_Details" ToRole="Template_colors" />
+    <NavigationProperty Name="Template_Details1" Relationship="Self.FK_Template_Details_Template_Details" FromRole="Template_Details" ToRole="Template_Details1" />
+    <NavigationProperty Name="Template_Details2" Relationship="Self.FK_Template_Details_Template_Details" FromRole="Template_Details1" ToRole="Template_Details" />
+    <NavigationProperty Name="template_subcategories" Relationship="Self.FK_Template_Details_Template_type" FromRole="Template_Details" ToRole="template_subcategories" />
+  </EntityType>
+  <EntityType Name="Template_dimensions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dimensions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Saved_Templates_Template_dimensions" FromRole="Template_dimensions" ToRole="Saved_Templates" />
+    <NavigationProperty Name="signs_description" Relationship="Self.FK_signs_description_Template_dimensions" FromRole="Template_dimensions" ToRole="signs_description" />
+    <NavigationProperty Name="Template_type" Relationship="Self.FK_Template_dimensions_Template_type" FromRole="Template_dimensions" ToRole="Template_type" />
+    <NavigationProperty Name="template_pricing" Relationship="Self.FK_template_pricing_Template_dimensions" FromRole="Template_dimensions" ToRole="template_pricing" />
+  </EntityType>
+  <EntityType Name="template_pricing">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="dimensions" Type="Int32" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Template_dimensions" Relationship="Self.FK_template_pricing_Template_dimensions" FromRole="template_pricing" ToRole="Template_dimensions" />
+  </EntityType>
+  <EntityType Name="template_subcategories">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="category_type" Type="Int32" Nullable="false" />
+    <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Template_categories" Relationship="Self.FK_market_subCateg_type_Market_Categ_type" FromRole="template_subcategories" ToRole="Template_categories" />
+    <NavigationProperty Name="Template_Details" Relationship="Self.FK_Template_Details_Template_type" FromRole="template_subcategories" ToRole="Template_Details" />
+  </EntityType>
+  <EntityType Name="Template_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Saved_Templates" Relationship="Self.FK_Saved_Templates_Template_type" FromRole="Template_type" ToRole="Saved_Templates" />
+    <NavigationProperty Name="Template_dimensions" Relationship="Self.FK_Template_dimensions_Template_type" FromRole="Template_type" ToRole="Template_dimensions" />
+  </EntityType>
+  <Association Name="FK_Billing_Shipping_details_marketing_orders">
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="0..1" />
+    <End Role="Billing_Shipping_details" Type="Self.Billing_Shipping_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marketing_orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Billing_Shipping_details">
+        <PropertyRef Name="orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Billing_Shipping_details_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
+    <End Role="Billing_Shipping_details" Type="Self.Billing_Shipping_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Billing_Shipping_details">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_crTb_OrderDetails_crTb_Orders">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="crTb_OrderDetails" Type="Self.crTb_OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="crTb_OrderDetails">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_crTb_Orders_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="0..1" />
+    <End Role="crTb_Orders" Type="Self.crTb_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="crTb_Orders">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_label_color_label_color">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="label_color" Type="Self.label_color" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="label_color">
+        <PropertyRef Name="templateid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_label_color_labels">
+    <End Role="labels" Type="Self.labels" Multiplicity="1" />
+    <End Role="label_color" Type="Self.label_color" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="labels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="label_color">
+        <PropertyRef Name="labelid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_labels_Templates">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="labels" Type="Self.labels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="labels">
+        <PropertyRef Name="template" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_saved_labels_labels">
+    <End Role="labels" Type="Self.labels" Multiplicity="1" />
+    <End Role="saved_labels" Type="Self.saved_labels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="labels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="saved_labels">
+        <PropertyRef Name="labelid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Marketing_order_details_marketing_orders">
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="1" />
+    <End Role="Marketing_order_details" Type="Self.Marketing_order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marketing_orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Marketing_order_details">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_marketing_orders_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="marketing_orders">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Intent_marketing_orders">
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="1" />
+    <End Role="Payment_Intent" Type="Self.Payment_Intent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marketing_orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Payment_Intent">
+        <PropertyRef Name="orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_marketing_orders">
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marketing_orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saved_Templates_marketing_orders">
+    <End Role="marketing_orders" Type="Self.marketing_orders" Multiplicity="0..1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marketing_orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="orderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Intent_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+    <End Role="Payment_Intent" Type="Self.Payment_Intent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Payment_Intent">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_saved_labels_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
+    <End Role="saved_labels" Type="Self.saved_labels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="saved_labels">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_saved_labels_Template_Details">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="saved_labels" Type="Self.saved_labels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="saved_labels">
+        <PropertyRef Name="templateid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saved_Templates_Template_Details">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="Templateid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saved_Templates_Template_dimensions">
+    <End Role="Template_dimensions" Type="Self.Template_dimensions" Multiplicity="0..1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_dimensions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="dimension" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saved_Templates_Template_type">
+    <End Role="Template_type" Type="Self.Template_type" Multiplicity="0..1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Templates_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Templates_Template_category">
+    <End Role="Template_categories" Type="Self.Template_categories" Multiplicity="1" />
+    <End Role="Saved_Templates" Type="Self.Saved_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Saved_Templates">
+        <PropertyRef Name="category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_signs_description_Template_dimensions">
+    <End Role="Template_dimensions" Type="Self.Template_dimensions" Multiplicity="1" />
+    <End Role="signs_description" Type="Self.signs_description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_dimensions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="signs_description">
+        <PropertyRef Name="dimension" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sys_Roles_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sys_Roles" Type="Self.Sys_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Sys_Roles">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sys_Users_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Sys_Users">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Appointments_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Appointments" Type="Self.Tb_Appointments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Appointments">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Conversation_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Conversation" Type="Self.Tb_Conversation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Conversation">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Customers_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Customers">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Docpackages_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Docpackages" Type="Self.Tb_Docpackages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Docpackages">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Marketing_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Marketing" Type="Self.Tb_Marketing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Marketing">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Network_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Network" Type="Self.Tb_Network" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Network">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Resources_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Resources" Type="Self.Tb_Resources" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Resources">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Videos_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Videos" Type="Self.Tb_Videos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Videos">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Webinars_Sys_Company">
+    <End Role="Sys_Company" Type="Self.Sys_Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Webinars" Type="Self.Tb_Webinars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Company">
+        <PropertyRef Name="ID_Company" />
+      </Principal>
+      <Dependent Role="Tb_Webinars">
+        <PropertyRef Name="ID_Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sys_Notifications_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sys_Notifications" Type="Self.Sys_Notifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Sys_Notifications">
+        <PropertyRef Name="ID_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Posts_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Posts" Type="Self.Tb_Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Tb_Posts">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Reminders_Sys_Users">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Reminders" Type="Self.Tb_Reminders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Tb_Reminders">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usersdoc">
+    <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="0..1" />
+    <End Role="Tb_DocuAgent" Type="Self.Tb_DocuAgent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sys_Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Tb_DocuAgent">
+        <PropertyRef Name="Id_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Message_Tb_Conversation">
+    <End Role="Tb_Conversation" Type="Self.Tb_Conversation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Message" Type="Self.Tb_Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tb_Conversation">
+        <PropertyRef Name="ID_Conversation" />
+      </Principal>
+      <Dependent Role="Tb_Message">
+        <PropertyRef Name="ID_Conversation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDoc">
+    <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="0..1" />
+    <End Role="Tb_LeadDocs" Type="Self.Tb_LeadDocs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tb_Customers">
+        <PropertyRef Name="ID_Customer" />
+      </Principal>
+      <Dependent Role="Tb_LeadDocs">
+        <PropertyRef Name="Id_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Process_Tb_Customers">
+    <End Role="Tb_Customers" Type="Self.Tb_Customers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Process" Type="Self.Tb_Process" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tb_Customers">
+        <PropertyRef Name="ID_Customer" />
+      </Principal>
+      <Dependent Role="Tb_Process">
+        <PropertyRef Name="ID_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tb_Docpackages_details_Tb_Docpackages">
+    <End Role="Tb_Docpackages" Type="Self.Tb_Docpackages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tb_Docpackages_details" Type="Self.Tb_Docpackages_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tb_Docpackages">
+        <PropertyRef Name="ID_docpackage" />
+      </Principal>
+      <Dependent Role="Tb_Docpackages_details">
+        <PropertyRef Name="ID_docpackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Network">
+    <End Role="Tb_Network" Type="Self.Tb_Network" Multiplicity="1" />
+    <End Role="Tb_Reviews" Type="Self.Tb_Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tb_Network">
+        <PropertyRef Name="ID_Network" />
+      </Principal>
+      <Dependent Role="Tb_Reviews">
+        <PropertyRef Name="Id_Network" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_market_subCateg_type_Market_Categ_type">
+    <End Role="Template_categories" Type="Self.Template_categories" Multiplicity="1" />
+    <End Role="template_subcategories" Type="Self.template_subcategories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="template_subcategories">
+        <PropertyRef Name="category_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Template_Details_Template_categories">
+    <End Role="Template_categories" Type="Self.Template_categories" Multiplicity="1" />
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Template_Details">
+        <PropertyRef Name="category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Template_colors_Template_Details">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="Template_colors" Type="Self.Template_colors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Template_colors">
+        <PropertyRef Name="templateid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Template_Details_Template_Details">
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="1" />
+    <End Role="Template_Details1" Type="Self.Template_Details" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Template_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Template_Details1">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Template_Details_Template_type">
+    <End Role="template_subcategories" Type="Self.template_subcategories" Multiplicity="0..1" />
+    <End Role="Template_Details" Type="Self.Template_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="template_subcategories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Template_Details">
+        <PropertyRef Name="subcategories" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Template_dimensions_Template_type">
+    <End Role="Template_type" Type="Self.Template_type" Multiplicity="1" />
+    <End Role="Template_dimensions" Type="Self.Template_dimensions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Template_dimensions">
+        <PropertyRef Name="type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_template_pricing_Template_dimensions">
+    <End Role="Template_dimensions" Type="Self.Template_dimensions" Multiplicity="1" />
+    <End Role="template_pricing" Type="Self.template_pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template_dimensions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="template_pricing">
+        <PropertyRef Name="dimensions" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Realstate_agentsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Billing_Shipping_details" EntityType="Self.Billing_Shipping_details" />
+    <EntitySet Name="crTb_OrderDetails" EntityType="Self.crTb_OrderDetails" />
+    <EntitySet Name="crTb_Orders" EntityType="Self.crTb_Orders" />
+    <EntitySet Name="label_color" EntityType="Self.label_color" />
+    <EntitySet Name="labels" EntityType="Self.labels" />
+    <EntitySet Name="Market_Categ_type" EntityType="Self.Market_Categ_type" />
+    <EntitySet Name="Marketing_order_details" EntityType="Self.Marketing_order_details" />
+    <EntitySet Name="marketing_orders" EntityType="Self.marketing_orders" />
+    <EntitySet Name="Payment_Intent" EntityType="Self.Payment_Intent" />
+    <EntitySet Name="Receipts" EntityType="Self.Receipts" />
+    <EntitySet Name="saved_labels" EntityType="Self.saved_labels" />
+    <EntitySet Name="Saved_Templates" EntityType="Self.Saved_Templates" />
+    <EntitySet Name="Shipping_Details" EntityType="Self.Shipping_Details" />
+    <EntitySet Name="signs_description" EntityType="Self.signs_description" />
+    <EntitySet Name="Sys_Company" EntityType="Self.Sys_Company" />
+    <EntitySet Name="Sys_Notifications" EntityType="Self.Sys_Notifications" />
+    <EntitySet Name="Sys_Roles" EntityType="Self.Sys_Roles" />
+    <EntitySet Name="Sys_Users" EntityType="Self.Sys_Users" />
+    <EntitySet Name="T_Company_Type" EntityType="Self.T_Company_Type" />
+    <EntitySet Name="Tb_Appointments" EntityType="Self.Tb_Appointments" />
+    <EntitySet Name="Tb_Conversation" EntityType="Self.Tb_Conversation" />
+    <EntitySet Name="Tb_Customers" EntityType="Self.Tb_Customers" />
+    <EntitySet Name="Tb_Customers_Users" EntityType="Self.Tb_Customers_Users" />
+    <EntitySet Name="Tb_docCategies" EntityType="Self.Tb_docCategies" />
+    <EntitySet Name="Tb_Docpackages" EntityType="Self.Tb_Docpackages" />
+    <EntitySet Name="Tb_Docpackages_details" EntityType="Self.Tb_Docpackages_details" />
+    <EntitySet Name="Tb_DocuAgent" EntityType="Self.Tb_DocuAgent" />
+    <EntitySet Name="Tb_LeadDocs" EntityType="Self.Tb_LeadDocs" />
+    <EntitySet Name="Tb_Marketing" EntityType="Self.Tb_Marketing" />
+    <EntitySet Name="Tb_Message" EntityType="Self.Tb_Message" />
+    <EntitySet Name="Tb_Network" EntityType="Self.Tb_Network" />
+    <EntitySet Name="Tb_Notes" EntityType="Self.Tb_Notes" />
+    <EntitySet Name="Tb_Options" EntityType="Self.Tb_Options" />
+    <EntitySet Name="Tb_Posts" EntityType="Self.Tb_Posts" />
+    <EntitySet Name="Tb_Process" EntityType="Self.Tb_Process" />
+    <EntitySet Name="Tb_Quotes" EntityType="Self.Tb_Quotes" />
+    <EntitySet Name="Tb_Reminders" EntityType="Self.Tb_Reminders" />
+    <EntitySet Name="Tb_Resources" EntityType="Self.Tb_Resources" />
+    <EntitySet Name="Tb_Reviews" EntityType="Self.Tb_Reviews" />
+    <EntitySet Name="Tb_Source" EntityType="Self.Tb_Source" />
+    <EntitySet Name="Tb_Status" EntityType="Self.Tb_Status" />
+    <EntitySet Name="Tb_Tasks" EntityType="Self.Tb_Tasks" />
+    <EntitySet Name="Tb_ToVerifyTaxes" EntityType="Self.Tb_ToVerifyTaxes" />
+    <EntitySet Name="Tb_Videos" EntityType="Self.Tb_Videos" />
+    <EntitySet Name="Tb_Webinars" EntityType="Self.Tb_Webinars" />
+    <EntitySet Name="Tb_WorkTeams" EntityType="Self.Tb_WorkTeams" />
+    <EntitySet Name="Template_categories" EntityType="Self.Template_categories" />
+    <EntitySet Name="Template_colors" EntityType="Self.Template_colors" />
+    <EntitySet Name="Template_Details" EntityType="Self.Template_Details" />
+    <EntitySet Name="Template_dimensions" EntityType="Self.Template_dimensions" />
+    <EntitySet Name="template_pricing" EntityType="Self.template_pricing" />
+    <EntitySet Name="template_subcategories" EntityType="Self.template_subcategories" />
+    <EntitySet Name="Template_type" EntityType="Self.Template_type" />
+    <AssociationSet Name="FK_Billing_Shipping_details_marketing_orders" Association="Self.FK_Billing_Shipping_details_marketing_orders">
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+      <End Role="Billing_Shipping_details" EntitySet="Billing_Shipping_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Billing_Shipping_details_Sys_Users" Association="Self.FK_Billing_Shipping_details_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Billing_Shipping_details" EntitySet="Billing_Shipping_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_crTb_OrderDetails_crTb_Orders" Association="Self.FK_crTb_OrderDetails_crTb_Orders">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="crTb_OrderDetails" EntitySet="crTb_OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_crTb_Orders_Sys_Company" Association="Self.FK_crTb_Orders_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="crTb_Orders" EntitySet="crTb_Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_label_color_label_color" Association="Self.FK_label_color_label_color">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="label_color" EntitySet="label_color" />
+    </AssociationSet>
+    <AssociationSet Name="FK_label_color_labels" Association="Self.FK_label_color_labels">
+      <End Role="labels" EntitySet="labels" />
+      <End Role="label_color" EntitySet="label_color" />
+    </AssociationSet>
+    <AssociationSet Name="FK_labels_Templates" Association="Self.FK_labels_Templates">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="labels" EntitySet="labels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_saved_labels_labels" Association="Self.FK_saved_labels_labels">
+      <End Role="labels" EntitySet="labels" />
+      <End Role="saved_labels" EntitySet="saved_labels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Marketing_order_details_marketing_orders" Association="Self.FK_Marketing_order_details_marketing_orders">
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+      <End Role="Marketing_order_details" EntitySet="Marketing_order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_marketing_orders_Sys_Users" Association="Self.FK_marketing_orders_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Intent_marketing_orders" Association="Self.FK_Payment_Intent_marketing_orders">
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+      <End Role="Payment_Intent" EntitySet="Payment_Intent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_marketing_orders" Association="Self.FK_Receipts_marketing_orders">
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saved_Templates_marketing_orders" Association="Self.FK_Saved_Templates_marketing_orders">
+      <End Role="marketing_orders" EntitySet="marketing_orders" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Intent_Sys_Users" Association="Self.FK_Payment_Intent_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Payment_Intent" EntitySet="Payment_Intent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Sys_Users" Association="Self.FK_Receipts_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_saved_labels_Sys_Users" Association="Self.FK_saved_labels_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="saved_labels" EntitySet="saved_labels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_saved_labels_Template_Details" Association="Self.FK_saved_labels_Template_Details">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="saved_labels" EntitySet="saved_labels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saved_Templates_Template_Details" Association="Self.FK_Saved_Templates_Template_Details">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saved_Templates_Template_dimensions" Association="Self.FK_Saved_Templates_Template_dimensions">
+      <End Role="Template_dimensions" EntitySet="Template_dimensions" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saved_Templates_Template_type" Association="Self.FK_Saved_Templates_Template_type">
+      <End Role="Template_type" EntitySet="Template_type" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Templates_Sys_Users" Association="Self.FK_Templates_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Templates_Template_category" Association="Self.FK_Templates_Template_category">
+      <End Role="Template_categories" EntitySet="Template_categories" />
+      <End Role="Saved_Templates" EntitySet="Saved_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_signs_description_Template_dimensions" Association="Self.FK_signs_description_Template_dimensions">
+      <End Role="Template_dimensions" EntitySet="Template_dimensions" />
+      <End Role="signs_description" EntitySet="signs_description" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sys_Roles_Sys_Company" Association="Self.FK_Sys_Roles_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Sys_Roles" EntitySet="Sys_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sys_Users_Sys_Company" Association="Self.FK_Sys_Users_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Appointments_Sys_Company" Association="Self.FK_Tb_Appointments_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Appointments" EntitySet="Tb_Appointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Conversation_Sys_Company" Association="Self.FK_Tb_Conversation_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Conversation" EntitySet="Tb_Conversation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Customers_Sys_Company" Association="Self.FK_Tb_Customers_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Docpackages_Sys_Company" Association="Self.FK_Tb_Docpackages_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Docpackages" EntitySet="Tb_Docpackages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Marketing_Sys_Company" Association="Self.FK_Tb_Marketing_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Marketing" EntitySet="Tb_Marketing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Network_Sys_Company" Association="Self.FK_Tb_Network_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Network" EntitySet="Tb_Network" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Resources_Sys_Company" Association="Self.FK_Tb_Resources_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Resources" EntitySet="Tb_Resources" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Videos_Sys_Company" Association="Self.FK_Tb_Videos_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Videos" EntitySet="Tb_Videos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Webinars_Sys_Company" Association="Self.FK_Tb_Webinars_Sys_Company">
+      <End Role="Sys_Company" EntitySet="Sys_Company" />
+      <End Role="Tb_Webinars" EntitySet="Tb_Webinars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sys_Notifications_Sys_Users" Association="Self.FK_Sys_Notifications_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Sys_Notifications" EntitySet="Sys_Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Posts_Sys_Users" Association="Self.FK_Tb_Posts_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Tb_Posts" EntitySet="Tb_Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Reminders_Sys_Users" Association="Self.FK_Tb_Reminders_Sys_Users">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Tb_Reminders" EntitySet="Tb_Reminders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usersdoc" Association="Self.fk_usersdoc">
+      <End Role="Sys_Users" EntitySet="Sys_Users" />
+      <End Role="Tb_DocuAgent" EntitySet="Tb_DocuAgent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Message_Tb_Conversation" Association="Self.FK_Tb_Message_Tb_Conversation">
+      <End Role="Tb_Conversation" EntitySet="Tb_Conversation" />
+      <End Role="Tb_Message" EntitySet="Tb_Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDoc" Association="Self.FK_CustomerDoc">
+      <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+      <End Role="Tb_LeadDocs" EntitySet="Tb_LeadDocs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Process_Tb_Customers" Association="Self.FK_Tb_Process_Tb_Customers">
+      <End Role="Tb_Customers" EntitySet="Tb_Customers" />
+      <End Role="Tb_Process" EntitySet="Tb_Process" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tb_Docpackages_details_Tb_Docpackages" Association="Self.FK_Tb_Docpackages_details_Tb_Docpackages">
+      <End Role="Tb_Docpackages" EntitySet="Tb_Docpackages" />
+      <End Role="Tb_Docpackages_details" EntitySet="Tb_Docpackages_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Network" Association="Self.FK_Network">
+      <End Role="Tb_Network" EntitySet="Tb_Network" />
+      <End Role="Tb_Reviews" EntitySet="Tb_Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_market_subCateg_type_Market_Categ_type" Association="Self.FK_market_subCateg_type_Market_Categ_type">
+      <End Role="Template_categories" EntitySet="Template_categories" />
+      <End Role="template_subcategories" EntitySet="template_subcategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Template_Details_Template_categories" Association="Self.FK_Template_Details_Template_categories">
+      <End Role="Template_categories" EntitySet="Template_categories" />
+      <End Role="Template_Details" EntitySet="Template_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Template_colors_Template_Details" Association="Self.FK_Template_colors_Template_Details">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="Template_colors" EntitySet="Template_colors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Template_Details_Template_Details" Association="Self.FK_Template_Details_Template_Details">
+      <End Role="Template_Details" EntitySet="Template_Details" />
+      <End Role="Template_Details1" EntitySet="Template_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Template_Details_Template_type" Association="Self.FK_Template_Details_Template_type">
+      <End Role="template_subcategories" EntitySet="template_subcategories" />
+      <End Role="Template_Details" EntitySet="Template_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Template_dimensions_Template_type" Association="Self.FK_Template_dimensions_Template_type">
+      <End Role="Template_type" EntitySet="Template_type" />
+      <End Role="Template_dimensions" EntitySet="Template_dimensions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_template_pricing_Template_dimensions" Association="Self.FK_template_pricing_Template_dimensions">
+      <End Role="Template_dimensions" EntitySet="Template_dimensions" />
+      <End Role="template_pricing" EntitySet="template_pricing" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

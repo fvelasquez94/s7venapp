@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Realestate_portal.Models;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
@@ -16,6 +17,19 @@ namespace Realestate_portal.Controllers
     {
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
+
+        private Imarket repo;
+
+        public PostsController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+
+        public PostsController()
+        {
+        }
+
+
         // GET: Posts
         public ActionResult Index( int broker=0)
         {
@@ -25,10 +39,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 ViewBag.rol = "";
 
@@ -112,10 +126,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 ViewBag.rol = "";
 
@@ -220,10 +234,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 ViewBag.rol = "";
 
@@ -288,10 +302,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 ViewBag.rol = "";
 

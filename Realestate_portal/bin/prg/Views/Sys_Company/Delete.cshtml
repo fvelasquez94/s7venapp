@@ -1,0 +1,106 @@
+﻿@model Realestate_portal.Models.Sys_Company
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">Brokers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+
+
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <h2>Delete</h2>
+
+                <h3>Are you sure you want to delete this?</h3>
+                <div>
+                    <h4></h4>
+                    <hr />
+                    <div class="widget-body" style="padding-bottom:250px">
+                        <div class="table-responsive">
+                            <table class="table" id="tableresources" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Logo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Web)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ShortName)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <!--Cuerpo de tabla-->
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Logo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Web)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ShortName)
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" /> |
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- End Calendar -->
+        </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+
+<!-- End Container -->

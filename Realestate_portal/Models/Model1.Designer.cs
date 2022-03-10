@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Fran-oficina\Desktop\ReposFreelance\PGR-ASP\Realestate_portal\Models\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\rodriguez\Desktop\real_state\Real_State_new\PGR-ASP\Realestate_portal\Models\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

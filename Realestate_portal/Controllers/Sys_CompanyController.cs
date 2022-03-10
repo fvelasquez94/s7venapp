@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
@@ -20,6 +21,18 @@ namespace Realestate_portal.Controllers
     {
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
+
+        private Imarket repo;
+
+        public Sys_CompanyController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+
+        public Sys_CompanyController()
+        {
+        }
+
 
         // GET: Sys_Company
         public ActionResult Index(int broker=0)
@@ -40,7 +53,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -96,7 +109,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -329,7 +342,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -436,7 +449,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -487,7 +500,7 @@ namespace Realestate_portal.Controllers
                 
                 Sys_Company sys_Company = db.Sys_Company.Find(id);
 
-                if (activeuser.ID_Company != id && id!=1)
+                if ( id!=1)
                 {
                     int id_company = sys_Company.ID_Company;
               
@@ -548,6 +561,12 @@ namespace Realestate_portal.Controllers
                     //eliminar agentes
                     var agents = db.Sys_Users.Where(c => c.ID_Company == id_company).ToList();
                     var agentsarr = db.Sys_Users.Where(c => c.ID_Company == id_company).Select(c => c.ID_User).ToList();
+
+                    var shipping = db.Billing_Shipping_details.Where(s => s.userid == id).ToList();
+                    db.Billing_Shipping_details.RemoveRange(shipping);
+                    db.SaveChanges();
+
+
                     if (agents.Count > 0)
                     {
                         //eliminamos documentos de clientes
@@ -557,9 +576,53 @@ namespace Realestate_portal.Controllers
                             db.Tb_DocuAgent.RemoveRange(docsagent);
                             db.SaveChanges();
                         }
+
+                        agents.ForEach(us => {
+                            var shipp = db.Billing_Shipping_details.Where(s => s.userid ==us.ID_User).ToList();
+                            db.Billing_Shipping_details.RemoveRange(shipp);
+                            db.SaveChanges();
+
+                            var lab = db.saved_labels.Where(s => s.userid == us.ID_User).ToList();
+                            db.saved_labels.RemoveRange(lab);
+                            db.SaveChanges();
+
+
+                            var ord = db.marketing_orders.Where(s => s.user_id == us.ID_User).ToList();
+                            db.marketing_orders.RemoveRange(ord);
+                            db.SaveChanges();
+
+                            var paym = db.Payment_Intent.Where(s => s.user_id == us.ID_User).ToList();
+                            db.Payment_Intent.RemoveRange(paym);
+                            db.SaveChanges();
+
+
+                            var rec = db.Receipts.Where(s => s.user_id == us.ID_User).ToList();
+                            db.Receipts.RemoveRange(rec);
+                            db.SaveChanges();
+
+                            var templat = db.Saved_Templates.Where(s => s.user_id == us.ID_User).ToList();
+                            db.Saved_Templates.RemoveRange(templat);
+                            db.SaveChanges();
+
+                            var not = db.Sys_Notifications.Where(s => s.ID_user == us.ID_User).ToList();
+                            db.Sys_Notifications.RemoveRange(not);
+                            db.SaveChanges();
+
+                            var appoin = db.Tb_Appointments.Where(s => s.ID_User == us.ID_User).ToList();
+                            db.Tb_Appointments.RemoveRange(appoin);
+                            db.SaveChanges();
+
+                            var cust_us = db.Tb_Customers_Users.Where(s => s.Id_User == us.ID_User).ToList();
+                            db.Tb_Customers_Users.RemoveRange(cust_us);
+                            db.SaveChanges();                           
+                        });
+
+                        
                         db.Sys_Users.RemoveRange(agents);
                         db.SaveChanges();
                     }
+                   
+
                     //Eliminar clientes     
                     if (customer.Count > 0)
                     {
@@ -573,7 +636,50 @@ namespace Realestate_portal.Controllers
                         db.SaveChanges();
                     }
 
-         
+                    var labe = db.saved_labels.Where(s => s.userid == id).ToList();
+                    db.saved_labels.RemoveRange(labe);
+                    db.SaveChanges();
+
+                    var order = db.marketing_orders.Where(s => s.user_id == id).ToList();
+                    db.marketing_orders.RemoveRange(order);
+                    db.SaveChanges();
+
+                    var payment = db.Payment_Intent.Where(s => s.user_id == id).ToList();
+                    db.Payment_Intent.RemoveRange(payment);
+                    db.SaveChanges();
+
+
+                    var receipt = db.Receipts.Where(s => s.user_id == id).ToList();
+                    db.Receipts.RemoveRange(receipt);
+                    db.SaveChanges();
+
+                    var templates = db.Saved_Templates.Where(s => s.user_id == id).ToList();
+                    db.Saved_Templates.RemoveRange(templates);
+                    db.SaveChanges();
+
+                    var noty = db.Sys_Notifications.Where(s => s.ID_user == id).ToList();
+                    db.Sys_Notifications.RemoveRange(noty);
+                    db.SaveChanges();
+
+                    var appoint = db.Tb_Appointments.Where(s => s.ID_User == id).ToList();
+                    db.Tb_Appointments.RemoveRange(appoint);
+                    db.SaveChanges();
+
+                    var cust_user = db.Tb_Customers_Users.Where(s => s.Id_User == id).ToList();
+                    db.Tb_Customers_Users.RemoveRange(cust_user);
+                    db.SaveChanges();
+
+                    var net = db.Tb_Network.Where(s => s.ID_Company == id).ToList();
+
+                    net.ForEach(n => {
+                        var rev = db.Tb_Reviews.Where(s => s.Id_Network == n.ID_Network).ToList();
+                        db.Tb_Reviews.RemoveRange(rev);
+                        db.SaveChanges();
+                    });
+                    
+                    
+                    db.Tb_Network.RemoveRange(net);
+                    db.SaveChanges();
 
 
                     db.Sys_Company.Remove(sys_Company);

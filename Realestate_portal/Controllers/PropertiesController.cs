@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
@@ -23,6 +24,18 @@ namespace Realestate_portal.Controllers
             var tb_Process = db.Tb_Process.Include(t => t.Tb_Customers);
             return View(tb_Process.ToList());
         }
+
+        private Imarket repo;
+
+        public PropertiesController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+
+        public PropertiesController()
+        {
+        }
+
 
         // GET: Properties/Details/5
         public ActionResult Details(int? id)
@@ -48,10 +61,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.rol = "";
 
                 //Filtros SA
@@ -195,10 +208,11 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
             tb_Process.Description = tb_Process.Address + " " + customer.Name + " " + customer.LastName + " " + tb_Process.Creation_date.ToShortDateString();
             tb_Process.ID_Property= tb_Process.Address + customer.Name+ customer.LastName + tb_Process.Creation_date.ToShortDateString();
             tb_Process.Source = customer.Source;
-            if (tb_Process.Stage == null)
-            {
-                tb_Process.Stage = customer.Marital_status;
-            }
+            tb_Process.Stage = "NOT ASSIGNED";
+            //if (tb_Process.Stage == null)
+            //{
+            //    tb_Process.Stage = customer.Marital_status;
+            //}
             if (customer.Source == null)
             {
                 tb_Process.Source = "";
@@ -221,10 +235,10 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 //Filtros SA
 
@@ -264,7 +278,22 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
                         var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
-                        RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
+                        ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
+                                                              //where (t.ID_Company == activeuser.ID_Company)
+                                                              select new
+                                                              {
+                                                                  ID = t.ID_Customer,
+                                                                  FullName = t.Name + " " + t.LastName
+                                                              }), "ID", "FullName", tb_Process.ID_Customer);
+
+
+                        ViewBag.ID_User = new SelectList((from t in db.Sys_Users
+                                                              //where (t.Roles.Contains("Agent"))
+                                                          select new
+                                                          {
+                                                              ID = t.ID_User,
+                                                              FullName = t.Name + " " + t.LastName
+                                                          }), "ID", "FullName", tb_Process.ID_User);
                     }
                     else
                     {
@@ -418,10 +447,10 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.rol = "";
 
                 //Filtros SA

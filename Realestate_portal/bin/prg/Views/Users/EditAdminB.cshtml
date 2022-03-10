@@ -1,0 +1,120 @@
+﻿@model Realestate_portal.Models.Sys_Users
+
+@{
+    ViewBag.Title = "Edit";
+
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">SETTINGS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        @if (TempData["advertencia"] != null)
+    {
+        <div class="alert alert-outline-warning dashed" role="alert">
+            @TempData["advertencia"]
+        </div><br />
+}
+
+        @if (TempData["exito"] != null)
+    {
+        <div class="alert alert-outline-success dashed" role="alert">
+            @TempData["exito"]
+        </div><br />
+}
+
+
+        <!-- Begin Widget -->
+              <div class="widget has-shadow">
+                  <div class="widget-header bordered no-actions d-flex align-items-center">
+                      <h4>SETTINGS</h4>
+                  </div>
+                  <!-- End Widget Header -->
+                  <!-- Begin Widget Body -->
+                  <div class="widget-body sliding-tabs" style="padding-bottom:250px">
+
+                      @using (Html.BeginForm())
+    {
+                  @Html.AntiForgeryToken()
+
+                  <ul class="nav nav-tabs" id="example-one" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" id="base-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Basic Information</a>
+                      </li>
+
+
+                  </ul>
+                  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                  @Html.HiddenFor(model => model.ID_User)
+
+                  <div class="tab-content pt-3">
+                      <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="base-tab-1">
+                          <br />
+                          <div class="form-group">
+                              @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                              <div class="col-md-10">
+                                  @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                  @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                              </div>
+                          </div>
+
+      
+                          <div class="form-group">
+                              @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                              <div class="col-md-10">
+                                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                  @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                              <div class="col-md-10">
+                                  @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                  @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                              </div>
+                          </div>
+
+
+                      <div class="form-group" >
+                          <label class="control-label col-md-2">Active user?</label>
+                          <div class="col-md-10">
+                              <div class="checkbox">
+                                  @Html.EditorFor(model => model.Active)
+                                  @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                              </div>
+                          </div>
+                      </div>
+
+
+                      </div>
+
+
+                      </div>
+
+
+                  <div class="form-group">
+                      <div class="col-md-offset-2 col-md-10">
+                          <input type="submit" value="Save" class="btn btn-default" />
+                      </div>
+                  </div>
+}
+
+                  </div>
+              </div>
+    </div>
+   </div>

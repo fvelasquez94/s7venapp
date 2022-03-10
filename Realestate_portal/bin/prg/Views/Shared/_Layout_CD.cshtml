@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Premium Group Realty NY Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site Description Here">
+    <link href="~/Content/assetsPD/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/stack-interface.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/socicon.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/lightbox.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/flickity.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/iconsmind.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/jquery.steps.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/theme.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/custom.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assetsPD/css/font-robotoslab.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/pgrlogos/S7VENStandalone.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/pgrlogos/S7VENStandalone.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/pgrlogos/S7VENStandalone.png">
+
+</head>
+<body>
+
+ 
+
+    @RenderBody()
+
+
+    <script src="~/Content/assetsPD/js/jquery-3.1.1.min.js"></script>
+    <script src="~/Content/assetsPD/js/flickity.min.js"></script>
+    <script src="~/Content/assetsPD/js/easypiechart.min.js"></script>
+    <script src="~/Content/assetsPD/js/parallax.js"></script>
+    <script src="~/Content/assetsPD/js/typed.min.js"></script>
+    <script src="~/Content/assetsPD/js/datepicker.js"></script>
+    <script src="~/Content/assetsPD/js/isotope.min.js"></script>
+    <script src="~/Content/assetsPD/js/ytplayer.min.js"></script>
+    <script src="~/Content/assetsPD/js/lightbox.min.js"></script>
+    <script src="~/Content/assetsPD/js/granim.min.js"></script>
+    <script src="~/Content/assetsPD/js/jquery.steps.min.js"></script>
+    <script src="~/Content/assetsPD/js/countdown.min.js"></script>
+    <script src="~/Content/assetsPD/js/twitterfetcher.min.js"></script>
+    <script src="~/Content/assetsPD/js/spectragram.min.js"></script>
+    <script src="~/Content/assetsPD/js/smooth-scroll.min.js"></script>
+    <script src="~/Content/assetsPD/js/scripts.js"></script>
+</body>
+</html>
+
+<!--NOTIFICACIONES GLOBALES-->
+
+@if (TempData["error"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+
+            new Noty({
+                type: 'error',
+                layout: 'topRight',
+                text: '@(TempData["error"])',
+                progressBar: true,
+                timeout: 2500
+            }).show()
+        };
+    </script>
+}
+
+
+@if (TempData["advertencia"] != null)
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        
+            new Noty({
+                type: 'warning',
+                layout: 'topRight',
+                text: '@(TempData["advertencia"])',
+                progressBar: true,
+                timeout: 2500,
+                animation:
+            }).show()
+
+        });
+    </script>
+}
+
+
+@if (TempData["exito"] != null)
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+  
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                text: '@(TempData["exito"])',
+                progressBar: true,
+                timeout: 2500
+            }).show()
+        });
+    </script>
+}

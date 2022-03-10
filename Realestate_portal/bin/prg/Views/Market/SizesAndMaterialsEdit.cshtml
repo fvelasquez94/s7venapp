@@ -1,0 +1,341 @@
+﻿@using Realestate_portal.Models.ViewModels.Market
+
+@model SavedTemplateModel
+
+@{
+    ViewBag.Title = "Edit Materials";
+   
+}
+<style>
+    #img {
+        border: solid black 2px;
+    }
+
+    #price, #pricelbl {
+        font-size: 20px;
+    }
+
+    #description {
+        color: black;
+        font-size: 20px;
+    }
+</style>
+
+
+<div class="top-bar -mx-4 px-4 md:mx-0 md:px-0">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <a href="@Url.Action("Index","Market")">Market</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        <a href="@Url.Action("Brands","Market")">Brands</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        <a href="@Url.Action("ShoppingCart", "Market")">Back to Cart</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+       
+        <a href="#" class="breadcrumb--active">Size and Materials Edit</a>
+    </div>
+    <!-- END: Breadcrumb -->
+
+</div><br />
+<br />
+
+
+<div class="grid grid-cols-12">
+    <div class="col-span-12 2xl:col-span-12">
+        <div class="container mt-1">
+            <div class="row">
+                <div class="col-md-12  text-center">
+                    <h1 style="font-weight: bold; color: black ">Materials and Sizes</h1>
+                    <br />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-12 float-left">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Template", "Market", new {broker=0 })" style="font-weight: bold; color: #236386;margin-right:10px"><i data-feather="check-circle"></i> Select a template</a></li>
+                            <li class="breadcrumb-item" aria-current="page" style="font-weight: bold; color: darkgreen;margin-right:10px"><i data-feather="check-circle"></i> Select size and materials</li>
+                            <li class="breadcrumb-item" aria-current="page"><i data-feather="arrow-right"></i> Customize it</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <br />
+            @if (ViewBag.error != null)
+    {
+        <div class="alert-warning"><h1>@ViewBag.error</h1></div>
+}
+            <br />
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-1 col-sm-12"></div>
+                <div class="col-md-5 col-sm-12">
+                    <img id="img" src="~/@Model.Location" alt="Alternate Text" />
+                    <br />
+                </div>
+                <div class="col-md-1 col-sm-12"></div>
+                <div class="col-md-4 col-sm-12">
+                    <!--Form starts here-->
+                    @using (Html.BeginForm("EditMaterials", "Market", new { templateid = ViewBag.templateid, savedId = ViewBag.id, }, FormMethod.Post))
+                    {
+            @Html.AntiForgeryToken()
+            <br />
+            <div>
+                <h3><strong>2. Select type &nbsp; <span style="color:red">*</span> </strong></h3>
+           
+                   
+                    <select name="Material" class="custom-select" id="dimension">
+                        <option value="0" selected>Choose...</option>
+                        @if (ViewBag.dimensions != null) {
+                                                    foreach (var item in ViewBag.dimensions)
+            {
+                if (item == Model.Material)
+                {
+                    <option selected value="@item">@item</option>
+    }
+    else
+    {
+            <option value="@item">@item</option>
+}
+
+}
+                        }
+
+                    </select>
+               
+                <div><span style="color:red" id="wngdimension"></span> </div>
+            </div>
+            <input type="hidden" name="price" id="priceval" value="" />
+            <div>
+                <div>
+                    <br />
+                    <div>
+                        <h3><strong> Qty &nbsp; <span style="color:red">*</span></strong></h3>
+                      
+                          
+                        <select name="amount" class="custom-select" id="amount">
+                            @if (ViewBag.amount != null)
+    {
+        foreach (var item in ViewBag.amount)
+        {
+            if (item == Model.Amount)
+            {
+                        <option class="opt" selected value="@item">@item</option>
+}
+else
+{
+                        <option class="opt" value="@item">@item</option>
+}
+
+}
+}
+
+                        </select>
+                      
+                        <div><span style="color:red" id="wngamount"></span> </div>
+                    </div>
+                    <div>
+                        <strong id="pricelbl"></strong> <a id="price">$@Model.Price</a>
+                        <br />
+                        <br />
+                        <h5>
+                            <div style="display:inline-block;">
+                                <strong id="description">
+                                    @ViewBag.description
+                                </strong>
+                            </div>
+                        </h5>
+                    </div>
+                    <br />
+                    <div>
+                        <input type="hidden" name="Templateid" value="@ViewBag.templateid" />
+                        <input type="hidden" name="dimension" id="dimensionval" value="" />
+                        <input type="hidden" name="id" value="@Model.Id" />
+
+                        <button id="submit" style="display:none" type="submit"></button>
+                    </div>
+                </div>
+            </div>
+            <!--Form ends here-->
+}
+            <button id="validator" class="btn btn-primary btn-lg btn-block"><strong>CUSTOMIZE IT</strong> <i data-feather="arrow-right"></i></button>                </div>
+
+                <div class="col-md-1 col-sm-12"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<br />
+<br />
+
+@section Scripts{
+    <script>
+
+        var img = document.getElementById("img");
+        var dimension = document.getElementById("dimension");
+        var amount = document.getElementById("amount");
+        var validator = document.getElementById("validator");
+        var wngamount = document.getElementById("wngamount");
+        var wngmat = document.getElementById("wngdimension");
+        var price = document.getElementById("price");
+        var pricelbl = document.getElementById("pricelbl");
+        var description = document.getElementById("description");
+        var priceval = document.getElementById("priceval");
+        var dimensionval = document.getElementById("dimensionval");
+        var prices=[];
+        var quantities=[];
+        var flag = 0;
+
+        window.onload = function () {
+            img.width = removePixels("@ViewBag.width");
+            img.height = removePixels("@ViewBag.height");
+
+            var type = dimension.value;
+              $.ajax({
+                        type: 'GET',
+                   contentType: 'application/json',
+                        url: '@Url.Action("GetPricesByType", "Market")'+"?type="+type+"&typeId=@ViewBag.type",
+                        data: null,
+                        processData: true,
+                        success: function (result) {
+                            if (result) {
+                                prices = result;
+                                console.log(prices);
+                                var opt = document.querySelectorAll(".opt");
+                                for (var item of opt) {
+                                    quantities.push(item.value);
+                                }
+                            }
+                        },
+                        error: function (error) {
+                            setTimeout(function () {
+                                alert("Error getting template details, refresh the page and try again...");
+                            }, 1000);
+
+                        }
+                    });
+        }
+
+        console.log(priceval);
+
+        amount.onchange = (e) => {
+            console.log("i am changing");
+            var counter = 0;
+            if (e.target.value !== 0) {
+                if (prices) {
+                    if (quantities) {
+                        for (var item of quantities) {
+                            if (item == e.target.value) {
+                                price.innerHTML = "$ " + prices[counter];
+                                priceval.value = prices[counter];
+                            }
+                            counter++;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        dimension.onchange = (e) => {
+            if (e.target.value != 0) {
+                 $("#preloader").show();
+            var type = dimension.value;
+               $.ajax({
+                        type: 'GET',
+                   contentType: 'application/json',
+                        url: '@Url.Action("GetQuantyAndDetails", "Market")'+"?type="+type+"&typeId=@ViewBag.type",
+                        data: null,
+                        processData: true,
+                        success: function (result) {
+                            if (result) {
+                                $("#preloader").hide();
+                                amount.innerHTML = "";
+                                var option = null;
+                                for (var item of result.Quantity) {
+                                    option = document.createElement('option');
+                                    option.value = item;
+                                    option.innerHTML = item;
+                                    option.classList.add('price');
+                                    amount.append(option);
+                                }
+
+                                if (result.Quantity) {
+                                    pricegroup = document.querySelectorAll(".price");
+                                    pricelbl.innerHTML = "Price : ";
+                                    price.innerHTML = "$ " + result.Prices[0];
+                                    priceval.value = result.Prices[0];
+                                    console.log(priceval.value);
+                                    description.innerHTML = result.Description;
+                                    prices = result.Prices;
+                                    quantities = result.Quantity;
+                                    dimensionval.value = result.dimension;
+                                }
+
+                            }
+                            else {
+                                $("#preloader").hide();
+                                alert("Error getting template details, refresh the page and try again...");
+                            }
+                        },
+                        error: function (error) {
+                            $("#preloader").hide();
+                            console.log(error);
+                            setTimeout(function () {
+                                alert("Error getting template details, refresh the page and try again...");
+                            }, 1000);
+
+                        }
+                    });
+            }
+
+        }
+
+        validator.onclick = function () {
+            if (dimension.value == 0) {
+                wngmat.innerHTML = "You must select a type";
+                flag++;
+            } else {
+                wngmat.innerHTML = "";
+            }
+
+            if (amount.value == 0) {
+                wngamount.innerHTML = "You must select an amount";
+                flag++;
+            } else {
+                wngamount.innerHTML = "";
+            }
+
+
+            if (flag !== 0) {
+                flag = 0;
+                return;
+            } else {
+                $("#submit").trigger("click");
+            }
+
+        }
+
+
+        function removePixels(text) {
+            var chars = text.split('');
+
+            var len = chars.length - 1;
+            var result = '';
+            var count = 1;
+            for (var i of chars) {
+                if (count == len) {
+                    break;
+                }
+                result = result + i;
+                count++;
+            }
+            return result;
+        }
+    </script>
+}

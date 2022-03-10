@@ -1,0 +1,853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Realstate_agentsModelStoreContainer" CdmEntityContainer="Realstate_agentsEntities">
+    <EntitySetMapping Name="Billing_Shipping_details">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Billing_Shipping_details">
+        <MappingFragment StoreEntitySet="Billing_Shipping_details">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="b_Adress" ColumnName="b_Adress" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="s_type" ColumnName="s_type" />
+          <ScalarProperty Name="s_name" ColumnName="s_name" />
+          <ScalarProperty Name="s_adress" ColumnName="s_adress" />
+          <ScalarProperty Name="s_city" ColumnName="s_city" />
+          <ScalarProperty Name="s_state" ColumnName="s_state" />
+          <ScalarProperty Name="s_zip_code" ColumnName="s_zip_code" />
+          <ScalarProperty Name="s_country" ColumnName="s_country" />
+          <ScalarProperty Name="s_suite" ColumnName="s_suite" />
+          <ScalarProperty Name="b_suite" ColumnName="b_suite" />
+          <ScalarProperty Name="s_phone" ColumnName="s_phone" />
+          <ScalarProperty Name="completed" ColumnName="completed" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crTb_OrderDetails">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.crTb_OrderDetails">
+        <MappingFragment StoreEntitySet="crTb_OrderDetails">
+          <ScalarProperty Name="ID_detail" ColumnName="ID_detail" />
+          <ScalarProperty Name="Resource" ColumnName="Resource" />
+          <ScalarProperty Name="Style" ColumnName="Style" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Company_name" ColumnName="Company_name" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Cellphone" ColumnName="Cellphone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Facebook_url" ColumnName="Facebook_url" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="GroupQty" ColumnName="GroupQty" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ID_order" ColumnName="ID_order" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crTb_Orders">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.crTb_Orders">
+        <MappingFragment StoreEntitySet="crTb_Orders">
+          <ScalarProperty Name="ID_order" ColumnName="ID_order" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="label_color">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.label_color">
+        <MappingFragment StoreEntitySet="label_color">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="background" ColumnName="background" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="labelid" ColumnName="labelid" />
+          <ScalarProperty Name="label_name" ColumnName="label_name" />
+          <ScalarProperty Name="templateid" ColumnName="templateid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="labels">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.labels">
+        <MappingFragment StoreEntitySet="labels">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="template" ColumnName="template" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="p_top" ColumnName="p_top" />
+          <ScalarProperty Name="p_bottom" ColumnName="p_bottom" />
+          <ScalarProperty Name="p_right" ColumnName="p_right" />
+          <ScalarProperty Name="p_left" ColumnName="p_left" />
+          <ScalarProperty Name="Font" ColumnName="Font" />
+          <ScalarProperty Name="Font_type" ColumnName="Font_type" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="size" ColumnName="size" />
+          <ScalarProperty Name="width" ColumnName="width" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="pic_bottom" ColumnName="pic_bottom" />
+          <ScalarProperty Name="pic_left" ColumnName="pic_left" />
+          <ScalarProperty Name="font_weight" ColumnName="font_weight" />
+          <ScalarProperty Name="text_position" ColumnName="text_position" />
+          <ScalarProperty Name="shape" ColumnName="shape" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Market_Categ_type">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Market_Categ_type">
+        <MappingFragment StoreEntitySet="Market_Categ_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="subcategory" ColumnName="subcategory" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="business_card" ColumnName="business_card" />
+          <ScalarProperty Name="yard_signs" ColumnName="yard_signs" />
+          <ScalarProperty Name="riders" ColumnName="riders" />
+          <ScalarProperty Name="open_house" ColumnName="open_house" />
+          <ScalarProperty Name="closing_signs" ColumnName="closing_signs" />
+          <ScalarProperty Name="for_sale_panels" ColumnName="for_sale_panels" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marketing_order_details">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Marketing_order_details">
+        <MappingFragment StoreEntitySet="Marketing_order_details">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="template" ColumnName="template" />
+          <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+          <ScalarProperty Name="items" ColumnName="items" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="marketing_orders">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.marketing_orders">
+        <MappingFragment StoreEntitySet="marketing_orders">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="items" ColumnName="items" />
+          <ScalarProperty Name="ttl_price" ColumnName="ttl_price" />
+          <ScalarProperty Name="taxes" ColumnName="taxes" />
+          <ScalarProperty Name="shipping" ColumnName="shipping" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+          <ScalarProperty Name="payment_intent_id" ColumnName="payment_intent_id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payment_Intent">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Payment_Intent">
+        <MappingFragment StoreEntitySet="Payment_Intent">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="payment_intent_id" ColumnName="payment_intent_id" />
+          <ScalarProperty Name="shipping" ColumnName="shipping" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="items" ColumnName="items" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receipts">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Receipts">
+        <MappingFragment StoreEntitySet="Receipts">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="file_name" ColumnName="file_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="saved_labels">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.saved_labels">
+        <MappingFragment StoreEntitySet="saved_labels">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="labelid" ColumnName="labelid" />
+          <ScalarProperty Name="templateid" ColumnName="templateid" />
+          <ScalarProperty Name="saved_template" ColumnName="saved_template" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="font_size" ColumnName="font_size" />
+          <ScalarProperty Name="color" ColumnName="color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Saved_Templates">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Saved_Templates">
+        <MappingFragment StoreEntitySet="Saved_Templates">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="Templateid" ColumnName="Templateid" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Holes" ColumnName="Holes" />
+          <ScalarProperty Name="Laminate" ColumnName="Laminate" />
+          <ScalarProperty Name="clearcoat" ColumnName="clearcoat" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="label_num" ColumnName="label_num" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="completed" ColumnName="completed" />
+          <ScalarProperty Name="photo_path" ColumnName="photo_path" />
+          <ScalarProperty Name="logo_path" ColumnName="logo_path" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="dimension" ColumnName="dimension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shipping_Details">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Shipping_Details">
+        <MappingFragment StoreEntitySet="Shipping_Details">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="carrier" ColumnName="carrier" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="dates" ColumnName="dates" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="signs_description">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.signs_description">
+        <MappingFragment StoreEntitySet="signs_description">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="dimension" ColumnName="dimension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sys_Company">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Company">
+        <MappingFragment StoreEntitySet="Sys_Company">
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Agents" ColumnName="Agents" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sys_Notifications">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Notifications">
+        <MappingFragment StoreEntitySet="Sys_Notifications">
+          <ScalarProperty Name="ID_notification" ColumnName="ID_notification" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sys_Roles">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Roles">
+        <MappingFragment StoreEntitySet="Sys_Roles">
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sys_Users">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Sys_Users">
+        <MappingFragment StoreEntitySet="Sys_Users">
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Birth" ColumnName="Birth" />
+          <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Last_login" ColumnName="Last_login" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Main_telephone" ColumnName="Main_telephone" />
+          <ScalarProperty Name="Secundary_telephone" ColumnName="Secundary_telephone" />
+          <ScalarProperty Name="Fb_url" ColumnName="Fb_url" />
+          <ScalarProperty Name="Ins_url" ColumnName="Ins_url" />
+          <ScalarProperty Name="Tw_url" ColumnName="Tw_url" />
+          <ScalarProperty Name="Other_url" ColumnName="Other_url" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Email_active" ColumnName="Email_active" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+          <ScalarProperty Name="Brokerage_name" ColumnName="Brokerage_name" />
+          <ScalarProperty Name="Brokerage_address" ColumnName="Brokerage_address" />
+          <ScalarProperty Name="Broker_Contact" ColumnName="Broker_Contact" />
+          <ScalarProperty Name="Broker_License" ColumnName="Broker_License" />
+          <ScalarProperty Name="My_License" ColumnName="My_License" />
+          <ScalarProperty Name="Member_since" ColumnName="Member_since" />
+          <ScalarProperty Name="Bank" ColumnName="Bank" />
+          <ScalarProperty Name="Bank_number" ColumnName="Bank_number" />
+          <ScalarProperty Name="Bank_typeaccount" ColumnName="Bank_typeaccount" />
+          <ScalarProperty Name="Credit_number" ColumnName="Credit_number" />
+          <ScalarProperty Name="Credit_name" ColumnName="Credit_name" />
+          <ScalarProperty Name="Credit_classification" ColumnName="Credit_classification" />
+          <ScalarProperty Name="Credit_month" ColumnName="Credit_month" />
+          <ScalarProperty Name="Credit_year" ColumnName="Credit_year" />
+          <ScalarProperty Name="Team_Leader" ColumnName="Team_Leader" />
+          <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
+          <ScalarProperty Name="Leader_Name" ColumnName="Leader_Name" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Company_Type">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.T_Company_Type">
+        <MappingFragment StoreEntitySet="T_Company_Type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="company" ColumnName="company" />
+          <ScalarProperty Name="path" ColumnName="path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Appointments">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Appointments">
+        <MappingFragment StoreEntitySet="Tb_Appointments">
+          <ScalarProperty Name="ID_Appointment" ColumnName="ID_Appointment" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID_Process" ColumnName="ID_Process" />
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Date_end" ColumnName="Date_end" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Conversation">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Conversation">
+        <MappingFragment StoreEntitySet="Tb_Conversation">
+          <ScalarProperty Name="ID_Conversation" ColumnName="ID_Conversation" />
+          <ScalarProperty Name="ID_Sender" ColumnName="ID_Sender" />
+          <ScalarProperty Name="ID_Receptor" ColumnName="ID_Receptor" />
+          <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Customers">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers">
+        <MappingFragment StoreEntitySet="Tb_Customers">
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Marital_status" ColumnName="Marital_status" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Lead" ColumnName="Lead" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Customers_Users">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Customers_Users">
+        <MappingFragment StoreEntitySet="Tb_Customers_Users">
+          <ScalarProperty Name="Id_Customer_User" ColumnName="Id_Customer_User" />
+          <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+          <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
+          <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+          <ScalarProperty Name="Teamleader" ColumnName="Teamleader" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_docCategies">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_docCategies">
+        <MappingFragment StoreEntitySet="Tb_docCategies">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+          <ScalarProperty Name="Category_Title" ColumnName="Category_Title" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Mandatory" ColumnName="Mandatory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Docpackages">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Docpackages">
+        <MappingFragment StoreEntitySet="Tb_Docpackages">
+          <ScalarProperty Name="ID_docpackage" ColumnName="ID_docpackage" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Total_docs" ColumnName="Total_docs" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="original" ColumnName="original" />
+          <ScalarProperty Name="Total_docsf" ColumnName="Total_docsf" />
+          <ScalarProperty Name="Finished" ColumnName="Finished" />
+          <ScalarProperty Name="Sent" ColumnName="Sent" />
+          <ScalarProperty Name="ID_Process" ColumnName="ID_Process" />
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="ID_Property" ColumnName="ID_Property" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Docpackages_details">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Docpackages_details">
+        <MappingFragment StoreEntitySet="Tb_Docpackages_details">
+          <ScalarProperty Name="ID_Detail" ColumnName="ID_Detail" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="original" ColumnName="original" />
+          <ScalarProperty Name="uploaded" ColumnName="uploaded" />
+          <ScalarProperty Name="sent" ColumnName="sent" />
+          <ScalarProperty Name="mandatory" ColumnName="mandatory" />
+          <ScalarProperty Name="ID_docpackage" ColumnName="ID_docpackage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_DocuAgent">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_DocuAgent">
+        <MappingFragment StoreEntitySet="Tb_DocuAgent">
+          <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
+          <ScalarProperty Name="Doc_Name" ColumnName="Doc_Name" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+          <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_LeadDocs">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_LeadDocs">
+        <MappingFragment StoreEntitySet="Tb_LeadDocs">
+          <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Marketing">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Marketing">
+        <MappingFragment StoreEntitySet="Tb_Marketing">
+          <ScalarProperty Name="ID_marketing" ColumnName="ID_marketing" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Likes" ColumnName="Likes" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="T_image" ColumnName="T_image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Message">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Message">
+        <MappingFragment StoreEntitySet="Tb_Message">
+          <ScalarProperty Name="ID_message" ColumnName="ID_message" />
+          <ScalarProperty Name="Message_content" ColumnName="Message_content" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="ID_Conversation" ColumnName="ID_Conversation" />
+          <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+          <ScalarProperty Name="Is_read" ColumnName="Is_read" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Network">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Network">
+        <MappingFragment StoreEntitySet="Tb_Network">
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="name_company" ColumnName="name_company" />
+          <ScalarProperty Name="ID_Network" ColumnName="ID_Network" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Likes" ColumnName="Likes" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="T_image" ColumnName="T_image" />
+          <ScalarProperty Name="super_admin" ColumnName="super_admin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Notes">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Notes">
+        <MappingFragment StoreEntitySet="Tb_Notes">
+          <ScalarProperty Name="ID_note" ColumnName="ID_note" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ID_Property" ColumnName="ID_Property" />
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Options">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Options">
+        <MappingFragment StoreEntitySet="Tb_Options">
+          <ScalarProperty Name="ID_option" ColumnName="ID_option" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Posts">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Posts">
+        <MappingFragment StoreEntitySet="Tb_Posts">
+          <ScalarProperty Name="ID_Post" ColumnName="ID_Post" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Content_post" ColumnName="Content_post" />
+          <ScalarProperty Name="Url_image" ColumnName="Url_image" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lng" ColumnName="Lng" />
+          <ScalarProperty Name="Start_at" ColumnName="Start_at" />
+          <ScalarProperty Name="Finish_at" ColumnName="Finish_at" />
+          <ScalarProperty Name="Post_type" ColumnName="Post_type" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Likes" ColumnName="Likes" />
+          <ScalarProperty Name="User_likes" ColumnName="User_likes" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="User_comments" ColumnName="User_comments" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="Post_parent" ColumnName="Post_parent" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Process">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Process">
+        <MappingFragment StoreEntitySet="Tb_Process">
+          <ScalarProperty Name="ID_Process" ColumnName="ID_Process" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="ID_Property" ColumnName="ID_Property" />
+          <ScalarProperty Name="Property" ColumnName="Property" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Purchase_price" ColumnName="Purchase_price" />
+          <ScalarProperty Name="Commission_amount" ColumnName="Commission_amount" />
+          <ScalarProperty Name="Commissionperc" ColumnName="Commissionperc" />
+          <ScalarProperty Name="Closing_date" ColumnName="Closing_date" />
+          <ScalarProperty Name="Under_contract_date" ColumnName="Under_contract_date" />
+          <ScalarProperty Name="Offer_accepted_date" ColumnName="Offer_accepted_date" />
+          <ScalarProperty Name="Inspection_date" ColumnName="Inspection_date" />
+          <ScalarProperty Name="Stage" ColumnName="Stage" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="TypeofAgency" ColumnName="TypeofAgency" />
+          <ScalarProperty Name="Loan_Officer_name" ColumnName="Loan_Officer_name" />
+          <ScalarProperty Name="Attorneys_name" ColumnName="Attorneys_name" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Loan_Officer_tel" ColumnName="Loan_Officer_tel" />
+          <ScalarProperty Name="Attorneys_tel" ColumnName="Attorneys_tel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Quotes">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Quotes">
+        <MappingFragment StoreEntitySet="Tb_Quotes">
+          <ScalarProperty Name="ID_quote" ColumnName="ID_quote" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Reminders">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Reminders">
+        <MappingFragment StoreEntitySet="Tb_Reminders">
+          <ScalarProperty Name="ID_Reminder" ColumnName="ID_Reminder" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Resources">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Resources">
+        <MappingFragment StoreEntitySet="Tb_Resources">
+          <ScalarProperty Name="ID_Resource" ColumnName="ID_Resource" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Doc_type" ColumnName="Doc_type" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Times_downloaded" ColumnName="Times_downloaded" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Extension_file" ColumnName="Extension_file" />
+          <ScalarProperty Name="Id_Leader" ColumnName="Id_Leader" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Reviews">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Reviews">
+        <MappingFragment StoreEntitySet="Tb_Reviews">
+          <ScalarProperty Name="Id_Review" ColumnName="Id_Review" />
+          <ScalarProperty Name="Rate_Review" ColumnName="Rate_Review" />
+          <ScalarProperty Name="Date_Review" ColumnName="Date_Review" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Id_Network" ColumnName="Id_Network" />
+          <ScalarProperty Name="Name_User" ColumnName="Name_User" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Source">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Source">
+        <MappingFragment StoreEntitySet="Tb_Source">
+          <ScalarProperty Name="Id_Source" ColumnName="Id_Source" />
+          <ScalarProperty Name="Source_name" ColumnName="Source_name" />
+          <ScalarProperty Name="Id_Company" ColumnName="Id_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Status">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Status">
+        <MappingFragment StoreEntitySet="Tb_Status">
+          <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
+          <ScalarProperty Name="Stage_name" ColumnName="Stage_name" />
+          <ScalarProperty Name="Id_Company" ColumnName="Id_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Tasks">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Tasks">
+        <MappingFragment StoreEntitySet="Tb_Tasks">
+          <ScalarProperty Name="ID_task" ColumnName="ID_task" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Finished" ColumnName="Finished" />
+          <ScalarProperty Name="Createdat" ColumnName="Createdat" />
+          <ScalarProperty Name="Lastupdate" ColumnName="Lastupdate" />
+          <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_ToVerifyTaxes">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_ToVerifyTaxes">
+        <MappingFragment StoreEntitySet="Tb_ToVerifyTaxes">
+          <ScalarProperty Name="Id_Document" ColumnName="Id_Document" />
+          <ScalarProperty Name="Doc_Name" ColumnName="Doc_Name" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+          <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Videos">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Videos">
+        <MappingFragment StoreEntitySet="Tb_Videos">
+          <ScalarProperty Name="ID_Video" ColumnName="ID_Video" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Likes" ColumnName="Likes" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="T_image" ColumnName="T_image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_Webinars">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_Webinars">
+        <MappingFragment StoreEntitySet="Tb_Webinars">
+          <ScalarProperty Name="ID_Webinar" ColumnName="ID_Webinar" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Max_users" ColumnName="Max_users" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Url_video" ColumnName="Url_video" />
+          <ScalarProperty Name="Date_end" ColumnName="Date_end" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tb_WorkTeams">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Tb_WorkTeams">
+        <MappingFragment StoreEntitySet="Tb_WorkTeams">
+          <ScalarProperty Name="ID_team" ColumnName="ID_team" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ID_Company" ColumnName="ID_Company" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+          <ScalarProperty Name="Last_update" ColumnName="Last_update" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Template_categories">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Template_categories">
+        <MappingFragment StoreEntitySet="Template_categories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="childs" ColumnName="childs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Template_colors">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Template_colors">
+        <MappingFragment StoreEntitySet="Template_colors">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="templateid" ColumnName="templateid" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="path" ColumnName="path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Template_Details">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Template_Details">
+        <MappingFragment StoreEntitySet="Template_Details">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="subcategories" ColumnName="subcategories" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="width" ColumnName="width" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="cleaned_path" ColumnName="cleaned_path" />
+          <ScalarProperty Name="cleaned_name" ColumnName="cleaned_name" />
+          <ScalarProperty Name="header" ColumnName="header" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="agent_name" ColumnName="agent_name" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="other" ColumnName="other" />
+          <ScalarProperty Name="adress_1" ColumnName="adress_1" />
+          <ScalarProperty Name="adress_2" ColumnName="adress_2" />
+          <ScalarProperty Name="instagram" ColumnName="instagram" />
+          <ScalarProperty Name="facebook" ColumnName="facebook" />
+          <ScalarProperty Name="profile_pic" ColumnName="profile_pic" />
+          <ScalarProperty Name="pic_path" ColumnName="pic_path" />
+          <ScalarProperty Name="original_width" ColumnName="original_width" />
+          <ScalarProperty Name="original_height" ColumnName="original_height" />
+          <ScalarProperty Name="saved_width" ColumnName="saved_width" />
+          <ScalarProperty Name="saved_height" ColumnName="saved_height" />
+          <ScalarProperty Name="logo_path" ColumnName="logo_path" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="pic_round" ColumnName="pic_round" />
+          <ScalarProperty Name="back" ColumnName="back" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Template_dimensions">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Template_dimensions">
+        <MappingFragment StoreEntitySet="Template_dimensions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="dimensions" ColumnName="dimensions" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="template_pricing">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.template_pricing">
+        <MappingFragment StoreEntitySet="template_pricing">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="dimensions" ColumnName="dimensions" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="template_subcategories">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.template_subcategories">
+        <MappingFragment StoreEntitySet="template_subcategories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="category_type" ColumnName="category_type" />
+          <ScalarProperty Name="location" ColumnName="location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Template_type">
+      <EntityTypeMapping TypeName="Realstate_agentsModel.Template_type">
+        <MappingFragment StoreEntitySet="Template_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="path" ColumnName="path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

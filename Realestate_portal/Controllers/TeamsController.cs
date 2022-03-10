@@ -14,6 +14,8 @@ namespace Realestate_portal.Controllers
     {
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
 
+
+
         // GET: Teams
         public ActionResult Index()
         {

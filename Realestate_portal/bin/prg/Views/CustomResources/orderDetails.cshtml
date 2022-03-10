@@ -1,0 +1,93 @@
+﻿@model  IEnumerable<Realestate_portal.Models.crTb_OrderDetails>
+
+@{
+    ViewBag.Title = "orderDetails";
+    Layout = "~/Views/Shared/_Layout_store.cshtml";
+}
+
+
+<!-- Start Bradcaump area -->
+<div class="ht__bradcaump__area bg-image--3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bradcaump__inner text-center">
+                    <h2 class="bradcaump-title">Order</h2>
+                    <nav class="bradcaump-content">
+                        <a class="breadcrumb_item" href="@Url.Action("Orders","CustomResources")">Back</a>
+                        <span class="brd-separetor">/</span>
+                        <span class="breadcrumb_item active">Order details</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Bradcaump area -->
+<!-- cart-main-area start -->
+<div class="cart-main-area section-padding--lg bg--white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ol-lg-12">
+                <form action="#">
+                    <div class="table-content wnro__table table-responsive">
+                        <table>
+                            <thead>
+                                <tr class="title-top">
+                          
+                                    <th class="product-name">Resource</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Total</th>
+                                  
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                          
+                                            <td class="product-name"><a href="#">@item.Resource (@item.Style)</a></td>
+                                            <td class="product-price"><span class="amount">$@item.Price</span></td>
+                                            <td class="product-quantity"><span class="amount">@item.Quantity</span></td>
+                                            <td class="product-subtotal">$@Convert.ToDecimal(item.Price*item.Quantity)</td>
+                                            
+
+                                        </tr>
+                                    }
+                                }
+
+                                <tr></tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-6">
+                <div class="cartbox__total__area">
+                    <div class="cartbox-total d-flex justify-content-between">
+                        <ul class="cart__total__list">
+                            <li>Cart total</li>
+                            <li>Sub Total</li>
+                        </ul>
+                        <ul class="cart__total__tk">
+                            <li>$@Model.Select(c => c.Price).Sum()</li>
+                            <li>$@Model.Select(c => c.Price).Sum()</li>
+                        </ul>
+                    </div>
+                    <div class="cart__total__amount">
+                        <span>Grand Total</span>
+                        <span>$@Model.Select(c => c.Price).Sum()</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

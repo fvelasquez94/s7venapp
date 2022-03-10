@@ -32,6 +32,11 @@ namespace Realestate_portal.Models
         public string Category { get; set; }
         public int Comments { get; set; }
         public string T_image { get; set; }
+        public Nullable<bool> super_admin { get; set; }
+        public string name_company { get; set; }
+        public string Contact { get; set; }
+        public string Email { get; set; }
+        public string Adress { get; set; }
     
         public virtual Sys_Company Sys_Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

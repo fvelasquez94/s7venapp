@@ -17,6 +17,12 @@ namespace Realestate_portal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Sys_Users()
         {
+            this.Billing_Shipping_details = new HashSet<Billing_Shipping_details>();
+            this.marketing_orders = new HashSet<marketing_orders>();
+            this.Payment_Intent = new HashSet<Payment_Intent>();
+            this.Receipts = new HashSet<Receipts>();
+            this.saved_labels = new HashSet<saved_labels>();
+            this.Saved_Templates = new HashSet<Saved_Templates>();
             this.Sys_Notifications = new HashSet<Sys_Notifications>();
             this.Tb_Posts = new HashSet<Tb_Posts>();
             this.Tb_Reminders = new HashSet<Tb_Reminders>();
@@ -66,7 +72,21 @@ namespace Realestate_portal.Models
         public bool Team_Leader { get; set; }
         public Nullable<int> Id_Leader { get; set; }
         public string Leader_Name { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Billing_Shipping_details> Billing_Shipping_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<marketing_orders> marketing_orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment_Intent> Payment_Intent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Receipts> Receipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<saved_labels> saved_labels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Saved_Templates> Saved_Templates { get; set; }
         public virtual Sys_Company Sys_Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sys_Notifications> Sys_Notifications { get; set; }

@@ -1,0 +1,362 @@
+﻿@model  Realestate_portal.Models.Tb_Customers
+
+@{
+    ViewBag.Title = "Leads";
+
+}
+
+<div class="container-fluid">
+
+    <!-- Begin Widget 08 -->
+    @**@
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">Leads</div>
+                @*<div class="new-tasks">ALL YOUR TRANSACTION DOCUMENTS </div>*@
+            </div><h2></h2>
+            @if (ViewBag.rol == "SA")
+            {
+
+            }
+            else
+            {
+                <div class="widget-options">
+                    <a class="btn btn-shadow" href="@Url.Action("Create", "Customers", new {broker=ViewBag.selbroker })">Add Lead</a>
+                </div>
+            }
+        </div><br />
+        <h2>Leads Table</h2>
+        <!-- Begin Widget header-->
+        <div class="widget has-shadow">
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+                <div class="table-responsive">
+                    <table class="table" id="tableresources" style="width: 100% !important">
+                        <thead>
+                            <tr style="background-color: #2c9ad6 !important; " id="tableHeader">
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    E-mail
+                                </th>
+
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Team
+                                </th>
+                                @if (ViewBag.rol != "SA")
+                                {
+                                    <th>
+                                        Agent
+                                    </th>
+                                }
+                                <th>
+                                    Last Activity
+                                </th>
+                              
+                                @if (ViewBag.rol != "Agent" && ViewBag.rol != "SA")
+                                {
+                                    <th>  
+                                        -
+                                    </th>
+                                }                                
+                            </tr>
+                        </thead>
+                    </table>
+                </div> 
+            </div>
+        </div>
+        <!-- End Widget -->
+        <!--notes modal start here -->
+        <div id="modalnotes" class="modal fade">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Notes</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" id="tbodynotes">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Text</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    </div>
+                    <label id="ddbystatus">
+                        <span> Search Status:</span>
+                        <select id="status" aria-controls="tableresources" class="form-control form-control-sm">
+                            <option value="All">ALL</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="ON_CONTRACT">ON CONTRACT</option>
+                            <option value="FOLLOW_UP">FOLLOW UP</option>
+                            <option value="CLOSED">CLOSED</option>
+                            <option value="DEAD">DEAD</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End table Container -->
+
+<!-- here starts category package modal section -->
+<div aria-hidden="true" id="deleteCustomer" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="closewindow">Delete Customer</h4>
+                <button data-dismiss="modal" class="close" aria-label="Close">
+                    <span style="background-color: black !important" aria-hidden="true"> &times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-align-center">
+                    <div class="col-12">
+                       <h2> <label>You are deleting the following customer : </label></h2>
+                    </div><br /><br />
+                    <div class="col-12">
+                        <label class="control-label" style="color:blue"><strong>Name : </strong> </label>
+                        <a class="control-label" id="customername"> </a><br />
+                    </div><br /><br />
+                    <div class="col-12">
+                        <label class="control-label" style="color:blue"><strong>E-mail : </strong> </label>
+                        <a class="control-label" id="customeremail"> </a><br />
+                    </div><br /><br />
+                    <div class="col-12">
+                        <label class="control-label" style="color:blue"><strong>User Assigned : </strong> </label>
+                        <a class="control-label" id="customeruser"> </a><br />
+                    </div><br /><br />
+                    <div class="col-12">
+                        <label class="control-label" style="color:blue"><strong>Phone : </strong> </label>
+                        <a class="control-label" id="customerphone"> </a><br />
+                    </div>
+                    <input type="hidden" id="customerid" />
+                </div>
+
+                <div class="modal-footer">
+                    <button onclick="confirmDeleteCustomer()" class="btn btn-info">Delete </button>
+                    <button class="btn" style="background-color:#E74C3C" type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="customerdeletebutton" class="btn btn-shadow" style="display:none" href="#" data-toggle="modal" data-target="#deleteCustomer"></button>
+
+<!-- here ends category package modal section -->
+<!--table scripts starts here to pull all data from controller by datable ajax -->
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            var columns;
+            var masterColumn;
+            if ("@ViewBag.rol" != "SA" && "@ViewBag.rol" != "Agent") {
+                masterColumn = 8;
+                columns = [
+                    { "data": { "Id": "Id", "Name" : "Name" }, "name": "Name", "autoWidth": true },
+                    { "data": "Phone", "name": "Phone", "autoWidth": true },
+                    { "data": "Email", "name": "Email", "autoWidth": true },
+                    { "data": "Type", "name": "Type", "autoWidth": true },
+                    { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
+                    { "data": "Team", "name": "Team", "autoWidth": true },
+                    { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
+                    { "data": "DateString", "name": "DateString", "autoWidth": true },
+                    { "data": { "Id": "Id" }, "name": "Name", "autoWidth": true }
+                ]
+            } else {
+                masterColumn = null;
+                columns = [
+                    { "data": { "Id": "Id", "Name": "Name" }, "name": "Name", "autoWidth": true },
+                    { "data": "Phone", "name": "Phone", "autoWidth": true },
+                    { "data": "Email", "name": "Email", "autoWidth": true },
+                    { "data": "Type", "name": "Type", "autoWidth": true },
+                    { "data": "Marital_status", "name": "Marital_status", "autoWidth": true },
+                    { "data": "Team", "name": "Team", "autoWidth": true },
+                    { "data": "User_assigned", "name": "User_assigned", "autoWidth": true },
+                    { "data": "DateString", "name": "DateString", "autoWidth": true }
+                 ]
+            }
+
+
+            var table = $('#tableresources').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url":'@Url.Action("CustomerAjax", "CRM")?status='+$("#status").val()+"&broker="+"@ViewBag.selbroker",
+                    "type": "POST",
+                    "dataType": "json"
+                },
+                "pageLength": 10,
+                "filter": true,
+                "paging": true,
+                "resposivePriority": 1,
+                "data": null,
+                "columns": columns,
+                "columnDefs": [
+                    {
+                    "targets": 0,
+                    "data": "download_link",
+                    "render": function (data) {
+                        var names = data.Name.split(' ');
+                        var first = names[0];
+                        var last = names[1];
+                        var f = first.split('');
+                        var l = last.split('');
+
+                        return `<a href="/CRM/CustomerDashboard/${data.Id}?broker='@ViewBag.selbroker'">
+                                <span style="text-align:center; border-radius:50%; background-color:#c9c9c9; width:30px; padding:5px 0; text-transform:uppercase; color: white;" " class="mg-fluid ">
+                                ${f[0]+l[0]}</span> &nbsp; ${data.Name}</a>`;
+                    }
+                   },
+                     {
+                    "targets": masterColumn,
+                    "render": function (data) {
+                        return `
+                            <a href="#" onclick="deleteCustomer(${data.Id})" id="deletecustomer">
+                                Delete</a>
+                              `;
+                    }
+                    }
+                ],
+                dom: 'Bflrtip',
+                buttons: [{
+                    extend: 'colvis'
+                }
+                ]
+            });
+
+            var previous = $("#tableresources_previous").disabled;
+            
+
+            $('#status').change(function () {
+                var status = $("#status").val();
+                var splited = status.split("_");
+
+                if (splited.length ==2) {
+                    status = splited[0] + " " + splited[1];
+                }
+                var url = '@Url.Action("CustomerAjax", "CRM")?status=' + status+"&broker"+"@ViewBag.selbroker";
+                table.ajax.url(url).load();
+            });
+            $("#tableHeader").find('*').css({ "color": 'white' });
+            $("#ddbystatus").insertBefore("#tableresources_filter");
+        });
+
+/* END EXTERNAL SOURCE */
+/* BEGIN EXTERNAL SOURCE */
+
+        function shownotes(idcustomer) {
+            $.ajax
+                ({
+                    url: '/Customers/GeUrlnotes',
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/Urlson',
+                    data: JSON.stringify({
+                        idcustomer: idcustomer
+                    }),
+                    success: function (result) {
+                        $("#tbodynotes tbody").html("");
+                        $.each($.parseJSON(result), function (i, notes) {
+                            var newRowContent = "<tr><td>" + notes.ID_note + " </td><td>" + notes.Text + " </td><td>" + new Date(parseInt(notes.Date.substr(6))).toLocaleDateString('en-US'); + "</td></tr>";
+                            $("#tbodynotes tbody").append(newRowContent);
+                        });
+                    },
+                    error: function () {
+                        alert("Error something went wrong...")
+                    }
+                });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function deleteCustomer(id) {
+            var customerid = id;
+            var data = { id:customerid };
+            $.ajax({
+                url: '@Url.Action("GetCustomerData", "Customers")',
+                type: 'GET',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: data,
+                success: function (result) {
+                    var name = document.getElementById("customername");
+                     name.innerHTML  = result.Name + " " + result.LastName;                
+                    var email = document.getElementById("customeremail");
+                   email.innerHTML = result.Email;
+                    var user = document.getElementById("customeruser");
+                    user.innerHTML = result.User;
+                    var phone = document.getElementById("customerphone");
+                    phone.innerHTML = result.Phone;
+                    var idtodelete = document.getElementById("customerid");
+                    idtodelete.value=result.id;
+                    $("#customerdeletebutton").trigger('click');
+                }
+
+            });
+        }
+
+        function confirmDeleteCustomer() {
+            var idcustomer = document.getElementById("customerid").value;
+            var data = { id: idcustomer };
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteByAjax","Customers")',
+                data: data,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (result) {
+                    if (result == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Customer Removed successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+                    } else {
+                        alert(result);
+                    }
+                },
+                error: function() {
+                    console.log("An error occured...");
+                }
+
+            });
+        }
+    </script>
+
+}
+
+
+
+
+
+
+

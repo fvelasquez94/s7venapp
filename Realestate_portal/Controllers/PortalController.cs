@@ -19,6 +19,7 @@ using System.Text;
 using Google.Apis.Calendar.v3.Data;
 using Realestate_portal.Controllers.BlobStorage;
 using System.Threading.Tasks;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
@@ -29,6 +30,18 @@ namespace Realestate_portal.Controllers
         private Cls_GoogleCalendar cls_GoogleCalendar = new Cls_GoogleCalendar();
         UploadService imageService = new UploadService();
         //Credentials
+
+        private Imarket repo;
+
+        public PortalController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+        
+        public PortalController()
+        {
+        }
+
 
         public ActionResult Log_out()
         {
@@ -61,13 +74,13 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendPackage(int idpackage, string email="")
+        public ActionResult SendPackage(int idpackage, int broker, string email="")
         {
             var result = "";
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
-                string company_email = (from c in db.Sys_Users where (c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Admin")) select c.Email).FirstOrDefault<string>();
+                string company_email = (from c in db.Sys_Users where (c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Admin") || c.ID_Company == activeuser.ID_Company && c.Roles.Contains("SA")) select c.Email).FirstOrDefault<string>();
                 if (activeuser != null)
                 {
                     var zippackage = "";
@@ -77,62 +90,64 @@ namespace Realestate_portal.Controllers
                     if (docpackage != null)
                     {
 
+
                         docpackage.Finished = true;
                         docpackage.Sent = true;
                         db.Entry(docpackage).State = EntityState.Modified;
                         db.SaveChanges();
 
                         var listdetais = (from a in db.Tb_Docpackages_details where (a.ID_docpackage == idpackage && a.URL != "") select a).ToList();
-
-                        zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/" + docpackage.ID_docpackage + "_documentsPack.zip");
                        
+                        zippackage = Server.MapPath("~/Content/Uploads/DocumentsPackages/Packages/" + docpackage.ID_docpackage + "_documentsPack.zip");
+
+                        if (System.IO.File.Exists(zippackage))
+                        {
+                            System.IO.File.Delete(zippackage);
+                        }
+                       
+                        
                             using (ZipFile zip = new ZipFile())
                             {
                                 foreach (var item in listdetais)
                                 {
+                                    var filename = Server.MapPath(item.URL);
                                     // add this map file into the "images" directory in the zip archive
-                                    zip.AddFile(Server.MapPath(item.URL), "documents");
+                                    zip.AddFile(filename, @"\");
                                 }
 
                                 zip.Save(zippackage);
-
-
                             }
-                        
-
-                        var urlpackage = "";
-                        //subimos paquete a Azure
-                        urlpackage =  imageService.UploadNormal(docpackage.ID_docpackage + "_documentsPack", zippackage, "application/zip");
-
-
-
-
-                        var brokeremail = "";
-                        if (email=="") {
-                            brokeremail = company_email;
-                        }
-                        else {
-                            brokeremail = email;
-                        }
+                                                                   
 
                         try
                         {
 
-
-                            if (brokeremail != null && brokeremail != "")
+                            if (broker == 1)
                             {
                                 //Enviamos correo para notificar
                                 dynamic emailtosend = new Email("newpackage_notification");
-                                emailtosend.To = brokeremail;
+                                emailtosend.To = company_email.Trim();
                                 emailtosend.From = "support@s7ven.co";
                                 emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead "+customer.Name +" "+customer.LastName+" - S7VEN Agents Portal";
                                 emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
-                                emailtosend.url = "Download URL: " + urlpackage;
-                             
+                                emailtosend.Attach(new Attachment(zippackage));
                                 emailtosend.Send();
-                                result = "SUCCESS";
-
+                                result = "SUCCESS";                                
                             }
+
+                            if (email != null && email != "")
+                            {
+                                //Enviamos correo para notificar
+                                dynamic emailtosend = new Email("newpackage_notification");
+                                emailtosend.To = email.Trim();
+                                emailtosend.From = "support@s7ven.co";
+                                emailtosend.subject = "New documents Package from " + activeuser.Name + " " + activeuser.LastName + " for Lead " + customer.Name + " " + customer.LastName + " - S7VEN Agents Portal";
+                                emailtosend.body = "from " + activeuser.Name + " " + activeuser.LastName + "\r\n Address: " + process.Address;
+                                emailtosend.Attach(new Attachment(zippackage));
+                                emailtosend.Send();
+                                result = "SUCCESS";                                
+                            }
+
                             //if (email!=null && email!="" && extra == true)
                             //{
                             //        //Enviamos correo para notificar
@@ -161,7 +176,10 @@ namespace Realestate_portal.Controllers
                             //{
                             //    result = "Data saved but email was not configured";
                             //}
-
+                            if (System.IO.File.Exists(zippackage))
+                            {
+                                System.IO.File.Delete(zippackage);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -359,9 +377,13 @@ namespace Realestate_portal.Controllers
                 }
                 if (activeuser.Roles.Contains("Admin"))
                 {
+                    var broker = 0;
                     ViewBag.rol = "Admin";
-
-                    return RedirectToAction("Dashboard", "Portal", null);
+                    if (activeuser.Position.Contains("Broker"))
+                    {
+                        broker = 1;
+                    }
+                    return RedirectToAction("Dashboard", "Portal", new { broker = broker });
                 }
                 if (activeuser.Roles.Contains("Agent"))
                 {
@@ -369,9 +391,14 @@ namespace Realestate_portal.Controllers
 
                     return RedirectToAction("Dashboard", "Portal", null);
                 }
-                
+                if (activeuser.Roles.Contains("Super User"))
+                {
+                    ViewBag.rol = "Super User";
 
-               
+                    return RedirectToAction("Dashboard", "Portal", null);
+                }
+
+
 
 
 
@@ -542,7 +569,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -620,12 +647,12 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //HEADING
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c=>c.ID_Company==activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c=>c.ID_Company==activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
                 ////filtros de fecha 
                 var firstDayOfMonth = DateTime.Now;
@@ -648,7 +675,7 @@ namespace Realestate_portal.Controllers
                     Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                     ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                     ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.Roles.Contains("Admin") && usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
-                    ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
+                    ViewBag.userCompany = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
 
                 }
                 else
@@ -658,9 +685,9 @@ namespace Realestate_portal.Controllers
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
                         ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
-                        ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
-                        broker = activeuser.ID_Company;
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userCompany = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
+                        broker = 0;
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("SA")) select b).FirstOrDefault();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
                     }
                     else
@@ -671,17 +698,17 @@ namespace Realestate_portal.Controllers
                             broker = activeuser.ID_Company;
                             ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
                             ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User) select usd).FirstOrDefault();
-                            ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
+                            ViewBag.userCompany = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
                             Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == activeuser.ID_User)) select a).FirstOrDefault();
                         }
                         else
                         {
 
-                            ViewBag.rol = "SA";
+                            ViewBag.rol = "Admin Broker";
 
-                            ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
-                            ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("SA")) select usd).FirstOrDefault();
-                            ViewBag.company = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
+                            ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
+                            ViewBag.userdataBroker = (from usd in db.Sys_Users where (usd.ID_User == activeuser.ID_User && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
+                            ViewBag.userCompany = (from c in db.Sys_Company where (c.ID_Company == activeuser.ID_Company) select c).FirstOrDefault();
                             var brokersel = (from b in db.Sys_Users where (b.ID_Company == broker && b.Roles.Contains("Admin")) select b).FirstOrDefault();
                             Broker_post = (from a in db.Tb_Posts where ((a.Post_type == 1 && a.Active == true) && (a.ID_User == brokersel.ID_User)) select a).FirstOrDefault();
                         }
@@ -789,26 +816,41 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
                 //FILTROS VARIABLES
                 DateTime filtrostartdate;
                 DateTime filtroenddate;
+                DateTime startDate = new DateTime();
+                DateTime endDate = new DateTime();
                 ////filtros de fecha 
-                var firstDayOfMonth = new DateTime(DateTime.Today.Year, 1, 1);
-                var lastDayOfMonth = new DateTime(DateTime.Today.Year, 12, 31);
-                if (fstartd == null || fstartd == "") { filtrostartdate = firstDayOfMonth; } else { filtrostartdate = Convert.ToDateTime(fstartd); }
-                if (fendd == null || fendd == "") { filtroenddate = lastDayOfMonth; } else { filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59); }
+                
+                if (fstartd != null)
+                {
+                    filtrostartdate = Convert.ToDateTime(fstartd);
+                    startDate = filtrostartdate;
+                    ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                }
+                else
+                {
+                    ViewBag.filtrofechastart = new DateTime(DateTime.Today.Year, 1, 1);
+                };
+                if (fendd != null)
+                {
+                    filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59);
+                    endDate = filtroenddate;
+                    ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                }
+                else
+                {
+                    ViewBag.filtrofechaend = new DateTime(DateTime.Today.Year, 12, 31);
+                }
 
-                var startDate = filtrostartdate;
-                var endDate = filtroenddate;
-
-                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
-                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+               
                 //Filtros SA
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
@@ -826,8 +868,17 @@ namespace Realestate_portal.Controllers
                                                               ID = t.ID_Process,
                                                               FullName = t.Address + " | CUSTOMER: " + t.Tb_Customers.Name + " " + t.Tb_Customers.LastName
                                                           }), "ID", "FullName");
-             
+
+
+                    if (fstartd != null && fendd != null)
+                    {
                         lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false && (a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
+                    }
+                    else
+                    {
+                        lstpackages = (from a in db.Tb_Docpackages where (a.ID_User == activeuser.ID_User && a.original == false) select a).ToList();
+                    }
+                  
                     
                    
 
@@ -837,13 +888,47 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
                       
-                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
-                        
+                           
+                        if (fstartd != null && fendd != null)
+                        {
+                            lstpackages = (from a in db.Tb_Docpackages where ((a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
+                        }
+                        else
+                        {
+                            lstpackages = (from a in db.Tb_Docpackages select a).ToList();
+                        }
 
-                        var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company).Select(c => c.ID_User).ToArray();
+
+                        var agentes = db.Sys_Users.Select(c => c.ID_User).ToArray();
+                        ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
+                                                              where (agentes.Contains(t.ID_User))
+                                                              select new
+                                                              {
+                                                                  ID = t.ID_Process,
+                                                                  FullName = t.Address + " | CUSTOMER: " + t.Tb_Customers.Name + " " + t.Tb_Customers.LastName
+                                                              }), "ID", "FullName");
+                    }else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
+
+                        if (fstartd != null && fendd != null)
+                        {
+                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
+
+                        }
+                        else
+                        {
+                            lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+
+                        }
+
+
+                        var agentes = db.Sys_Users.Select(c => c.ID_User).ToArray();
                         ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
                                                               where (agentes.Contains(t.ID_User))
                                                               select new
@@ -858,9 +943,17 @@ namespace Realestate_portal.Controllers
 
                         if (broker == 0)
                         {
-                         
+                            if (fstartd != null && fendd != null)
+                            {
                                 lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company && (a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
-                            
+
+                            }
+                            else
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == activeuser.ID_Company) select a).ToList();
+                            }
+
+                           
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == activeuser.ID_Company && c.Roles.Contains("Agent")).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
                                                                   where (agentes.Contains(t.ID_User))
@@ -873,9 +966,15 @@ namespace Realestate_portal.Controllers
                         else
                         {
                             ViewBag.rol = "SA";
-                         
+                                                        
+                            if (fstartd != null && fendd != null)
+                            {
                                 lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker && (a.Last_update >= startDate && a.Last_update <= endDate)) select a).ToList();
-                            
+                            }
+                            else
+                            {
+                                lstpackages = (from a in db.Tb_Docpackages where (a.ID_Company == broker) select a).ToList();
+                            }
                             var agentes = db.Sys_Users.Where(c => c.ID_Company == broker).Select(c => c.ID_User).ToArray();
                             ViewBag.ID_Property = new SelectList((from t in db.Tb_Process
                                                                   where (agentes.Contains(t.ID_User))
@@ -931,7 +1030,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -1068,10 +1167,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -1092,8 +1191,15 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        lstdocpacakges = (from a in db.Tb_Docpackages where (a.original == false) select a).ToList();
+                    }
+                    else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
                         lstdocpacakges = (from a in db.Tb_Docpackages where (a.original == false) select a).ToList();
                     }
                     else
@@ -1150,10 +1256,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
 
                 var package = (from a in db.Tb_Docpackages where (a.ID_docpackage == idpackage && a.original == false) select a).FirstOrDefault();
@@ -1188,10 +1294,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
 
                 var package = (from a in db.Tb_Docpackages where (a.ID_docpackage == idpackage && a.original == false) select a).FirstOrDefault();
@@ -1237,12 +1343,12 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
 
                 //Filtros SA
@@ -1361,7 +1467,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -1494,7 +1600,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -1879,7 +1985,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -1901,8 +2007,14 @@ namespace Realestate_portal.Controllers
                     if (r.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
+                        lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
+                    }else if (r.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
                         lstvideos = (from a in db.Tb_Videos where (a.ID_Company == activeuser.ID_Company && a.Type != "broker") select a).ToList();
                     }
                     else
@@ -2010,10 +2122,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //ROLES
                 //FIN HEADER
@@ -2036,8 +2148,14 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
+                        lstvideos = (from a in db.Tb_Videos select a).ToList();
+                    }else if (activeuser.Roles.Contains("SA") && broker == 0)
+                    {
+                        ViewBag.rol = "SA";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("Super User") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("Super User") || b.Roles.Contains("SA")) select b).FirstOrDefault();
                         lstvideos = (from a in db.Tb_Videos select a).ToList();
                     }
                     else
@@ -2084,10 +2202,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -2156,10 +2274,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -2555,10 +2673,32 @@ namespace Realestate_portal.Controllers
 
 
         [HttpPost]
-        public ActionResult EditNetwork(int id, string title, string url, string description, string category)
+        public ActionResult GetNetwork(int id)
+        {
+            var name = (from n in db.Tb_Network where n.ID_Network == id select n).FirstOrDefault();
+
+            if(name != null)
+            {
+                var video = new { ID_Network = name.ID_Network, Name = name.Name, Description = name.Description,
+                    Category = name.Category, name_company = name.name_company, Contact = name.Contact,
+                    Email = name.Email, Adress = name.Adress, url = name.Url
+                };
+                return Json(new { msg = "SUCCESS", video = video });
+            }
+            else
+            {
+                return Json(new { msg = "ERROR" });
+            }
+          
+        }
+
+
+        [HttpPost]
+        public ActionResult EditNetwork(int id, string title, string url, string description, string category, string email, string adress, string contact)
         {
             var path = "";
             var fileName = "";
+            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
             try
             {
                 for (int i = 0; i < Request.Files.Count; i++)
@@ -2583,6 +2723,9 @@ namespace Realestate_portal.Controllers
                 editnetwork.Name = title;
                 editnetwork.Description = description;
                 editnetwork.Category = category;
+                editnetwork.Email = email;
+                editnetwork.Contact = contact;
+                editnetwork.Adress = adress;
                 if (fileName == "")
                 {
 
@@ -2593,6 +2736,14 @@ namespace Realestate_portal.Controllers
                 }
 
                 editnetwork.Last_update = DateTime.UtcNow;
+
+
+                if(editnetwork.name_company == "" || editnetwork.name_company == null)
+                {
+                    var name = (from n in db.Sys_Company where n.ID_Company == activeuser.ID_Company select n).Select(n => n.Name).FirstOrDefault();
+                    editnetwork.name_company = name;
+                }
+
 
                 db.Entry(editnetwork).State = EntityState.Modified;
                 db.SaveChanges();
@@ -2611,7 +2762,7 @@ namespace Realestate_portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadNetwork(string title, string url, string description, string category)
+        public ActionResult UploadNetwork(string title, string url, string description, string category, string email, string adress, string contact)
         {
             var path = "";
             var fileName = "";
@@ -2631,11 +2782,14 @@ namespace Realestate_portal.Controllers
 
             }
 
-            try {
-
-                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+            try {               
 
                 Tb_Network newnetwork = new Tb_Network();
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                if (activeuser.Roles.Contains("SA"))
+                {
+                    newnetwork.super_admin = true;
+                }
                 newnetwork.Name = title;
                 newnetwork.Description = description;
                 newnetwork.Url = url;
@@ -2647,6 +2801,12 @@ namespace Realestate_portal.Controllers
                 newnetwork.Likes = 0;
                 newnetwork.Type = "";
                 newnetwork.ID_Company = activeuser.ID_Company;
+                newnetwork.Email = email;
+                newnetwork.Contact = contact;
+                newnetwork.Adress = adress;
+
+                var name = (from n in db.Sys_Company where n.ID_Company == activeuser.ID_Company select n).Select(n => n.Name).FirstOrDefault();
+                newnetwork.name_company = name;
 
 
                 db.Tb_Network.Add(newnetwork);
@@ -2817,12 +2977,13 @@ namespace Realestate_portal.Controllers
                         
                         
                         
-                        path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/"), fileName);
+                        path = Path.Combine(Server.MapPath("~/Content/Uploads/DocumentsPackages/Files"), fileName);
                         file.SaveAs(path);
 
 
-                        detail.URL = "~/Content/Uploads/DocumentsPackages/" + fileName;
+                        detail.URL = "~/Content/Uploads/DocumentsPackages/Files/" + fileName;
                         detail.Extension = extension;
+                        detail.Notes = file.FileName;
                         detail.Size = size;
                         headerpack.Total_docsf = headerpack.Total_docsf + 1;
                         headerpack.Last_update = DateTime.UtcNow;
@@ -3068,7 +3229,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -3122,7 +3283,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -3211,7 +3372,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -3303,7 +3464,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -3490,10 +3651,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3517,9 +3678,17 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
                         lstresources = (from a in db.Tb_Resources where ((a.Type != "Documents Broker" || a.Type != "Scripts Broker" || a.Type != "Email Campaign Broker" || a.Type != "Text Campaign Broker")) select a).ToList();
+
+                    }
+                    else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
+                        lstresources = (from a in db.Tb_Resources select a).ToList();
 
                     }
                     else
@@ -3585,10 +3754,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3621,10 +3790,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3692,10 +3861,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3718,6 +3887,10 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
 
+                    }
+                    else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        lstresources = (from a in db.Tb_Resources where ((a.Type == "Documents Broker" || a.Type == "Scripts Broker" || a.Type == "Email Campaign Broker" || a.Type == "Text Campaign Broker")) select a).ToList();
                     }
                     else
                     {
@@ -3767,10 +3940,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3838,10 +4011,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3855,7 +4028,7 @@ namespace Realestate_portal.Controllers
                 {
                     ViewBag.rol = "Agent";
 
-                    lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company==a.ID_Company)  select a).ToList();
+                    lstnetwork = (from a in db.Tb_Network where (a.super_admin == true || a.ID_Company == activeuser.ID_Company)  select a).ToList();
                  
                    
 
@@ -3866,14 +4039,21 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA") && broker == 0)
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
                     
-                            lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
+                            lstnetwork = (from a in db.Tb_Network  select a).ToList();
                         
                       
 
                         
+                    }
+                    else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
+                        lstnetwork = (from a in db.Tb_Network where (a.super_admin == true || a.ID_Company == activeuser.ID_Company) select a).ToList();
                     }
                     else
                     {
@@ -3881,7 +4061,7 @@ namespace Realestate_portal.Controllers
                         if (broker == 0)
                         {
                             
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
+                                lstnetwork = (from a in db.Tb_Network where (a.super_admin == true || a.ID_Company == activeuser.ID_Company) select a).ToList();
                           
                            
 
@@ -3890,7 +4070,7 @@ namespace Realestate_portal.Controllers
                         {
                             ViewBag.rol = "SA";
                             
-                                lstnetwork = (from a in db.Tb_Network where (a.ID_Company == 1 || a.ID_Company == a.ID_Company) select a).ToList();
+                                lstnetwork = (from a in db.Tb_Network where (a.super_admin == true || a.ID_Company == activeuser.ID_Company) select a).ToList();
                           
                            
 
@@ -3917,6 +4097,17 @@ namespace Realestate_portal.Controllers
                 var categorieslist = (from a in db.Tb_Options where (a.Type == 2 &&  (a.ID_Company == 1 || a.ID_Company == activeuser.ID_Company)) select a).ToList();
                 ViewBag.categoryList = categorieslist;
 
+
+                lstnetwork.ForEach(review =>
+                {
+                    var network = (from n in db.Tb_Reviews where n.Id_Network == review.ID_Network select n).Count();
+                    review.Comments = network;
+                    db.Entry(review).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                });
+               
+
                 return View(lstnetwork);
 
             }
@@ -3935,10 +4126,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //FIN HEADER
 
@@ -3959,8 +4150,15 @@ namespace Realestate_portal.Controllers
                     if (activeuser.Roles.Contains("SA"))
                     {
                         ViewBag.rol = "SA";
-                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin")) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA")) select b).FirstOrDefault();
+                        lstnetwork = (from a in db.Tb_Network select a).ToList();
+                    }
+                    else if (activeuser.Roles.Contains("Super User"))
+                    {
+                        ViewBag.rol = "Super User";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company && usd.Roles.Contains("Admin") || usd.Roles.Contains("SA") || usd.Roles.Contains("Super User")) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin") || b.Roles.Contains("SA") || b.Roles.Contains("Super User")) select b).FirstOrDefault();
                         lstnetwork = (from a in db.Tb_Network where (a.ID_Company == activeuser.ID_Company) select a).ToList();
                     }
                     else
@@ -4426,7 +4624,7 @@ namespace Realestate_portal.Controllers
             var path = fileDB.URL;
             var file = Server.MapPath(path);
 
-            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Title + fileDB.Extension);
+            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileDB.Notes + fileDB.Extension);
 
         }
         public ActionResult DownloadLeadDoc(int id)

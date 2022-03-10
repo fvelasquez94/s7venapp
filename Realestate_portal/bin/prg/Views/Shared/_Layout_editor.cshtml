@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Premium Group Realty NY Store</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link href="~/Content/assetsEditor/css/editor.css" rel="stylesheet">
+    <link href="~/Content/assetsEditor/css/line-awesome.css" rel="stylesheet">
+    <style>
+
+        #add-section-btn {
+            display: none !important;
+        }
+    </style>
+</head>
+<body id="phto">
+
+
+    @RenderBody()
+
+
+    <!-- jquery-->
+    <script src="~/Content/assetsEditor/js/jquery.min.js"></script>
+    <script src="~/Content/assetsEditor/js/jquery.hotkeys.js"></script>
+    <!-- bootstrap-->
+    <script src="~/Content/assetsEditor/js/popper.min.js"></script>
+    <script src="~/Content/assetsEditor/js/bootstrap.min.js"></script>
+    <!-- builder code-->
+    <script src="~/Content/assetsEditor/libs/builder/builder.js"></script>
+    <!-- undo manager-->
+    <script src="~/Content/assetsEditor/libs/builder/undo.js"></script>
+    <!-- inputs-->
+    <script src="~/Content/assetsEditor/libs/builder/inputs.js"></script>
+    <!-- bootstrap colorpicker //uncomment bellow scripts to enable -->
+    <!--
+    <script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <link href="libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <script src="libs/builder/plugin-bootstrap-colorpicker.js"></script>
+    -->
+    <!-- components-->
+    <script src="~/Content/assetsEditor/libs/builder/components-server.js"></script>
+    <script src="~/Content/assetsEditor/libs/builder/components-bootstrap4.js"></script>
+    <script src="~/Content/assetsEditor/libs/builder/components-widgets.js"></script>
+    <!-- blocks-->
+    <script src="~/Content/assetsEditor/libs/builder/blocks-bootstrap4.js"></script>
+    <!-- plugins -->
+    <!-- code mirror - code editor syntax highlight -->
+    <link href="~/Content/assetsEditor/libs/codemirror/lib/codemirror.css" rel="stylesheet" />
+    <link href="~/Content/assetsEditor/libs/codemirror/theme/material.css" rel="stylesheet" />
+    <script src="~/Content/assetsEditor/libs/codemirror/lib/codemirror.js"></script>
+    <script src="~/Content/assetsEditor/libs/codemirror/lib/xml.js"></script>
+    <script src="~/Content/assetsEditor/libs/codemirror/lib/formatting.js"></script>
+    <script src="~/Content/assetsEditor/libs/builder/plugin-codemirror.js"></script>
+    <!-- jszip - download page as zip -->
+    <!-- script src="libs/jszip/jszip.min.js"></script>
+    <script src="libs/builder/plugin-jszip.js"></script -->
+    <!-- autocomplete plugin used by autocomplete input-->
+    <script src="~/Content/assetsEditor/libs/autocomplete/jquery.autocomplete.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$("#vvveb-builder").addClass("no-right-panel");
+            //		$(".component-properties-tab").show();
+            //		Vvveb.Components.componentPropertiesElement = "#left-panel .component-properties";
+            //if url has #no-right-panel set one panel demo
+            if (window.location.hash.indexOf("no-right-panel") != -1) {
+                $("#vvveb-builder").addClass("no-right-panel");
+                $(".component-properties-tab").show();
+                Vvveb.Components.componentPropertiesElement = "#left-panel .component-properties";
+            } else {
+                $(".component-properties-tab").hide();
+            }
+
+            var loadhtml = '@ViewBag.preloadhtml';
+
+            //if (loadhtml == "1") {
+                Vvveb.Builder.init('about:blank', function () {
+                    Vvveb.Builder.setHtml('@Html.Raw(ViewBag.htmlcode)');
+                });
+            //} else {
+            //    Vvveb.Builder.init('about:blank', function () {
+            //        //Vvveb.Builder.init('../Content/assetsEditor/demo/narrow-jumbotron/index.html', function () {
+            //        //run code after page/iframe is loaded
+            //    });
+            //}
+
+
+            Vvveb.Gui.init();
+            Vvveb.FileManager.init();
+            Vvveb.FileManager.addPages(
+                [
+                    { name: "blank-page", title: "Blank Page", url: "/Content/assetsEditor/demo/blank-page/index.html", assets: ['/Content/assetsEditor/demo/narrow-jumbotron/narrow-jumbotron.css'] },
+                    { name: "narrow-jumbotron", title: "Business Card", url: "/Content/assetsEditor/demo/narrow-jumbotron/index.html", assets: ['/Content/assetsEditor/demo/narrow-jumbotron/narrow-jumbotron.css'] },
+                    { name: "landing-page", title: "Door Hanger", url: "/Content/assetsEditor/demo/startbootstrap-landing-page/index.html", assets: ['/Content/assetsEditor/demo/startbootstrap-landing-page/css/landing-page.min.css'] },
+                    { name: "album", title: "Flyer", url: "/Content/assetsEditor/demo/album/index.html", assets: ['demo/album/album.css'] },
+                    { name: "blog", title: "For Sale Sign", url: "/Content/assetsEditor/demo/blog/index.html", assets: ['demo/blog/blog.css'] },
+                    { name: "carousel", title: "Frame Sign", url: "/Content/assetsEditor/demo/carousel/index.html", assets: ['demo/carousel/carousel.css'] },
+                    { name: "offcanvas", title: "Open House Sign", url: "/Content/assetsEditor/demo/offcanvas/index.html", assets: ['demo/offcanvas/offcanvas.css', 'demo/offcanvas/offcanvas.js'] },
+                    { name: "pricing", title: "Rider", url: "/Content/assetsEditor/demo/pricing/index.html", assets: ['demo/pricing/pricing.css'] },
+                    { name: "product", title: "Stand Up Banner", url: "/Content/assetsEditor/demo/product/index.html", assets: ['demo/product/product.css'] },
+
+                    //uncomment php code below and rename file to .php extension to load saved html files in the editor
+                    /*
+                    <?php
+                       $htmlFiles = glob("*.html");
+                       foreach ($htmlFiles as $file) {
+                           if (in_array($file, array('new-page-blank-template.html', 'editor.html'))) continue;//skip template files
+                           $pathInfo = pathinfo($file);
+                    ?>
+                    {name:"<?php echo ucfirst($pathInfo['filename']);?>", title:"<?php echo ucfirst($pathInfo['filename']);?>",  url: "<?php echo $pathInfo['basename'];?>"},
+                    <?php } ?>
+                    */
+
+                ]);
+
+            //  if (loadhtml == "1") {
+
+            //} else {
+            //      Vvveb.FileManager.loadPage("blank-page");
+            //}
+
+            //Vvveb.Builder.documentFrame.on("load", function (e) {
+
+            //    Vvveb.Builder.frameBody.append('<link rel="stylesheet" href="/Content/assetsEditor/demo/narrow-jumbotron/narrow-jumbotron.css" />');//external
+            //});
+            //$("#toggle-right-column-btn").trigger('click');
+        });
+
+
+
+    </script>
+    <script type="text/javascript">
+
+        // Define the function
+        // to screenshot the div
+        function takeshot() {
+            document.getElementById("iframe1").contentWindow.print();
+          
+
+            let div =
+                document.getElementById('pdf-viewer');
+
+            // Use the html2canvas
+            // function to take a screenshot
+            // and append it
+            // to the output div
+            html2canvas(div).then(
+                function (canvas) {
+                    document
+                        .getElementById('output')
+                        .appendChild(canvas);
+                })
+        }
+    </script>
+</body>
+</html>
+
+<!--NOTIFICACIONES GLOBALES-->
+
+@if (TempData["error"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+
+            new Noty({
+                type: 'error',
+                layout: 'topRight',
+                text: '@(TempData["error"])',
+                progressBar: true,
+                timeout: 2500
+            }).show()
+        };
+    </script>
+}
+
+
+@if (TempData["advertencia"] != null)
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        
+            new Noty({
+                type: 'warning',
+                layout: 'topRight',
+                text: '@(TempData["advertencia"])',
+                progressBar: true,
+                timeout: 2500,
+                animation:
+            }).show()
+
+        });
+    </script>
+}
+
+
+@if (TempData["exito"] != null)
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+  
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                text: '@(TempData["exito"])',
+                progressBar: true,
+                timeout: 2500
+            }).show()
+        });
+    </script>
+}

@@ -1,0 +1,255 @@
+﻿@model List<Realestate_portal.Models.Tb_Docpackages_details>
+
+@{
+    ViewBag.Title = "Premium Group Realty";
+    var package = (Realestate_portal.Models.Tb_Docpackages)ViewBag.package;
+    var property = (Realestate_portal.Models.Tb_Process)ViewBag.property;
+    var customer = (Realestate_portal.Models.Tb_Customers)ViewBag.customer;
+    var modelcount = Model.Where(a => a.mandatory == true).Count();
+}
+
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Document History
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Document Package Details
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+                    @if (Model.Count > 0)
+                    {
+                        if (Model.Where(a => a.uploaded == true && a.mandatory == true).Count() == modelcount)
+                        {
+                            <a href="#" class="btn btn-success" id="sendtoBroker">Send to Broker</a>
+                        }
+
+                    }
+                </div>
+
+            </div>
+            <label class="text-primary ml-5" for="task-1">DESCRIPTION: @package.Description.ToUpper()</label><br />
+            <label class="text-primary ml-5" for="task-1">PROPERTY ID: @property.ID_Property - ADDRESS: @property.Address </label><br />
+            <label class="text-primary ml-5" for="task-1">CUSTOMER: @customer.Name.ToUpper() @customer.LastName.ToUpper()</label><br />
+            <label class="text-primary ml-5" for="task-1">CATEGORY: @package.Category</label><br />
+
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        DOCUMENT ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TITLE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        REQUIRED
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        UPLOADED
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        DOCUMENT
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ACTIONS
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID_Detail</td>
+                                        <td>@item.Title</td>
+                                        <td>
+                                            @if (item.mandatory)
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-20 text-white mr-1">YES</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-15 mr-1">NO</label>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.uploaded)
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-20 text-white mr-1">YES</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-15 mr-1">NO</label>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.uploaded)
+                                            {
+                                                if (item.Extension == ".pdf")
+                                                {
+                                                    <a href="@Url.Action("Showpdf_docspackage","Portal", new { id=item.ID_Detail})" target="_blank">
+                                                        <div class="c-icon">
+
+
+                                                            <i class="la la-file-pdf-o">Download</i>
+
+
+                                                        </div>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("DownloadDocPackage","Portal", new { id=item.ID_Detail})">
+                                                        <div class="c-icon">
+
+
+
+
+
+                                                            <i class="la la-file-word-o">Download</i>
+
+                                                        </div>
+                                                    </a>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <label>-</label>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <div class="flex justify-center items-center">
+
+                                                <input type="file" class="form-control fileToUpload" id="file_@item.ID_Detail" />
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
+
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        $("#tableresources").DataTable();
+    }
+
+</script>
+<script type="text/javascript">
+     var broker = document.getElementById("sendtoBroker");
+        broker.onclick= function () {
+
+            var idpack = '@package.ID_docpackage';
+            var data = { idpackage: idpack};
+            $.ajax({
+              url:'@Url.Action("SendPackage", "Portal")',
+                type: 'POST',
+                data: data,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: true,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        var link = document.getElementById('basic-non-sticky-notification-toggle');
+                        link.click();
+                    }
+
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+
+
+</script>
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        $(".fileToUpload").on('change', function () {
+            ///// Your code
+            var id = $(this).attr("id");
+            var idtosave = id.substring(5);
+        
+            var formData = new FormData();
+            var file = document.getElementById(id).files[0];
+
+
+
+            formData.append("imageUploadForm", file);
+            formData.append("ids", idtosave);
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/Uploadfile',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+
+                        var link = document.getElementById('basic-non-sticky-notification-toggle');
+                        link.click();
+
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                     
+
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+
+                    alert("Error uploading file");
+                }
+            });
+        });
+
+
+
+
+
+    };
+
+
+</script>

@@ -1,0 +1,131 @@
+﻿@model List<Realestate_portal.Models.Tb_Docpackages>
+@{
+    ViewBag.Title = "Premium Group Realty - Management Packages";
+}
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Documents History
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Documents History management
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+                 
+                </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        PACKAGE ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        DESCRIPTION (click for details)
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        LAST UPDATE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TOTAL DOCUMENTS
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        STATUS
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ACTIONS
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID_docpackage</td>
+                                        <td><a class="text-primary" href="@Url.Action("Package_details","Portal", new { idpackage=item.ID_docpackage})">@item.Description</a></td>
+                                        <td>@item.Category</td>
+                                      
+                                        <td>@Convert.ToDateTime(item.Last_update).ToShortDateString()</td>
+                                        <td>(@item.Total_docsf/@item.Total_docs)</td>
+                                        <td>
+                                            @if (item.Finished && item.Sent)
+                                            {
+                                                <label class="px-2 py-1 rounded-full bg-theme-20 text-white mr-1">Completed</label>
+                                            }
+                                            else
+                                            {<label class="px-2 py-1 rounded-full bg-theme-15 mr-1">In progress</label>}
+                                        </td>
+                                        <td>
+                                            <a class="flex items-center text-theme-21" href="@Url.Action("DeletePackageManagement","Portal", new { id=item.ID_docpackage })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+
+                $("#tableresources").DataTable();
+            };
+
+
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                $("#tableresources").DataTable();
+            }
+
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+
+    </script>
+}

@@ -1,0 +1,610 @@
+﻿@model List<Realestate_portal.Models.Tb_Network>
+@using Realestate_portal.Models;
+@{
+    ViewBag.Title = "Premium Group Realty - Network";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+    List<Realestate_portal.Models.Tb_Options> categoryList = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categoryList;
+    List<Realestate_portal.Models.Tb_Reviews> lstreviews = (List<Realestate_portal.Models.Tb_Reviews>)ViewBag.reviews;
+
+
+}
+
+<!-- BEGIN: Content -->
+<div class="content content--top-nav ">
+    <h2 class="intro-y text-lg font-medium mt-10">
+        Network
+    </h2>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+            @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+    {
+
+        <a class="btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add New Network</a>
+        <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("PGR_network_management", "Portal")">Management</a>
+
+}
+
+            <div class="hidden md:block mx-auto text-gray-600">&nbsp;</div>
+            @*<div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-5">
+                <div class="w-56 relative text-gray-700 dark:text-gray-300">
+                    <input type="text" class="form-control w-100 box pr-10 placeholder-theme-13" placeholder="Search...">
+                    <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+                </div>
+            </div>*@
+            <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-5">
+                <select class="form-control" id="filternetwork" onchange="filternetwork(this.value)">
+                    <option value="0">SHOW ALL</option>
+                    @foreach (var category in lstcategories)
+        {
+
+            <option value="@category.ID_option">@category.Description</option>
+
+}
+                </select>
+            </div>
+        </div>
+
+
+        @if (lstcategories.Count() == 0)
+        {
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+                <div class="hidden md:block mx-auto text-gray-600">
+                    <div class="pricing-tabs nav nav-tabs box rounded-full overflow-hidden" role="tablist"> No data to show </div>
+                </div>
+                <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+
+                </div>
+            </div>
+        }
+        @foreach (var category in lstcategories)
+        {
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 @category.ID_option toshowhide">
+                <div class=" md:block mx-auto text-gray-600">
+                    <div class="pricing-tabs nav nav-tabs box rounded-full overflow-hidden" role="tablist"> <a style="width: 100%;padding-left: 20px;padding-right:20px" class="flex-1 w-32 lg:w-40 py-2 lg:py-3 whitespace-nowrap text-center active">@category.Description</a> </div>
+                </div>
+                <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+
+                </div>
+            </div>
+
+            <!-- BEGIN: Users Layout -->
+            if (Model.Where(a => a.Category == category.Description).Count() > 0)
+            {
+                foreach (var item in Model.Where(a => a.Category == category.Description))
+                {
+                    <div class="intro-y col-span-12 md:col-span-3 lg:col-span-3 @category.ID_option toshowhide">
+                        <div class="box">
+                            <div class="flex items-start px-5 pt-5">
+                                <div class="w-full flex flex-col lg:flex-row items-center">
+                                    <div class="w-24 h-24 image-fit">
+                                        @if (item.T_image == "~/Content/Uploads/Images/Network/")
+                                        {
+                                            <img alt="S7VEN" class="rounded-full" src="~/Content/dist/images/profile-1.jpg">
+
+                                        }
+                                        else
+                                        {
+
+                                            <img alt="S7VEN" class="rounded-full" style="object-fit:contain !important" src="@Url.Content(item.T_image)">
+
+                                        }
+                                    </div>
+                                    <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
+                                        <a href="javascript:void(0);" class="font-medium">@item.Name</a>
+                                        @if (item.Url == "" || item.Url == " " || item.Url == "-" || item.Url == " - ") { }
+                                        else
+                                        {<a href="@item.Url" style="margin-top:-2px;" target="_blank" class="flex items-center justify-center lg:justify-start mt-5"> <i data-feather="globe" class="w-3 h-3 mr-2"></i> @item.Url </a>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center lg:text-left p-5">
+                                <textarea readonly class="mr-3" rows="9" style="width: 100% !important;background: transparent;border: none; outline: none;">@item.Description</textarea>
+
+
+                            </div>
+                            <div class="text-center lg:text-right p-5 border-t border-gray-200 dark:border-dark-5">
+                                <div>
+                                    @{
+                                        int i = 0, rate = 0, prom = 0;
+                                    }
+                                    @foreach (var r in lstreviews)
+                                    {
+                                        if (r.Id_Network == item.ID_Network)
+                                        {
+                                            rate = rate + r.Rate_Review;
+                                            i++;
+                                        }
+                                        if (i != 0)
+                                        {
+                                            prom = rate / i;
+                                        }
+
+
+                                    }
+
+                                    @if (prom > 0)
+                                    {
+                                        for (int x = 0; x < prom; x++)
+                                        {
+                                            <span class="la la-star la-2x" style="color:gold"></span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="la la-star-o la-2x"></span>
+                                    }
+                                </div>
+                                <a class=btn btn-primary py-1 px-2 mr-2" href="javascript:void(0);" onclick="showReviews(@item.ID_Network)" data-toggle="modal" data-target="#modalReview">Reviews</a>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            }
+            else
+            {
+                <div class="item">
+                    <label>No data to show</label>
+                </div>
+            }
+
+        }
+
+
+
+        <!-- END: Users Layout -->
+
+    </div>
+    <br /><br />
+    <div class="alert alert-outline-primary alert-dismissible show flex items-center mb-2" role="alert">
+        <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i> S7VEN makes no representations or warranties, either expressed or implied, of any kind with respect to products or services offered by these businesses and does not directly or indirectly endorse any particular business, product or service. S7VEN does not assume liability resulting from your dealings with these businesses.
+
+    </div>
+</div>
+<!-- END: Content -->
+
+<link rel="stylesheet" href="~/Content/assetsEditor/css/line-awesome.min.css">
+
+
+    <div id="modalNewvideo" class="modal hide fade in" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Network</h4>
+          
+                </div>
+                <div class="modal-body">
+                    <form id="htmlform" method="post" onsubmit="checkRegistration()">
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Full Name *</label>
+                                    <input type="text" class="form-control" id="titlevideo" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Company *</label>
+                                    <input type="text" class="form-control" id="company" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Contact *</label>
+                                    <input type="text" class="form-control" id="contact" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="text" class="form-control" id="email" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Website *</label>
+                                    <input type="text" class="form-control" id="website" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Address *</label>
+                                    <input type="text" class="form-control" id="address" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Category *</label>
+                                    <select id="categoryvideo" class="form-control" required>
+                                        @foreach (var item in lstcategories)
+                        {
+                            <option value="@item.Description">@item.Description</option>
+        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="descriptionvideo" class="form-control" style="white-space: pre-line !important" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" id="imageUpload" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                            <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- here start review sections -->
+    <div id="modalReview" class="modal hide fade in" data-keyboard="false" >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <!-- here stars no note in tab menu section -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Reviews</h4>
+             
+                </div>
+                <div class="modal-body">
+                    <div id="reviewCard" style="width:100%">
+                        <div>
+
+                            <input type="hidden" id="index" value="0" />
+                            <input type="hidden" id="reviewId" value="" />
+                            <input type="hidden" id="reviewText" value="" />
+
+                        </div>
+                        <div class="media-body">
+
+                            <br />
+                            <div class="files-number">Date : </div>
+                            <br />
+
+                        </div>
+                    </div>
+                    <div class="media w-100 mt-10">
+
+                        <form id="reviewForm" class="media-body align-self-center text-align-center">
+
+
+
+                            <h2>Write your review...</h2>
+                            <br />
+                            <textarea class="form-control-lg align-self-center" style="width: 100%" id="reviewComment" cols="50" rows="5" placeholder="Type here..."></textarea>
+
+                            <span class="la la-star la-2x" style="color:gold" id="Rate1" onclick="CRate(1)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate2" onclick="CRate(2)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate3" onclick="CRate(3)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate4" onclick="CRate(4)"></span>
+                            <span class="la la-star-o la-2x" style="color:gold" id="Rate5" onclick="CRate(5)"></span>
+                            <input type="hidden" name="rating" id="rating" value="1">
+                            <br />
+                            <br />
+                            <button class="badge badgeDocstype btn" style="background-color:#f4f4f4" id="addReview">Add Review</button>
+
+
+
+                        </form>
+
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+<!--end review-->
+<script type="text/javascript">
+        document.getElementById("buttonClose").onclick = function () { window.location.reload() };
+
+        document.getElementById("searchButton").onclick = function () { searchByCat() };
+        function searchByCat() {
+            var category = $('#inputCategory').val();
+
+
+
+            window.location.href = "/Portal/PGR_network?category=" + category;
+
+         };
+        document.getElementById("searchName").onclick = function () { searchByName() };
+        function searchByName() {
+            var name = $('#inputName').val();
+
+
+
+            window.location.href = "/Portal/PGR_network?name="+name;
+
+        };
+        function showReviews(idNetwork) {
+            var star = "";
+            var network = idNetwork;
+
+
+            $('#reviewForm').on('submit', function (event) {
+                $("#addReview").attr("disabled", true);
+                event.preventDefault();
+
+                var comment = $("#reviewComment").val();
+                var rate = $("#rating").val();
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddReview", "Review")',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        network: network, comment: comment, rate: rate
+                    }),
+                    success: function (response) {
+                        if (response == "SUCCESS") {
+                            window.location.reload(true);
+                        }
+                        else {
+                            alert(response);
+                        }
+                    },
+                    error: function (error) {
+
+                        alert("Error" + error);
+                        window.location.reload(true);
+                    }
+                });
+
+
+            });
+            $.ajax
+                ({
+                    url: '@Url.Action("GetReview", "Review")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        idnetwork: network
+                    }),
+                    success: function (result) {
+
+                        $('#reviewCard').html('');
+
+                        $.each(result, function (i, review) {
+
+                            for (var x = 0; x < review.Review_Rate; x++) {
+                                star = star.concat(`<span class="la la-star la-2x" style="color:gold"></span>`)
+                            };
+                            $('#reviewCard').append(`<div style="margin-bottom:10px">
+                                                       <h4>Review #${i + 1}  </h4>
+<h6>Date: ${review.Date} Created by: ${review.User}</h6>
+                                                       <h2>${star}</h2>
+                                                        
+                                                       <textarea class="form-control-lg align-self-center" style="width: 100%"  cols="50" rows="5" disabled>${review.Comment}</textarea>
+                                                      
+                                                        @if (ViewBag.rol == "SA")
+                                                        {
+
+                                                            <a class="btn btn-shadow" id="deleteReview" onclick="deleteReview(${review.Id_Review})">Delete review</a>
+
+                                                        }
+
+                                                    </div >
+
+                                                </div>
+                                            </div >`
+                            );
+                            star = "";
+
+                        }
+                        );
+
+                    },
+                    error: function (result) {
+                        alert("Whooaaa! Something went wrong.." + result)
+                    }
+                });
+
+        };
+        function deleteReview(idReview) {
+            var review = idReview
+            console.log(review);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteReview", "Review")',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    review: review
+                }),
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Information deleted successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+                    }
+                    else {
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+
+                    alert("Error" + error + " " + response );
+                    window.location.reload(true);
+                }
+            });
+        };
+        function CRate(r) {
+            $("#rating").val(r);
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+            // unselect remaining
+            for (var i = r + 1; i <= 5; i++) {
+                $("#Rate" + i).attr('class', 'la la-star-o la-2x');
+            }
+        };
+
+        function CRateOver(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+        };
+
+        function CRateOut(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'la la-star-o la-2x');
+            }
+        };
+
+        function CRateSelected() {
+            var setRating = $("#rating").val();
+            for (var i = 1; i <= setRating; i++) {
+                $("#Rate" + i).attr('class', 'la la-star la-2x');
+            }
+        };
+
+
+    window.onload = function () {
+
+
+        //$('#filternetwork').change(function () {
+        //    alert($(this).val()); //will work here
+        //});
+
+            //$(".owl-carousel").owlCarousel({
+            //    center: false,
+            //    onInitialize: function (event) { if (event.item.count <= 4) { this.options.mouseDrag = false; this.options.touchDrag = false; } else { this.options.mouseDrag = true; this.options.touchDrag = true; } },
+            //    items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true" style="font-size: 30px;"></i>', '<i  style="font-size: 30px;"class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 3 } }
+            //});
+
+      
+    }
+
+
+    function filternetwork(cat) {
+        if (cat != "0") {
+            $('.toshowhide').hide();
+            $(".toshowhide." + cat).show();
+            window.scrollTo(0, document.body.scrollHeight);
+            $('html,body').scrollTop(0);
+        } else {
+            $('.toshowhide').show();
+           
+            window.scrollTo(0, document.body.scrollHeight);
+            $('html,body').scrollTop(0);
+        }
+
+    }
+
+
+    function checkRegistration(e) {
+        $("#subbtnenviar").attr("disabled", true);
+        console.log("hola");
+        event.preventDefault();
+
+
+        var formData = new FormData();
+        var photo = document.getElementById("imageUpload");
+        var photoSize = photo.files[0].size;
+        var photoType = photo.files[0].type;
+
+        if (photoSize < 225600) {
+            var file = photo.files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+
+
+            var company = $("#company").val();
+            var contact = $("#contact").val();
+            var email = $("#email").val();
+            var website = $("#website").val();
+            var address = $("#address").val();
+
+            var txtArea = document.getElementById("descriptionvideo");
+            txtArea.value = "";
+            txtArea.value += company + '\r\n';
+            txtArea.value += contact + '\r\n';
+            txtArea.value += email + '\r\n';
+            txtArea.value += website + '\r\n';
+            txtArea.value += address + '\r\n';
+
+
+            var description = $.trim($("#descriptionvideo").val());
+            var url = website;
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+            formData.append("url", url);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadNetwork',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        Swal.fire(
+                            'Network Added ',
+                            'The record has been added.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                  
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading information");
+                }
+            });
+
+        }
+        else {
+        
+            $("#subbtnenviar").attr("disabled", false);
+            alert("The photo must be lower than 2MB");
+            window.location.reload(true);
+        }
+    }
+</script>

@@ -20,16 +20,16 @@ namespace Realestate_portal.Models
             this.crTb_OrderDetails = new HashSet<crTb_OrderDetails>();
             this.crTb_Orders = new HashSet<crTb_Orders>();
             this.Sys_Roles = new HashSet<Sys_Roles>();
+            this.Sys_Users = new HashSet<Sys_Users>();
             this.Tb_Appointments = new HashSet<Tb_Appointments>();
             this.Tb_Conversation = new HashSet<Tb_Conversation>();
+            this.Tb_Customers = new HashSet<Tb_Customers>();
+            this.Tb_Docpackages = new HashSet<Tb_Docpackages>();
             this.Tb_Marketing = new HashSet<Tb_Marketing>();
             this.Tb_Network = new HashSet<Tb_Network>();
             this.Tb_Resources = new HashSet<Tb_Resources>();
             this.Tb_Videos = new HashSet<Tb_Videos>();
             this.Tb_Webinars = new HashSet<Tb_Webinars>();
-            this.Tb_Docpackages = new HashSet<Tb_Docpackages>();
-            this.Sys_Users = new HashSet<Sys_Users>();
-            this.Tb_Customers = new HashSet<Tb_Customers>();
         }
     
         public int ID_Company { get; set; }
@@ -37,6 +37,7 @@ namespace Realestate_portal.Models
         public string Logo { get; set; }
         public string Web { get; set; }
         public string ShortName { get; set; }
+        public Nullable<int> Agents { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<crTb_OrderDetails> crTb_OrderDetails { get; set; }
@@ -45,9 +46,15 @@ namespace Realestate_portal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sys_Roles> Sys_Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sys_Users> Sys_Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Appointments> Tb_Appointments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Conversation> Tb_Conversation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tb_Customers> Tb_Customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tb_Docpackages> Tb_Docpackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Marketing> Tb_Marketing { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -58,11 +65,5 @@ namespace Realestate_portal.Models
         public virtual ICollection<Tb_Videos> Tb_Videos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Webinars> Tb_Webinars { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Docpackages> Tb_Docpackages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sys_Users> Sys_Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tb_Customers> Tb_Customers { get; set; }
     }
 }

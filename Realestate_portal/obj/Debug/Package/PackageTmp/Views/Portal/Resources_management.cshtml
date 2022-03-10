@@ -1,0 +1,133 @@
+﻿@model List<Realestate_portal.Models.Tb_Resources>
+@{
+    ViewBag.Title = "Premium Group Realty - Management Resources";
+}
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Resources
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Resources Management
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+                </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table table-report sm:mt-2" id="tableresources">
+                            <thead>
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        RESOURCE ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TITLE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        TYPE
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="whitespace-nowrap">
+                                        LAST UPDATE
+                                    </th>
+                              
+                                    <th class="whitespace-nowrap">
+                                        COMPANY
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        ACTIONS
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID_Resource</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Type</td>
+                                        <td>@item.Doc_type</td>
+                                        <td>@item.Last_update.ToShortDateString()</td>
+                                
+                                        <td>@item.Sys_Company.Name</td>
+
+                                        <td>
+                                            <div class="flex justify-center items-center">
+
+
+                                                <a class="flex items-center text-theme-21" href="@Url.Action("DeleteResource","Portal", new { id=item.ID_Resource })"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
+
+
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+
+                $("#tableresources").DataTable();
+            };
+
+
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                $("#tableresources").DataTable();
+            }
+
+        </script>
+    }
+
+}
+else
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            $("#tableresources").DataTable();
+        }
+
+    </script>
+}

@@ -12,15 +12,26 @@ using Postal;
 using Realestate_portal.Models;
 using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Models.ViewModels.CRM;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
     public class CustomersController : Controller
     {
+        private Imarket repo;
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
         private Cls_GoogleCalendar cls_GoogleCalendar = new Cls_GoogleCalendar();
-      
+
+        public CustomersController()
+        {          
+        }
+
+        public CustomersController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+
 
         // GET: Tb_Customers/Details/5
         public ActionResult Details(int? id)
@@ -47,10 +58,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
               
                 //ROLES
                 //FIN HEADER
@@ -79,7 +90,7 @@ namespace Realestate_portal.Controllers
                     {
                         ViewBag.rol = "SA";
                         ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
-                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("Admin")) select b).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("SA")) select b).FirstOrDefault();
                         RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
                     }
                     else
@@ -190,7 +201,7 @@ namespace Realestate_portal.Controllers
             }
 
 
-            return RedirectToAction("Leads", "CRM");
+            return RedirectToAction("CustomerDashboard", "CRM", new {id= tb_Customers.ID_Customer });
             
                 
             
@@ -487,10 +498,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 ViewBag.token = token;
                 //ROLES
                 //FIN HEADER
@@ -726,10 +737,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
               
                 //ROLES
                 //FIN HEADER

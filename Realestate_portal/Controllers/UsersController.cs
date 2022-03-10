@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
 using Realestate_portal.Models.ViewModels;
+using Realestate_portal.Services.Contracts;
 
 namespace Realestate_portal.Controllers
 {
@@ -19,6 +20,19 @@ namespace Realestate_portal.Controllers
     {
         private Realstate_agentsEntities db = new Realstate_agentsEntities();
         private clsGeneral generalClass = new clsGeneral();
+
+
+        private Imarket repo;
+
+        public UsersController(Imarket _repo)
+        {
+            repo = _repo;
+        }
+
+        public UsersController()
+        {
+        }
+
 
         [HttpPost]
         public ActionResult changeProfilePicture(int id)
@@ -91,7 +105,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -178,7 +192,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 //FIN HEADER
@@ -267,10 +281,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
      
                 if (activeuser.Roles.Contains("Agent"))
@@ -314,10 +328,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
                 //FIN HEADER
                 var leaders = (from l in db.Sys_Users where (l.Team_Leader == true && l.ID_Company == activeuser.ID_Company) orderby l.LastName ascending select l).ToList();
                 ViewBag.leaders = leaders;
@@ -390,6 +404,9 @@ namespace Realestate_portal.Controllers
                 sys_Users.Member_since = DateTime.UtcNow;
                 sys_Users.Gender = "Male";
                 sys_Users.Password = CreatePassword(8);
+                sys_Users.Country = "United States";
+                sys_Users.State = "default";
+                sys_Users.City = "default";
                 if (sys_Users.LastName == null) { sys_Users.LastName = ""; }
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
@@ -421,6 +438,8 @@ namespace Realestate_portal.Controllers
               
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
+                if (sys_Users.Country == null) { sys_Users.Country = ""; }
+                if (sys_Users.City == null) { sys_Users.City = ""; }
 
                 db.Sys_Users.Add(sys_Users);
                 db.SaveChanges();
@@ -454,13 +473,15 @@ namespace Realestate_portal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditBroker(string BrokerName, string Web, string Name, string LastName, string Email, string Password, int ID_Company)
+        public ActionResult EditBroker(string BrokerName, string Web, string Name, string LastName, string Email, string Password, int ID_Company, int agents)
         {
             try
             {
                 Sys_Company company = db.Sys_Company.Where(c => c.ID_Company == ID_Company).FirstOrDefault();
                 company.Name = BrokerName;
                 company.Web = Web;
+                company.Agents = agents;
+
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -492,9 +513,16 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = ""; }
                 if (sys_Users.Gender == null) { sys_Users.Gender = ""; }
+                if (sys_Users.Country == null) { sys_Users.Country = ""; }
+                if (sys_Users.City == null) { sys_Users.City = ""; }
                 sys_Users.Team_Leader = false;
                 sys_Users.Id_Leader = 0;
-                sys_Users.Leader_Name = ""; 
+                sys_Users.Leader_Name = "";
+                sys_Users.Name = Name;
+                sys_Users.Other_url = Web;
+                sys_Users.LastName = LastName;
+                sys_Users.Password = Password;
+                sys_Users.Email = Email;
 
                 db.Entry(sys_Users).State = EntityState.Modified;
                 db.SaveChanges();
@@ -535,6 +563,8 @@ namespace Realestate_portal.Controllers
                 sys_Users.ID_Company = activeuser.ID_Company;
                 sys_Users.Member_since = DateTime.UtcNow;
                 sys_Users.Gender = "Male";
+                sys_Users.Country = "USA";
+                sys_Users.City = "NA";
                 sys_Users.Password = CreatePassword(8);
                 if (sys_Users.Address == null) { sys_Users.Address = ""; }
                 if (sys_Users.State == null) { sys_Users.State = ""; }
@@ -661,7 +691,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
                 var lstDocsAgent = (from d in db.Tb_DocuAgent where (d.Id_User == id) select d).ToList();
@@ -716,10 +746,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 List<US_State> states;
 
@@ -861,10 +891,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 Sys_Users lstAdmins = new Sys_Users();
                 lstAdmins =(from a in db.Sys_Users where (a.Roles.Contains("Admin") && a.ID_Company == id) select a).FirstOrDefault();
@@ -915,10 +945,10 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 //HEADER DATA
                 ViewBag.activeuser = activeuser;
-                ViewBag.company = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
 
                 List<US_State> states;
 
@@ -1144,7 +1174,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -1234,7 +1264,7 @@ namespace Realestate_portal.Controllers
                 //NOTIFICATIONS
                 DateTime now = DateTime.Today;
                 List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
-                ViewBag.notifications = lstAlerts;
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
                 ViewBag.userID = activeuser.ID_User;
                 ViewBag.userName = activeuser.Name + " " + activeuser.LastName;
 
@@ -1370,7 +1400,7 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
-
+                //assaaaaaaasass  
                 //var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                 //if (sys_Users.Team_Leader == true)
                 //{
@@ -1464,13 +1494,13 @@ namespace Realestate_portal.Controllers
                             if (agents.Count > 0)
                             {
                                 foreach (var item in agents)
-                                {
-                                    item.Active = false;
+                                {                                   
+                                    db.Sys_Users.Remove(item);
                                 }
                                 db.SaveChanges();
                             }
-                            //desactivamos usuario
-                            sys_Users.Active = false;
+                            //desactivamos usuario                          
+                            db.Sys_Users.Remove(sys_Users);
                             db.SaveChanges();
 
                             var result = "Success";

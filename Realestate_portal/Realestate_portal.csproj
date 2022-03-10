@@ -35,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,13 +74,100 @@
     <Reference Include="Google.Apis.PlatformServices, Version=1.46.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.46.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization.Policy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.Policy.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Core.2.2.5\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.ResponseCaching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.ResponseCaching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.2.1.0\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.2.2.0\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
@@ -92,14 +180,48 @@
     <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=39.87.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.39.87.0\lib\net461\Stripe.net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic.Core, Version=1.2.9.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.9\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -109,6 +231,29 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -126,32 +271,20 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.10\lib\net46\Unity.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    <Reference Include="Unity.Container, Version=5.11.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.10\lib\net46\Unity.Container.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    <Reference Include="Unity.Mvc, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.5.11.1\lib\net46\Unity.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -189,6 +322,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\BlobStorage\ConnectionString.cs" />
     <Compile Include="Controllers\BlobStorage\UploadService.cs" />
     <Compile Include="Controllers\BookingController.cs" />
@@ -198,7 +333,9 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomResourcesController.cs" />
     <Compile Include="Controllers\LeadDocsController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
+    <Compile Include="Controllers\PaymentIntentApiController.cs" />
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
@@ -211,14 +348,34 @@
     <Compile Include="Controllers\Tb_StatusController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Cors\AllowCrossSiteAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HttpPostedFile\MemoryPostedFile.cs" />
+    <Compile Include="Models\Billing_Shipping_details.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\crTb_OrderDetails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\crTb_Orders.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enum\OrderStatus.cs" />
+    <Compile Include="Models\labels.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\label_color.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\marketing_orders.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Marketing_order_details.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Market_Categ_type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -236,10 +393,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+    <Compile Include="Models\Payment_Intent.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+    <Compile Include="Models\Receipts.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\saved_labels.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Saved_Templates.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Shipping_Details.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\signs_description.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sys_Company.cs">
@@ -335,23 +504,71 @@
     <Compile Include="Models\Tb_WorkTeams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Template_categories.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Template_colors.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Template_Details.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Template_dimensions.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\template_pricing.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\template_subcategories.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Template_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\T_Company_Type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\AgentsView.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerCRMDashboard.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerTableViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\CustomerViewModel.cs" />
     <Compile Include="Models\ViewModels\CRM\TeamsModel.cs" />
+    <Compile Include="Models\ViewModels\Market\AmountsByType.cs" />
+    <Compile Include="Models\ViewModels\Market\CartViewModel.cs" />
+    <Compile Include="Models\ViewModels\Market\Colors.cs" />
+    <Compile Include="Models\ViewModels\Market\LabelColors.cs" />
+    <Compile Include="Models\ViewModels\Market\SavedTemplateModel.cs" />
+    <Compile Include="Models\ViewModels\Market\TemplateCanvas.cs" />
+    <Compile Include="Models\ViewModels\Market\TemplateColors.cs" />
+    <Compile Include="Models\ViewModels\Market\TempPDF.cs" />
+    <Compile Include="Models\ViewModels\Market\Template_Layout.cs" />
+    <Compile Include="Models\ViewModels\Market\Template_Type.cs" />
+    <Compile Include="Models\ViewModels\Market\TypeInfo.cs" />
     <Compile Include="Models\ViewModels\NotesView.cs" />
     <Compile Include="Models\ViewModels\ReviewView.cs" />
+    <Compile Include="Models\ViewModels\SysCompany\Company.cs" />
     <Compile Include="Models\ViewModels\TasksView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Contracts\IEmail.cs" />
+    <Compile Include="Services\Contracts\IGeneral.cs" />
+    <Compile Include="Services\Contracts\Imarket.cs" />
+    <Compile Include="Services\Contracts\IUser.cs" />
+    <Compile Include="Services\Repositories\clsGeneral.cs" />
+    <Compile Include="Services\Repositories\EmailRepository.cs" />
+    <Compile Include="Services\Repositories\MarketRepository.cs" />
+    <Compile Include="Services\Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Realestate_portal.dll" />
+    <Content Include="bin\Realestate_portal.pdb" />
     <Content Include="Content\assetsEditor\css\editor.css" />
     <Content Include="Content\assetsEditor\css\line-awesome.css" />
     <Content Include="Content\assetsEditor\css\line-awesome.min.css" />
     <Content Include="Content\assetsEditor\css\vvvebjs-editor-helpers.css" />
     <Content Include="Content\assetsEditor\demo\album\album.css" />
     <Content Include="Content\assetsEditor\demo\album\index.html" />
+    <Content Include="Content\assetsEditor\demo\blank-page\index.html" />
+    <Content Include="Content\assetsEditor\demo\blank-page\narrow-jumbotron.css" />
     <Content Include="Content\assetsEditor\demo\blog\blog.css" />
     <Content Include="Content\assetsEditor\demo\blog\index.html" />
     <Content Include="Content\assetsEditor\demo\carousel\carousel.css" />
@@ -794,44 +1011,6 @@
     <Content Include="Content\assetsPD\js\twitterfetcher.min.js" />
     <Content Include="Content\assetsPD\js\typed.min.js" />
     <Content Include="Content\assetsPD\js\ytplayer.min.js" />
-    <Content Include="Content\assetsStore\images\bg\collection-of-colored-pencils-min.jpg" />
-    <Content Include="Content\assetsStore\images\bg\colored-pencils-near-chalkboard-min.jpg" />
-    <Content Include="Content\assetsStore\images\bg\file-sketch-with-text-lines-min.png" />
-    <Content Include="Content\assetsStore\images\bg\min.jpg" />
-    <Content Include="Content\assetsStore\images\fondostore-min.jpg" />
-    <Content Include="Content\assetsStore\images\fondostore2-min.jpg" />
-    <Content Include="Content\assetsStore\images\templates\businesscards\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\businesscards\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\businesscards\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\businesscards\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\DoorHanger\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\DoorHanger\Bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\DoorHanger\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\DoorHanger\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Flyer\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Flyer\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Flyer\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Flyer\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\ForSaleSign\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\ForSaleSign\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\ForSaleSign\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\ForSaleSign\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\FrameSign\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\FrameSign\blueandwhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\FrameSign\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\FrameSign\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Rider\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Rider\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Rider\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\Rider\redwhitegray.jpg" />
-    <Content Include="Content\assetsStore\images\templates\StandUpBanner\blackandgold.jpg" />
-    <Content Include="Content\assetsStore\images\templates\StandUpBanner\bluewhite.jpg" />
-    <Content Include="Content\assetsStore\images\templates\StandUpBanner\red.jpg" />
-    <Content Include="Content\assetsStore\images\templates\StandUpBanner\redwhitegray.jpg" />
     <Content Include="Content\assetsStore\css\bootstrap.min.css" />
     <Content Include="Content\assetsStore\css\custom.css" />
     <Content Include="Content\assetsStore\css\plugins.css" />
@@ -882,6 +1061,10 @@
     <Content Include="Content\assetsStore\images\bg\7.jpg" />
     <Content Include="Content\assetsStore\images\bg\8.jpg" />
     <Content Include="Content\assetsStore\images\bg\9.jpg" />
+    <Content Include="Content\assetsStore\images\bg\collection-of-colored-pencils-min.jpg" />
+    <Content Include="Content\assetsStore\images\bg\colored-pencils-near-chalkboard-min.jpg" />
+    <Content Include="Content\assetsStore\images\bg\file-sketch-with-text-lines-min.png" />
+    <Content Include="Content\assetsStore\images\bg\min.jpg" />
     <Content Include="Content\assetsStore\images\blog\big-img\1.jpg" />
     <Content Include="Content\assetsStore\images\blog\blog-3\1.jpg" />
     <Content Include="Content\assetsStore\images\blog\blog-3\2.jpg" />
@@ -920,6 +1103,8 @@
     <Content Include="Content\assetsStore\images\fancybox\fancybox_sprite%402x.png" />
     <Content Include="Content\assetsStore\images\fancybox\fancybox_sprite.png" />
     <Content Include="Content\assetsStore\images\favicon.ico" />
+    <Content Include="Content\assetsStore\images\fondostore-min.jpg" />
+    <Content Include="Content\assetsStore\images\fondostore2-min.jpg" />
     <Content Include="Content\assetsStore\images\icon.png" />
     <Content Include="Content\assetsStore\images\icons\blog-link-post2.png" />
     <Content Include="Content\assetsStore\images\icons\box.png" />
@@ -1020,6 +1205,38 @@
     <Content Include="Content\assetsStore\images\product\sm-img\1.jpg" />
     <Content Include="Content\assetsStore\images\product\sm-img\2.jpg" />
     <Content Include="Content\assetsStore\images\product\sm-img\3.jpg" />
+    <Content Include="Content\assetsStore\images\templates\businesscards\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\businesscards\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\businesscards\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\businesscards\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\DoorHanger\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\DoorHanger\Bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\DoorHanger\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\DoorHanger\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Flyer\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Flyer\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Flyer\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Flyer\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\ForSaleSign\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\ForSaleSign\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\ForSaleSign\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\ForSaleSign\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\FrameSign\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\FrameSign\blueandwhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\FrameSign\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\FrameSign\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\OpenHouseSign\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Rider\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Rider\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Rider\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\Rider\redwhitegray.jpg" />
+    <Content Include="Content\assetsStore\images\templates\StandUpBanner\blackandgold.jpg" />
+    <Content Include="Content\assetsStore\images\templates\StandUpBanner\bluewhite.jpg" />
+    <Content Include="Content\assetsStore\images\templates\StandUpBanner\red.jpg" />
+    <Content Include="Content\assetsStore\images\templates\StandUpBanner\redwhitegray.jpg" />
     <Content Include="Content\assetsStore\images\testimonial\1.png" />
     <Content Include="Content\assetsStore\images\testimonial\2.png" />
     <Content Include="Content\assetsStore\images\testimonial\3.png" />
@@ -1032,6 +1249,7 @@
     <Content Include="Content\assetsStore\style.css" />
     <Content Include="Content\assets\css\animate\animate.css" />
     <Content Include="Content\assets\css\animate\animate.min.css" />
+    <Content Include="Content\assets\css\app.css" />
     <Content Include="Content\assets\css\bootstrap-select\bootstrap-select.css" />
     <Content Include="Content\assets\css\bootstrap-select\bootstrap-select.min.css" />
     <Content Include="Content\assets\css\datatables\datatables.css" />
@@ -1067,6 +1285,12 @@
     <Content Include="Content\assets\icons\themify\css\themify-icons.css" />
     <Content Include="Content\assets\icons\themify\css\themify-icons.min.css" />
     <Content Include="Content\assets\icons\themify\fonts\themify.svg" />
+    <Content Include="Content\assets\imagesemoji\blank.gif" />
+    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_0.png" />
+    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_1.png" />
+    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_2.png" />
+    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_3.png" />
+    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_4.png" />
     <Content Include="Content\assets\img\albums\01.jpg" />
     <Content Include="Content\assets\img\albums\02.jpg" />
     <Content Include="Content\assets\img\albums\03.jpg" />
@@ -1094,6 +1318,7 @@
     <Content Include="Content\assets\img\avatar\avatar-08.jpg" />
     <Content Include="Content\assets\img\avatar\avatar-09-big.jpg" />
     <Content Include="Content\assets\img\avatar\avatar-09.jpg" />
+    <Content Include="Content\assets\img\avatar\avatar-3.jpg" />
     <Content Include="Content\assets\img\background\01.jpg" />
     <Content Include="Content\assets\img\background\02.jpg" />
     <Content Include="Content\assets\img\background\03.jpg" />
@@ -1185,6 +1410,8 @@
     <Content Include="Content\assets\img\smarthome\17.jpg" />
     <Content Include="Content\assets\img\smarthome\18.jpg" />
     <Content Include="Content\assets\img\smarthome\19.jpg" />
+    <Content Include="Content\assets\img\smarthome\home.jpeg" />
+    <Content Include="Content\assets\img\smarthome\Properties.jpg" />
     <Content Include="Content\assets\img\videos\01.jpg" />
     <Content Include="Content\assets\img\videos\02.jpg" />
     <Content Include="Content\assets\img\videos\03.jpg" />
@@ -1305,6 +1532,7 @@
     <Content Include="Content\assets\vendors\js\datatables\vfs_fonts.js" />
     <Content Include="Content\assets\vendors\js\datepicker\daterangepicker.js" />
     <Content Include="Content\assets\vendors\js\datepicker\moment.min.js" />
+    <Content Include="Content\assets\vendors\js\Html2Canvas\Html2Canvas.min.js" />
     <Content Include="Content\assets\vendors\js\leaflet\leaflet.js" />
     <Content Include="Content\assets\vendors\js\leaflet\leaflet.min.js" />
     <Content Include="Content\assets\vendors\js\lity\lity.js" />
@@ -1323,16 +1551,10 @@
     <Content Include="Content\assets\vendors\js\progress\circle-progress.min.js" />
     <Content Include="Content\assets\vendors\js\tabledit\jquery.tabledit.js" />
     <Content Include="Content\assets\vendors\js\tabledit\jquery.tabledit.min.js" />
-    <Content Include="Content\assets\imagesemoji\blank.gif" />
-    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_0.png" />
-    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_1.png" />
-    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_2.png" />
-    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_3.png" />
-    <Content Include="Content\assets\imagesemoji\emoji_spritesheet_4.png" />
     <Content Include="Content\common\1.2.js" />
     <Content Include="Content\common\component.css" />
-    <Content Include="Content\common\customCareers.js" />
     <Content Include="Content\common\custom.js" />
+    <Content Include="Content\common\customCareers.js" />
     <Content Include="Content\common\images\logo %281%29.svg" />
     <Content Include="Content\common\images\logo.svg" />
     <Content Include="Content\common\images\step1.svg" />
@@ -1342,6 +1564,12 @@
     <Content Include="Content\common\library\air-datepicker-master\dist\js\datepicker.min.js" />
     <Content Include="Content\common\library\air-datepicker-master\dist\js\i18n\datepicker.en.js" />
     <Content Include="Content\common\library\jquery.steps.js" />
+    <Content Include="Content\common\stripe\client.js" />
+    <Content Include="Content\common\stripe\client2.js" />
+    <Content Include="Content\common\stripe\global.css" />
+    <Content Include="Content\crm\ADMINPROFILE.png" />
+    <Content Include="Content\crm\AGENTPROFILE.png" />
+    <Content Include="Content\crm\BROKERPROFILE.png" />
     <Content Include="Content\dist\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\dist\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\dist\bootstrap\css\bootstrap.css" />
@@ -1425,6 +1653,274 @@
     <Content Include="Content\dist\js\ckeditor-classic.js" />
     <Content Include="Content\dist\js\ckeditor-document.js" />
     <Content Include="Content\dist\js\ckeditor-inline.js" />
+    <Content Include="Content\images\cc-images\amex-b.png" />
+    <Content Include="Content\images\cc-images\discover-b.png" />
+    <Content Include="Content\images\cc-images\godaddy.png" />
+    <Content Include="Content\images\cc-images\lock.png" />
+    <Content Include="Content\images\cc-images\master-b.png" />
+    <Content Include="Content\images\cc-images\visa-b.png" />
+    <Content Include="Content\images\marketing\back\cg-back-000-01.jpeg" />
+    <Content Include="Content\images\marketing\back\pgr-back-000-01.jpeg" />
+    <Content Include="Content\images\marketing\back\vh-back-000-01.jpeg" />
+    <Content Include="Content\images\marketing\back\wn-000-01.jpeg" />
+    <Content Include="Content\images\marketing\ColorTemplate\R-2436-4-white-%28black%29.jpg" />
+    <Content Include="Content\images\marketing\ColorTemplate\R-2436-4-white-%28red%29.jpg" />
+    <Content Include="Content\images\marketing\Companies\axisHome.jpg" />
+    <Content Include="Content\images\marketing\Companies\b&amp;w.jpg" />
+    <Content Include="Content\images\marketing\Companies\berkshire.jpg" />
+    <Content Include="Content\images\marketing\Companies\bhg.jpg" />
+    <Content Include="Content\images\marketing\Companies\calltekglobal.jpg" />
+    <Content Include="Content\images\marketing\Companies\century21.jpg" />
+    <Content Include="Content\images\marketing\Companies\coldwell.jpg" />
+    <Content Include="Content\images\marketing\Companies\pgrrealestate.jpg" />
+    <Content Include="Content\images\marketing\Companies\premierteam.jpg" />
+    <Content Include="Content\images\marketing\Companies\premiumgrouprealty.jpg" />
+    <Content Include="Content\images\marketing\Companies\vividhomes.jpg" />
+    <Content Include="Content\images\marketing\Companies\worknetify.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-02-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-03-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-04-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-05-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-06-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-07-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-08-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-09-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-10-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-000-11-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-AH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-CG-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-PG-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-PR-000-01-cleaned.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-VH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\BussinesCards\BC-WN-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-AX-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-AX-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PC-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PC-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PGR-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-PR-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-vh-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ClosingSigns\C-vh-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ForSalePanels\FS-AX-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ForSalePanels\FS-PC-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ForSalePanels\FS-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ForSalePanels\FS-PR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\ForSalePanels\FS-VH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-AX-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-AX-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PC-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PC-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PGR-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-PR-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-VH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\OpenHouse\OH-VH-000-02-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\axishome-round.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\forsale-pic.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\Girl-profile-Picture.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\premiumcorp-round.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\premiumg-round.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\profile-pic-round.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\profile-square.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Photos\vividhomes-squared.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Riders\RD-AX-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Riders\RD-PC-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Riders\RD-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Riders\RD-PR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\Riders\RD-VH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-1824-11-blank.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-1824-9-Blank.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-1824OH-5-white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-2418-37-white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-2424-32.white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-2436-4-white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-2524-29-white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\R-OHAR-21-white.jpg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-AX-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-CT-000-01-cleaned.png" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-PC-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-PGR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-PR-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-VH-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\EmptyTemplates\YardSigns\YS-WN-000-01-cleaned.jpeg" />
+    <Content Include="Content\images\marketing\model.png" />
+    <Content Include="Content\images\marketing\module_marketing.PNG" />
+    <Content Include="Content\images\marketing\order-image.jpg" />
+    <Content Include="Content\images\marketing\photos\BC-PC-000-01DiegoRodriguez244527.97816296353.jpg" />
+    <Content Include="Content\images\marketing\photos\BC-PR-000-01DiegoRodriguez244492.64928422452.jpg" />
+    <Content Include="Content\images\marketing\photos\BC-PR-000-01DiegoRodriguez244522.839631863499.jpg" />
+    <Content Include="Content\images\marketing\photos\BC-PR-000-01DiegoRodriguez511744503.56342622694.jpg" />
+    <Content Include="Content\images\marketing\photos\BC-VH-000-01DiegoRodriguez244527.788967812523.jpg" />
+    <Content Include="Content\images\marketing\photos\OH-VH-000-01Premium Group RealtyAdministration244581.6864458912106.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-11DiegoRodriguez244490.958969097219.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244434.698446388995.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244434.729641296393.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244435.74585453760.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244438.726876655169.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244438.742904687546.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244445.709236342644.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244445.7171472569104.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244449.530184838109.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244449.531724583391.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244449.533634398165.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244449.5449489468140.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244452.5404034375111.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244452.6315719444111.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244462.468014050944.jpg" />
+    <Content Include="Content\images\marketing\photos\R-1824-9DiegoRodriguez244556.631362303267.jpg" />
+    <Content Include="Content\images\marketing\photos\RD-PR-000-01DiegoRodriguez244556.792406990728.jpg" />
+    <Content Include="Content\images\marketing\photos\YS-PR-000-01Premium Group RealtyAdministration244584.691364733899.jpg" />
+    <Content Include="Content\images\marketing\photos\YS-WN-000-01DiegoRodriguez244556.7182505324133.jpg" />
+    <Content Include="Content\images\marketing\photos\YS-WN-000-01DiegoRodriguez244556.8623563889130.jpg" />
+    <Content Include="Content\images\marketing\photos\YS-WN-000-01Premium Group RealtyAdministration244581.8958846412122.jpg" />
+    <Content Include="Content\images\marketing\R-1824-10.png" />
+    <Content Include="Content\images\marketing\R-1824-31.png" />
+    <Content Include="Content\images\marketing\R-1824-6.png" />
+    <Content Include="Content\images\marketing\R-1824-8.png" />
+    <Content Include="Content\images\marketing\R-1824-9-Blank.png" />
+    <Content Include="Content\images\marketing\R-1824-9.png" />
+    <Content Include="Content\images\marketing\R-3024-9.png" />
+    <Content Include="Content\images\marketing\R-business-cards-lp.png" />
+    <Content Include="Content\images\marketing\R-closing-sign-home.png" />
+    <Content Include="Content\images\marketing\R-directionals-lp.png" />
+    <Content Include="Content\images\marketing\R-panel-lp.png" />
+    <Content Include="Content\images\marketing\R-panel-reflective-lp.png" />
+    <Content Include="Content\images\marketing\R-riders-lp.png" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.838382338116.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.838580208317.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.840037002398.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.848025104255.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.8482084375100.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.848377569446.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.848600972257.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.848709849547.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.849016701488.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244490.849190451473.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244491.056494768535.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02DiegoRodriguez244491.7257435301122.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-02Premium Group RealtyAdministration244581.6202796181143.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-03DiegoRodriguez244472.768875069432.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-03DiegoRodriguez244491.688574155146.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-04DiegoRodriguez244456.688790381971.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-04DiegoRodriguez244491.688066041710.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-05DiegoRodriguez244490.873412777844.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-05DiegoRodriguez244490.8905919907117.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-06DiegoRodriguez244460.678227870486.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-06DiegoRodriguez244490.87929052083.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-06DiegoRodriguez244490.8805396065101.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-06DiegoRodriguez244490.882880266254.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-06DiegoRodriguez244490.884664386654.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-07DiegoRodriguez244490.951756678298.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-07DiegoRodriguez244570.932621770856.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-08DiegoRodriguez244460.66395921357.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-09DiegoRodriguez244461.568687071829.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-000-11DiegoRodriguez244466.7118447454113.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-AX-000-01DiegoRodriguez244570.969854108846.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-PR-000-01DiegoRodriguez511744503.56342622694.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-WN-000-01DiegoRodriguez244556.923898993111.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\BC-WN-000-01Premium Group RealtyAdministration244584.126637581136.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\FS-VH-000-01DiegoRodriguez244558.776422210619.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\FS-VH-000-01DiegoRodriguez511744559.495592303286.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\OH-VH-000-01Premium Group RealtyAdministration244581.6864458912106.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244474.82061672455.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244490.958969097219.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244491.03058921392.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244491.033554131952.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244491.03585069444.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244491.056076192110.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11DiegoRodriguez244491.7198518518116.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-11Premium Group RealtyAdministration244581.865688622713.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-9DiegoRodriguez244462.4691717014123.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-9DiegoRodriguez511744540.504005011643.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-9Premium Group RealtyAdministration244584.63981245372.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824-9Premium Group RealtyAdministration244584.640629050957.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824OH-5DiegoRodriguez244474.717910937531.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-1824OH-5DiegoRodriguez511744540.4978888889134.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2418-37DiegoRodriguez511744560.4977161806115.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2424-32DiegoRodriguez244460.6799914583140.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2424-32DiegoRodriguez244472.729469537138.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2424-32DiegoRodriguez244490.968036226938.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2436-4S7venInfo615444585.092425023157.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\R-2524-29DiegoRodriguez244570.868071990743.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\YS-CT-000-01Premium Group RealtyAdministration244581.804649641234.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\YS-PR-000-01Premium Group RealtyAdministration244584.691364733899.jpg" />
+    <Content Include="Content\images\marketing\savedTemplates\YS-WN-000-01Premium Group RealtyAdministration244581.8958846412122.jpg" />
+    <Content Include="Content\images\marketing\TemplatePDF\Template44621.826986713141.jpg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-02.jfif" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-03.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-04.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-05.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-06.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-07.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-08.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-09.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-10.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-000-11.PNG" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-AX-000-01.png" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-CG-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-PGR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-PR-000-01.jpg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\BC-WN-000-01.png" />
+    <Content Include="Content\images\marketing\Templates\BussinesCards\Mainbc.png" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-AX-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-AX-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PC-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PGR-000-01.png" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PGR-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-PR-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ClosingSigns\C-VH-000-02.png" />
+    <Content Include="Content\images\marketing\Templates\ForSalePanels\FS-AX-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ForSalePanels\FS-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ForSalePanels\FS-PGR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ForSalePanels\FS-PR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\ForSalePanels\FS-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-AX-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-AX-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PC-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PGR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PGR-000-02.png" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-PR-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\OpenHouse\OH-VH-000-02.jpeg" />
+    <Content Include="Content\images\marketing\Templates\Riders\RD-AX-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\Riders\RD-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\Riders\RD-PGR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\Riders\RD-PR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\Riders\RD-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\MainYard.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-1824-11.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-1824-9.jpg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-1824OH-5.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-2418-37.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-2424-32.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-2436-4.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-2524-29.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\R-OHAR-21.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-AX-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-CT-000-01.png" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-PC-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-PGR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-PR-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-VH-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Templates\YardSigns\YS-WN-000-01.jpeg" />
+    <Content Include="Content\images\marketing\Template_type\MainYard.png" />
+    <Content Include="Content\images\marketing\Template_type\R-business-cards-lp.png" />
+    <Content Include="Content\images\marketing\Template_type\R-closing-sign-home.png" />
+    <Content Include="Content\images\marketing\Template_type\R-forsale.png" />
+    <Content Include="Content\images\marketing\Template_type\R-open-house.png" />
+    <Content Include="Content\images\marketing\Template_type\R-riders-lp.png" />
+    <Content Include="Content\images\marketing_logo.jpg" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -1436,8 +1932,8 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\pgrlogos\icon.png" />
     <Content Include="Content\pgrlogos\icon32x32.png" />
-    <Content Include="Content\pgrlogos\logowhite.png" />
     <Content Include="Content\pgrlogos\logopgr.png" />
+    <Content Include="Content\pgrlogos\logowhite.png" />
     <Content Include="Content\pgrlogos\PGRLogo.png" />
     <Content Include="Content\pgrlogos\PGRLogo_icon.png" />
     <Content Include="Content\pgrlogos\pgr_network\eastc.png" />
@@ -1450,6 +1946,231 @@
     <Content Include="Content\pgrlogos\S7VENLogoBlack.png" />
     <Content Include="Content\pgrlogos\S7VENLogoWhite.png" />
     <Content Include="Content\pgrlogos\S7VENStandalone.png" />
+    <Content Include="Content\Uploads\Images\logos\1 - PGR Logo %282%29.png" />
+    <Content Include="Content\Uploads\Images\logos\247009.jpg" />
+    <Content Include="Content\Uploads\Images\logos\Axis Logo 2.jpg" />
+    <Content Include="Content\Uploads\Images\logos\Cochy Martinez.jpeg" />
+    <Content Include="Content\Uploads\Images\logos\d1ea63758ec65e6d6db3545ff6dff15f.png" />
+    <Content Include="Content\Uploads\Images\logos\Facebook_Header-1.jpg" />
+    <Content Include="Content\Uploads\Images\logos\f_logo_RGB-Hex-Blue_512.png" />
+    <Content Include="Content\Uploads\Images\logos\IMG-20210125-WA0001.jpg" />
+    <Content Include="Content\Uploads\Images\logos\IMG_0925.jpeg" />
+    <Content Include="Content\Uploads\Images\logos\ISbtw1hkassfs31000000000.jpg" />
+    <Content Include="Content\Uploads\Images\logos\PGR Real Estate Logo Gold With No Shadow %281%29 %281%29.png" />
+    <Content Include="Content\Uploads\Images\logos\PHOTO-2021-06-02-12-28-15.jpg" />
+    <Content Include="Content\Uploads\Images\logos\qt=q_95.png" />
+    <Content Include="Content\Uploads\Images\logos\virtual-office.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\0be9703c84a7d9d2b415ad7430e24373.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\0D7CB3B0-FD8B-4525-BC94-6EB282EBD367.PNG" />
+    <Content Include="Content\Uploads\Images\Marketing_img\1.png" />
+    <Content Include="Content\Uploads\Images\Marketing_img\10.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\11.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\12.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\13.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\14.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\15.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\16.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\17.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\18.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\19.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\2.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\2.png" />
+    <Content Include="Content\Uploads\Images\Marketing_img\20.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\20200729_153618.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\21.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\22.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\23.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\247009.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\25.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\26.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\27.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\28.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\29.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\3.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\3.png" />
+    <Content Include="Content\Uploads\Images\Marketing_img\30.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\31.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\32.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\33.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\34.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\35.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\36.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\37.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\38.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\39.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\4.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\40.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\41.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\42.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\43.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\44.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\45.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\45D13E78-78CF-4BFA-B807-5D07261362BE.PNG" />
+    <Content Include="Content\Uploads\Images\Marketing_img\46.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\47.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\48.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\49.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\5.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\50.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\5010c238b15220527425ea7515d935ec.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\51.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\52.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\53.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\54.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\5734a08ff8ee6453e497e7d494603b02.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\6.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\7.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\8.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\9.jpeg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\B79DA94F-9DFB-44D7-B092-D1B5D81A6F03 2.PNG" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Baldwin, NY 2.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Bellmore, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\BFE5B6A8-9081-4D79-9894-4EAD920B4035 2.PNG" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Brentwood, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Broker-For-Homebuyer.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Brooklyn, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Corona-Showing-Tips.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\E08EC58D-4C8F-4D83-85B6-B7E1A1D11E39.PNG" />
+    <Content Include="Content\Uploads\Images\Marketing_img\East Meadow, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\fa512ac00a3925a3b1eb84c723742f78.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Farmingdale, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\First-Time-Home-Buyer.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Flushing, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Freeport, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Glen Head, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Hempstead, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Hewlett, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Open-House-Prep-hi-res-e1566005855838 %281%29.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Open-House-Safety-Tips.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Oyster Bay,.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\PGR Home Buying Tips 1.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\PGR Home Buying Tips 2.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\PGR Home Buying Tips 3.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\PGR Home Buying Tips 4.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Roosevelt, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Roslyn, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Screen-Shot-2018-05-27-at-8.13.52-PM.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Southampton, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Spring valley, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Uniondale, NY.jpg" />
+    <Content Include="Content\Uploads\Images\Marketing_img\Untitled.jpg" />
+    <Content Include="Content\Uploads\Images\Network\247009.jpg" />
+    <Content Include="Content\Uploads\Images\Network\4dd24222c1a0d8050453e9d3499d0c4b.png" />
+    <Content Include="Content\Uploads\Images\Network\5a951939c4ffc33e8c148af2.png" />
+    <Content Include="Content\Uploads\Images\Network\Alejandra Saavedra.jpg" />
+    <Content Include="Content\Uploads\Images\Network\bc3.PNG" />
+    <Content Include="Content\Uploads\Images\Network\ben.jpg" />
+    <Content Include="Content\Uploads\Images\Network\calltek3transparent.jpg" />
+    <Content Include="Content\Uploads\Images\Network\Captura de Pantalla 2021-07-27 a la%28s%29 1.38.39 p. m..png" />
+    <Content Include="Content\Uploads\Images\Network\Capture.PNG" />
+    <Content Include="Content\Uploads\Images\Network\Chris .jpg" />
+    <Content Include="Content\Uploads\Images\Network\Christian Makepeace.jpg" />
+    <Content Include="Content\Uploads\Images\Network\d1ea63758ec65e6d6db3545ff6dff15f.png" />
+    <Content Include="Content\Uploads\Images\Network\download.jpg" />
+    <Content Include="Content\Uploads\Images\Network\download.png" />
+    <Content Include="Content\Uploads\Images\Network\East Coast Capital.png" />
+    <Content Include="Content\Uploads\Images\Network\familyfirst.png" />
+    <Content Include="Content\Uploads\Images\Network\GeoGlobalSolutions Building Your Online Business 3000x3000 JPG1.jpg" />
+    <Content Include="Content\Uploads\Images\Network\images.jfif" />
+    <Content Include="Content\Uploads\Images\Network\Insual Capital.jpg" />
+    <Content Include="Content\Uploads\Images\Network\Jaredpic-e1590758107714-160x160.jpg" />
+    <Content Include="Content\Uploads\Images\Network\Logo buldelr.jpg" />
+    <Content Include="Content\Uploads\Images\Network\Logo Geo.jpg" />
+    <Content Include="Content\Uploads\Images\Network\logo on tax 1.jpg" />
+    <Content Include="Content\Uploads\Images\Network\logo-icon.png" />
+    <Content Include="Content\Uploads\Images\Network\logo.png" />
+    <Content Include="Content\Uploads\Images\Network\logomatersmall1NEW.png" />
+    <Content Include="Content\Uploads\Images\Network\MRubino-250x300.png" />
+    <Content Include="Content\Uploads\Images\Network\order-image.jpg" />
+    <Content Include="Content\Uploads\Images\Network\R-business-cards-lp.png" />
+    <Content Include="Content\Uploads\Images\Network\Raquel Carranza.jpg" />
+    <Content Include="Content\Uploads\Images\Network\Raquel.PNG.jpg" />
+    <Content Include="Content\Uploads\Images\Network\raul.jpg" />
+    <Content Include="Content\Uploads\Images\Network\RubinoLogo3.png" />
+    <Content Include="Content\Uploads\Images\Network\STATEFARM %282%29.png" />
+    <Content Include="Content\Uploads\Images\Network\stateFarm.png" />
+    <Content Include="Content\Uploads\Images\Network\statefarm22.gif" />
+    <Content Include="Content\Uploads\Images\Network\Unitednorthernlogo.jpg" />
+    <Content Include="Content\Uploads\Images\Network\v4-460px-Cancel-a-Real-Estate-Contract-Step-16.jpg.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\1 - PGR Logo %282%29.png" />
+    <Content Include="Content\Uploads\Images\profiles\111.JPG" />
+    <Content Include="Content\Uploads\Images\profiles\1564.JPEG" />
+    <Content Include="Content\Uploads\Images\profiles\1600702600026.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\2.25-LYREA.png" />
+    <Content Include="Content\Uploads\Images\profiles\20.JPEG" />
+    <Content Include="Content\Uploads\Images\profiles\22392367-3d-people-in-group-team-and-the-leader.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\247009.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\35493994-36e2c50e-04d9-11e8-8b38-890caea01850.png" />
+    <Content Include="Content\Uploads\Images\profiles\4 %281%29.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\443A0549-2.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\443A0663-2A.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\443A0695-2.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\4612.JPEG" />
+    <Content Include="Content\Uploads\Images\profiles\699049_users_512x512.png" />
+    <Content Include="Content\Uploads\Images\profiles\Alejandra Saavedra.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Alvaro Diaz.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Andrea 1.JPG" />
+    <Content Include="Content\Uploads\Images\profiles\Anthony Testaverde.png" />
+    <Content Include="Content\Uploads\Images\profiles\Axis Homes realty_8.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Axis Logo 2.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Bill.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\business card.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Captura.PNG" />
+    <Content Include="Content\Uploads\Images\profiles\Chris .jpg" />
+    <Content Include="Content\Uploads\Images\profiles\chrome.exe" />
+    <Content Include="Content\Uploads\Images\profiles\Construction-Company-Logo-Sample.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Copia de 1 - PGR Logo.png" />
+    <Content Include="Content\Uploads\Images\profiles\CRACK visual studio profesional.png" />
+    <Content Include="Content\Uploads\Images\profiles\Diego Rodriguez.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\facebook axishomes.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\foto beach small.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\foto perfil.jpeg" />
+    <Content Include="Content\Uploads\Images\profiles\Full body.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\George Headshot 9-2021.jpeg" />
+    <Content Include="Content\Uploads\Images\profiles\George.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\headshot.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\homecosts.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Hugo Idrogo Picture.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG-20200305-WA0003.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG-20201211-WA0015.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG_1209.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG_1766.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG_2235.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\IMG_4446.JPG" />
+    <Content Include="Content\Uploads\Images\profiles\IMG_E3763.JPG" />
+    <Content Include="Content\Uploads\Images\profiles\ISi7pjrfy57adz0000000000.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\ISmmjs3y43m0z41000000000.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\iStock_000026235680Medium.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Joe.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Logo 1 - Premium Group Realty - By GeoGlobalSolutions.png" />
+    <Content Include="Content\Uploads\Images\profiles\Logo 25 - Worknetify - By GeoGlobalSolutions.png" />
+    <Content Include="Content\Uploads\Images\profiles\Logo Opener.aep.mp4" />
+    <Content Include="Content\Uploads\Images\profiles\Logo-Limena2.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Logo.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Lorena Moncayo.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Obama.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\PGR Real Estate Logo Gold With No Shadow %281%29 %281%29.png" />
+    <Content Include="Content\Uploads\Images\profiles\PHOTO-2021-06-02-12-28-15 %281%29.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\PHOTO-2021-06-02-12-28-15 %282%29.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\photo.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\png-clipart-computer-icons-system-administrator-avatar-computer-network-heroes.png" />
+    <Content Include="Content\Uploads\Images\profiles\profile photo.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Putin.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Raquel Carranza.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Raquel.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\S7VEN Logo Black - Complete Clean Cut 2000x470 PNG 2.png" />
+    <Content Include="Content\Uploads\Images\profiles\sofor.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Trump.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Unitednorthernlogo.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\unnamed.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\VIE_380100_Saavedra, Alejandra.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\WhatsApp Image 2021-12-15 at 5.43.39 PM.jpeg" />
+    <Content Include="Content\Uploads\Images\profiles\your-logo-300x300-1-300x300.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\YourFace.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\YourPhotoHere.jpg" />
+    <Content Include="Content\Uploads\Images\profiles\Z 6.jpg" />
+    <Content Include="Content\Uploads\Resources\Documents\oscar.txt" />
+    <Content Include="Content\Uploads\Resources\Scripts\oscar.txt" />
     <Content Include="Content\video_ms\css\all.min.css" />
     <Content Include="Content\video_ms\css\animate.min.css" />
     <Content Include="Content\video_ms\css\bootstrap.min.css" />
@@ -1960,6 +2681,8 @@
     <Content Include="Content\wizardform\img\info_graphic_4.svg" />
     <Content Include="Content\wizardform\img\info_graphic_5.svg" />
     <Content Include="Content\wizardform\img\logo.png" />
+    <Content Include="Content\wizardform\img\StarFade.gif" />
+    <Content Include="Content\wizardform\img\StarGlow.gif" />
     <Content Include="Content\wizardform\img\stars.svg" />
     <Content Include="Content\wizardform\img\sub_header_about.jpg" />
     <Content Include="Content\wizardform\img\team\team-1.jpg" />
@@ -2008,61 +2731,30 @@
     <Content Include="img\Open House Sign.jpg" />
     <Content Include="img\Rider.jpg" />
     <Content Include="img\Stand Up Banner.jpg" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\dist\fonts\roboto\Roboto-Black.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-BlackItalic.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Bold.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-BoldItalic.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Italic.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Light.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-LightItalic.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Medium.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-MediumItalic.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Regular.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-Thin.ttf" />
-    <Content Include="Content\dist\fonts\roboto\Roboto-ThinItalic.ttf" />
-    <Content Include="Content\dist\images\.DS_Store" />
-    <Content Include="Content\dist\images\placeholders\.DS_Store" />
-    <Content Include="Content\dist\json\location.json" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Shared\Partials\Menu\Mobile_menu.cshtml" />
     <Content Include="Views\Shared\Partials\Menu\Top_bar.cshtml" />
     <Content Include="Views\Shared\Partials\Menu\Top_menu.cshtml" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.eot" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.ttf" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff2" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.eot" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.ttf" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.woff" />
-    <Content Include="Content\video_ms\css\flaticon\fonts\_flaticon.scss" />
-    <Content Include="Content\video_ms\fonts\fa-brands-400.eot" />
-    <Content Include="Content\video_ms\fonts\fa-brands-400.ttf" />
-    <Content Include="Content\video_ms\fonts\fa-brands-400.woff" />
-    <Content Include="Content\video_ms\fonts\fa-brands-400.woff2" />
-    <Content Include="Content\video_ms\fonts\fa-regular-400.eot" />
-    <Content Include="Content\video_ms\fonts\fa-regular-400.ttf" />
-    <Content Include="Content\video_ms\fonts\fa-regular-400.woff" />
-    <Content Include="Content\video_ms\fonts\fa-regular-400.woff2" />
-    <Content Include="Content\video_ms\fonts\fa-solid-900.eot" />
-    <Content Include="Content\video_ms\fonts\fa-solid-900.ttf" />
-    <Content Include="Content\video_ms\fonts\fa-solid-900.woff" />
-    <Content Include="Content\video_ms\fonts\fa-solid-900.woff2" />
-    <Content Include="Content\video_ms\fonts\Flaticon.eot" />
-    <Content Include="Content\video_ms\fonts\Flaticon.ttf" />
-    <Content Include="Content\video_ms\fonts\Flaticon.woff" />
-    <Content Include="Content\video_ms\fonts\Flaticon.woff2" />
-    <Content Include="Content\video_ms\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\video_ms\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\video_ms\fonts\FontAwesome.otf" />
-    <Content Include="Content\video_ms\fonts\_flaticon.scss" />
-    <Content Include="Content\video_ms\images\background\Thumbs.db" />
-    <Content Include="Content\video_ms\images\Thumbs.db" />
     <Content Include="Views\Shared\_Layout_videos.cshtml" />
     <Content Include="Views\Shared\Partials\Video_ms\Menu\header_menu.cshtml" />
     <Content Include="Views\Shared\Partials\Video_ms\Menu\footer_menu.cshtml" />
@@ -2086,145 +2778,46 @@
     <Content Include="Views\Portal\Notfound.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\AgentProfile.cshtml" />
-    <Content Include="Content\dist\bootstrap\config.json" />
     <Content Include="Views\Users\BrokerProfile.cshtml" />
     <Content Include="Views\Users\CreateBroker.cshtml" />
-    <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
     <Content Include="Views\Portal\Taxes.cshtml" />
     <Content Include="Views\CRM\PropertiesFiltered.cshtml" />
     <Content Include="Views\Portal\ToVerifyTaxes.cshtml" />
     <Content Include="Views\CRM\CRMDashboard_Teams.cshtml" />
     <Content Include="Views\CRM\Agents_properties.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Views\Emails\TemplateConfirmation.cshtml" />
+    <Content Include="Views\Market\Brands.cshtml" />
+    <Content Include="Views\Market\Categories.cshtml" />
+    <Content Include="Views\Market\Checkout.cshtml" />
+    <Content Include="Views\Market\Companies.cshtml" />
+    <Content Include="Views\Market\Image.cshtml" />
+    <Content Include="Views\Market\Index.cshtml" />
+    <Content Include="Views\Market\OrderDetails.cshtml" />
+    <Content Include="Views\Market\OwnTemplate.cshtml" />
+    <Content Include="Views\Market\Payment.cshtml" />
+    <Content Include="Views\Market\PurchaseHistory.cshtml" />
+    <Content Include="Views\Market\Receipt.cshtml" />
+    <Content Include="Views\Market\Shop.cshtml" />
+    <Content Include="Views\Market\ShoppingCart.cshtml" />
+    <Content Include="Views\Market\SizesAndMaterials.cshtml" />
+    <Content Include="Views\Market\SizesAndMaterialsEdit.cshtml" />
+    <Content Include="Views\Market\Template.cshtml" />
+    <Content Include="Views\Market\TemplateEdit.cshtml" />
+    <Content Include="Views\Shared\Utilities\ShoppingCart.cshtml" />
+    <Content Include="Views\Shared\_Layout-font.cshtml" />
+    <Content Include="Views\Emails\JoinBrand.cshtml" />
+    <Content Include="Views\Market\TemplatePDF.cshtml" />
+    <Content Include="Scripts\datatables.net.1.10.24\.signature.p7s" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Content\wizardform\img\StarFade.gif" />
-    <Content Include="Content\wizardform\img\StarGlow.gif" />
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-1.12.4-vsdoc.js" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\jquery-1.12.4.js" />
-    <Content Include="Scripts\jquery-1.12.4.min.js" />
-    <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Portal\Login.cshtml" />
-    <Content Include="Views\CRM\Leads.cshtml" />
-    <Content Include="Views\CRM\Brokers.cshtml" />
-    <Content Include="Views\CRM\CRMDashboardCopy.cshtml" />
-    <Content Include="Views\Shared\PartialTables\DocumentsTemplate.cshtml" />
-    <Content Include="Views\Tb_Source\Create.cshtml" />
-    <Content Include="Views\Tb_Source\Delete.cshtml" />
-    <Content Include="Views\Tb_Source\Details.cshtml" />
-    <Content Include="Views\Tb_Source\Edit.cshtml" />
-    <Content Include="Views\Tb_Source\Index.cshtml" />
-    <Content Include="Views\Tb_Status\Create.cshtml" />
-    <Content Include="Views\Tb_Status\Delete.cshtml" />
-    <Content Include="Views\Tb_Status\Details.cshtml" />
-    <Content Include="Views\Tb_Status\Edit.cshtml" />
-    <Content Include="Views\Tb_Status\Index.cshtml" />
-    <Content Include="Views\Users\TeamList.cshtml" />
-    <Content Include="Views\Tb_Customers_Users\AssignList.cshtml" />
-    <Content Include="Views\Tb_Customers_Users\AssignEdit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content\Uploads\DocumentsAgent\" />
-    <Folder Include="Content\Uploads\DocumentsLead\" />
-    <Folder Include="Content\Uploads\DocumentsPackages\" />
-    <Folder Include="Content\Uploads\Images\logos\" />
-    <Folder Include="Content\Uploads\Images\Marketing_img\" />
-    <Folder Include="Content\Uploads\Images\Network\" />
-    <Folder Include="Content\Uploads\Images\profiles\" />
-    <Folder Include="Content\Uploads\Images\Videos_img\" />
-    <Folder Include="Content\Uploads\Resources\Documents\" />
-    <Folder Include="Content\Uploads\Resources\Scripts\" />
-    <Folder Include="Content\Uploads\Resources\Taxes\" />
-    <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\LeadDocs\" />
-    <Folder Include="Views\Session\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.eot" />
-    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.ttf" />
-    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.woff" />
-    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.eot" />
-    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.ttf" />
-    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.woff" />
-    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.woff2" />
-    <Content Include="Content\assets\icons\meteocons\fonts\Meteocons.ttf" />
-    <Content Include="Content\assets\icons\meteocons\fonts\Meteocons.woff" />
-    <Content Include="Content\assets\icons\themify\fonts\themify.eot" />
-    <Content Include="Content\assets\icons\themify\fonts\themify.ttf" />
-    <Content Include="Content\assets\icons\themify\fonts\themify.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.woff" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\themify.eot" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\themify.ttf" />
-    <Content Include="Content\wizardform\css\icon_fonts\font\themify.woff" />
-    <Content Include="Content\poetic-producer-280700-821c738ea972.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\assetsPD\fonts\iconsmind.eot" />
-    <Content Include="Content\assetsPD\fonts\iconsmind.ttf" />
-    <Content Include="Content\assetsPD\fonts\iconsmind.woff" />
-    <Content Include="Content\assetsPD\fonts\socicon.eot" />
-    <Content Include="Content\assetsPD\fonts\socicon.ttf" />
-    <Content Include="Content\assetsPD\fonts\socicon.woff" />
-    <Content Include="Content\assetsPD\fonts\stack-interface.eot" />
-    <Content Include="Content\assetsPD\fonts\stack-interface.ttf" />
-    <Content Include="Content\assetsPD\fonts\stack-interface.woff" />
-    <Content Include="Content\assetsPD\fonts\stack-interface.woff2" />
-    <Content Include="Content\assetsStore\fonts\bicon.eot" />
-    <Content Include="Content\assetsStore\fonts\bicon.ttf" />
-    <Content Include="Content\assetsStore\fonts\bicon.woff" />
-    <Content Include="Content\assetsStore\fonts\fontawesome-webfont-1.eot" />
-    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\assetsStore\fonts\Material-Design-Iconic-Font.woff2" />
-    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.eot" />
-    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.ttf" />
-    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.woff" />
-    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.woff2" />
-    <Content Include="Content\assetsStore\fonts\slick-1.eot" />
-    <Content Include="Content\assetsStore\fonts\slick.eot" />
-    <Content Include="Content\assetsStore\fonts\slick.ttf" />
-    <Content Include="Content\assetsStore\fonts\slick.woff" />
+    <Content Include="Views\Market\TemplateCreate.cshtml" />
+    <Content Include="Content\api-calendar-app-s7ven-745b1ec4f3eb.json" />
     <Content Include="Content\assetsEditor\css\editor.css.map" />
     <Content Include="Content\assetsEditor\fonts\line-awesome.eot" />
     <Content Include="Content\assetsEditor\fonts\line-awesome.ttf" />
@@ -2325,6 +2918,320 @@
     <Content Include="Content\assetsEditor\scss\_type.scss" />
     <Content Include="Content\assetsEditor\scss\_utilities.scss" />
     <Content Include="Content\assetsEditor\scss\_variables.scss" />
+    <Content Include="Content\assetsPD\fonts\iconsmind.eot" />
+    <Content Include="Content\assetsPD\fonts\iconsmind.ttf" />
+    <Content Include="Content\assetsPD\fonts\iconsmind.woff" />
+    <Content Include="Content\assetsPD\fonts\socicon.eot" />
+    <Content Include="Content\assetsPD\fonts\socicon.ttf" />
+    <Content Include="Content\assetsPD\fonts\socicon.woff" />
+    <Content Include="Content\assetsPD\fonts\stack-interface.eot" />
+    <Content Include="Content\assetsPD\fonts\stack-interface.ttf" />
+    <Content Include="Content\assetsPD\fonts\stack-interface.woff" />
+    <Content Include="Content\assetsPD\fonts\stack-interface.woff2" />
+    <Content Include="Content\assetsStore\fonts\bicon.eot" />
+    <Content Include="Content\assetsStore\fonts\bicon.ttf" />
+    <Content Include="Content\assetsStore\fonts\bicon.woff" />
+    <Content Include="Content\assetsStore\fonts\fontawesome-webfont-1.eot" />
+    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assetsStore\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\assetsStore\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Content\assetsStore\fonts\Simple-Line-Icons.woff2" />
+    <Content Include="Content\assetsStore\fonts\slick-1.eot" />
+    <Content Include="Content\assetsStore\fonts\slick.eot" />
+    <Content Include="Content\assetsStore\fonts\slick.ttf" />
+    <Content Include="Content\assetsStore\fonts\slick.woff" />
+    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.eot" />
+    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.ttf" />
+    <Content Include="Content\assets\icons\ionicons\fonts\ionicons.woff" />
+    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.eot" />
+    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.ttf" />
+    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.woff" />
+    <Content Include="Content\assets\icons\lineawesome\fonts\line-awesome.woff2" />
+    <Content Include="Content\assets\icons\meteocons\fonts\Meteocons.ttf" />
+    <Content Include="Content\assets\icons\meteocons\fonts\Meteocons.woff" />
+    <Content Include="Content\assets\icons\themify\fonts\themify.eot" />
+    <Content Include="Content\assets\icons\themify\fonts\themify.ttf" />
+    <Content Include="Content\assets\icons\themify\fonts\themify.woff" />
+    <Content Include="Content\assets\img\avatar\avatar - Shortcut.lnk" />
+    <Content Include="Content\dist\bootstrap\config.json" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Black.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-BlackItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-BoldItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Italic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-LightItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-MediumItalic.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="Content\dist\fonts\roboto\Roboto-ThinItalic.ttf" />
+    <Content Include="Content\dist\images\.DS_Store" />
+    <Content Include="Content\dist\images\placeholders\.DS_Store" />
+    <Content Include="Content\dist\json\location.json" />
+    <Content Include="Content\images\marketing\TemplatePDF\Template44621.6828914236120.pdf" />
+    <Content Include="Content\images\marketing\TemplatePDF\Template44621.809395219962.pdf" />
+    <Content Include="Content\images\marketing\TemplatePDF\Template44621.8523265972130.pdf" />
+    <Content Include="Content\images\marketing\TemplatePDF\Template44621.852793298636.pdf" />
+    <Content Include="Content\poetic-producer-280700-821c738ea972.json" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgcNgLIXevd0Zyp0pcvi9Ck.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3Jgcs4LIXevd0Zyp06Sv1UTS.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgcuiLIXevd0Zyp08ozvA7e.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgcXXLIXevd0Zyp0ZEP0Mm1.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgdEOLIXevd0Zyp14NqJqNX.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgdPPLIXevd0Zyp061zviVo.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgdZGLIXevd0Zyp0Yb2KW0z.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JgefpLIXevd0Zyp0iavwyHC.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3Jgf3mLIXevd0Zyp0EtEvuZy.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JhMtfLIXevd0Zyp0OZ1iK2b.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JhPA1LIXevd0Zyp1qQDDQUF.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnGmLLIXevd0Zyp0mLw3eAE.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnHbmLIXevd0Zyp1pohSF3b.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnHVOLIXevd0Zyp0AoMnNhQ.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnI4wLIXevd0Zyp0Wa6LaIL.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnX0XLIXevd0Zyp0fnHSzBy.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3JnX8NLIXevd0Zyp02J17oa4.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3KGDynLIXevd0Zyp1NBkxfTF.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3KKC33LIXevd0Zyp1Y9T7nud.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3KKDB1LIXevd0Zyp0u2PAkPd.pdf" />
+    <Content Include="Content\Receipts\Receipt_pi_3KKDqcLIXevd0Zyp108qbsXu.pdf" />
+    <Content Include="Content\Uploads\Images\profiles\Main Picture.pdf" />
+    <Content Include="Content\Uploads\Images\profiles\Manny Leads.xlsx" />
+    <Content Include="Content\Uploads\Images\profiles\stamp-text-your-name-here-260nw-191281073.webp" />
+    <Content Include="Content\Uploads\Resources\Documents\108---zone-boundaries.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\109---town-list-zone-order.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\1400835607-Morales-Commitment_Letter_-_New_York-RESTRICTED.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\2019-code-of-ethics.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\202---lead-paint-disclosure-information.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\2020 New Agent Set Up.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\2020 PGR Privacy Policy and Operations Procedures %281%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\203---lead-paint-sales-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\204---lead-paint-rental-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\213---exclusive-buyer-broker-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\215---2011-agency-disclosure-form-buyer-and-seller.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\216---2011-agency-disclosure-form-landlord-and-tenant.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\217---property-condition-disclosure-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\218---property-condition---buyers-rights-and-sellers-obligations.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\221---amendment-to-listing-agreement-to-modify-commission.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\224---sales-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\226---buyer-agency-termination-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\227---public-records-access-authorization-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\228---tenant-broker-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\450---realtor-application.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\603---request-for-arbitration.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\851---condo-coop-property-data-section.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\852---addendum-to-commercial-industrial-listing-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\853---rental-listing-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\853-rental-property-data-section.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\854---commercial-industrial-listing-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\854-Commercial-Property-Data-Section.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\855-land-property-data-section.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\856-Report-of-OneKeyMLS-Status-Change-Form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\857---office-exclusive-certification.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\859-OneKeMLS-Withdrawal-Form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\860---release.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\860-Release-with-OneKeyMLS-Listing-Cancellation-Form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\865---mls-rules-complaint-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\870---offer-acknowledgement-and-registration-form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\871---sworn-declaration-of-offer-presentation.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\AGENCY DISCLOSURE.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\AGENTS YEAR GOAL.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Approval Letter.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Cambios S7VEN.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\condo_co-op_property_data_form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\COVID 19 Questionnaire %281%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Deal Sheet %282%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\deal sheet %283%29 %281%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\DEAL SHEET.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Deal Sheet.docx.url" />
+    <Content Include="Content\Uploads\Resources\Documents\Diagramas2.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\fair housing diclosure.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Fair Housing Disclosure .pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\FLOOD INSURANCE DISCLOSURE.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\land_listing_agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\lead_paint_form_rental.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\LeaseHouse 1,000.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\LEG-SFL-NYSAR-COVID19-Disclosure %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\listing-agreement-for-res-Condo-Coop-2-page-8-5-x-14.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls-of-choice---frequently-asked-questions.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls-request-for-paperwork.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mlsrules.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_buyer_broker_agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_change_form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_commission_change_form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_sales_agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_short_sale_addendum.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_town_list_for_zones.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\mls_withdrawal_form.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\OFFER ACKNOWLEDGMENT FORM.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\office-exclusive-certification.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\onekey-extension-agreement.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Open House Signing Sheet.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\PGR Privacy Policy and Operations Procedures %281%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Premium Invoice %287%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Premium Invoice %289%29.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Premium INVOICE.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\PROPERTY CONDITION DISCLOSURE FORM.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\REALTOR-REFERRAL-FORM-F-2013-11-18.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\rent-deposit.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\RESIDENTIAL PROPERTY DATA SECTION.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\residential-property-data-section.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Sales Agreement Premium.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\SHORT SALE ADDENDUM.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\SHORT SALE CANCELLATION ADDENDUM.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\SWORN PRESENTATION OF OFFER.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Team Leader contracts.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\Team leader.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Test Super Admi.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\TEST.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\Transaction Profile Sheet.docx" />
+    <Content Include="Content\Uploads\Resources\Documents\withdrawal.pdf" />
+    <Content Include="Content\Uploads\Resources\Documents\W_9 Form.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 1 - Leveraging The Database.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 2 - For Sale By Owner.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 3 - Door Knocking.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 4 - Online Lead Conversion.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 5 - Expired.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 6 - The Mega Open House.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2019 - 7 - The Buyer Consultation.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\2021 PGR Privacy Policy and Operations Procedures.docx" />
+    <Content Include="Content\Uploads\Resources\Scripts\AGENTS GOALS SHEET.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Approval letter upd.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Broker Application.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Buyer Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\C.M.A Presentation %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Centers Of Influence Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Expired Script Over The Phone %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\EXTRA ADMIN CODE FOR BROKER MLS.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\FSBO Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Just Listed Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\LIBOR APPLICATION FOR DESIGNATED REALTOR.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\LIBOR AUTO CHARGE AUTHORIZATION FORM.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Listing Plan Of Action %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Listing Plan Of Action Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\MFO Listing Process %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\One Key Agent Application.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\ONEKEY APPLICATION FOR BROKERS.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\ONEKEY AUTO CHARGE AUTHORIZATION FORM.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Pre-listing Package %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Prequalifying The Listing Presentation Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Presenting The Offer %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Price Reduction Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Prospecting Scripts %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Quealifying For Home And Motivation %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Real Estate license law.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\REALTOR APPLICATION.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\SALESPERSON CONTRACT.docx" />
+    <Content Include="Content\Uploads\Resources\Scripts\Sellers Objections Scripts %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Showing Property %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\SUBSCRIBER APPLICATION FOR ONE KEY MLS.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\Telephone Ad Call_Sign Responses %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\The Just Sold Script %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\The Listing.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\The One Minute Presentation %281%29.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\updated award letter.pdf" />
+    <Content Include="Content\Uploads\Resources\Scripts\W_9 FORM.pdf" />
+    <Content Include="Content\Uploads\Resources\Taxes\S7VEN_NEW_REQ_2_-_10202021.pdf" />
+    <Content Include="Content\Uploads\Resources\Taxes\Verify Taxes.pdf" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.eot" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.ttf" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\Flaticon.woff2" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.eot" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.ttf" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\ionicons.woff" />
+    <Content Include="Content\video_ms\css\flaticon\fonts\_flaticon.scss" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.eot" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.woff" />
+    <Content Include="Content\video_ms\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.eot" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.woff" />
+    <Content Include="Content\video_ms\fonts\fa-regular-400.woff2" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.eot" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.woff" />
+    <Content Include="Content\video_ms\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\video_ms\fonts\Flaticon.eot" />
+    <Content Include="Content\video_ms\fonts\Flaticon.ttf" />
+    <Content Include="Content\video_ms\fonts\Flaticon.woff" />
+    <Content Include="Content\video_ms\fonts\Flaticon.woff2" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\video_ms\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\video_ms\fonts\FontAwesome.otf" />
+    <Content Include="Content\video_ms\fonts\_flaticon.scss" />
+    <Content Include="Content\video_ms\images\background\Thumbs.db" />
+    <Content Include="Content\video_ms\images\Thumbs.db" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\ElegantIcons.woff" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\fontello.woff" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Glyphter.woff" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\icon_set_1.woff" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\Pe-icon-7-stroke.woff" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\themify.eot" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\themify.ttf" />
+    <Content Include="Content\wizardform\css\icon_fonts\font\themify.woff" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Scripts\jquery-1.12.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Portal\Login.cshtml" />
+    <Content Include="Views\CRM\Leads.cshtml" />
+    <Content Include="Views\CRM\Brokers.cshtml" />
+    <Content Include="Views\CRM\CRMDashboardCopy.cshtml" />
+    <Content Include="Views\Shared\PartialTables\DocumentsTemplate.cshtml" />
+    <Content Include="Views\Tb_Source\Create.cshtml" />
+    <Content Include="Views\Tb_Source\Delete.cshtml" />
+    <Content Include="Views\Tb_Source\Details.cshtml" />
+    <Content Include="Views\Tb_Source\Edit.cshtml" />
+    <Content Include="Views\Tb_Source\Index.cshtml" />
+    <Content Include="Views\Tb_Status\Create.cshtml" />
+    <Content Include="Views\Tb_Status\Delete.cshtml" />
+    <Content Include="Views\Tb_Status\Details.cshtml" />
+    <Content Include="Views\Tb_Status\Edit.cshtml" />
+    <Content Include="Views\Tb_Status\Index.cshtml" />
+    <Content Include="Views\Users\TeamList.cshtml" />
+    <Content Include="Views\Tb_Customers_Users\AssignList.cshtml" />
+    <Content Include="Views\Tb_Customers_Users\AssignEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\Uploads\DocumentsAgent\" />
+    <Folder Include="Content\Uploads\DocumentsLead\" />
+    <Folder Include="Content\Uploads\DocumentsPackages\Files\" />
+    <Folder Include="Content\Uploads\DocumentsPackages\Packages\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\LeadDocs\" />
+    <Folder Include="Views\Session\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Portal\Dashboard.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />

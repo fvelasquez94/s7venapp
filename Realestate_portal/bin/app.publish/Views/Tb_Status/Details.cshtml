@@ -1,0 +1,27 @@
+﻿@model Realestate_portal.Models.Tb_Status
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout_editor.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tb_Status</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Stage_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stage_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Status }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

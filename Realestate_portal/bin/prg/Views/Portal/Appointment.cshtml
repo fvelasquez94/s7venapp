@@ -1,0 +1,380 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no" />
+    <meta name="title" content="Premium Group Realty NY">
+    @*<meta name="keywords" content="appointment, booking, scheduling, bootstrap 4, book, schedule, bootstrap, responsive, calendar, schedule, dentist, doctor, email, wizard form, send mail, wizard, booking com, bookit, bookingcom, schedule maker, appointment system, appointment booking, bootstrap form, forms, booking form, management, book, payment, services, book now, php, javascript, html5, html, css, css3, jquery, appointment booking, appointment calendar, appointment scheduling, booking calendar, booking system, online appointment management software, online booking, online payments, online reservations, online scheduling, reservation calendar" />
+        <meta name="description" content="Online booking system. Book an appointment with ease using a booking form on your website. Schedule appointment based on your availability and make a payment." />
+        <meta name="subject" content="Schedule an appointment" />
+        <meta name="copyright" content="Uneekcc1" />
+        <meta name="og:title" content="Appointment Scheduling System" />
+        <meta name="og:type" content="booking" />
+        <meta name="og:description" content="Online booking system. Book an appointment with ease using a booking form on your website. Schedule appointment based on your availability and make a payment." />*@
+    <title>Premium Group Realty NY</title>
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+    <!--Material icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!--select-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <!--datepicker-->
+    <link rel="stylesheet" href="~/Content/common/library/air-datepicker-master/dist/css/datepicker.min.css">
+    <!--Additional styling-->
+    <link rel="stylesheet" href="~/Content/common/component.css">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/pgrlogos/PGRLogo_icon.png" ">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/pgrlogos/PGRLogo_icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/pgrlogos/PGRLogo_icon.png">
+    <style>
+        /* Center the loader */
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Add animation to "page content" */
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @@-webkit-keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @@keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader" style="display:none;"></div>
+    <!--main content-->
+    <main class="d-flex min-vh-100">
+        <div class="card uneek-wizard-card">
+            <div class="card-body">
+                <!--main content-->
+                <form id="example-form" autocomplete="off" method="post" novalidate>
+                    <div id="wizard">
+                        <!--step 1 steps-content-->
+                        <h3>
+                            <div class="media">
+                                <div class="uneek-wizard-step-icon"> <i class="zmdi zmdi-assignment"></i> </div>
+                                <div class="media-body">
+                                    <h5 class="uneek-wizard-step-title">Contact Data</h5>
+                                    <p class="uneek-wizard-step-subtitle"></p>
+                                </div>
+                            </div>
+                        </h3>
+                        <!--step 1 body-->
+                        <section>
+                            <!--header logo-->
+                            <div class="brand-wrapper"> <img src="~/Content/pgrlogos/PGRLogo.png" alt="logo" class="logo" style="width:150px;"> </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <!--heading step 1-->
+                                    <div class="row mb-3">
+                                        <div class="col-md-7 section-heading">Book Your Appointment</div>
+                                        <div class="col-md-5 errorblock"></div>
+                                    </div>
+                                    <!--form fields-->
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="fname" class="sr-only">First Name</label>
+                                            <input type="text" name="fname" id="fname" class="form-control" placeholder="First Name" required>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="lname" class="sr-only">Last Name</label>
+                                            <input type="text" name="lname" id="lname" class="form-control" placeholder="Last Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pnumber" class="sr-only">Phone Number</label>
+                                        <input type="number" name="pnumber" id="pnumber" class="form-control" placeholder="Your Phone Number" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="sr-only">E-Mail</label>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Your E-Mail ID" required>
+                                    </div>
+                                    <label>Real estate</label>
+                                    <div class="form-group">
+                                        <input type="text" id="idproperty" value="@ViewBag.idproperty" class="form-control" hidden>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="listingtype" value="@ViewBag.listingtype" class="form-control" hidden>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="property" value="@ViewBag.property" class="form-control" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="price" value="@ViewBag.price" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <!--image step 1-->
+
+                                <div class="col-xl-6 d-none d-xl-block">   <img src="@ViewBag.urlimg" class="img-fluid" /> </div>
+                            </div>
+                            <!--card footer step 1-->
+                        </section>
+                        <!--step 2 steps-content-->
+                        <h3>
+                            <div class="media">
+                                <div class="uneek-wizard-step-icon"> <i class="zmdi zmdi-home"></i> </div>
+                                <div class="media-body">
+                                    <h5 class="uneek-wizard-step-title">Services</h5>
+                                    <p class="uneek-wizard-step-subtitle"></p>
+                                </div>
+                            </div>
+                        </h3>
+                        <!--step 2 body-->
+                        <section>
+                            <div class="brand-wrapper"> <img src="~/Content/pgrlogos/PGRLogo.png" alt="logo" class="logo" style="width:150px;"> </div>
+                            <div class="row mb-3">
+                                <div class="col-md-3 section-heading">Select Your Date</div>
+                                <div class="col-md-9 errorblock"></div>
+                            </div>
+                            @*<div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="category">Category</label>
+                                    <select id="category" name="category" data-bind="select2:{} , options: togaMakers, value: selectedCategory,optionsValue:'text', optionsText : 'text', optionsCaption : 'Select your Category'" required></select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="service">Service</label>
+                                    <select id="service" name="service" data-bind="select2:{} ,options: togaServices, value: selectedService, optionsValue:'text', optionsText : 'text', optionsCaption : 'Select your Service', enable : togaServices" required></select>
+                                </div>
+                            </div>*@
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="dp">Date</label>
+                                    <input type="text" name="dp2" onchange="checkAva()" class="datepicker-here form-control" data-language="en" id="dp2" placeholder="Select Date" data-date-format="dd M yyyy" required>
+
+                                </div>
+                            </div>
+                            <div class="row" id="divhours" style="display:none">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message1" class="">Message</label>
+                                <textarea class="form-control" name="message1" id="message1" placeholder="Anything else?"></textarea>
+                            </div>
+                            <p class="card-footer-text">Please select a date to check the availables hours. Nueva York, US. (GMT-4) Time Zone</p>
+                        </section>
+
+                        <!--step 4 steps-content-->
+                        <h3>
+                            <div class="media">
+                                <div class="uneek-wizard-step-icon"> <i class="zmdi zmdi-check-all"></i> </div>
+                                <div class="media-body">
+                                    <h5 class="uneek-wizard-step-title">Review</h5>
+                                    <p class="uneek-wizard-step-subtitle"></p>
+                                </div>
+                            </div>
+                        </h3>
+                        <!--step 4 body-->
+                        <section>
+                            <div class="brand-wrapper"> <img src="~/Content/pgrlogos/PGRLogo.png" alt="logo" class="logo" style="width:150px;"> </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <!--input data review-->
+                                    <div id="FormSummary">
+                                        <div class="row mb-3">
+                                            <div class="col-md-5 section-heading">Review details</div>
+                                            <div class="col-md-7 errorblock"></div>
+                                        </div>
+                                        <h6 class="font-weight-bold"> Personal Details</h6>
+                                        <p class="mb-0">Name : <span id="summaryfname"></span> <span id="summarylname"></span></p>
+                                        <p class="mb-0">Contact : <span id="summarypnumber"></span></p>
+                                        <p class="mb-0">Email : <span id="summaryemail"></span></p>
+                                        <h6 class="font-weight-bold mt-3"> Appointment Details</h6>
+                                        @*<p class="mb-0">Category : <span id="summarycategory"></span></p>
+                                        <p class="mb-0">Service : <span id="summaryservice"></span></p>*@
+                                        <p class="mb-0">Date : <span id="summarydate"></span></p>
+                                        <p class="mb-0">Time : <span id="summarytime"></span></p>
+                                        <h6 class="font-weight-bold mt-3"> Real Estate</h6>
+                                        <p class="mb-0">Address : <span>@ViewBag.property</span></p>
+                                        <p class="mb-0">Type : <span> @ViewBag.listingtype</span></p>
+                                        <p class="mb-0">Price : <span>@ViewBag.price</span></p>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 d-none d-xl-block"> <img src="@ViewBag.urlimg" class="img-fluid" /> </div>
+                            </div>
+                            <p class="mb-0">We will contact you about the time slot on a particular day as per your availability.</p>
+                            <br>
+                            <div class="custom-control custom-checkbox mb-4">
+                                <input type="checkbox" class="custom-control-input" name="tnc" id="tnc">
+                                <label class="custom-control-label" for="tnc">I agree to the terms and conditions.</label>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!--jquery library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--validation library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
+    <!--bootstrap library-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!--steps library-->
+    <script src="~/Content/common/library/jquery.steps.js"></script>
+    <!--datepicker library-->
+    <script src="~/Content/common/library/air-datepicker-master/dist/js/datepicker.min.js"></script>
+    <script src="~/Content/common/library/air-datepicker-master/dist/js/i18n/datepicker.en.js"></script>
+    <!--select library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <!--library for cascading select-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <!--custom JS-->
+    <script src="~/Content/common/custom.js"></script>
+
+    <script>
+$(document).ready(function () {
+
+                $('#dp2').datepicker({
+                    onSelect: function onSelect(fd, date) {
+                        var mydate = new Date(date);
+                        $('#summarydate').text(mydate.toLocaleDateString('en-US'));
+
+                        var today = mydate;
+                        var dd = today.getDate();
+
+                        if (dd != 1) {
+                            dd = dd - 1;
+                        }
+
+                        var mm = today.getMonth() + 1; //January is 0!
+
+                        var yyyy = today.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd;
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm;
+                        }
+                        mydate = mm + '/' + dd + '/' + yyyy;
+
+
+
+                        $.ajax
+                            ({
+                                url: '/Portal/Obtener_actividadesConflicto',
+                                type: 'POST',
+                                datatype: 'application/json',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    horainicio: date
+                                }),
+                                success: function (result) {
+                                    console.log(result);
+                                    var flagcount = 0;
+                                    $("#divhours").html("");
+                                    $("#divhours").html("<div class='col-md-12'><label>Availables Hours</label></div>");
+
+                                    $.each($.parseJSON(result), function (i, actividades) {
+
+                                        var newRowContent = '<div class="col-md-2">';
+                                        newRowContent += '<div class="custom-control custom-radio mb-3">';
+                                        newRowContent += '<input type="radio" id="chk_' + flagcount + '" name="hoursel" class="custom-control-input" value="' + new Date(parseInt(actividades.substr(6))).toLocaleTimeString('en-US') + '" required >';
+                                        newRowContent += '<label class="custom-control-label" for="chk_' + flagcount + '"> ' + new Date(parseInt(actividades.substr(6))).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) + ' </label>';
+                                        newRowContent += ' </div >';
+                                        newRowContent += ' </div >';
+
+                                        $("#divhours").append(newRowContent);
+                                        flagcount += 1;
+                                    });
+                                    $("#divhours").show();
+
+                                    $('input[name="hoursel"]').change(function () {
+                                        $('#summarytime').text($(this).val());
+                                    });
+
+                                },
+                                error: function (xhr, status, error) {
+                                    var err = eval("(" + xhr.responseText + ")");
+                                    alert(err.Message);
+                                },
+                            });
+
+                    }
+                });
+
+
+            });
+
+
+
+
+    </script>
+</body>
+</html>

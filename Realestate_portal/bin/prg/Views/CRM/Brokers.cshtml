@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Realestate_portal.Models.Sys_Company>
+
+@{
+    ViewBag.Title = "Premium Group Realty";
+
+}
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Brokers
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Brokers
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+                    <div class="widget-options">
+                        <a class="btn btn-success" href="@Url.Action("CreateBroker","Users" )">Add Broker</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+                    <div class="overflow-x-auto">
+                        <table class="table" id="tableresources" style="width:100%">
+                            <thead id="tableHeader">
+                                <tr class="text-white" style="background-color:#162343">
+                                    <th class="whitespace-nowrap">
+                                        ID
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        NAME
+                                    </th>
+                                    <th class="whitespace-nowrap">
+                                        LOGO
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+
+                                        <tr>
+                                            <td>
+
+                                                @item.ID_Company
+                                            </td>
+                                            <td>
+                                                @item.Name
+                                            </td>
+
+                                            <td>
+                                                @if (item.Logo == "")
+                                                {
+                                                    <label>No image</label>
+                                                }
+                                                else if (item.Logo.StartsWith("http"))
+                                                {<div>
+                                                        <img alt="@item.Name" class="tooltip" src="@item.Logo" title="@item.Name" style="width:70px">
+                                                    </div>
+                                                }
+                                                else
+                                                { <div>
+                                                        <img alt="@item.Name" class="tooltip " src="@Url.Content(item.Logo)" title="@item.Name" style="width:70px">
+                                                    </div>
+                                                }
+                                            </td>
+
+
+                                            <td>
+                                                <a class="flex items-center mr-3" href="@Url.Action("BrokerProfile", "Users", new { id = item.ID_Company})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Details </a>
+
+                                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteBroker(@item.ID_Company)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+                <!-- End Calendar -->
+            </div>
+            <!-- End Widget -->
+
+
+
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function deleteBroker(idbroker) {
+
+            swal.fire({
+                title: 'Do you want to delete?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Sys_Company/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idbroker },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
+
+
+    </script>}

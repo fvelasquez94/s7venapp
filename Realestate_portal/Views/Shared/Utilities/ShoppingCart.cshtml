@@ -1,0 +1,42 @@
+﻿<style>
+    .cart-badge {
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 80%;
+        position: relative;
+        bottom: 1px;
+    }
+
+    .cart-notification {
+        position: relative;
+        left: 40px;
+        top: 27px;
+    }
+
+    .badge-size {
+        height: 15px;
+        width: 15px;
+    }
+
+
+</style>
+<a style="float: right; position: relative; bottom: 25px; right: 25px" href="@Url.Action("ShoppingCart","Market")">
+    <div class="cover-image">
+        @if (ViewBag.CartItems != null)
+        {
+            if (ViewBag.CartItems > 0)
+            {
+                <div class="cart-notification">
+                    <span class="badge-pulse"><p class="cart-badge">@ViewBag.CartItems</p></span>
+                </div>
+            }
+        }
+
+        <div class="c-icon">
+            <i class="la la-shopping-cart"></i>
+        </div>
+        <h4 style="font-weight: bold; color: black; position: relative; left: 15px; bottom: 10px">Cart</h4>
+    </div>
+</a>
