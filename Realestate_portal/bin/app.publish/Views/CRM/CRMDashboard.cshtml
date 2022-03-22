@@ -640,12 +640,13 @@ else
 
         var flag = 0;
        //DATETIMEPICKER
- var t1 = "@ViewBag.filtrofechastart";
+        var t1 = "@ViewBag.filtrofechastart";
         var t2 = "@ViewBag.filtrofechaend";
-
+        
         var start = moment(t1, "MM-DD-YYYY");
         var end = moment(t2, "MM-DD-YYYY");
-
+        console.log(start);
+        console.log(end);
         function cb(start, end) {
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             if (flag == 0) {
@@ -721,7 +722,8 @@ else
             newurl = newurl.replace('sss', agent);
 
             newurl = newurl.replace(/&amp;/g, "&");
-
+                console.log(st);
+                console.log(ed);
             window.location.href = newurl;
         };
 

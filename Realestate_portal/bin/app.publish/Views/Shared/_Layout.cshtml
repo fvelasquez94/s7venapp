@@ -146,6 +146,7 @@
     function CambiarBroker(broker) {
         var url = '@Url.Action("ChangeBrokerFilter","Portal", new { broker="IDCOMPANY"})';
         url = url.replace("IDCOMPANY", broker);
+        console.log( url );
         window.location.href = url;
     }
 </script>

@@ -719,6 +719,7 @@ namespace Realestate_portal.Controllers
                 }
 
                 ViewBag.selbroker = broker;
+                ViewBag.brokerid = activeuser.ID_Company;
                 //POST TYPE: 1-BROKER | 2-AGENT | 3-ADMIN
                 //BROKER MESSAGE
 
@@ -833,21 +834,22 @@ namespace Realestate_portal.Controllers
                 {
                     filtrostartdate = Convert.ToDateTime(fstartd);
                     startDate = filtrostartdate;
-                    ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                    ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                   
                 }
                 else
                 {
-                    ViewBag.filtrofechastart = new DateTime(DateTime.Today.Year, 1, 1);
+                    filtrostartdate = new DateTime(DateTime.Today.Year, 1, 1);
                 };
                 if (fendd != null)
                 {
                     filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59);
                     endDate = filtroenddate;
-                    ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                    ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
                 }
                 else
                 {
-                    ViewBag.filtrofechaend = new DateTime(DateTime.Today.Year, 12, 31);
+                    filtroenddate = new DateTime(DateTime.Today.Year, 12, 31);
                 }
 
                
@@ -855,6 +857,9 @@ namespace Realestate_portal.Controllers
 
                 var lstCompanies = (from a in db.Sys_Company select a).ToList();
                 ViewBag.lstCompanies = lstCompanies;
+
+                ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
 
                 List<Tb_Docpackages> lstpackages = new List<Tb_Docpackages>();
 

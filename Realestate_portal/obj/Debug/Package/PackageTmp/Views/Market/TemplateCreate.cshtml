@@ -545,10 +545,20 @@
         height: 18px !important;
     }
 
+    .bar-top {
+        height: 67px;
+        z-index: 51;
+        display: flex;
+        align-items: center;
+        border-bottom-width: 1px;
+        --tw-border-opacity: 1;
+        border-color: rgba(222, 229, 245, var(--tw-border-opacity));
+    }
+
 </style>
 
 
-<div class="top-bar -mx-4 px-4 md:mx-0 md:px-0">
+<div class="bar-top -mx-4 px-4 md:mx-0 md:px-0">
     <!-- BEGIN: Breadcrumb -->
     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
         <a href="@Url.Action("Index","Market")">Market</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>

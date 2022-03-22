@@ -137,7 +137,7 @@ else if (user.Roles.Contains("SA") || user.Roles.Contains("Super User"))
                     <select class="form-control mt-5" id="selectedBroker" onchange="CambiarBroker(this.value)">
                         @foreach (var broker in lstCompanies)
     {
-        if (ViewBag.selbroker == broker.ID_Company)
+        if (ViewBag.brokerid == broker.ID_Company)
         {
                     <option selected value="@broker.ID_Company">@broker.Name</option> }
                             else

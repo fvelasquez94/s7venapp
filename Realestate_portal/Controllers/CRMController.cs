@@ -192,8 +192,8 @@ namespace Realestate_portal.Controllers
                 var endDate = filtroenddate;
                 //importante
                 var months = MonthsBetween(startDate, endDate);
-                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
-                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
                 List<GainsReport> lstgainsreport = new List<GainsReport>();
                 ViewBag.rol = "";
 
@@ -906,8 +906,8 @@ namespace Realestate_portal.Controllers
                 var endDate = filtroenddate;
                 //importante
                 var months = MonthsBetween(startDate, endDate);
-                ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
-                ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
                 List<GainsReport> lstgainsreport = new List<GainsReport>();
                 ViewBag.rol = "";
 
@@ -1874,20 +1874,26 @@ namespace Realestate_portal.Controllers
                 {
                     filtrostartdate = Convert.ToDateTime(fstartd);
                     startDate = filtrostartdate;
-                    ViewBag.filtrofechastart = filtrostartdate.ToShortDateString();
+                    ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                   
                 }
                 else {
-                    ViewBag.filtrofechastart = new DateTime(DateTime.Today.Year, 1, 1);                    
+                    filtrostartdate = new DateTime(DateTime.Today.Year, 1, 1);                    
                 };
                 if (fendd != null) {
                     filtroenddate = Convert.ToDateTime(fendd).AddHours(23).AddMinutes(59);
                     endDate = filtroenddate;
-                    ViewBag.filtrofechaend = filtroenddate.ToShortDateString();
+                    ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
                 }
                 else
                 {
-                    ViewBag.filtrofechaend = new DateTime(DateTime.Today.Year, 12, 31);
-                }                                
+                    filtroenddate = new DateTime(DateTime.Today.Year, 12, 31);
+                }
+
+
+
+                ViewBag.filtrofechastart = filtrostartdate.ToString("MM/DD/YYYY");
+                ViewBag.filtrofechaend = filtroenddate.ToString("MM/DD/YYYY");
                 //ROLES
                 if (activeuser.Roles.Contains("Agent"))
                 {

@@ -384,7 +384,7 @@ else
         }
         function editimage(id) {
 
-            $("#edittitle").text("Loading Data...");
+            $("#edittitle").text("Loading Data Please Wait...");
             alert("here");
             var video;
            
@@ -421,11 +421,11 @@ else
                         $("#urlvideo").val(url);
 
                     } else {
-                        $("#edit-title").html("Please reload the page and try again...");
+                        $("#edit-title").text("Please reload the page and try again...");
                     }
                 },
                 error: function (error) {
-                    $("#edit-title").html("Please reload the page and try again...");
+                    $("#edit-title").text("Please reload the page and try again...");
                 }
             });
 
