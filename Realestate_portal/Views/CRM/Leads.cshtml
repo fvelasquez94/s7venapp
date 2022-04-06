@@ -37,12 +37,46 @@
                 </h2>
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
 
-                    <div class="widget-options">
+                    <div class="widget-options ">
                         <a class="btn btn-success" href="@Url.Action("Create", "Customers")">Add Lead</a>
                     </div>
-
+                    <div class="widget-options ml-2">
+                        <a class="btn btn-primary"  href="#" data-toggle="modal" data-target="#modalImport">Import</a>
+                    </div>
+                    <div class="widget-options ml-2">
+                        <a class="btn btn-primary" href="@Url.Action("ExportLeads", "Customers")">Export</a>
+                    </div>
                 </div>
             </div>
+            <div id="modalImport" class="modal fade">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Import Leads Data</h4>
+                        </div>
+                        <form id="htmlform2" method="post">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                        
+                                            <p>Use our import tool to quickly upload your Lead's information and start working with them.</p>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                      
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                                <a href="@Url.Action("ImportLeads", "Customers")" class="btn btn-primary">Go to import page</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
 
 
             <div class="p-5" id="basic-table">
@@ -54,12 +88,12 @@
                             <select id="selecttable" class="form-control box pl-10 mb-5" style="width:250px">
                                 <option>ALL</option>
                                 @foreach (var item in Model.Select(c => c.Marital_status).Distinct())
-                {
-                    <option>@item</option>
-}
+                                {
+                                    <option>@item</option>
+                                }
                             </select>
                         </div>
-                        <div class="col-md-4">                           
+                        <div class="col-md-4">
 
                             <div class="show-range" id="daterange">
                                 <label>By date</label>
@@ -67,7 +101,7 @@
                                     <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>&nbsp;
                                     <span></span>
                                 </div>
-                            </div>                           
+                            </div>
 
                         </div>
                         <div class="col-md-4"></div>
@@ -115,78 +149,78 @@
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>  <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_lead})" class="font-medium whitespace-nowrap"><i data-feather="link" class="w-4 h-4 mr-1"></i> @item.Name</a></td>
-                        <td>@item.Phone</td>
-                        <td>@item.Email</td>
-                        <td>@item.Type</td>
-                        <td>@item.Marital_status</td>
-                        <td>@item.Team</td>
+                                {
+                                    <tr>
+                                        <td>  <a href="@Url.Action("CustomerDashboard","CRM", new { id=item.ID_lead})" class="font-medium whitespace-nowrap"><i data-feather="link" class="w-4 h-4 mr-1"></i> @item.Name</a></td>
+                                        <td>@item.Phone</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Type</td>
+                                        <td>@item.Marital_status</td>
+                                        <td>@item.Team</td>
 
-                        <td>
+                                        <td>
 
-                            <div class="flex">
-                                @if (item.Agents != null)
-                {
-                    if (item.Agents.Count() > 0)
-                    {
-                        foreach (var agent in item.Agents)
-                        {
-
-
-                            if (agent.Url_image == "")
-                            {
-
-                                <div class="tooltip text-lg  image-fit zoom-in font-medium truncate -ml-4" title="@agent.Name @agent.Lastname">   <p data-letters="@agent.Name.Substring(0, 1) @agent.Lastname.Substring(0, 1)"></p></div>
+                                            <div class="flex">
+                                                @if (item.Agents != null)
+                                                {
+                                                    if (item.Agents.Count() > 0)
+                                                    {
+                                                        foreach (var agent in item.Agents)
+                                                        {
 
 
-            }
-            else if (agent.Url_image.StartsWith("http"))
-            {
-                <div class="w-12 h-12 image-fit zoom-in -ml-4">
-                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
-                </div>
-}
-else
-{
-                <div class="w-12 h-12 image-fit zoom-in -ml-4">
-                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
-                </div>
-}
+                                                            if (agent.Url_image == "")
+                                                            {
+
+                                                                <div class="tooltip text-lg  image-fit zoom-in font-medium truncate -ml-4" title="@agent.Name @agent.Lastname">   <p data-letters="@agent.Name.Substring(0, 1) @agent.Lastname.Substring(0, 1)"></p></div>
 
 
-}
+                                                            }
+                                                            else if (agent.Url_image.StartsWith("http"))
+                                                            {
+                                                                <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@agent.Url_image" title="@agent.Name @agent.Lastname">
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="w-12 h-12 image-fit zoom-in -ml-4">
+                                                                    <img alt="@agent.Name @agent.Lastname" class="tooltip rounded-full" src="@Url.Content(agent.Url_image)" title="@agent.Name @agent.Lastname">
+                                                                </div>
+                                                            }
 
-}
-else
-{
-                <label> Not assigned </label>
-}
-}
-else
-{
-                <label> Not assigned </label>
-}
-                            </div>
-                        </td>
+
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <label> Not assigned </label>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <label> Not assigned </label>
+                                                }
+                                            </div>
+                                        </td>
 
 
-                        <td>
-                            @item.Creation_date.ToString("MM/dd/yyyy")
-                        </td>
+                                        <td>
+                                            @item.Creation_date.ToString("MM/dd/yyyy")
+                                        </td>
 
-                        <td>
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="@Url.Action("Edit","Customers", new { id=item.ID_lead})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                        <td>
+                                            <div class="flex justify-center items-center">
+                                                <a class="flex items-center mr-3" href="@Url.Action("Edit","Customers", new { id=item.ID_lead})"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
 
-                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.ID_lead)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
+                                                <a class="flex items-center text-theme-21" href="javascript:void(0);" onclick="deleteCustomer(@item.ID_lead)" id="deletecustomer"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                            </div>
 
-                        </td>
+                                        </td>
 
-                    </tr>
-}
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

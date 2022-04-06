@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using ClosedXML.Excel;
 using Newtonsoft.Json;
 using Postal;
 using Realestate_portal.Models;
@@ -884,6 +887,80 @@ namespace Realestate_portal.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+        public ActionResult ExportLeads()
+        {
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+                //UTILIZANDO LIBRERIA 
+                DataSet ds = getDataSetExportToExcel(activeuser.ID_Company);
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(ds);
+                    wb.Worksheet(1).Name = "Leads";
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=Leads.xlsx");
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex2)
+            {
+                Console.WriteLine(ex2);
+                return RedirectToAction("Leads", "CRM");
+            }
+
+        }
+
+        public DataSet getDataSetExportToExcel(int id)
+        {
+            
+  
+            List<ExportLeads> leads = db.Tb_Customers.Where(c=>c.ID_Company==id).Select(c=> new ExportLeads { ID_Customer=c.ID_Customer, Active=c.Active ? "YES" : "NO", Address=c.Address, Broker=c.ID_Company, Creation_date=c.Creation_date,
+            Email=c.Email, LastName=c.LastName, Name=c.Name, Phone=c.Phone, Source=c.Source, Stage=c.Marital_status, State=c.State, Type=c.Type, Zipcode=c.Zipcode}).ToList();
+
+            DataSet ds = new DataSet();
+
+            DataTable dtEmpResume = new DataTable("Leads");
+            dtEmpResume = ToDataTable(leads);
+
+            ds.Tables.Add(dtEmpResume);
+
+            return ds;
+        }
+
+
+        public DataTable ToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties =
+                TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+            return table;
         }
     }
 }
