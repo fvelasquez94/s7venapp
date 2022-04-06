@@ -1400,6 +1400,8 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
+                if (sys_Users.City == null) { sys_Users.City = activeuser.City; }
+                if (sys_Users.Country == null) { sys_Users.Country = activeuser.Country; }
                 //assaaaaaaasass  
                 //var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                 //if (sys_Users.Team_Leader == true)
@@ -1411,7 +1413,7 @@ namespace Realestate_portal.Controllers
                 //        db.SaveChanges();
                 //    }
                 //}
-             
+
                 if (sys_Users.Roles.Contains("Admin")) {
                     var agents = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles.Contains("Agent")) select a).ToList();
                     if (agents.Count() > 0)

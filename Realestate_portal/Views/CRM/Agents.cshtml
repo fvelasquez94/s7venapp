@@ -27,10 +27,10 @@
                     @if (ViewBag.rol != "Agent")
                     {
                         <div class="widget-options">
-                            <a class="btn btn-success mr-2" id="addagent" href="@Url.Action("Create","Users", new {broker=ViewBag.selbroker })">Add Agent</a>
+                            <a class="btn btn-success mr-2" id="addagent" href="@Url.Action("Create","Users")">Add Agent</a>
                         </div>
                         <div class="widget-options">
-                            <a class="btn btn-success" id="addagent" href="@Url.Action("Create","Users", new {broker=ViewBag.selbroker })">Add Self Agent</a>
+                            <a class="btn btn-success" id="addagent" href="@Url.Action("Create","Users")">Add Self Agent</a>
                         </div>
 
                     }

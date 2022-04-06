@@ -257,7 +257,7 @@
             function editimage(id) {
 
                 $("#edittitle").text("Loading Data...");
-                alert("here");
+         
                 var video;               
                 $.ajax({
                     type: "POST",
@@ -269,7 +269,7 @@
                     success: function (response) {
                         if (response.msg == "SUCCESS") {
                             video = response.video;
-                            $("#edit-title").html("Edit PGR Network");
+                            $("#edit-title").html("Edit Network");
 
                             var ID_video = video.ID_Network;// Extract info from data-* attributes
                             var title = video.Name;// Extract info from data-* attributes
@@ -385,7 +385,7 @@ else
         function editimage(id) {
 
             $("#edittitle").text("Loading Data Please Wait...");
-            alert("here");
+           
             var video;
            
             $.ajax({
@@ -398,7 +398,7 @@ else
                 success: function (response) {
                     if (response.msg == "SUCCESS") {
                         video = response.video;
-                        $("#edit-title").text("Edit PGR Network");
+                        $("#edit-title").text("Edit Network");
 
                         var ID_video = video.ID_Network;// Extract info from data-* attributes
                         var title = video.Name;// Extract info from data-* attributes
