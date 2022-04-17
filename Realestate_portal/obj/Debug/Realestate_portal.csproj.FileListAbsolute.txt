@@ -925,3 +925,14 @@ C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Cl
 C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\ClosedXML.xml
 C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\DocumentFormat.OpenXml.xml
 C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\ExcelNumberFormat.xml
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Twilio.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\Twilio.xml
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\SendGrid.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\StarkbankEcdsa.dll
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\SendGrid.pdb
+C:\Users\Fran-oficina\Desktop\s7venapp\realstate_portal\Realestate_portal\bin\SendGrid.xml

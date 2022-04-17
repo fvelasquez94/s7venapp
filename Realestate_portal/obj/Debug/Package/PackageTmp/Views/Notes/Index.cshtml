@@ -1,0 +1,197 @@
+﻿@model IEnumerable<Realestate_portal.Models.Tb_Notes>
+
+@{
+    ViewBag.Title = "Premium Group Realty";
+    Layout = "~/Views/Shared/_CRM.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">NOTES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Widget 08 -->
+    <div class="widget widget-08" style="width: 100%;background-color:transparent">
+        <div class="widget-header bordered d-flex align-items-center">
+            <div class="today">
+                <div class="title">NOTES</div>
+                @if (ViewBag.module == "Customers")
+    {
+            <div class="new-tasks">
+                FOR CUSTOMER ID:  @ViewBag.Customer
+              
+            </div>
+}
+else
+{
+            <div class="new-tasks">
+                FOR PROPERTY ID:  @ViewBag.Process
+            </div>
+}
+
+            </div><h2></h2>
+            <div class="widget-options">
+                <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Note</a>
+
+            </div>
+        </div><br />
+
+
+        <!-- Begin Widget -->
+        <div class="widget has-shadow">
+
+            <!-- End Widget Header -->
+            <!-- Begin Widget Body -->
+            <div class="widget-body" style="padding-bottom:250px">
+
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Text)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Text)
+                            </td>
+                            <td>
+                                @item.Date.ToShortDateString()
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID_note, ID_Customer = ViewBag.Customer, ID_Propery = ViewBag.Process, module = ViewBag.module }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID_note, ID_Customer = ViewBag.Customer, ID_Propery = ViewBag.Process, module = ViewBag.module })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+            <!-- End Calendar -->
+        </div>
+        <!-- End Widget -->
+
+
+
+    </div>
+
+</div>
+
+<!-- End Container -->
+
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Note</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Content: *</label>
+                               
+                                <textarea class="form-control" id="textnote"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+       
+            var content = $("#textnote").val();
+            var customer = '@ViewBag.Customer';
+            var process = '@ViewBag.Process';
+
+            formData.append("content", content);
+            formData.append("customer", customer);
+            formData.append("process", process);
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Notes/Addnote',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+               
+                            window.location.reload(true);
+                        
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+    
+</script>

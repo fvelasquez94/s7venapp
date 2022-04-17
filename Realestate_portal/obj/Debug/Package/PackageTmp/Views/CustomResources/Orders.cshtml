@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Realestate_portal.Models.list_orders_Result>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_Layout_store.cshtml";
+}
+
+
+
+<!-- cart-main-area start -->
+<div class="cart-main-area section-padding--lg bg--white">
+    <div class="container">
+        <div class="row">
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="main-container">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Orders</h1>
+                    <hr><br /><br />
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="border--round">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Date)
+
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Status)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Total)
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                       @item.Date.ToShortDateString()
+
+                                    </td>
+                                    <td>
+                                        @if (item.Status == "ordered")
+                                        {
+                                            <label>Invoiced</label>
+
+                                        }
+                                        else {
+                                            <label>@item.Status</label>
+                                        }</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Total)
+                                    </td>
+
+                                    <td>
+                                        <a href=" @Url.Action("orderDetails", new { id = item.ID_order})" class="btn btn-light btn-sm"> Details</a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

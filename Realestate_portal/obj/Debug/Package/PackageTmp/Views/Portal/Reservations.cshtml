@@ -1,0 +1,426 @@
+﻿@model List<Realestate_portal.Models.Tb_Webinars>
+@{
+    ViewBag.Title = "Premium Group Realty | Webinar";
+}
+
+<div class="container-fluid">
+    <!-- Begin Page Header-->
+    <div class="row">
+        <div class="page-header">
+            <div class="d-flex align-items-center">
+                <h2 class="page-header-title"></h2>
+                <div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="ti ti-home"></i></a></li>
+                        <li class="breadcrumb-item active">BOOKING</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Begin Row -->
+
+
+    <div class="row">
+
+
+        <!-- Begin Widget Header -->
+        <!-- End Widget Header -->
+        <!-- Begin Widget Body -->
+        <div class="widget-body" style="width:100%;">
+            <div class="widget-header bordered d-flex align-items-center">
+                <div class="today">
+                    <div class="title">CHECK</div>
+                    <div class="new-tasks">ALL BOOKINGS </div>
+                </div><h2></h2>
+                      <div class="widget-options">
+                          @if (ViewBag.rol == "Admin") {
+                          <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Booking</a>
+                      
+                          }    
+                          @if (ViewBag.rol == "SA") {
+                          <a class="btn btn-shadow" href="#" data-toggle="modal" data-target="#modalNewwebinar">Add Booking</a>
+                          <a class="btn btn-shadow" href="@Url.Action("Reservations_management", "Portal", new { broker=ViewBag.selbroker})">Management</a>
+                          }
+
+                      </div>
+            </div><br />
+                  <div class="row">
+                      <!-- Begin Events -->
+
+                      <div class="col-xl-3">
+                            <div class="widget-32 widget-image bg-image" style="display:none;">
+                                <div class="overlay"></div>
+                                <div class="content">
+                                    <div id="events-day"></div>
+                                    <div id="events-date"></div>
+                                    <div id="events-year"></div>
+                                </div>
+                                <div class="real-time">
+                                    <div id="events-time"></div>
+                                </div>
+                            </div>
+
+                            <div class="widget has-shadow">
+                                <div class="widget-header bordered no-actions">
+                                    <h5>Last  Bookings</h5>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget widget-14 has-shadow">
+                                        <ul class="list-group w-100 mt-3" id="webinarlist">
+                                            @if (Model.Count() > 0)
+                                            {
+                                                foreach (var item in Model.OrderByDescending(c=>c.Date).Take(6)) {
+                                            <li class="list-group-item">
+                                                <div class="media">
+                                                
+                                                    <div class="event-date align-self-center mr-3" style="font-size:12px !important">
+                                                        @item.Date.Day / @item.Date.ToString("MMM", System.Globalization.CultureInfo.InvariantCulture)
+                                                    </div>
+                                                    <div class="media-body align-self-center">
+                                                        @if (item.Category == "Meeting")
+            {
+                                                    <div class="event-title text-secondary">@item.Title.ToUpper()</div>
+        }
+        else
+        {
+                                                    <div class="event-title text-info">@item.Title.ToUpper()</div>
+        }
+                                                        <div class="event-desc mr-3">
+                                                            <i class="la la-calendar"></i>
+                                                            <span>@item.Date.ToShortTimeString()</span>
+                                                        </div>
+                                                        <div class="event-desc">
+                                                            @if (item.Url != "" && item.Url.Contains("http")) {
+ <a href="@item.Url" target="_blank" style="font-size:12px;" class="badge badge-info">Go to meeting</a>
+                                                            }
+                                                            
+                                                       
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                                }
+
+                                            }
+                                            else {
+                                             <li class="list-group-item">No data to show</li>
+                                            }
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End Events -->
+                        <div class="col-xl-9">
+                            <!-- Begin Widget -->
+                            <div class="widget has-shadow">
+
+                                <!-- End Widget Header -->
+                                <!-- Begin Widget Body -->
+                                <div class="widget-body">
+                                    <!-- Begin Calendar -->
+                                    <div id="calendar-container">
+                                        <div id="fullcalendar"></div>
+                                    </div>
+                                    <!-- End Calendar -->
+                                </div>
+                                <!-- End Calendar -->
+                            </div>
+                            <!-- End Widget -->
+                        </div>
+                  </div>
+
+        </div>
+        <!-- End Widget Body -->
+
+
+    </div>
+    <!-- End Row -->
+
+</div>
+<!-- End Container -->
+
+
+
+<div id="modalNewwebinar" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Booking</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Resource *</label>
+
+                                <select class="form-control" id="title">
+                                    <option>Private Office BayShore 1</option>
+                                    <option>Private Office BayShore 2</option>
+                                    <option>Conference Room BayShore</option>
+                                    <option>Conference Room RVC</option>
+                                    <option>Private Office RVC</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Start *</label>
+                                <input type="datetime-local" class="form-control" id="dateinit"  required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Time (max 2 hours) *</label>
+                                <select class="form-control" id="dateend">
+                                    <option value="30">30 minutes</option>
+                                    <option value="60">1 hour</option>
+                                    <option value="90">1:30 hours</option>
+                                    <option value="120">2 hours</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <span id="asignarhoralabel" style="display:none;" class="badge badge-warning">End hour can't be greater than start hour.</span>
+                        <span id="conflictolbl" style="display:none;" class="badge badge-warning">Resource not available on this date and time.</span>
+                    </div>
+                    <div class="row" style="display:none">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>URL (From Zoom App) *</label>
+                                <input type="text" id="url" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <textarea id="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+
+
+
+        $('#dateinit, #dateend').on('input', function () {
+            evaluarDisponibilidad();
+
+        });
+
+        $('#title').on('change', function () {
+            evaluarDisponibilidad();
+            //evaluarRangos()
+        });
+
+
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+
+            var title = $("#title").val();
+            var category = "";
+            var description = $.trim($("#description").val());
+            var url = "";
+            var date = $("#dateinit").val();
+
+            var minutes = $("#dateend").val();
+
+            //start time
+            var start_time = new Date($("#dateinit").val());
+
+            var end_time = moment(start_time).add(minutes, 'm').toDate();
+
+            var datefin = end_time;
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadWebinar',
+                data: JSON.stringify({
+                    title: title,
+                    url: url,
+                    date: date,
+                    datefin: datefin,
+                    description: description,
+                    category: category
+                }),
+                datatype: 'application/json',
+                contentType: 'application/json',
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Booking added successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading booking");
+                }
+            });
+        });
+
+
+
+    }
+
+            //Evaluar Disponibilidad
+    function evaluarDisponibilidad() {
+        try {
+
+            var minutes = $("#dateend").val();
+
+            //start time
+            var start_time = new Date($("#dateinit").val());
+
+            var end_time = moment(start_time).add(minutes, 'm').toDate();
+
+            var title = $("#title").val();
+
+
+            //if (start_time >= end_time) {
+
+            //    $("#asignarhoralabel").show();
+            //    $("#conflictolbl").hide();
+
+            //    return false;
+            //} else {
+
+                $("#asignarhoralabel").hide();
+
+                $.ajax
+                    ({
+                        url: '/Portal/Obtener_actividadesConflictoBooking',
+                        type: 'POST',
+                        datatype: 'application/json',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            resource: title,
+                            horainicio: start_time,
+                            horafin: end_time
+                        }),
+                        success: function (result) {
+                            var flag = 0;
+                            flag = result;
+
+                            if (flag == "1") {
+                                $("#conflictolbl").show();
+                                $("#subbtnenviar").prop('disabled', true);
+                            } else {
+                                $("#conflictolbl").hide();
+                                $("#subbtnenviar").prop('disabled', false);
+                            }
+
+                        },
+                        error: function () {
+                        
+                        },
+                    });
+           // }
+        } catch{
+
+        }
+            
+
+  
+
+        
+    }
+
+   
+
+    function evaluarRangos() {
+
+        var st = new Date($('#dateinit').val());
+        var ed = new Date($('#dateend').val());
+        //var today = st;
+        //var dd = today.getDate();
+        //var mm = today.getMonth() + 1; //January is 0!
+
+        //var yyyy = today.getFullYear();
+        //if (dd < 10) {
+        //    dd = '0' + dd;
+        //}
+        //if (mm < 10) {
+        //    mm = '0' + mm;
+        //}
+        //st = mm + '/' + dd + '/' + yyyy;
+
+        //var today2 = ed;
+        //var dd2 = today2.getDate();
+        //var mm2 = today2.getMonth() + 1; //January is 0!
+
+        //var yyyy2 = today2.getFullYear();
+        //if (dd2 < 10) {
+        //    dd2 = '0' + dd2;
+        //}
+        //if (mm2 < 10) {
+        //    mm2 = '0' + mm2;
+        //}
+        //ed = mm2 + '/' + dd2 + '/' + yyyy2;
+
+
+        if (st != ed) {
+            $("#asignarhoralabel").hide();
+
+        } else {
+            $("#asignarhoralabel").show();
+
+        }
+
+    }
+</script>

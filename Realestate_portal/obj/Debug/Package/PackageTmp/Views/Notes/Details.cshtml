@@ -1,0 +1,59 @@
+﻿@model Realestate_portal.Models.Tb_Notes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CRM.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tb_Notes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Property)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Property)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Customer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Customer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_User)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_User)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_note }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

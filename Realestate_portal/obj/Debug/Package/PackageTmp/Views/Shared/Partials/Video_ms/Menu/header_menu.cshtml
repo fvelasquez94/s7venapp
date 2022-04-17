@@ -1,0 +1,53 @@
+﻿
+@{
+
+
+    Layout = null;
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+<header id="gen-header" class="gen-header-style-1 gen-has-sticky">
+    <div class="gen-bottom-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="#">
+                            <img class="img-fluid logo" src="~/Content/video_ms/images/S7VENLogoPLAY.png" alt="S7VEN">
+                        </a>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div id="gen-menu-contain" class="gen-menu-contain">
+                                <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                                    <li class="menu-item active">
+                                        <a href="@Url.Action("Videos","Portal")" aria-current="page">Home</a>
+                                      
+
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">Categories</a>
+                                        <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                        <ul class="sub-menu">
+                                            @foreach (var cat in lstcategories)
+    {
+                                        <li class="menu-item">
+                                            <a href="#@cat.Description">@cat.Description</a>
+                                        </li>
+}
+
+                                        </ul>
+                                    </li>
+  
+                                    <li class="menu-item">
+                                        <a target="_blank" href="https://www.youtube.com/channel/UCD_2yD9wiI7LsgY5Qq7E8oQ/videos">Webinars</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

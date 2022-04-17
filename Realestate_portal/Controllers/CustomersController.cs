@@ -16,6 +16,7 @@ using Realestate_portal.Models;
 using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Models.ViewModels.CRM;
 using Realestate_portal.Services.Contracts;
+using Realestate_portal.Controllers.TwilioAPI;
 
 namespace Realestate_portal.Controllers
 {
@@ -185,14 +186,26 @@ namespace Realestate_portal.Controllers
                     db.Tb_Customers_Users.Add(customerUsers);
                     db.SaveChanges();
 
-                    Sys_Notifications newnotification = new Sys_Notifications();
-                    newnotification.Active = true;
-                    newnotification.Date = DateTime.UtcNow;
-                    newnotification.Title = "Customer assigned.";
-                    newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
-                    newnotification.ID_user = activeuser.ID_User;
-                    db.Sys_Notifications.Add(newnotification);
-                    db.SaveChanges();
+                    //Sys_Notifications newnotification = new Sys_Notifications();
+                    //newnotification.Active = true;
+                    //newnotification.Date = DateTime.UtcNow;
+                    //newnotification.Title = "Lead assigned.";
+                    //newnotification.Description = "Customer: " + tb_Customers.Name + " " + tb_Customers.LastName + ".";
+                    //newnotification.ID_user = activeuser.ID_User;
+                    //db.Sys_Notifications.Add(newnotification);
+
+
+
+                    ////Send the email
+                    //dynamic semail = new Email("NewNotification_createLead");
+                    //semail.To = activeuser.Email.ToString();
+                    //semail.From = "support@s7ven.co";
+                    //semail.title = tb_Customers.Name + " " + tb_Customers.LastName;
+
+                    //semail.Send();
+
+              
+                    //db.SaveChanges();
 
                 }
 
@@ -961,6 +974,242 @@ namespace Realestate_portal.Controllers
                 table.Rows.Add(row);
             }
             return table;
+        }
+
+        public DataSet getDataSetExportToExcelTemplate(int id)
+        {
+
+
+            List<ExportLeadsTemplate> leads = db.Tb_Customers.Where(c => c.ID_Company == id).Select(c => new ExportLeadsTemplate
+            {
+                Address = c.Address,
+                Email = c.Email,
+                LastName = c.LastName,
+                Name = c.Name,
+                Phone = c.Phone,
+                State = c.State,
+                Zipcode = c.Zipcode
+            }).ToList();
+
+            DataSet ds = new DataSet();
+
+            DataTable dtEmpResume = new DataTable("Leads");
+            dtEmpResume = ToDataTable(leads);
+
+            ds.Tables.Add(dtEmpResume);
+
+            return ds;
+        }
+        public ActionResult ExportLeadsTemplate()
+        {
+            try
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
+                //UTILIZANDO LIBRERIA 
+                DataSet ds = getDataSetExportToExcelTemplate(0);
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(ds);
+                    wb.Worksheet(1).Name = "Leads";
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=Leads.xlsx");
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex2)
+            {
+                Console.WriteLine(ex2);
+                return RedirectToAction("Leads", "CRM");
+            }
+
+        }
+
+        public ActionResult ImportLeads(int broker = 0)
+        {
+
+            if (generalClass.checkSession())
+            {
+                Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                //NOTIFICATIONS
+                DateTime now = DateTime.Today;
+                List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+                ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
+                //HEADER DATA
+                ViewBag.activeuser = activeuser;
+                ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+
+                //ROLES
+                //FIN HEADER
+
+                ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
+
+                ViewBag.rol = "";
+
+
+
+                if (activeuser.Roles.Contains("Agent"))
+                {
+                    ViewBag.rol = "Agent";
+                    ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
+                }
+                else
+                {
+                    if (activeuser.Roles.Contains("SA") && broker == 0)
+                    {
+                        ViewBag.rol = "SA";
+                        ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
+                        var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("SA")) select b).FirstOrDefault();
+                        RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
+                    }
+                    else
+                    {
+                        ViewBag.rol = "Admin";
+                        if (broker == 0)
+                        {
+                        }
+                        else
+                        {
+                            ViewBag.rol = "SA";
+
+                        }
+                    }
+
+                    ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
+
+                }
+                ViewBag.selbroker = broker;
+
+
+                ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name");
+                return View();
+
+            }
+            else
+            {
+
+                return RedirectToAction("Login", "Portal", new { access = false });
+
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult ImportLeads(HttpPostedFileBase file)
+        {
+            DataTable dt = new DataTable();
+            //Checking file content length and Extension must be .xlsx  
+            if (file != null && file.ContentLength > 0 && System.IO.Path.GetExtension(file.FileName).ToLower() == ".xlsx")
+            {
+                string path = Path.Combine(Server.MapPath("~/Content/Uploads"), Path.GetFileName(file.FileName));
+                //Saving the file  
+                file.SaveAs(path);
+                //Started reading the Excel file.  
+                using (XLWorkbook workbook = new XLWorkbook(path))
+                {
+                    IXLWorksheet worksheet = workbook.Worksheet(1);
+                    bool FirstRow = true;
+                    //Range for reading the cells based on the last cell used.  
+                    string readRange = "1:1";
+                    foreach (IXLRow row in worksheet.RowsUsed())
+                    {
+                        //If Reading the First Row (used) then add them as column name  
+                        if (FirstRow)
+                        {
+                            //Checking the Last cellused for column generation in datatable  
+                            readRange = string.Format("{0}:{1}", 1, row.LastCellUsed().Address.ColumnNumber);
+                            foreach (IXLCell cell in row.Cells(readRange))
+                            {
+                                dt.Columns.Add(cell.Value.ToString());
+                            }
+                            FirstRow = false;
+                        }
+                        else
+                        {
+                            //Adding a Row in datatable  
+                            dt.Rows.Add();
+                            int cellIndex = 0;
+                            //Updating the values of datatable  
+                            foreach (IXLCell cell in row.Cells(readRange))
+                            {
+                                dt.Rows[dt.Rows.Count - 1][cellIndex] = cell.Value.ToString();
+                                cellIndex++;
+                            }
+                        }
+                    }
+                    //If no data in Excel file  
+                    if (FirstRow)
+                    {
+                        ViewBag.Message = "Empty Excel File!";
+                    }
+                }
+            }
+            else
+            {
+                //If file extension of the uploaded file is different then .xlsx  
+                ViewBag.Message = "Please select file with .xlsx extension!";
+            }
+            //Creamos nuevos clientes
+
+            ///
+            Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+            //NOTIFICATIONS
+            DateTime now = DateTime.Today;
+            List<Sys_Notifications> lstAlerts = (from a in db.Sys_Notifications where (a.ID_user == activeuser.ID_User && a.Active == true) select a).OrderByDescending(x => x.Date).Take(4).ToList();
+            ViewBag.notifications = lstAlerts; ViewBag.CartItems = repo.GetCartCount();
+            //HEADER DATA
+            ViewBag.activeuser = activeuser;
+            ViewBag.userCompany = db.Sys_Company.Where(c => c.ID_Company == activeuser.ID_Company).FirstOrDefault();
+
+            //ROLES
+            //FIN HEADER
+
+            ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
+
+            ViewBag.rol = "";
+
+
+
+            if (activeuser.Roles.Contains("Agent"))
+            {
+                ViewBag.rol = "Agent";
+                ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && u.ID_User == activeuser.ID_User && u.Active == true) orderby u.LastName ascending select u).ToList();
+            }
+            else
+            {
+                if (activeuser.Roles.Contains("SA"))
+                {
+                    ViewBag.rol = "SA";
+                    ViewBag.userdata = (from usd in db.Sys_Users where (usd.ID_Company == activeuser.ID_Company) select usd).FirstOrDefault();
+                    var brokersel = (from b in db.Sys_Users where (b.ID_Company == activeuser.ID_Company && b.Roles.Contains("SA")) select b).FirstOrDefault();
+                    RedirectToAction("Dashboard", "Portal", new { broker = brokersel.ID_Company });
+                }
+                else
+                {
+                    ViewBag.rol = "Admin";
+                }
+
+                ViewBag.userslist = (from u in db.Sys_Users where (u.Sys_Company.ID_Company == activeuser.ID_Company && (u.Roles == "Agent" || u.Roles == "Admin") && u.Active == true) orderby u.LastName ascending select u).ToList();
+
+            }
+
+
+
+            ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name");
+
+            return View(dt);
         }
     }
 }

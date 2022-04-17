@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Image";
+    Layout = null;
+}
+
+<img src="@Url.Content("~/Content/images/marketing/R-1824-9-Blank.png")" id="img"  style="display:none" />
+
+<img src="@Url.Content("~/Content/images/marketing/R-business-cards-lp.png")" id="newimg"  style="display:none"/>
+<input type="text"  id="header" />
+<br />
+<canvas id="canvas" width="400" height="535" ></canvas>
+<br />
+<br />
+<input type="file" id="photo"  />
+
+<script>
+    var img = document.getElementById('img');
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+    var headerText = document.getElementById('header');
+    var drawnimage;
+    var newimg = document.getElementById('photo');
+    var imgSource;
+    var imgcontext;
+    var header;
+
+        window.onload = function () {
+            //2 & 3 are for x , y position, 4 & 5 for the img size, 8 & 9 are for the resizing the img in the canvas
+          context.drawImage(img, 0, 0, 1728, 1296, 0, 0, 400, 535);
+
+    }
+    
+
+    headerText.onkeyup = function () {
+        header = canvas.getContext('2d');
+
+        header.font = "40px Arial";
+        header.fillStyle = "white";
+        layout.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 400, 535);
+        if (imgSource) {
+            loadimg();
+        }
+        layout.fillText(header.value, 80, 70);
+    }
+
+    newimg.onchange = function (e) {
+        var imgup = new Image();
+        imgup.onload = draw;
+        imgup.src = URL.createObjectURL(this.files[0]);        
+    }
+
+    function draw() {
+        imgSource = this;
+         imgcontext = canvas.getContext('2d');
+        imgcontext.drawImage(this, 0, 0, imgSource.width, imgSource.height, 280,110, 80, 190);
+       
+    }
+
+    function loadtemplate() {
+
+        imgcontext.drawImage(imgSource, 0, 0, imgSource.width, imgSource.height, 280, 110, 80, 190);
+    }
+
+    function loadimg() {
+
+        imgcontext.drawImage(imgSource, 0, 0, imgSource.width, imgSource.height, 280, 110, 80, 190);
+    }
+   //  https://stackoverflow.com/questions/17929753/how-to-draw-a-two-paragraph-div-onto-a-canvas
+    // http://html2canvas.hertzen.com/
+</script>

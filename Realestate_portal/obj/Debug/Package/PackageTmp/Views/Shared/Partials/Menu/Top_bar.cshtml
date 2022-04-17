@@ -1,0 +1,275 @@
+﻿
+@{
+    Layout = null;
+   var user = ViewBag.activeuser;
+    var company = ViewBag.userCompany;
+    var notifications = ViewBag.notifications;
+
+}
+
+<div class="top-bar-boxed border-b border-theme-3 px-4 md:px-6 mb-14 md:mb-8">
+    <div class="h-full flex items-center">
+        <!-- BEGIN: Logo -->
+        <a href="#" class="-intro-x hidden md:flex">
+            <img alt="S7VEN" style="width:130px" src="~/Content/pgrlogos/S7VENLogoWhite.png">
+            <span class="text-white text-lg ml-3" style="font-size:11px"> REAL ESTATE AGENT PORTAL<span class="font-medium"></span> </span>
+        </a>
+        <!-- END: Logo -->
+        <!-- BEGIN: Breadcrumb -->
+        @*if (ViewBag.Title == "Dashboard")
+            {
+                <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="@Url.Action("Dashboard","Portal")" class="breadcrumb--active">Dashboard</a> </div>
+        }
+        else if (ViewBag.Title == "Premium Group Realty - Network")
+        {
+            <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Network</a> </div>
+
+        }
+        else if (ViewBag.Title == "Premium Group Realty - PGR Management")
+        {
+            <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Network</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="javascript:void(0);" class="breadcrumb--active">Management</a> </div>
+
+        }
+        else
+        {*@
+        <div class="-intro-x breadcrumb breadcrumb--light mr-auto"> <a href="javascript:void(0);">&nbsp;</a> </div>
+        @*}*@
+
+        @if (company == null)
+        {
+            if (user.Roles.Contains("Agent"))
+            {
+
+            }
+            else
+            {
+                <div class="mr-5" style="width:100px;height:70px;background-image:url('~/Content/dist/images/logo-1.png');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+
+            }
+
+        }
+        else
+        {
+            if (company.Logo == "")
+            {
+                if (user.Roles.Contains("Agent"))
+                {
+
+                }
+                else
+                {
+                    <div class="mr-5" style="width:100px;height:70px;background-image:url('~/Content/dist/images/logo-1.png');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+
+                }
+            }
+            else
+            {
+                if (company.Logo.StartsWith("http"))
+                {
+
+                    <div class="mr-5" style="width:100px;height:70px;background-image:url('@company.Logo');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+
+                }
+                else
+                {
+                    <div class="mr-5" style="width:100px;height:70px;background-image:url('@Url.Content(company.Logo)');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+                    @*<img alt="S7VEN" style="width:130px;margin-right:20px" src="Url.Content(company.Logo)">*@
+                }
+
+            }
+
+        }
+
+        <!-- END: Breadcrumb -->
+        <!-- BEGIN: Search -->
+        <!-- END: Search -->
+        <!-- BEGIN: MARKET -->
+        <div class="intro-x dropdown mr-4 sm:mr-6">
+            @if (ViewBag.CartItems != null)
+            {
+                if (ViewBag.CartItems > 0)
+                {
+                    <div class="dropdown-toggle notification notification--light notification--bullet cursor-pointer" role="button" aria-expanded="false"> <i data-feather="shopping-cart" class="notification__icon dark:text-gray-300"></i> </div>
+
+                }
+
+
+                else
+                {
+                    <div class="dropdown-toggle notification  cursor-pointer" role="button" aria-expanded="false"> <i data-feather="shopping-cart" class="notification__icon dark:text-gray-300"></i> </div>
+
+                }
+            }
+            else
+            { <div class="dropdown-toggle notification  cursor-pointer" role="button" aria-expanded="false"> <i data-feather="shopping-cart" class="notification__icon dark:text-gray-300"></i> </div>
+            }<div class="notification-content pt-2 dropdown-menu">
+                <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
+                    <div class="notification-content__title">Order Details</div>
+                    @if (ViewBag.CartItems != null)
+                    {
+                        if (ViewBag.CartItems > 0)
+                        {
+                            if (ViewBag.CartItems > 2)
+                            {
+                                <a href="@Url.Action("ShoppingCart","Market")" style="text-decoration:underline">@ViewBag.CartItems products in the cart.</a>
+
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("ShoppingCart","Market")" style="text-decoration:underline">@ViewBag.CartItems product in the cart.</a>
+
+                            }
+                        }
+                        else
+                        {
+                            <label style="font-size:11px">No products in the cart.</label>
+                        }
+                    }
+                    else
+                    {
+                        <label style="font-size:11px">No products in the cart.</label>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- End: Market -->
+        <!-- BEGIN: Notifications -->
+        <div class="intro-x dropdown mr-4 sm:mr-6">
+            @if (notifications.Count > 0)
+            {
+                <div class="dropdown-toggle notification notification--light notification--bullet cursor-pointer" role="button" aria-expanded="false"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
+
+            }
+            else
+            {
+                <div class="dropdown-toggle notification  cursor-pointer" role="button" aria-expanded="false"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
+
+            }
+            <div class="notification-content pt-2 dropdown-menu">
+                <div class="notification-content__box dropdown-menu__content box dark:bg-dark-6">
+                    <div class="notification-content__title">Notifications   <a href="@Url.Action("markasread","Portal")" class="text-theme-24">Mark all as read</a></div>
+                    @if (notifications.Count > 0)
+                    {
+                        foreach (var notif in notifications)
+                        {
+                            <div class="cursor-pointer relative flex items-center mt-5">
+
+                                <div class="overflow-hidden">
+                                    <div class="flex items-center">
+                                        <a href="javascript:;" class="font-medium mr-5">@notif.Title</a>
+                                        <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">@notif.Date.ToString("MM/dd/yyyy") @notif.Date.ToShortTimeString()</div>
+                                    </div>
+                                    <div class="w-full text-gray-600 mt-0.5">@notif.Description</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <label>No new notifications</label>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- END: Notifications -->
+        <!-- BEGIN: Account Menu -->
+        <div class="intro-x dropdown w-8 h-8">
+            <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in" role="button" aria-expanded="false">
+                @if (user == null)
+                {
+                    <img alt="S7VEN" src="~/Content/dist/images/profile-2.jpg">
+                }
+                else
+                {
+                    if (user.Image == "")
+                    {
+                        <img alt="S7VEN" src="~/Content/dist/images/profile-2.jpg">
+                    }
+                    else
+                    {
+                        if (user.Image.StartsWith("http"))
+                        {
+                            <img src="@user.Image" alt="S7VEN">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content(user.Image)" alt="S7VEN">
+                        }
+
+                    }
+
+                }
+
+            </div>
+            <div class="dropdown-menu w-56">
+                <div class="dropdown-menu__content box dark:bg-dark-6">
+                    @if (user == null)
+                    {
+                        <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
+                            <div class="font-medium">Username</div>
+                            <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">
+                                Rol
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
+                            <div class="font-medium">@user.Name @user.LastName</div>
+                            <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">
+                                @if (ViewBag.rol == "Agent")
+                                {
+                                    <span>Real Estate Agent</span>
+                                    if (user.Team_Leader)
+                                    {
+                                        <br /><span class="text-theme-20">Team Leader</span>
+                                    }
+                                }
+                                else if (ViewBag.rol == "Admin")
+                                { <span>Broker</span>}
+                                else if (ViewBag.rol == "SA")
+                                { <span>Super Administrator</span>}
+                            </div>
+                        </div>
+                    }
+
+                    <div class="p-2">
+                        <a href="@Url.Action("UserProfile","Users")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
+                        <a href="@Url.Action("Forgot_password", "Portal")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
+                        @*<a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a>*@
+                    </div>
+                    @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
+                    {
+                        <div class="p-2">
+                            <a href="@Url.Action("BrokerProfile","Users", new { id=user.ID_Company})" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Broker Information </a>
+
+                            <div id="faq-accordion-1" class="accordion">
+                                <div class="accordion-item">
+                                    <div id="faq-accordion-content-4" class="accordion-header">
+                                        <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-4" aria-expanded="false" aria-controls="faq-accordion-collapse-4" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md accordion-button collapsed" style="font-weight:normal"> <i data-feather="settings" class="w-4 h-4 mr-2"></i> Settings </a>
+
+
+                                    </div>
+                                    <div id="faq-accordion-collapse-4" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-4" data-bs-parent="#faq-accordion-1">
+                                        <a href="@Url.Action("Index","Tb_Options")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Categories </a>
+                                        <a href="@Url.Action("Index","Tb_Source")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Sources </a>
+                                        <a href="@Url.Action("Index","Tb_Status")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Stages </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+                    <div class="p-2 border-t border-black border-opacity-5 dark:border-dark-3">
+                        <a href="@Url.Action("Log_out", "Portal")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Account Menu -->
+    </div>
+</div>

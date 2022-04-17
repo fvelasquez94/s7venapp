@@ -1,0 +1,342 @@
+﻿@model List<Realestate_portal.Models.Template_categories>
+
+@{
+    ViewBag.Title = "Categories";
+
+}
+
+<style>
+    .brand-1 {
+        background-color: black;
+        font-weight: bold;
+        font-size: 25px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: antiquewhite;
+        box-shadow: rgba(0,0,0,0.2) 5px 5px 7px;
+    }
+
+
+    .brand-2 {
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        font-size: 25px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: gray;
+        text-align: center;
+        box-shadow: rgba(0,0,0,0.2) 5px 5px 7px;
+    }
+
+    .item-brands {
+        width: 300px;
+        position: relative;
+        height: 150px;
+        margin-bottom: 40px;
+        margin-right: 20px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        justify-items: center;
+        align-content: space-around;
+    }
+
+    .image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        color: white;
+    }
+
+    .message {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 101%;
+        height: 40%;
+        background-color: rgba(112,137,232,1);
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+
+    .item-brands:hover .message {
+        opacity: 1;
+    }
+
+    .brand-2:hover {
+        border-color: rgba(112,137,232,1);
+    }
+
+    .brand-1:hover {
+        border-color: rgba(112,137,232,1);
+    }
+
+    .m-label {
+        position: relative;
+        margin-top: 10px;
+        color: white;
+    }
+
+
+    .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px;
+        align-content: space-around;
+    }
+
+    .flex-container-block {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px;
+        align-content: space-around;
+    }
+
+    .checkout-btn {
+        background: #162343;
+        margin: auto;
+        padding: 10px;
+        font-weight: 400;
+        color: white;
+        margin: auto;
+    }
+
+    .form-group > .label {
+        font-family: font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 400;
+    }
+
+
+    .modal-open .modal {
+        overflow-y: scroll;
+        overflow-y: auto;
+    }
+
+
+    .fade {
+        transition: opacity 0.15s linear;
+    }
+
+        .fade:not(.show) {
+            opacity: 0;
+        }
+
+    .modal {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+        background: #000000a6;
+        transition: visibility 0s linear 0.2s, opacity 0.2s 0s;
+        visibility: hidden;
+        position: fixed;
+        z-index: 1050;
+        top: 0;
+        right: 0;
+        bottom: 20px;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        opacity: 0;
+        overflow: hidden;
+        outline: 0;
+    }
+
+    #openmodal {
+        font-size: 20px;
+    }
+
+    .bar-top {
+        height: 67px;
+        z-index: 51;        
+        display: flex;
+         align-items: center;
+        border-bottom-width: 1px;
+        --tw-border-opacity: 1;
+        border-color: rgba(222, 229, 245, var(--tw-border-opacity));
+    }
+</style>
+
+<div class="bar-top -mx-4 px-4 md:mx-0 md:px-0">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <a href="@Url.Action("Index", "Market")">Market</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+
+        <a href="#" class="breadcrumb--active">Brands</a>
+    </div>
+    <!-- END: Breadcrumb -->
+    <div>
+        <a id="openmodal" data-toggle="modal" data-target="#modalNewwebinar" href="#" style="float: right">Want your company to become a S7ven Brand? Click here!</a>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="grid grid-cols-12">
+    <div class="col-span-12 2xl:col-span-12">
+        <div class="container mt-1">
+            <div class="row">
+                <div class="col-md-12  text-center">
+                    <h1 style="font-weight: bold; color: black ">Available Brands</h1>
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12"></div>
+                <div class="flex-container">
+                    <a href="@Url.Action("Categories", "Market", new { id = 7 })">
+                        <div class="item-brands brand-1">
+                            <br />
+                            <div class="image mt-3"> Independent ©</div>
+                            <div class="message">
+                                <p class="m-label text-center">Click to see details</p>
+                            </div>
+
+                        </div>
+                    </a>
+                    @foreach (var item in Model)
+                    {
+                        <a href="@Url.Action("Categories", "Market", new { id = item.id, child = item.childs })">
+                            <div class="item-brands brand-2">
+                                <div class="image mt-3">
+                                    <img class="logo-big" src="~/@item.path" alt="PGR" width="200" height="120" />
+                                </div>
+                                <div class="message">
+                                    <p class="m-label">Click to see details</p>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div aria-hidden="true" id="modalNewwebinar" tabindex="-1" role="dialog" aria-labelledby="closewindow" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div style="background:#f4f4f4" class="modal-header">
+                <button data-dismiss="modal" class="close" aria-label="Close">
+                    <i data-feather="x-circle"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="flex-container-block">
+                    <br />
+                    <h2>Fill out the form and we will get in touch with you.</h2>
+                    <br />
+                    <div class="form-group">
+                        <label class="form-label">Name &nbsp; <span style="color: red">*</span></label><br />
+                        <input style="width: 90%" type="text" class="form-control" name="user" /><br />
+                        <span id="warn-name" style="color: red"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label class="form-label">Company  &nbsp; <span style="color: red">*</span></label><br />
+                        <input style="width: 90%" type="text" class="form-control" name="company" /><br />
+                        <span id="warn-comp" style="color: red"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label class="form-label">Email  &nbsp; <span style="color: red">*</span></label><br />
+                        <input style="width: 90%" type="email" class="form-control" name="email" /><br />
+                        <span id="warn-email" style="color: red"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button class="checkout-btn">Submit </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var user = document.querySelector("input[name='user']");
+    var company = document.querySelector("input[name='company']");
+    var email = document.querySelector("input[name='email']");
+    var submit = document.querySelector(".checkout-btn");
+    var warnName = document.querySelector("#warn-name");
+    var warnComp = document.querySelector("#warn-comp");
+    var warnEmail = document.querySelector("#warn-email");
+    var closebtn = document.querySelector(".close");
+
+    submit.addEventListener("click", sendData);
+
+    function sendData() {
+        submit.disabled = true;
+        let valid = true;
+        if (user.value === "" || user.value === undefined) {            
+            warnName.innerText = "Please add a valid name";
+            valid = false;
+        }
+
+        if (company.value === "" || company.value === undefined) {
+            warnComp.innerText = "Please add a valid Company";
+            valid = false;
+        }       
+
+        if (email.value === "" || email.value === undefined) {
+            warnEmail.innerText = "Please add a valid Email";
+            valid = false;
+        }
+      var  data = { name: user.value, company: company.value, email: email.value };
+        var link = "@Url.Action("JoinBrand", "Market")";       
+        if (valid === true) {
+             $.ajax({
+                 type: 'GET',
+                 contentType: 'application/json',
+                 url: link,
+                 data: data,
+                        processData: true,
+                        success: function (result) {
+                            if (result) {
+                                console.log( result );
+                                if (result.message === "Success") {
+                                    submit.disabled = false;
+                                    closebtn.click();
+                                    document.body.style.overflow = "auto";
+                                    Swal.fire(
+                                        'Email sent',
+                                        'the email has been sent, we will get back to you as soon as possible',
+                                        'success'
+                                    )
+                                } else {
+                                    submit.disabled = false;
+                                    closebtn.click();
+                                    document.body.style.overflow = "auto";
+                                    Swal.fire(
+                                        'Email was not sent',
+                                        'Please refresh the page and try again',
+                                        'error'
+                                    )
+                                }
+                            }
+
+                        },
+                 error: function (error) {
+                     submit.disabled = false;
+                    closebtn.click();
+                    document.body.style.overflow = "auto";
+                    Swal.fire(
+                        'Email was not sent',
+                        'Please refresh the page and try again',
+                        'error'
+                    )
+                        }
+                    });
+        }
+    }
+
+</script>

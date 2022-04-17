@@ -1,0 +1,358 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+
+}
+<style>
+    .header-box {
+        background-color: gray;
+        margin: auto;
+        width: 100%;
+        padding: 5px;
+        color: white;
+    }
+
+    .emaillabel {
+        background-color: forestgreen;
+        color: black;
+        font-weight: bold;
+        padding: 2px;
+        text-align: center;
+        margin-bottom: 3px;
+        margin-top: 1px;
+    }
+
+    .checkout-btn {
+        background-color: mediumseagreen;
+        width: 120px;
+        margin: auto;
+        padding: 10px;
+        width: 200px;
+    }
+
+    .btn-box {
+        margin: auto;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-left: 15px;
+    }
+
+    .checkout1-btn {
+        background-color: #236386;
+        width: 120px;
+        margin: auto;
+        padding: 2px;
+        padding-left: 12px;
+    }
+
+    .btn2-box {
+        margin: auto;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .bar-top {
+        height: 67px;
+        z-index: 51;
+        display: flex;
+        align-items: center;
+        border-bottom-width: 1px;
+        --tw-border-opacity: 1;
+        border-color: rgba(222, 229, 245, var(--tw-border-opacity));
+    }
+</style>
+
+<div class="bar-top -mx-4 px-4 md:mx-0 md:px-0">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <a href="@Url.Action("Index","Market")">Market </a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+            <a href="#" class="breadcrumb--active">Check Out</a>
+    </div>
+    <!-- END: Breadcrumb -->
+
+</div><br />
+<br />
+<div class="grid grid-cols-12">
+    <div class="col-span-12">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <h2>
+                    BILLING & SHIPPING INFORMATION
+                </h2>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <div class="float-left" style="margin-top:25px;margin-bottom:25px">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Checkout", "Market", new {broker=0 })" style="font-weight: bold; color: darkgreen;margin-right:10px"><i data-feather="check-circle"></i> BILLING AND SHIPPING</a></li>
+                            <li class="breadcrumb-item" aria-current="page" style="font-weight: bold; color: #236386;margin-right:10px"><i data-feather="arrow-right"></i> VERIFY</li>
+                            <li class="breadcrumb-item" aria-current="page" style="font-weight: bold; color: #236386;margin-right:10px"><i data-feather="arrow-right"></i> CONFIRMATION</li>
+
+                        </ol>
+                    </nav>
+                </div>
+   
+            </div>
+        </div>
+        <br />
+        <br />
+        <i style="color: gray" class="la la-lock la-2x"></i> Secure Connection     <a href="@Url.Action("PurchaseHistory","Market")" style=" float: right; width:160px" class="btn btn-primary rounded shadow ml-5"><span class="btn2-box">Purchase history <i class="la la-dollar la-2x ml-2"></i></span></a>
+        <hr />
+        <br />
+        @using (Html.BeginForm("Payment", "Market", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="header-box">
+                    <h3 style="color:white">BILLING INFORMATION</h3>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p>Email Adress<span style="color: red">*</span> </p>
+                    <input required id="email" type="email" class="form-control" />
+                    <label class="emaillabel" id="emaillabel" style="display:none"></label>
+                </div>
+                <div class="form-group">
+                    <p>Email Adress<span style="color: red">*</span> </p>
+                    <input required id="rep_email" type="email" name="email" class="form-control" />
+                    <label class="emaillabel" id="repemaillabel" style="display:none"></label>
+                </div>
+                <div style="display: flex; align-items:center;">
+                    <div class="form-group mr-3">
+                        <p>first Name<span style="color: red">*</span> </p>
+                        <input required type="text" class="form-control" name="first_name" />
+                        <label for="first"></label>
+                    </div>
+                    <div class="form-group">
+                        <p>Last Name<span style="color: red">*</span> </p>
+                        <input required type="text" class="form-control" name="last_name" />
+                        <label for="last"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p>Adress<span style="color: red">*</span> </p>
+                    <input required type="text" class="form-control" name="b_Adress" />
+                    <label for="adress"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="b_suite" placeholder="Suite, bldg (Optional)" />
+                    <label for="suite"></label>
+                </div>
+                <div style="display: flex; align-items:center;">
+                    <div class="form-group mr-3">
+                        <p>City<span style="color: red">*</span> </p>
+                        <input required type="text" class="form-control" name="city" />
+                        <label for="City"></label>
+                    </div>
+                    <div class="form-group">
+                        <p>State<span style="color: red">*</span> </p>
+                        <input required type="text" class="form-control" name="state" />
+                        <label for="State"></label>
+                    </div>
+                </div>
+                <div style="display: flex; align-items:center;">
+                    <div class="form-group mr-3">
+                        <p>Zip Code<span style="color: red">*</span> </p>
+                        <input required type="text" class="form-control" name="zip_Code" />
+                        <label for="City"></label>
+                    </div>
+                    <div class="form-group">
+                        <p>Country</p>
+                        <input required type="text" class="form-control" disabled value="United States" name="country" />
+                        <label for="State"></label>
+                    </div>
+                </div>
+                <div style="width:200px" class="form-group">
+                    <p>Phone<span style="color: red">*</span> </p>
+                    <input required type="text" class="form-control" name="phone" placeholder="(___) ___-____" />
+                    <label for="suite"></label>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="header-box">
+                    <h3 style="color:white">SHIPPING INFORMATION</h3>
+                </div>
+                <br />
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="radio1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                        Ship to Billing Address
+                    </label>
+                </div>
+                <br />
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="radio2">
+                    <label class="form-check-label" for="exampleRadios1">
+                        Ship to Different Adress
+                    </label>
+                </div>
+                <br />
+                <div id="different_adress">
+
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-12">
+                <div style="float: right;" class="text-center">
+                    <button type="submit" style="color:white" class=" btn checkout-btn shadow"><span class="btn-box"> &nbsp; &nbsp; CONTINUE <i class="la la-arrow-right la-2x ml-2"></i></span></button>
+                    <br />
+                    <br />
+                    <div style="display:flex; align-items:center;text-align:right" class="text-center">
+                        <img src="~/Content/images/cc-images/lock.png" height="50" alt="Alternate Text" />
+                        <span class="label-color mx-4">100% secure </span>
+                        <img src="~/Content/images/cc-images/godaddy.png" height="30" alt="Alternate Text" style="margin-right:30px" />
+
+                        <img class="mx-3" src="~/Content/images/cc-images/visa-b.png" height="30" alt="Alternate Text" />
+                        <img class="mx-3" src="~/Content/images/cc-images/master-b.png" height="30" alt="Alternate Text" />
+                        <img class="mx-3" src="~/Content/images/cc-images/discover-b.png" height="30" alt="Alternate Text" />
+                        <img class="mx-3" src="~/Content/images/cc-images/amex-b.png" height="30" alt="Alternate Text" />
+                    </div>
+              
+                </div>
+            </div>
+        </div>
+}
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+    <script>
+        var email = document.querySelector("#email");
+        var rep_email = document.querySelector("#rep_email");
+        var emaillabel = document.querySelector("#emaillabel");
+        var repemaillabel = document.querySelector("#repemaillabel");
+        var radio1 = document.querySelector("#radio1");
+        var radio2 = document.querySelector("#radio2");
+        var different_adress = document.querySelector("#different_adress");
+        var adress_type;
+        var selectedadress;
+
+
+
+        email.addEventListener("input", showemailTip);
+        email.addEventListener("blur", hideemailTip);
+        rep_email.addEventListener("input", validateemails);
+        rep_email.addEventListener("blur", hideemailvalidation);
+        radio1.addEventListener("change", changeradio);
+        radio2.addEventListener("change", changeradio);
+
+        function showemailTip() {
+            emaillabel.style.display = "block";
+            emaillabel.innerHTML = "Please make sure you add a valid email since we will email you " +
+                "with instructions";
+        }
+        function hideemailTip() {
+            emaillabel.style.display = "none";
+        }
+
+        function validateemails() {
+            if (email.value !== rep_email.value) {
+                emaillabel.innerHTML = "";
+                emaillabel.innerHTML = "Email must be the same";
+                emaillabel.style.display = "block";
+                repemaillabel.style.display = "block";
+                repemaillabel.innerHTML = "Email must be the same";
+            } else if (email.value === rep_email.value) {
+                emaillabel.style.display = "block";
+                repemaillabel.style.display = "block";
+                repemaillabel.innerHTML = "Emails are the same";
+                emaillabel.innerHTML = "Emails are the same";
+            }
+        }
+
+        function hideemailvalidation() {
+            emaillabel.style.display = "none";
+            repemaillabel.style.display = "none";
+        }
+
+
+        function changeradio(e) {
+            if (e.target.id === "radio1") {
+                $("#radio2").prop('checked', false);
+                $("#different_adress").html("");
+            } else if (e.target.id === "radio2") {
+                $("#radio1").prop('checked', false);
+                $("#different_adress").html(`
+              <div class="form-group">
+                            <p>Select type of adress </p>
+                            <select id="selectedadress" name="s_type" class="form-control">
+                                <option value="Personal">Personal</option>
+                                <option value="Office">Office</option>
+                            </select>
+                            <label for="adress"></label>
+                        </div>
+
+                        <div class="form-group">
+                            <div style="display:flex; align-items: center;">
+                                <p id="adress_type">Full Name </p><span style="color: red; position: relative; bottom:5px;">*</span>
+                            </div>
+                            <input required type="text" class="form-control" name="s_name" />
+                            <label for="adress"></label>
+                        </div>
+
+                        <div class="form-group">
+                            <p>Adress<span style="color: red">*</span> </p>
+                            <input required type="text" class="form-control" name="s_adress" />
+                            <label for="adress"></label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="s_suite" placeholder="Suite, bldg (Optional)" />
+                            <label for="suite"></label>
+                        </div>
+                        <div style="display: flex; align-items:center;">
+                            <div class="form-group mr-3">
+                                <p>City<span style="color: red">*</span> </p>
+                                <input required type="text" class="form-control" name="s_city" />
+                                <label for="City"></label>
+                            </div>
+                            <div class="form-group">
+                                <p>State<span style="color: red">*</span> </p>
+                                <input required type="text" class="form-control" name="s_state" />
+                                <label for="State"></label>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items:center;">
+                            <div class="form-group mr-3">
+                                <p>Zip Code<span style="color: red">*</span> </p>
+                                <input required type="text" class="form-control" name="s_zip_Code" />
+                                <label for="City"></label>
+                            </div>
+                            <div class="form-group">
+                                <p>Country</p>
+                                <input type="text" class="form-control" disabled value="United States" name="s_country" />
+                                <label for="State"></label>
+                            </div>
+                        </div>
+                           <div style="width:200px" class="form-group">
+                           <p>Phone<span style="color: red">*</span> </p>
+                           <input required type="text" class="form-control" name="s_phone" placeholder="(___) ___-____" />
+                           <label for="suite"></label>
+                           </div>
+        `);
+            }
+            selectedadress = document.querySelector("#selectedadress");
+            adress_type = document.querySelector("#adress_type");
+            selectedadress.addEventListener("change", changeadresstype);
+        }
+
+        function changeadresstype(e) {
+            if (e.target.value === "Office") {
+                adress_type.innerHTML = "Office Name";
+            }
+
+            if (e.target.value === "Personal") {
+                adress_type.innerHTML = "Full Name";
+            }
+
+        }
+    </script>
+
+}

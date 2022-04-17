@@ -1,0 +1,24 @@
+﻿@model Realestate_portal.Models.ViewModels.Market.TempPDF
+@{
+    Layout = null;
+}
+
+    <style>
+        .flex-container {
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+            justify-content: center;
+            justify-items: center;
+            padding: 10px;
+            align-content: space-around;
+        }
+    </style>
+    <br />
+    <br />
+    <br />
+    <div class="flex-container-block">
+        <img style="height : @Model.Height; width: @Model.Width" id="img" src="@Model.Src" />
+    </div>   
+    
+
