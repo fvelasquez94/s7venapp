@@ -364,6 +364,7 @@
     <Compile Include="Controllers\BlobStorage\ConnectionString.cs" />
     <Compile Include="Controllers\BlobStorage\UploadService.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\clsGeneral.cs" />
     <Compile Include="Controllers\Cls_GoogleCalendar.cs" />
     <Compile Include="Controllers\CRMController.cs" />
@@ -3231,6 +3232,7 @@
     <Content Include="Views\Emails\NewNotification_createLead.cshtml" />
     <Content Include="Views\Emails\NewNotification_noteagent.cshtml" />
     <Content Include="Views\Customers\ImportLeads.cshtml" />
+    <Content Include="Views\Campaigns\CampaignsSMS.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

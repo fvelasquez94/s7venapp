@@ -108,20 +108,13 @@
 
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
-                                    @if (ViewBag.activeuser.Roles.Contains("SA"))
-                                    {
+                                 
                                         <div>
                                             <label class="form-label">Amount of agents</label>
                                             <input name="agents" type="number" class="form-control" value="@Model.Agents" required>
                                         </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <label class="form-label">Amount of agents</label>
-                                            <input disabled name="agents" type="number" class="form-control" value="@Model.Agents" required>
-                                        </div>
-                                    }
+                                    
+                                
 
                                 </div>
 
@@ -152,7 +145,7 @@
                                         <div class="col-span-6 md:col-span-3 ml-2">
                                             <div>
                                                 <label class="form-label">Last Name</label>
-                                                <input type="text" name="LastName" class="form-control" value="@brokeruser.LastName" >
+                                                <input type="text" name="LastName" class="form-control" value="@brokeruser.LastName">
                                             </div>
 
                                         </div>
@@ -168,7 +161,39 @@
                                             <div>
                                                 <label class="form-label">Password</label>
                                                 <input type="text" name="Password" id="Password" class="form-control" value="@brokeruser.Password" required>
-                                                <input type="checkbox" id="check" /> <label for="check">Show</label>
+                                                <input type="checkbox" id="check" checked /> <label for="check">Show</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="grid grid-cols-12 ">
+                                        <div class="col-span-6 md:col-span-3">
+                                            <div>
+                                                <label class="form-label">Brokerage Name</label>
+                                                <input type="text" name="BrokerageName" class="form-control" value="@brokeruser.Brokerage_name" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+                                            <div>
+                                                <label class="form-label">Broker Contact</label>
+                                                <input type="text" name="BrokerContact" class="form-control" value="@brokeruser.Broker_Contact">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+                                            <div>
+                                                <label class="form-label">Brokerage Address</label>
+                                                <input type="text" name="BrokerAddress" class="form-control" value="@brokeruser.Brokerage_address" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-span-6 md:col-span-3 ml-2">
+
+                                            <div>
+                                                <label class="form-label">Brokerage License</label>
+                                                <input type="text" name="BrokerLicense" class="form-control" value="@brokeruser.Broker_License" required>
                                             </div>
 
                                         </div>

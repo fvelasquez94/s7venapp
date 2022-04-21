@@ -20,7 +20,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
         static string idtemplate_NewLead = "d-78f979719e6845368e7bf9c1f2cfd075";
 
         //New agent, new Broker
-        public async Task<string> SendEmail_newAgentBroker(string toemail, string password)
+        public string SendEmail_newAgentBroker(string toemail, string password)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
                     pass = password
                 });
 
-                var response = await sendGridClient.SendEmailAsync(sendGridMessage);
+                var response = sendGridClient.SendEmailAsync(sendGridMessage);
 
                 return "Success";
             }
@@ -51,7 +51,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
         }
 
         //New task
-        public async Task<string> SendEmail_newTask(string toemail, string title, string description)
+        public string SendEmail_newTask(string toemail, string title, string description)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
                     description = description
                 });
 
-                var response = await sendGridClient.SendEmailAsync(sendGridMessage);
+                var response = sendGridClient.SendEmailAsync(sendGridMessage);
 
                 return "Success";
             }
@@ -81,7 +81,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
 
         }
 
-        public async Task<string> SendEmail_newLead(string toemail, string leadname, string phone, string address, string state)
+        public string SendEmail_newLead(string toemail, string leadname, string phone, string address, string state)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Realestate_portal.Controllers.SendGridAPI
                     state=state
                 });
 
-                var response = await sendGridClient.SendEmailAsync(sendGridMessage);
+                var response = sendGridClient.SendEmailAsync(sendGridMessage);
 
                 return "Success";
             }

@@ -1,0 +1,360 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Leads";
+
+}
+
+<style>
+    .show-range {
+        display: none;
+    }
+
+    .margin-btn {
+        position: relative;
+        top: 18px;
+    }
+</style>
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Import Leads
+    </h2>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <!-- BEGIN: Basic Table -->
+        <div class="intro-y box">
+            <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+                <h2 class="font-medium text-base mr-auto">
+                    Importing Leads
+                </h2>
+                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
+
+
+                    <div class="widget-options ml-2">
+                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalImport">Help</a>
+                    </div>
+                    <div class="widget-options ml-2">
+                        <a class="btn btn-primary" href="@Url.Action("ExportLeadsTemplate", "Customers")">Blank template</a>
+                    </div>
+                </div>
+            </div>
+            <div id="modalImport" class="modal fade">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Import Leads Data</h4>
+                        </div>
+                        <form id="htmlform2" method="post">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+
+                                            <p>Use our import tool to quickly upload your Lead's information and start working with them.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                       
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="p-5" id="basic-table">
+                <div class="preview">
+
+
+                    <br /><br />
+                    @using (Html.BeginForm("ImportLeads", "Customers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                <div>
+               
+                    <div class="widget-options ">
+                        <label>Upload File:</label>
+                        <input type="file" id="file" name="file" />
+                        <input type="submit" value="Upload File" class="btn btn-success" />
+                    </div>
+                   
+                </div>
+                        <!--Display Error Message-->
+                        <div style="color:red;">@ViewBag.Message</div>
+                        <!--Show the Data Table on the View after reading the Excel File-->
+                        <div class="">
+                            @if (Model != null)
+                            {
+                                <table class="table table-report sm:mt-2" id="tableresources">
+                                    <tr>
+                                        @for (int i = 0; i < Model.Columns.Count; i++)
+                                        {
+                                            <th>@Model.Columns[i].ColumnName</th>
+
+                                        }
+                                    </tr>
+                                    @for (int i = 0; i < Model.Rows.Count; i++)
+                                    {
+                                        <tr>
+                                            @for (int j = 0; j < Model.Columns.Count; j++)
+                                            {
+                                                <td>@Model.Rows[i][j]</td>
+
+                                            }
+                                        </tr>
+
+                                    }
+
+                                </table>
+                            }
+                        </div>
+                    }
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Basic Table -->
+<!-- BEGIN: Bordered Table -->
+
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
+
+
+        </script>
+    }
+
+}
+<!-- End table Container -->
+<!--table scripts starts here to pull all data from controller by datable ajax -->
+@section scripts{
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+    <script>
+        function deleteCustomer(idcustomer) {
+
+            swal.fire({
+                title: 'Do you really want to delete these record?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Customers/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idcustomer },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
+        $(document).ready(function () {
+
+
+            table = $("#tableresources").DataTable({
+                "order": [[0, "asc"]],
+                dom: 'lBfrtip',
+                "iDisplayLength": 25,
+                buttons: [
+                    'colvis',
+                    {
+                        text: 'Show All Columns <i class="fa-lg fas fa-check-square"></i>',
+                        className: 'show-all-columns',
+                        action: function (e, dt) {
+                            dt.columns([0, 1, 2, 3, 4, 5]).visible(true, false); // show selected columns, false is to disable redraw calcs for speed
+
+                        }
+                    }
+                ]
+            });
+
+            $('#selecttable').on('change', function () {
+                if (this.value == "ALL") {
+                    table.columns(4).search('').draw();
+                } else {
+                    table.columns(4).search(this.value).draw();
+                }
+
+            });
+
+            $('#reportrange').daterangepicker({
+                linkedCalendars: false,
+                startDate: start,
+                endDate: end,
+                autoApply: true,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+            var buttons = document.querySelector(".dt-buttons");
+            var range = document.createElement("button");
+            var clear = document.createElement("button");
+            range.id = "showbydate";
+            range.classList.add("dt-button", "show-all-columns");
+            range.type = "button";
+            clear.id = "clearRange";
+            range.type = "button";
+            clear.classList.add("dt-button", "show-all-columns");
+            clear.innerHTML = `<span>Clear <i class="fa-lg fas fa-check-square"></i></span>`;
+            range.innerHTML = `<span>Show By Date <i class="fa-lg fas fa-check-square"></i></span>`;
+            buttons.appendChild(
+               range
+            );
+            buttons.appendChild(
+                clear
+            );
+
+            var showbydate = document.getElementById("showbydate");
+            showbydate.onclick = function () {
+                $("#daterange").toggleClass("show-range");
+            }
+
+            var clearRange = document.getElementById("clearRange");
+            clearRange.onclick = function () {
+                window.location.href = "@Url.Action("Leads", "CRM")";
+            }
+
+
+        });
+
+
+        var flag = 0;
+       //DATETIMEPICKER
+ var t1 = "@ViewBag.filtrofechastart";
+        var t2 = "@ViewBag.filtrofechaend";
+
+        var start = moment(t1, "MM-DD-YYYY");
+        var end = moment(t2, "MM-DD-YYYY");
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            if (flag == 0) {
+                flag = 1;
+            } else {
+                filterSObydate();
+            }
+
+
+        }
+
+
+
+
+
+            function filterSObydate() {
+            var st = new Date($('#reportrange').data('daterangepicker').startDate);
+            var ed = new Date($('#reportrange').data('daterangepicker').endDate);
+
+            //st = st.toLocaleDateString();
+            //ed = ed.toLocaleDateString();
+            ////colocamos la url de la demo
+
+
+
+            var today = st;
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            st = mm + '/' + dd + '/' + yyyy;
+
+            var today2 = ed;
+            var dd2 = today2.getDate();
+            var mm2 = today2.getMonth() + 1; //January is 0!
+
+            var yyyy2 = today2.getFullYear();
+            if (dd2 < 10) {
+                dd2 = '0' + dd2;
+            }
+            if (mm2 < 10) {
+                mm2 = '0' + mm2;
+            }
+            ed = mm2 + '/' + dd2 + '/' + yyyy2;
+
+            var agent = $("#filteragent").val();
+
+            var url = '@Url.Action("Leads", "CRM", new { fstartd = "dad", fendd="tfe"})';
+            url = url.replace('dad', st);
+            var newurl = url;
+            newurl = newurl.replace('tfe', ed);
+            newurl = newurl.replace('sss', agent);
+
+            newurl = newurl.replace(/&amp;/g, "&");
+
+            window.location.href = newurl;
+        };
+
+
+    </script>
+}
+
+
+
+
+
+
+

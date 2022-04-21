@@ -108,20 +108,13 @@
 
                                 </div>
                                 <div class="col-span-6 md:col-span-3 ml-2">
-                                    @if (ViewBag.activeuser.Roles.Contains("SA"))
-                                    {
+                                 
                                         <div>
                                             <label class="form-label">Amount of agents</label>
                                             <input name="agents" type="number" class="form-control" value="@Model.Agents" required>
                                         </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <label class="form-label">Amount of agents</label>
-                                            <input disabled name="agents" type="number" class="form-control" value="@Model.Agents" required>
-                                        </div>
-                                    }
+                                    
+                                
 
                                 </div>
 

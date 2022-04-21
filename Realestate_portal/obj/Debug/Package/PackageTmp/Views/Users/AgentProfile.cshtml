@@ -127,7 +127,7 @@ else if (ViewBag.rol == "SA")
                                     </div>
 
                                     <div class="mt-3">
-                                        <label  class="form-label">Phone Number</label>
+                                        <label class="form-label">Phone Number (complete format starting with + , no spaces)</label>
                                         <input name="Main_telephone" type="text" class="form-control" value="@Model.Main_telephone" required>
                                     </div>
                                 </div>
@@ -260,21 +260,21 @@ else if (ViewBag.rol == "SA")
                         <div class="col-span-12 xl:col-span-6">
                             <div>
                                 <label  class="form-label">Brokerage Name</label>
-                                <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
+                                <input name="Brokerage_name" type="text" class="form-control" value="@activeusr.Brokerage_name" disabled>
                             </div>
                             <div class="mt-3">
                                 <label  class="form-label">Brokerage Address</label>
-                                <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" disabled>
+                                <input name="Brokerage_address" type="text" class="form-control" value="@activeusr.Brokerage_address" disabled>
                             </div>
                         </div>
                         <div class="col-span-12 xl:col-span-6">
                             <div class="mt-3 xl:mt-0">
                                 <label  class="form-label">Broker Contact</label>
-                                <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" disabled>
+                                <input name="Broker_Contact" type="text" class="form-control" value="@activeusr.Broker_Contact" disabled>
                             </div>
                             <div class="mt-3">
                                 <label  class="form-label">Broker License</label>
-                                <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
+                                <input name="Broker_License" type="text" class="form-control" value="@activeusr.Broker_License" disabled>
                             </div>
                             <div style="display:none">
                                 <input type="text" value="@Model.Image" name="Image"/>

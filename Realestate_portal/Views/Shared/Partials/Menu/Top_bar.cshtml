@@ -240,34 +240,40 @@
                         <a href="@Url.Action("Forgot_password", "Portal")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
                         @*<a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a>*@
                     </div>
-                    @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
+                 
+                        @if (user.Roles.Contains("Admin") || user.Roles.Contains("SA"))
+                        {
+                <div class="p-2">
+                    @if (user.Roles.Contains("SA"))
                     {
-                        <div class="p-2">
-                            <a href="@Url.Action("BrokerProfile","Users", new { id=user.ID_Company})" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Broker Information </a>
+                        <a href="@Url.Action("CampaignsSMS","Campaigns")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="message-square" class="w-4 h-4 mr-2"></i>SMS Campaigns </a>
 
-                            <div id="faq-accordion-1" class="accordion">
-                                <div class="accordion-item">
-                                    <div id="faq-accordion-content-4" class="accordion-header">
-                                        <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-4" aria-expanded="false" aria-controls="faq-accordion-collapse-4" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md accordion-button collapsed" style="font-weight:normal"> <i data-feather="settings" class="w-4 h-4 mr-2"></i> Settings </a>
-
-
-                                    </div>
-                                    <div id="faq-accordion-collapse-4" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-4" data-bs-parent="#faq-accordion-1">
-                                        <a href="@Url.Action("Index","Tb_Options")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Categories </a>
-                                        <a href="@Url.Action("Index","Tb_Source")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Sources </a>
-                                        <a href="@Url.Action("Index","Tb_Status")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Stages </a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
                     }
-                    <div class="p-2 border-t border-black border-opacity-5 dark:border-dark-3">
-                        <a href="@Url.Action("Log_out", "Portal")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                    <a href="@Url.Action("BrokerProfile","Users", new { id=user.ID_Company})" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Broker Information </a>
+
+                    <div id="faq-accordion-1" class="accordion">
+                        <div class="accordion-item">
+                            <div id="faq-accordion-content-4" class="accordion-header">
+                                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#faq-accordion-collapse-4" aria-expanded="false" aria-controls="faq-accordion-collapse-4" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md accordion-button collapsed" style="font-weight:normal"> <i data-feather="settings" class="w-4 h-4 mr-2"></i> Settings </a>
+
+
+                            </div>
+                            <div id="faq-accordion-collapse-4" class="accordion-collapse collapse" aria-labelledby="faq-accordion-content-4" data-bs-parent="#faq-accordion-1">
+                                <a href="@Url.Action("Index","Tb_Options")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Categories </a>
+                                <a href="@Url.Action("Index","Tb_Source")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Sources </a>
+                                <a href="@Url.Action("Index","Tb_Status")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">Stages </a>
+
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
+                        }
+                        <div class="p-2 border-t border-black border-opacity-5 dark:border-dark-3">
+                            <a href="@Url.Action("Log_out", "Portal")" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                        </div>
+                    </div>
             </div>
         </div>
         <!-- END: Account Menu -->

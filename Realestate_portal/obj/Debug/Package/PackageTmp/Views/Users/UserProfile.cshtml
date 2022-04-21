@@ -95,131 +95,275 @@ else if (ViewBag.rol == "SA")
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID_User)
-        <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-            <!-- BEGIN: Display Information -->
-            <div class="intro-y box lg:mt-5">
-                <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Basic Information
-                    </h2>
-                    <label class="mt-3">Last update: @Model.Last_update</label>
-                </div>
-                <div class="p-5">
-                    <div class="flex flex-col-reverse xl:flex-row flex-col">
-                        <div class="flex-1 mt-6 xl:mt-0">
-                            <div class="grid grid-cols-12 ">
-                                <div class="col-span-6 md:col-span-3">
-                                    <div>
-                                        <label class="form-label">Name</label>
-                                        <input type="text" name="Name" class="form-control" value="@Model.Name" required>
+            <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+                <!-- BEGIN: Display Information -->
+                <div class="intro-y box lg:mt-5">
+                    <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                        <h2 class="font-medium text-base mr-auto">
+                            Basic Information
+                        </h2>
+                        <label class="mt-3">Last update: @Model.Last_update</label>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex flex-col-reverse xl:flex-row flex-col">
+                            <div class="flex-1 mt-6 xl:mt-0">
+                                <div class="grid grid-cols-12 ">
+                                    <div class="col-span-6 md:col-span-3">
+                                        <div>
+                                            <label class="form-label">Name</label>
+                                            <input type="text" name="Name" class="form-control" value="@Model.Name" required>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="form-label">Position</label>
+                                            <input type="text" name="Position" class="form-control" value="@Model.Position" required>
+                                        </div>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="form-label">Position</label>
-                                        <input type="text" name="Position" class="form-control" value="@Model.Position" required>
-                                    </div>
-                                </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
-                                    <div>
-                                        <label class="form-label">Last Name</label>
-                                        <input type="text" name="LastName" class="form-control" value="@Model.LastName" required>
-                                    </div>
+                                    <div class="col-span-6 md:col-span-3 ml-2">
+                                        <div>
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="LastName" class="form-control" value="@Model.LastName" required>
+                                        </div>
 
-                                    <div class="mt-3">
-                                        <label class="form-label">Phone Number</label>
-                                        <input name="Main_telephone" type="text" class="form-control" value="@Model.Main_telephone" required>
+                                        <div class="mt-3">
+                                            <label class="form-label">Phone Number</label>
+                                            <input name="Main_telephone" type="text" class="form-control" value="@Model.Main_telephone" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
-                                    <div>
-                                        <label class="form-label">Email</label>
-                                        <input type="email" name="Email" class="form-control" value="@Model.Email" required>
+                                    <div class="col-span-6 md:col-span-3 ml-2">
+                                        <div>
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="Email" class="form-control" value="@Model.Email" required>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="form-label">Birthday</label>
+                                            <input type="date" name="Birth" class="form-control" value="@Model.Birth.ToString("yyyy-MM-dd")" required>
+                                        </div>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="form-label">Birthday</label>
-                                        <input type="date" name="Birth" class="form-control" value="@Model.Birth.ToString("yyyy-MM-dd")" required>
-                                    </div>
-                                </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
+                                    <div class="col-span-6 md:col-span-3 ml-2">
 
-                                    <div>
-                                        <label class="form-label">Password</label>
-                                        <input type="password" name="Password" class="form-control" value="@Model.Password" required>
+                                        <div>
+                                            <label class="form-label">Password</label>
+                                            <input type="password" name="Password" class="form-control" value="@Model.Password" required>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="form-label">Agent License</label>
+                                            <input type="text" name="My_License" class="form-control" value="@Model.My_License">
+                                        </div>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="form-label">Agent License</label>
-                                        <input type="text" name="My_License" class="form-control" value="@Model.My_License">
+                                    <div class="col-span-6 md:col-span-3">
+                                        <div class="mt-3">
+                                            <label class="form-label">Address</label>
+                                            <textarea class="form-control" name="Address">@Model.Address</textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-span-6 md:col-span-3">
-                                    <div class="mt-3">
-                                        <label class="form-label">Address</label>
-                                        <textarea class="form-control" name="Address">@Model.Address</textarea>
+                                    <div class="col-span-6 md:col-span-3 ml-2">
+                                        <div class="mt-3">
+                                            <label class="form-label">State</label>
+                                            <select class="form-control" id="State" name="State">
+                                                @foreach (var state in lstsates)
+                                                {
+                                                    if (state.Abbreviations == Model.State)
+                                                    {
+                                                        <option value="@state.Abbreviations" selected>@state.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@state.Abbreviations">@state.Name</option>
+                                                    }
+                                                }
+
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
-                                    <div class="mt-3">
-                                        <label class="form-label">State</label>
-                                        <select class="form-control" id="State" name="State">
-                                            @foreach (var state in lstsates)
+                                    <div class="col-span-6 md:col-span-3 ml-2">
+                                        <div class="mt-3">
+                                            @if (ViewBag.rol == "Admin")
                                             {
-                                                if (state.Abbreviations == Model.State)
-                                                {
-                                            <option value="@state.Abbreviations" selected>@state.Name</option>
-                                                }
-                                                else
-                                                {
-                                    <option value="@state.Abbreviations">@state.Name</option>
-                                                }
+                                                <label class="form-label" for="Active">Active user?</label>
+                                                <div class="mt-3">
+                                                    @Html.EditorFor(model => model.Active)
+                                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                                </div>
+
+
                                             }
+                                            else
+                                            {
 
-                                        </select>
+                                                <div class="mt-3" style="display:none">
+                                                    @Html.EditorFor(model => model.Active)
+                                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-span-6 md:col-span-3 ml-2">
+                                        <div class="mt-3">
+                                            @if (ViewBag.rol == "Admin")
+                                            {
+                                                <label class="form-label" for="Team_Leader">Team Leader?</label>
+                                                <div class="mt-3">
+                                                    @Html.EditorFor(model => model.Team_Leader)
+                                                    @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                                                </div>
+
+
+                                            }
+                                            else
+                                            {
+
+                                                <div class="mt-3" style="display:none">
+                                                    @Html.EditorFor(model => model.Team_Leader)
+                                                    @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                                                </div>
+
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
-                                    <div class="mt-3">
-                                        @if (ViewBag.rol == "Admin")
-                                        {
-                                    <label class="form-label" for="Active">Active user?</label>
-                                    <div class="mt-3">
-                                        @Html.EditorFor(model => model.Active)
-                                        @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-                                    </div>
+                                <div class="flex justify-end mt-4">
+                                    <button type="submit" class="btn btn-primary ">Save information</button>
 
-
-                                        }
-                                        else
-                                        {
-
-                            <div class="mt-3" style="display:none">
-                                @Html.EditorFor(model => model.Active)
-                                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                </div>
                             </div>
 
-                                        }
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Display Information -->
+                <!-- BEGIN: Personal Information -->
+                @if (activeusr.Roles.Contains("Admin") || activeusr.Roles.Contains("SA"))
+                {
+
+                }
+                else
+                {
+                    <div class="intro-y box mt-5">
+                        <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Broker Information
+                            </h2>
+                        </div>
+                        <div class="p-5">
+                            <div class="grid grid-cols-12 gap-x-5">
+
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div>
+                                        <label class="form-label">Brokerage Name</label>
+                                        <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Brokerage Address</label>
+                                        <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" disabled>
                                     </div>
                                 </div>
-                                <div class="col-span-6 md:col-span-3 ml-2">
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div class="mt-3 xl:mt-0">
+                                        <label class="form-label">Broker Contact</label>
+                                        <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" disabled>
+                                    </div>
                                     <div class="mt-3">
-                                        @if (ViewBag.rol == "Admin")
-                                        {
-                                    <label class="form-label" for="Team_Leader">Team Leader?</label>
-                                    <div class="mt-3">
-                                        @Html.EditorFor(model => model.Team_Leader)
-                                        @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                                        <label class="form-label">Broker License</label>
+                                        <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
                                     </div>
 
-
-                                        }
-                                        else
-                                        {
-
-                            <div class="mt-3" style="display:none">
-                                @Html.EditorFor(model => model.Team_Leader)
-                                @Html.ValidationMessageFor(model => model.Team_Leader, "", new { @class = "text-danger" })
+                                </div>
+                             
+                                <div style="display:none">
+                                    <input type="text" value="@Model.Image" name="Image" />
+                                </div>
                             </div>
 
-                                        }
+                        </div>
+                    </div>
+                }
+                    <!-- END: Personal Information -->
+                    <div class="intro-y box mt-5">
+                        <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Social Networks
+                            </h2>
+                        </div>
+                        <div class="p-5">
+                            <div class="grid grid-cols-12 gap-x-5">
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div>
+                                        <label class="form-label">Facebook URL</label>
+                                        <input name="Fb_url" type="text" class="form-control" value="@Model.Fb_url">
                                     </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Instagram URL</label>
+                                        <input name="Ins_url" type="text" class="form-control" value="@Model.Ins_url">
+                                    </div>
+                                </div>
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div class="mt-3 xl:mt-0">
+                                        <label class="form-label">Twitter URL</label>
+                                        <input name="Tw_url" type="text" class="form-control" value="@Model.Tw_url">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Other Social Network URL</label>
+                                        <input name="Other_url" type="text" class="form-control" value="@Model.Other_url">
+                                    </div>
+
+                                </div>        <div class="col-span-6 md:col-span-3 ml-2" style="display:none !important">
+
+                                    <input type="text" name="Roles" class="form-control" value="@Model.Roles">
+                                    <input type="text" name="ID_Company" class="form-control" value="@Model.ID_Company">
+                                    <input type="text" name="Gender" class="form-control" value="@Model.Gender">
+                                    <input type="text" name="Last_login" class="form-control" value="@Model.Last_login">
+                                    <input type="text" name="Last_update" class="form-control" value="@Model.Last_update">
+                                    <input type="text" name="Creation_date" class="form-control" value="@Model.Creation_date">
+                                    <input type="text" name="Member_since" class="form-control" value="@Model.Member_since">
+
+
+
+                                </div>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                                <button type="submit" class="btn btn-primary">Save information</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="intro-y box mt-5">
+                        <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                            <h2 class="font-medium text-base mr-auto">
+                                Payment Information
+                            </h2>
+                        </div>
+                        <div class="p-5">
+                            <div class="grid grid-cols-12 gap-x-5">
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div>
+                                        <label class="form-label">Bank</label>
+                                        <input name="Bank" type="text" class="form-control" value="@Model.Bank">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Bank Number</label>
+                                        <input name="Bank_number" type="text" class="form-control" value="@Model.Bank_number">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Account Type</label>
+                                        <input name="Bank_typeaccount" type="text" class="form-control" value="@Model.Bank_typeaccount">
+                                    </div>
+
+                                </div>
+                                <div class="col-span-12 xl:col-span-6">
+                                    <div class="mt-3 xl:mt-0">
+                                        <label class="form-label">Credit Card Number</label>
+                                        <input name="Credit_number" type="text" class="form-control" value="@Model.Credit_number">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Credit Card Owner Name</label>
+                                        <input name="Credit_name" type="text" class="form-control" value="@Model.Credit_name">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="form-label">Credit Card Type</label>
+                                        <input name="Credit_classification" type="text" class="form-control" value="@Model.Credit_classification">
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="flex justify-end mt-4">
@@ -227,170 +371,8 @@ else if (ViewBag.rol == "SA")
 
                             </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <!-- END: Display Information -->
-            <!-- BEGIN: Personal Information -->
-            <div class="intro-y box mt-5">
-                <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Broker Information
-                    </h2>
-                </div>
-                <div class="p-5">
-                    <div class="grid grid-cols-12 gap-x-5">
-                        @if (Model.Roles.Contains("Admin"))
-                        {
-                    <div class="col-span-12 xl:col-span-6">
-                        <div>
-                            <label class="form-label">Brokerage Name</label>
-                            <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name">
-                        </div>
-                        <div class="mt-3">
-                            <label class="form-label">Brokerage Address</label>
-                            <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address">
-                        </div>
-                    </div>
-                    <div class="col-span-12 xl:col-span-6">
-                        <div class="mt-3 xl:mt-0">
-                            <label class="form-label">Broker Contact</label>
-                            <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact">
-                        </div>
-                        <div class="mt-3">
-                            <label class="form-label">Broker License</label>
-                            <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License">
-                        </div>
-
-                    </div>
-                        }
-                        else
-                        {
-            <div class="col-span-12 xl:col-span-6">
-                <div>
-                    <label class="form-label">Brokerage Name</label>
-                    <input name="Brokerage_name" type="text" class="form-control" value="@Model.Brokerage_name" disabled>
-                </div>
-                <div class="mt-3">
-                    <label class="form-label">Brokerage Address</label>
-                    <input name="Brokerage_address" type="text" class="form-control" value="@Model.Brokerage_address" disabled>
-                </div>
-            </div>
-            <div class="col-span-12 xl:col-span-6">
-                <div class="mt-3 xl:mt-0">
-                    <label class="form-label">Broker Contact</label>
-                    <input name="Broker_Contact" type="text" class="form-control" value="@Model.Broker_Contact" disabled>
-                </div>
-                <div class="mt-3">
-                    <label class="form-label">Broker License</label>
-                    <input name="Broker_License" type="text" class="form-control" value="@Model.Broker_License" disabled>
-                </div>
-
-            </div>
-                        }
-                        <div style="display:none">
-                            <input type="text" value="@Model.Image" name="Image" />
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <!-- END: Personal Information -->
-            <div class="intro-y box mt-5">
-                <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Social Networks
-                    </h2>
-                </div>
-                <div class="p-5">
-                    <div class="grid grid-cols-12 gap-x-5">
-                        <div class="col-span-12 xl:col-span-6">
-                            <div>
-                                <label class="form-label">Facebook URL</label>
-                                <input name="Fb_url" type="text" class="form-control" value="@Model.Fb_url">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Instagram URL</label>
-                                <input name="Ins_url" type="text" class="form-control" value="@Model.Ins_url">
-                            </div>
-                        </div>
-                        <div class="col-span-12 xl:col-span-6">
-                            <div class="mt-3 xl:mt-0">
-                                <label class="form-label">Twitter URL</label>
-                                <input name="Tw_url" type="text" class="form-control" value="@Model.Tw_url">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Other Social Network URL</label>
-                                <input name="Other_url" type="text" class="form-control" value="@Model.Other_url">
-                            </div>
-
-                        </div>        <div class="col-span-6 md:col-span-3 ml-2" style="display:none !important">
-
-                            <input type="text" name="Roles" class="form-control" value="@Model.Roles">
-                            <input type="text" name="ID_Company" class="form-control" value="@Model.ID_Company">
-                            <input type="text" name="Gender" class="form-control" value="@Model.Gender">
-                            <input type="text" name="Last_login" class="form-control" value="@Model.Last_login">
-                            <input type="text" name="Last_update" class="form-control" value="@Model.Last_update">
-                            <input type="text" name="Creation_date" class="form-control" value="@Model.Creation_date">
-                            <input type="text" name="Member_since" class="form-control" value="@Model.Member_since">
-
-
-
-                        </div>
-                    </div>
-                    <div class="flex justify-end mt-4">
-                        <button type="submit" class="btn btn-primary">Save information</button>
-
-                    </div>
-                </div>
-            </div>
-            <div class="intro-y box mt-5">
-                <div class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Payment Information
-                    </h2>
-                </div>
-                <div class="p-5">
-                    <div class="grid grid-cols-12 gap-x-5">
-                        <div class="col-span-12 xl:col-span-6">
-                            <div>
-                                <label class="form-label">Bank</label>
-                                <input name="Bank" type="text" class="form-control" value="@Model.Bank">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Bank Number</label>
-                                <input name="Bank_number" type="text" class="form-control" value="@Model.Bank_number">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Account Type</label>
-                                <input name="Bank_typeaccount" type="text" class="form-control" value="@Model.Bank_typeaccount">
-                            </div>
-
-                        </div>
-                        <div class="col-span-12 xl:col-span-6">
-                            <div class="mt-3 xl:mt-0">
-                                <label class="form-label">Credit Card Number</label>
-                                <input name="Credit_number" type="text" class="form-control" value="@Model.Credit_number">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Credit Card Owner Name</label>
-                                <input name="Credit_name" type="text" class="form-control" value="@Model.Credit_name">
-                            </div>
-                            <div class="mt-3">
-                                <label class="form-label">Credit Card Type</label>
-                                <input name="Credit_classification" type="text" class="form-control" value="@Model.Credit_classification">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="flex justify-end mt-4">
-                        <button type="submit" class="btn btn-primary ">Save information</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 }
             @if (activeusr.Roles.Contains("Admin") || activeusr.Roles.Contains("SA"))  {
             <div class="col-span-12 lg:col-span-8 2xl:col-span-9">

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Fran-oficina\Desktop\S7VENDEPLOY</_PublishTargetUrl>
-    <History>True|2022-04-09T20:53:24.8007480Z;True|2022-03-22T12:14:21.3486906-06:00;True|2022-03-04T00:15:53.0953049-06:00;True|2022-03-02T23:49:31.7855989-06:00;True|2022-03-02T23:46:59.2140522-06:00;True|2022-03-02T00:12:04.6913324-06:00;True|2022-03-01T20:29:39.4982130-06:00;True|2022-03-01T20:28:42.8123827-06:00;True|2022-03-01T20:18:08.5145243-06:00;True|2022-03-01T19:40:21.9615331-06:00;True|2022-03-01T19:40:11.7720550-06:00;True|2022-03-01T19:27:43.7569881-06:00;True|2022-03-01T19:12:54.4242007-06:00;True|2022-03-01T19:07:47.7376299-06:00;True|2022-03-01T18:47:48.4871703-06:00;True|2022-03-01T17:03:01.5674241-06:00;True|2022-03-01T16:40:12.3584406-06:00;True|2022-03-01T16:31:32.9703896-06:00;True|2022-03-01T16:28:30.5796360-06:00;True|2022-03-01T16:24:57.5750299-06:00;True|2022-03-01T15:58:25.1557982-06:00;True|2022-03-01T15:57:55.4573595-06:00;True|2022-03-01T15:49:36.1867822-06:00;True|2022-03-01T15:49:13.8146334-06:00;True|2022-03-01T15:30:06.9630282-06:00;True|2022-03-01T15:26:19.2505168-06:00;True|2022-03-01T15:26:10.5779481-06:00;True|2022-03-01T15:18:57.3252286-06:00;True|2022-03-01T15:01:04.8195820-06:00;True|2022-03-01T14:52:06.8282052-06:00;True|2022-03-01T14:31:32.2089884-06:00;True|2022-03-01T12:51:45.5894380-06:00;True|2022-03-01T12:41:41.3033337-06:00;True|2022-03-01T12:35:06.0007746-06:00;True|2022-03-01T12:34:31.1829415-06:00;True|2022-03-01T11:55:39.1708269-06:00;True|2022-03-01T11:22:55.7485036-06:00;True|2022-02-27T05:01:36.0674255-06:00;True|2022-02-27T01:30:40.8292820-06:00;True|2022-02-26T03:20:12.4852705-06:00;False|2022-02-26T03:16:53.9325476-06:00;False|2022-02-26T03:16:28.8287346-06:00;False|2022-02-26T03:16:23.8306378-06:00;False|2022-02-26T03:15:46.4167358-06:00;</History>
+    <History>True|2022-04-20T20:34:31.3535409Z;True|2022-04-09T14:53:24.8007480-06:00;True|2022-03-22T12:14:21.3486906-06:00;True|2022-03-04T00:15:53.0953049-06:00;True|2022-03-02T23:49:31.7855989-06:00;True|2022-03-02T23:46:59.2140522-06:00;True|2022-03-02T00:12:04.6913324-06:00;True|2022-03-01T20:29:39.4982130-06:00;True|2022-03-01T20:28:42.8123827-06:00;True|2022-03-01T20:18:08.5145243-06:00;True|2022-03-01T19:40:21.9615331-06:00;True|2022-03-01T19:40:11.7720550-06:00;True|2022-03-01T19:27:43.7569881-06:00;True|2022-03-01T19:12:54.4242007-06:00;True|2022-03-01T19:07:47.7376299-06:00;True|2022-03-01T18:47:48.4871703-06:00;True|2022-03-01T17:03:01.5674241-06:00;True|2022-03-01T16:40:12.3584406-06:00;True|2022-03-01T16:31:32.9703896-06:00;True|2022-03-01T16:28:30.5796360-06:00;True|2022-03-01T16:24:57.5750299-06:00;True|2022-03-01T15:58:25.1557982-06:00;True|2022-03-01T15:57:55.4573595-06:00;True|2022-03-01T15:49:36.1867822-06:00;True|2022-03-01T15:49:13.8146334-06:00;True|2022-03-01T15:30:06.9630282-06:00;True|2022-03-01T15:26:19.2505168-06:00;True|2022-03-01T15:26:10.5779481-06:00;True|2022-03-01T15:18:57.3252286-06:00;True|2022-03-01T15:01:04.8195820-06:00;True|2022-03-01T14:52:06.8282052-06:00;True|2022-03-01T14:31:32.2089884-06:00;True|2022-03-01T12:51:45.5894380-06:00;True|2022-03-01T12:41:41.3033337-06:00;True|2022-03-01T12:35:06.0007746-06:00;True|2022-03-01T12:34:31.1829415-06:00;True|2022-03-01T11:55:39.1708269-06:00;True|2022-03-01T11:22:55.7485036-06:00;True|2022-02-27T05:01:36.0674255-06:00;True|2022-02-27T01:30:40.8292820-06:00;True|2022-02-26T03:20:12.4852705-06:00;False|2022-02-26T03:16:53.9325476-06:00;False|2022-02-26T03:16:28.8287346-06:00;False|2022-02-26T03:16:23.8306378-06:00;False|2022-02-26T03:15:46.4167358-06:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -225,10 +225,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:20</publishTime>
     </File>
     <File Include="bin/Realestate_portal.dll">
-      <publishTime>04/09/2022 14:59:36</publishTime>
+      <publishTime>04/20/2022 14:34:15</publishTime>
     </File>
     <File Include="bin/Realestate_portal.pdb">
-      <publishTime>04/09/2022 14:59:36</publishTime>
+      <publishTime>04/20/2022 14:34:15</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>04/05/2022 19:09:20</publishTime>
@@ -376,6 +376,15 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/Rotativa.dll">
       <publishTime>04/05/2022 19:09:21</publishTime>
+    </File>
+    <File Include="bin/SendGrid.dll">
+      <publishTime>03/23/2022 12:39:48</publishTime>
+    </File>
+    <File Include="bin/SendGrid.pdb">
+      <publishTime>03/23/2022 12:39:48</publishTime>
+    </File>
+    <File Include="bin/StarkbankEcdsa.dll">
+      <publishTime>11/09/2021 15:27:58</publishTime>
     </File>
     <File Include="bin/Stripe.net.dll">
       <publishTime>04/05/2022 19:09:21</publishTime>
@@ -4182,7 +4191,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 17:35:08</publishTime>
     </File>
     <File Include="Content/common/stripe/client.js">
-      <publishTime>04/05/2022 19:09:11</publishTime>
+      <publishTime>04/17/2022 14:25:03</publishTime>
     </File>
     <File Include="Content/common/stripe/client2.js">
       <publishTime>04/05/2022 19:09:11</publishTime>
@@ -8480,6 +8489,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Customers/Edit.cshtml">
       <publishTime>04/07/2022 11:08:41</publishTime>
     </File>
+    <File Include="Views/Customers/ImportLeads.cshtml">
+      <publishTime>04/12/2022 17:39:20</publishTime>
+    </File>
     <File Include="Views/Customers/Success.cshtml">
       <publishTime>04/05/2022 17:35:08</publishTime>
     </File>
@@ -8541,7 +8553,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:31:58</publishTime>
     </File>
     <File Include="Views/Emails/newBroker.Html.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/11/2022 19:22:37</publishTime>
     </File>
     <File Include="Views/Emails/newBroker.Text.cshtml">
       <publishTime>04/05/2022 17:35:08</publishTime>
@@ -8592,7 +8604,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:13</publishTime>
     </File>
     <File Include="Views/Market/Checkout.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/17/2022 13:41:18</publishTime>
     </File>
     <File Include="Views/Market/Companies.cshtml">
       <publishTime>04/05/2022 19:09:13</publishTime>
@@ -8610,7 +8622,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:13</publishTime>
     </File>
     <File Include="Views/Market/Payment.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/17/2022 14:27:39</publishTime>
     </File>
     <File Include="Views/Market/PurchaseHistory.cshtml">
       <publishTime>04/05/2022 19:09:13</publishTime>
@@ -8637,7 +8649,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:13</publishTime>
     </File>
     <File Include="Views/Market/TemplateEdit.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/17/2022 13:32:02</publishTime>
     </File>
     <File Include="Views/Market/TemplatePDF.cshtml">
       <publishTime>04/05/2022 19:09:13</publishTime>
@@ -8970,13 +8982,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:13</publishTime>
     </File>
     <File Include="Views/Users/AgentProfile.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/16/2022 22:10:19</publishTime>
     </File>
     <File Include="Views/Users/BrokerProfile.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/20/2022 14:33:21</publishTime>
     </File>
     <File Include="Views/Users/Create.cshtml">
-      <publishTime>04/07/2022 11:44:03</publishTime>
+      <publishTime>04/16/2022 22:10:29</publishTime>
     </File>
     <File Include="Views/Users/CreateBroker.cshtml">
       <publishTime>04/05/2022 19:09:13</publishTime>
@@ -9003,7 +9015,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 19:09:13</publishTime>
     </File>
     <File Include="Views/Users/UserProfile.cshtml">
-      <publishTime>04/05/2022 19:09:13</publishTime>
+      <publishTime>04/19/2022 15:12:21</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/05/2022 19:09:13</publishTime>
@@ -9012,7 +9024,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2022 17:35:08</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/09/2022 14:52:54</publishTime>
+      <publishTime>04/18/2022 00:31:35</publishTime>
     </File>
   </ItemGroup>
 </Project>

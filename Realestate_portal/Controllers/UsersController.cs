@@ -489,7 +489,15 @@ namespace Realestate_portal.Controllers
                 Sys_Company company = db.Sys_Company.Where(c => c.ID_Company == ID_Company).FirstOrDefault();
                 company.Name = BrokerName;
                 company.Web = Web;
-                company.Agents = agents;
+                if (agents != null)
+                {
+                    company.Agents = agents;
+                }
+                else
+                {
+                    company.Agents = 0;
+                }
+               
                 
 
                 db.Entry(company).State = EntityState.Modified;
@@ -616,8 +624,8 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
 
-               // db.Sys_Users.Add(sys_Users);
-                //db.SaveChanges();
+               db.Sys_Users.Add(sys_Users);
+                db.SaveChanges();
 
 
                 if (sys_Users.Email != "")
