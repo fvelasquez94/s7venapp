@@ -2789,9 +2789,6 @@
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Views\Emails\Web.config" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Shared\Partials\Menu\Mobile_menu.cshtml" />
     <Content Include="Views\Shared\Partials\Menu\Top_bar.cshtml" />
@@ -3233,12 +3230,6 @@
     <Content Include="Views\Emails\NewNotification_noteagent.cshtml" />
     <Content Include="Views\Customers\ImportLeads.cshtml" />
     <Content Include="Views\Campaigns\CampaignsSMS.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <None Include="Scripts\jquery-1.12.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
