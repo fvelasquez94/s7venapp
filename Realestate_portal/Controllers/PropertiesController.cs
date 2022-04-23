@@ -82,7 +82,7 @@ namespace Realestate_portal.Controllers
                                                       {
                                                           ID = t.ID_User,
                                                           FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName");
+                                                      }), "ID", "FullName").OrderBy(c => c.Text);
 
                     ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
                                                           where (t.Lead == false)
@@ -90,7 +90,7 @@ namespace Realestate_portal.Controllers
                                                           {
                                                               ID = t.ID_Customer,
                                                               FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName");
+                                                          }), "ID", "FullName").OrderBy(c => c.Text);
                 }
                 else
                 {
@@ -112,7 +112,7 @@ namespace Realestate_portal.Controllers
                                                               {
                                                                   ID = t.ID_User,
                                                                   FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName");
+                                                              }), "ID", "FullName").OrderBy(c => c.Text);
 
                             ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
                                                                   where (t.Lead == false && t.ID_Company == activeuser.ID_Company)
@@ -120,7 +120,7 @@ namespace Realestate_portal.Controllers
                                                                   {
                                                                       ID = t.ID_Customer,
                                                                       FullName = t.Name + " " + t.LastName
-                                                                  }), "ID", "FullName");
+                                                                  }), "ID", "FullName").OrderBy(c => c.Text);
                         }
                         else
                         {
@@ -257,7 +257,7 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                                                       {
                                                           ID = t.ID_User,
                                                           FullName = t.Name + " " + t.LastName
-                                                      }), "ID", "FullName");
+                                                      }), "ID", "FullName").OrderBy(c => c.Text);
 
                     ViewBag.ID_Customer = new SelectList((from t in db.Tb_Customers
                                                           
@@ -265,7 +265,7 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                                                           {
                                                               ID = t.ID_Customer,
                                                               FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName");
+                                                          }), "ID", "FullName").OrderBy(c=>c.Text);
       
 
 
@@ -284,16 +284,16 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
                                                               {
                                                                   ID = t.ID_Customer,
                                                                   FullName = t.Name + " " + t.LastName
-                                                              }), "ID", "FullName", tb_Process.ID_Customer);
+                                                              }), "ID", "FullName", tb_Process.ID_Customer).OrderBy(c => c.Text);
 
 
                         ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                              //where (t.Roles.Contains("Agent"))
+                                                              where (t.ID_Company == activeuser.ID_Company)//(t.Roles.Contains("Agent"))
                                                           select new
                                                           {
                                                               ID = t.ID_User,
                                                               FullName = t.Name + " " + t.LastName
-                                                          }), "ID", "FullName", tb_Process.ID_User);
+                                                          }), "ID", "FullName", tb_Process.ID_User).OrderBy(c => c.Text);
                     }
                     else
                     {
@@ -319,7 +319,7 @@ if (tb_Process.Address == null) { tb_Process.Address = ""; }
 
 
                         ViewBag.ID_User = new SelectList((from t in db.Sys_Users
-                                                              //where (t.Roles.Contains("Agent"))
+                                                              where (t.ID_Company == activeuser.ID_Company)//(t.Roles.Contains("Agent"))
                                                           select new
                                                           {
                                                               ID = t.ID_User,

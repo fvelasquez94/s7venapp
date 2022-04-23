@@ -1,0 +1,473 @@
+﻿@model List<Realestate_portal.Models.Tb_Videos>
+@{
+    Layout = "~/Views/Shared/_Layout_videos.cshtml";
+    ViewBag.Title = "Premium Group Realty";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+
+<!-- owl-carousel Banner Start -->
+<section class="pt-0 pb-0">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <div class="gen-banner-movies banner-style-2">
+                    <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="1"
+                         data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" data-autoplay="false"
+                         data-loop="false" data-margin="0">
+                        <div class="item" style="background: url('/Content/video_ms/images/fondovideos.jpg')">
+                            <div class="gen-movie-contain-style-2 h-100">
+                                <div class="container h-100">
+                                    <div class="row flex-row-reverse align-items-center h-100">
+                                        <div class="col-xl-6">
+                                            <div class="gen-front-image">
+                                                <img src="https://img.youtube.com/vi/mrpiPK8_up0/hqdefault.jpg" alt="owl-carousel-banner-image">
+                                                <a href="https://www.youtube.com/watch?v=mrpiPK8_up0" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                                    <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                                                    <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="213.7px"
+                                                         height="213.7px" viewBox="0 0 213.7 213.7"
+                                                         enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+                                                    <polygon class="triangle" id="XMLID_17_" fill="none" stroke-width="7"
+                                                             stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                             points="
+                                                            73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
+                                                    <circle class="circle" id="XMLID_18_" fill="none" stroke-width="7"
+                                                            stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                            cx="106.8" cy="106.8" r="103.3">
+                                             </circle>
+                                          </svg>
+                                                    <span>Watch Now</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="gen-tag-line"><span>Most Viewed</span></div>
+                                            <div class="gen-movie-info">
+                                                <h3>How to become a successful Real Estate Agent</h3>
+                                            </div>
+                                            <div class="gen-movie-meta-holder">
+                        
+                                                <div class="gen-meta-info">
+                                                    <ul class="gen-meta-after-excerpt">
+                                                        <li>
+                                                            <strong>Category :</strong>
+                                                            <span>
+                                                                <a href="action.html">
+                                                                    Prospecting
+                                                                </a>
+                                                            </span>
+                                                        </li>
+        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="gen-movie-action">
+                                                <div class="gen-btn-container">
+                                                    <a href="https://www.youtube.com/watch?v=mrpiPK8_up0" class="gen-button .gen-button-dark popup-youtube popup-vimeo popup-gmaps">
+                                                        <i aria-hidden="true" class="fas fa-play"></i> <span class="text">
+                                                            Play
+                                                            Now
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="item" style="background: url('/Content/video_ms/images/fondovideos.jpg')">
+                            <div class="gen-movie-contain-style-2 h-100">
+                                <div class="container h-100">
+                                    <div class="row flex-row-reverse align-items-center h-100">
+                                        <div class="col-xl-6">
+                                            <div class="gen-front-image ">
+                                                <img src="~/Content/video_ms/images/background/asset-3.jpeg" alt="owl-carousel-banner-image">
+                                                <a href="#" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                                     Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  
+                                                    <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="213.7px"
+                                                         height="213.7px" viewBox="0 0 213.7 213.7"
+                                                         enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+                                                    <polygon class="triangle" id="XMLID_19_" fill="none" stroke-width="7"
+                                                             stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                             points="
+                                                            73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
+                                                    <circle class="circle" id="XMLID_20_" fill="none" stroke-width="7"
+                                                            stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                            cx="106.8" cy="106.8" r="103.3">
+                                             </circle>
+                                          </svg>
+                                                    <span>Watch Trailer</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="gen-tag-line"><span>Best Of 2021</span></div>
+                                            <div class="gen-movie-info">
+                                                <h3>The Express</h3>
+                                            </div>
+                                            <div class="gen-movie-meta-holder">
+                                                <ul class="gen-meta-after-title">
+                                                    <li class="gen-sen-rating">
+                                                        <span>
+                                                            PG-14
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/Content/video_ms/images/asset-2.png" alt="rating-image">
+                                                        <span>
+                                                            8.5
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                                <p>
+                                                    Streamlab is a long established fact that a reader will be distracted
+                                                    by the readable content of a page when Streamlab at its layout
+                                                    Streamlab.
+                                                </p>
+                                                <div class="gen-meta-info">
+                                                    <ul class="gen-meta-after-excerpt">
+                                                        <li>
+                                                            <strong>Cast :</strong>
+                                                            Robert Romanson,Anne Good
+                                                        </li>
+                                                        <li>
+                                                            <strong>Genre :</strong>
+                                                            <span>
+                                                                <a href="action.html">
+                                                                    Action,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="adventure.html">
+                                                                    Adventure,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="biography.html">
+                                                                    Biography
+                                                                </a>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <strong>Tag :</strong>
+                                                            <span>
+                                                                <a href="#">
+                                                                    4K Ultra,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    King,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    Premieres,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    viking
+                                                                </a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="gen-movie-action">
+                                                <div class="gen-btn-container">
+                                                    <a href="single-movie.html" class="gen-button gen-button-dark">
+                                                        <i aria-hidden="true" class="fas fa-play"></i> <span class="text">
+                                                            Play
+                                                            Now
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        @*<div class="item" style="background: url('/Content/video_ms/images/background/asset-4.jpeg')">
+                            <div class="gen-movie-contain-style-2 h-100">
+                                <div class="container h-100">
+                                    <div class="row flex-row-reverse align-items-center h-100">
+                                        <div class="col-xl-6">
+                                            <div class="gen-front-image ">
+                                                <img src="~/Content/video_ms/images/background/asset-4.jpeg" alt="owl-carousel-banner-image">
+                                                <a href="#" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                                     Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  
+                                                    <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="213.7px"
+                                                         height="213.7px" viewBox="0 0 213.7 213.7"
+                                                         enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+                                                    <polygon class="triangle" id="XMLID_21_" fill="none" stroke-width="7"
+                                                             stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                             points="
+                                                            73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
+                                                    <circle class="circle" id="XMLID_22_" fill="none" stroke-width="7"
+                                                            stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                            cx="106.8" cy="106.8" r="103.3">
+                                             </circle>
+                                          </svg>
+                                                    <span>Watch Trailer</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="gen-tag-line"><span>High Rated</span></div>
+                                            <div class="gen-movie-info">
+                                                <h3>thieve the bank</h3>
+                                            </div>
+                                            <div class="gen-movie-meta-holder">
+                                                <ul class="gen-meta-after-title">
+                                                    <li class="gen-sen-rating">
+                                                        <span>
+                                                            TV-MA
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/Content/video_ms/images/asset-2.png" alt="rating-image">
+                                                        <span>
+                                                            9.5
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                                <p>
+                                                    Streamlab is a long established fact that a reader will be distracted
+                                                    by the readable content of a page when Streamlab at its layout
+                                                    Streamlab.
+                                                </p>
+                                                <div class="gen-meta-info">
+                                                    <ul class="gen-meta-after-excerpt">
+                                                        <li>
+                                                            <strong>Cast :</strong>
+                                                            Jennifer Lonez,Mars Shelley
+                                                        </li>
+                                                        <li>
+                                                            <strong>Genre :</strong>
+                                                            <span>
+                                                                <a href="action.html">
+                                                                    Action,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="action.html">
+                                                                    Mystery
+                                                                </a>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <strong>Tag :</strong>
+                                                            <span>
+                                                                <a href="#">
+                                                                    Brother,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    Hero,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    Premieres,
+                                                                </a>
+                                                            </span>
+                                                            <span>
+                                                                <a href="#">
+                                                                    viking
+                                                                </a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="gen-movie-action">
+                                                <div class="gen-btn-container">
+                                                    <a href="single-movie.html" class="gen-button gen-button-dark">
+                                                        <i aria-hidden="true" class="fas fa-play"></i> <span class="text">
+                                                            Play
+                                                            Now
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- owl-carousel Banner End -->
+@foreach (var category in lstcategories)
+{
+    <!-- owl-carousel Videos Section Start -->
+    <section id="@category.Description" class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">@category.Description</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="4"
+                             data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="false"
+                             data-loop="false" data-margin="30">
+                            @if (Model.Where(a => a.Category == category.Description).Count() > 0)
+    {
+        foreach (var item in Model.Where(a => a.Category == category.Description))
+        {
+
+                       
+      
+                        <div class="item">
+                            <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-action movie_genre-adventure movie_genre-drama">
+                                <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                                    <div class="gen-movie-contain">
+                                        <div class="gen-movie-img">
+                                            @{
+        string imagen = "https://img.youtube.com/vi/" + item.Url + "/hqdefault.jpg";
+                                        <img src="@imagen" alt="owl-carousel-video-image">
+                                            }
+
+                                         
+                                            <div class="gen-movie-add">
+                                           
+     
+            
+                                            </div>
+                                            <div class="gen-movie-action">
+                                                  @{
+                                                    string url = "https://www.youtube.com/watch?v=" + item.Url;
+                                          
+                                                        }
+                                                <a href="@url" class="gen-button popup-youtube popup-vimeo popup-gmaps">
+                                                    <i class="fa fa-play"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="gen-info-contain">
+                                            <div class="gen-movie-info" >
+                                                <h3 style="white-space:normal !important">
+                                                      @{
+                                                    string url2 = "https://www.youtube.com/watch?v=" + item.Url;
+                                          
+                                                        }
+                                                    <a href="@url2" class="popup-youtube popup-vimeo popup-gmaps">
+                                                        @item.Name
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <div class="gen-movie-meta-holder">
+                                                @*<ul>
+                                                    <li>2hr 00mins</li>
+                                                    <li>
+
+                                                      
+
+                                                    </li>
+                                                </ul>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #post-## -->
+                        </div>
+    
+
+}
+}
+else
+{
+                        <div class="item" style="margin-right:10px;">
+                            <label style="color:white;">No data to show</label>
+                        </div>
+}
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+<!-- owl-carousel Videos Section-1 End -->
+
+
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        $(".owl-carousel").owlCarousel({ center: false, items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true"></i>', '<i class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 4 } } });
+
+        
+
+
+        $(function () {
+            $('#filterbycat').change(function (e) {
+                var selected = $(e.target).val();
+                if (selected == "") {
+
+                } else {
+                    $("#myInput").val('');
+                }
+
+
+
+                filterbycategory(selected);
+            });
+        });
+    };
+    function filterbycategory(values) {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = values;
+        ul = document.getElementById("sortable");
+
+        if (ul == null) {
+
+        } else {
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("div")[0];
+                txtValue = a.id;
+
+                if (filter == "") {
+                    li[i].style.display = "";
+                } else {
+
+                    if (filter.indexOf(txtValue) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+
+
+            }
+        }
+
+
+    };
+</script>

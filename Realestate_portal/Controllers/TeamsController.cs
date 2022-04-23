@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Realestate_portal.Controllers.SendGridAPI;
+using Realestate_portal.Controllers.TwilioAPI;
 using Realestate_portal.Models;
 
 namespace Realestate_portal.Controllers
@@ -158,6 +160,9 @@ namespace Realestate_portal.Controllers
                     {
                         foreach (var user in agents)
                         {
+                            //consultamos agent
+                            var agent = (from a in db.Sys_Users where (a.ID_User == user) select a).FirstOrDefault();
+
                             //Agregamos agentes a equipo
                             Tb_Customers_Users newteamuser = new Tb_Customers_Users();
                             newteamuser.Id_Customer = idcustomer;
@@ -169,11 +174,25 @@ namespace Realestate_portal.Controllers
                             Sys_Notifications newnotification = new Sys_Notifications();
                             newnotification.Active = true;
                             newnotification.Date = DateTime.UtcNow;
-                            newnotification.Title = "Customer assigned.";
-                            newnotification.Description = "Customer: " + customer.Name + " " + customer.LastName + ".";
+                            newnotification.Title = "Lead assigned.";
+                            newnotification.Description = "Lead: " + customer.Name + " " + customer.LastName + ".";
                             newnotification.ID_user = user;
                             db.Sys_Notifications.Add(newnotification);
                             db.SaveChanges();
+
+                            //Email notification
+                            SendEmail emailnot = new SendEmail();
+                            //Email formato cliente
+                            var resut = emailnot.SendEmail_newLead(agent.Email, customer.Name + " " + customer.LastName, customer.Phone, customer.Address, customer.State);
+
+                            //Send SMS notification
+                            if (agent.Main_telephone != "")
+                            {
+                                //Send SMS notification
+                                SendSMS sendsms = new SendSMS();
+                                var result = sendsms.sendSMSTrilio("Hello, you have a new Lead assigned in our S7VEN platform. " + newnotification.Description, agent.Main_telephone);
+                            }
+
                         }
                         db.SaveChanges();
                     }

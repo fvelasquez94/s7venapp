@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using Realestate_portal.Models;
 using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Services.Contracts;
+using Realestate_portal.Controllers.TwilioAPI;
+using Postal;
 
 namespace Realestate_portal.Controllers
 {
@@ -145,6 +147,7 @@ namespace Realestate_portal.Controllers
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
                 Tb_Notes newnote = new Tb_Notes();
                 newnote.Date = DateTime.UtcNow;
                 newnote.ID_Customer = Convert.ToInt32(customer);
@@ -154,6 +157,8 @@ namespace Realestate_portal.Controllers
                 newnote.Created_By = activeuser.Name + " " + activeuser.LastName;
                 db.Tb_Notes.Add(newnote);
                 db.SaveChanges();
+
+     
 
                 var result = "SUCCESS";
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -174,6 +179,8 @@ namespace Realestate_portal.Controllers
             try
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+                var agentdef = (from a in db.Sys_Users where (a.ID_User == agent) select a).FirstOrDefault();
+
                 Tb_Notes newnote = new Tb_Notes();
                 newnote.Date = DateTime.UtcNow;
                 newnote.ID_Customer = 0;
@@ -184,6 +191,22 @@ namespace Realestate_portal.Controllers
                 db.Tb_Notes.Add(newnote);
                 db.SaveChanges();
 
+                //Send the email
+                dynamic semail = new Email("NewNotification_noteagent");
+                semail.To = agentdef.Email.ToString();
+                semail.From = "support@s7ven.co";
+                semail.Description = content;
+                semail.Assignedby = activeuser.Name + " " + activeuser.LastName;
+
+                semail.Send();
+
+
+                //Send SMS notification
+                if (agentdef.Main_telephone != "")
+                {
+                    SendSMS sendsms = new SendSMS();
+                    var result2 = sendsms.sendSMSTrilio("Hello, you have a new note assigned in our S7VEN platform from " + newnote.Created_By + ": " + content, agentdef.Main_telephone);
+                }
                 var result = "SUCCESS";
                 return Json(result, JsonRequestBehavior.AllowGet);
 

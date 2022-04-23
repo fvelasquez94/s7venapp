@@ -20,6 +20,7 @@ using Google.Apis.Calendar.v3.Data;
 using Realestate_portal.Controllers.BlobStorage;
 using System.Threading.Tasks;
 using Realestate_portal.Services.Contracts;
+using Realestate_portal.Controllers.SendGridAPI;
 
 namespace Realestate_portal.Controllers
 {
@@ -281,6 +282,7 @@ namespace Realestate_portal.Controllers
             if (Session["activeUser"] != null)
             {
                 Sys_Users activeuser = Session["activeUser"] as Sys_Users;
+
 
                 ///PARA RECORDAR DATOS
                 if (rememberme == true)

@@ -1,0 +1,316 @@
+﻿@model Realestate_portal.Models.Tb_Customers
+@using Realestate_portal.Models
+@{
+    ViewBag.Title = "Premium Group Realty";
+    List<Realestate_portal.Models.Sys_Users> lstusers = (List<Realestate_portal.Models.Sys_Users>)ViewBag.users;
+    Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users assigned = (Realestate_portal.Models.ViewModels.CRM.TeamsModel_Users)ViewBag.assigneduser;
+    List<Realestate_portal.Models.ViewModels.US_State> lstsates = (List<Realestate_portal.Models.ViewModels.US_State>)ViewBag.states;
+    List<Tb_Source> source = ViewBag.lstSource;
+    List<Tb_Status> lststage = ViewBag.lstStatus;
+}
+
+
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Data saved successfully!</div>
+
+    </div>
+</div>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        Edit Lead
+    </h2>
+    <a href="@Url.Action("CustomerDashboard","CRM",new { id=Model.ID_Customer})" class="btn btn-primary mr-2">Back to Lead's Dashboard</a>
+    <a href="@Url.Action("Leads","CRM")" class="btn btn-primary ml-5">Back to Leads</a>
+</div>
+<div class="grid grid-cols-12 gap-12 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="intro-y box">
+                <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200 dark:border-dark-5">
+                    <h2 class="font-medium text-base mr-auto">
+                        Edit Lead
+                    </h2>
+                </div>
+                <div id="input" class="p-5">
+                    <div class="preview">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ID_Customer)
+
+                        <div>
+                            <label class="form-label">Name</label>
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        </div>
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        </div>
+
+
+                        <div class="form-group" style="display:none;">
+                            <label class="control-label col-md-2">Gender</label>
+                            @Html.EditorFor(model => model.Gender)
+                        </div>
+
+                        <div>
+                            <label class="form-label">Birthday</label>
+                            <input type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.Birthday.ToString("yyyy-MM-dd")" />
+                        </div>
+                        <div>
+                            <label class="form-label">Stage</label>
+                            <select name="Marital_status" id="Marital_status" class="form-control">
+                                @if (lststage.Count > 0) {
+                                    foreach (var item in lststage) {
+                                        if (item.Stage_name == Model.Marital_status) {
+                                            <option selected>@item.Stage_name</option>
+                                        }
+                                        else {
+                                            <option>@item.Stage_name</option>
+                                        }
+                                    }
+                                }
+                                
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Type</label>
+                            <select class="form-control" id="Type" name="Type">
+                                <option>NOT ASSIGNED</option>
+                                @if (Model.Type == "SELLER")
+                                {
+                                    <option selected>SELLER</option>}
+                                else
+                                {
+                                    <option>SELLER</option>}
+                                @if (Model.Type == "BUYER")
+                                {
+                                    <option selected>BUYER</option>}
+                                else
+                                {
+                                    <option>BUYER</option>}
+                                @if (Model.Type == "RENTAL")
+                                {
+                                    <option selected>RENTAL</option>}
+                                else
+                                {
+                                    <option>RENTAL</option>}
+                                @if (Model.Type == "SHORT SALE")
+                                {
+                                    <option selected>SHORT SALE</option> }
+                                else
+                                {
+                                    <option>SHORT SALE</option>}
+                                @if (Model.Type == "INVESTOR")
+                                {
+                                    <option selected>INVESTOR</option> }
+                                else
+                                {
+                                    <option>INVESTOR</option>}
+
+                                @if (Model.Type == "TENANTS")
+                                {
+                                    <option selected>TENANTS</option> }
+                                else
+                                {
+                                    <option>INVESTENANTSTOR</option>}
+                                @if (Model.Type == "LANDLORD")
+                                {
+                                    <option selected>LANDLORD</option> }
+                                else
+                                {
+                                    <option>LANDLORD</option>}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Email</label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        </div>
+                        <div>
+                            <label class="form-label">Phone</label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div>
+                            <label class="form-label">Address</label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+
+                        <div>
+                            <label for="State" class="form-label">State</label>
+                            <select class="form-control" id="State" name="State">
+                                @foreach (var state in lstsates)
+                                {
+                                    if (state.Abbreviations == Model.State)
+                                    {
+                                        <option value="@state.Abbreviations" selected>@state.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@state.Abbreviations">@state.Name</option>
+                                    }
+                                }
+
+                            </select>
+
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Zipcode</label>
+                            @Html.EditorFor(model => model.Zipcode, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group" style="display:none;">
+                            @Html.LabelFor(model => model.Lead, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Lead)
+                                    @Html.ValidationMessageFor(model => model.Lead, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Active customer?</label>
+                            @Html.EditorFor(model => model.Active)
+                        </div>
+
+
+                        <div class="form-group" style="display:none;">
+                            @Html.EditorFor(model => model.Source, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.ID_Company, "ID_Company", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("ID_Company", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ID_Company, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @if (ViewBag.rol == "Agent")
+                        {
+                            <div class="form-group" style="display:none">
+                                <select class="form-control" name="ID_agent" id="ID_agent">
+                                    <option value="0">Not assigned</option>
+
+
+                                    @foreach (var item in lstusers)
+                                    {
+                                        if (assigned != null)
+                                        {
+                                            if (assigned.Name != null)
+                                            {
+                                                if (assigned.Id_User == item.ID_User)
+                                                {
+                                                    <option selected value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+
+                        }
+                        else
+                        {
+                            <div style="display:none">
+                                <label class="form-label">Assigned Agent</label>
+                                <select class="form-control" name="ID_agent" id="ID_agent">
+                                    <option value="0">Not assigned</option>
+
+
+                                    @foreach (var item in lstusers)
+                                    {
+                                        if (assigned != null)
+                                        {
+                                            if (assigned.Name != null)
+                                            {
+                                                if (assigned.Id_User == item.ID_User)
+                                                {
+                                                    <option selected value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID_User">@item.Name @item.LastName</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+
+
+                        }
+                        <div>
+                            <label class="form-label">Created</label>
+                            @Html.EditorFor(model => model.Creation_date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+
+                        <div class="mt-6">
+                            <button type="submit" id="submitbuttoncreate" class="btn btn-primary">Save changes</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<button id="basic-non-sticky-notification-toggle" style="display:none" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    if (ViewBag.token == "success")
+    {
+        <script>
+            window.onload = function () {
+
+                var link = document.getElementById('basic-non-sticky-notification-toggle');
+                link.click();
+            };
+
+
+        </script>
+    }
+
+}

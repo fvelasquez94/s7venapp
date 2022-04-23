@@ -3142,7 +3142,7 @@ namespace Realestate_portal.Controllers
                 DateTime filtrostartdate;
                 DateTime filtroenddate;
                 ////filtros de fecha 
-                var firstDayOfMonth = new DateTime(DateTime.Today.Year-10, 1, 1);
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, 1, 1);
                 var lastDayOfMonth = new DateTime(DateTime.Today.Year, 12, 31);
 
                 if (fstartd == null || fstartd == "") { filtrostartdate = firstDayOfMonth; } else { filtrostartdate = Convert.ToDateTime(fstartd); }

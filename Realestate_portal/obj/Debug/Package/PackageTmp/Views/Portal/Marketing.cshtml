@@ -1,0 +1,296 @@
+﻿@model List<Realestate_portal.Models.Tb_Marketing>
+@{
+    ViewBag.Title = "Premium Group Realty";
+    List<Realestate_portal.Models.Tb_Options> lstcategories = (List<Realestate_portal.Models.Tb_Options>)ViewBag.categories;
+}
+
+<div class="grid grid-cols-12 gap-6 mt-8">
+    <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+        <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+            MARKETING
+        </h2>
+        <!-- BEGIN: File Manager Menu -->
+        <div class="intro-y box p-5 mt-6">
+            <div class="border-t border-gray-200 dark:border-dark-5 mt-4 pt-4">
+                <a href="javascript:void(0)" class="flex items-center px-3 py-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
+                    Gallery
+                </a>
+                <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+                    Open House
+                </a>
+                <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+                    New Listing
+                </a>        
+                <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                    <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+                    Social Media
+                </a>
+
+
+                @*<a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2" data-feather="plus"></i> Add New Category </a>*@
+            </div>
+        </div>
+        <!-- END: File Manager Menu -->
+    </div>
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+        <!-- BEGIN: File Manager Filter -->
+        <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
+            <div class="w-full sm:w-auto flex">
+
+                @if (ViewBag.rol == "Admin" || ViewBag.rol == "SA")
+                {
+                <a class="btn btn-shadow btn btn-success shadow-md mr-2" href="#" data-toggle="modal" data-target="#modalNewvideo">Add Image</a>
+                <a class="btn btn-secondary shadow-md mr-2" href="@Url.Action("Marketing_management", "Portal")">Management</a>
+                }
+      
+            </div>
+        </div>
+        <!-- END: File Manager Filter -->
+
+
+        <div class="tab-content">
+            <div id="resourcesindividual" class="tab-pane flex flex-col lg:flex-row active" role="tabpanel" aria-labelledby="resourcesindividual">
+                <!-- BEGIN: Directory & Files -->
+                <div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div id="id_@item.ID_marketing" class="intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2 sortableDocs">
+                                <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
+                                    <div class="absolute left-0 top-0 mt-3 ml-3">
+                                        @if (item.Category == "GALLERY" )
+    {<a href="javascript:void(0)" class="flex items-center px-3 py-2 rounded-md">
+                                        <div class="w-2 h-2 bg-theme-25 rounded-full mr-3"></div>
+
+                                    </a>}
+                                        else if (item.Category == "OPEN HOUSE")
+                                        {
+                                    <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                        <div class="w-2 h-2 bg-theme-20 rounded-full mr-3"></div>
+
+                                    </a>
+}
+else if (item.Category == "NEW LISTING")
+{
+                                    <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                        <div class="w-2 h-2 bg-theme-15 rounded-full mr-3"></div>
+
+                                    </a>
+}
+else if (item.Category == "SOCIAL MEDIA")
+{
+                                    <a href="javascript:void(0)" class="flex items-center px-3 py-2 mt-2 rounded-md">
+                                        <div class="w-2 h-2 bg-theme-21 rounded-full mr-3"></div>
+
+                                    </a>
+}
+else
+{
+
+}
+                                
+                                    </div>
+                                    <a href="" class="w-3/5 file__icon file__icon--image mx-auto">
+                                        <div class="file__icon--image__preview image-fit">
+                                          
+                                                    @if (item.T_image == "~/Content/Uploads/Images/Marketing_img/")
+                                        {
+                                              <img alt="S7VEN" src="~/Content/dist/images/preview-8.jpg">
+                                        }
+                                        else
+                                        {
+                                            if (item.T_image.Contains("pdf") || item.T_image.Contains("doc"))
+                                            {
+                                                  <img alt="S7VEN" src="~/Content/dist/images/preview-8.jpg">
+                                            }
+                                            else
+                                            {
+                                                <img src="@Url.Content(item.T_image)" class="img-fluid" alt="S7VEN">
+                                            }
+
+                                        }
+                                        </div>
+                                    </a>
+                                 @if (item.T_image.Contains("pdf") || item.T_image.Contains("doc"))
+                                    {
+                                        <a href="@Url.Action("DownloadDocpdfmarketing", "Portal", new { id = item.ID_marketing })" class="block font-medium mt-4 text-center truncate">@(item.Name)</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Download_imageMarketing", "Portal", new { id = item.ID_marketing })" class="block font-medium mt-4 text-center truncate">@(item.Name)</a>
+                                    }
+
+                                
+                                    <div class="text-gray-600 text-xs text-center mt-0.5">@item.Last_update.ToShortDateString()</div>
+                                    <div class="text-gray-600 text-xs text-center mt-0.5">@item.Category</div>
+
+                                </div>
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <label>No Marketing Resources to show</label>
+                        <br />
+
+                    }
+
+
+
+
+                </div>
+                <!-- END: Directory & Files -->
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div id="modalNewvideo" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Image</h4>
+      
+            </div>
+            <form id="htmlform" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Title *</label>
+                                <input type="text" class="form-control" id="titlevideo" required/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="categoryvideo" class="form-control" required>
+                                    @foreach (var item in lstcategories)
+    {
+                                <option value="@item.Description">@item.Description</option>
+}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Description *</label>
+                                <textarea id="descriptionvideo" class="form-control" required></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="imageUpload" class="form-control"/>
+                                @*<input type="file" id="imageUpload" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="validateFileType()"/>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                    <button type="submit" id="subbtnenviar" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        $(".owl-carousel").owlCarousel({ center: false, items: 2, dots: false, nav: true, loop: false, smartSpeed: 1000, navText: ['<i class="la la-angle-left" aria-hidden="true"></i>', '<i class="la la-angle-right" aria-hidden="true"></i>'], responsive: { 768: { items: 4 } } });
+
+        $('#htmlform').on('submit', function (event) {
+            $("#subbtnenviar").attr("disabled", true);
+            event.preventDefault();
+
+            $("#preloader").show();
+
+
+            var formData = new FormData();
+            var file = document.getElementById("imageUpload").files[0];
+
+            var title = $("#titlevideo").val();
+            var category = $("#categoryvideo").val();
+            var description = $.trim($("#descriptionvideo").val());
+            var url = $("#urlvideo").val();
+
+            formData.append("imageUploadForm", file);
+            formData.append("title", title);
+            formData.append("category", category);
+            formData.append("description", description);
+ 
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Portal/UploadImage',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "SUCCESS") {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Image added successfully',
+                            progressBar: true,
+                            timeout: 2500
+                        }).show()
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 2000);
+
+                    } else {
+                        $("#loader_form").hide();
+                        $("#subbtnenviar").attr("disabled", false);
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    $("#loader_form").hide();
+                    $("#subbtnenviar").attr("disabled", false);
+                    alert("Error uploading video");
+                }
+            });
+        });
+
+
+
+
+    }
+
+
+</script>
+<script type="text/javascript">
+    //function validateFileType() {
+    //    var fileName = document.getElementById("imageUpload").value;
+    //    var idxDot = fileName.lastIndexOf(".") + 1;
+    //    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    //    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    //        //TO DO
+    //    } else {
+    //        alert("Only jpg/jpeg and png files are allowed.");
+    //        document.getElementById("imageUpload").value = "";
+    //    }
+    //}
+</script>

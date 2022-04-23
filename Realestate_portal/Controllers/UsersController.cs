@@ -13,6 +13,8 @@ using Postal;
 using Realestate_portal.Models;
 using Realestate_portal.Models.ViewModels;
 using Realestate_portal.Services.Contracts;
+using Realestate_portal.Controllers.TwilioAPI;
+using Realestate_portal.Controllers.SendGridAPI;
 
 namespace Realestate_portal.Controllers
 {
@@ -351,7 +353,10 @@ namespace Realestate_portal.Controllers
                     ViewBag.rol = "SA";
                 }
 
-                ViewBag.activeuser = activeuser;
+         
+                //buscamos admin de broker que es quien tiene la info actualizada
+                var brokeruser = (from a in db.Sys_Users where (a.Roles.Contains("Admin") && a.ID_Company == activeuser.ID_Company) select a).FirstOrDefault();
+                ViewBag.activeuser = brokeruser;
                 ViewBag.selbroker = broker;
                 ViewBag.leader = leader;
                 ViewBag.ID_Company = new SelectList(db.Sys_Company, "ID_Company", "Name");
@@ -448,18 +453,22 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Email != "")
                 {
                     //Enviamos correo para notificar
-                    dynamic emailtosend = new Email("newBroker");
-                    emailtosend.To = sys_Users.Email.ToString();
-                    emailtosend.From = "support@s7ven.co";
-                    emailtosend.correo = sys_Users.Email;
-                    emailtosend.contrasena = sys_Users.Password;
-                    emailtosend.Send();
+                    //dynamic emailtosend = new Email("newBroker");
+                    //emailtosend.To = sys_Users.Email.ToString();
+                    //emailtosend.From = "support@s7ven.co";
+                    //emailtosend.correo = sys_Users.Email;
+                    //emailtosend.contrasena = sys_Users.Password;
+                    //emailtosend.Send();
 
+                    SendEmail emailnot = new SendEmail();
+                    //Email formato cliente
+                    var resut = emailnot.SendEmail_newAgentBroker(sys_Users.Email, sys_Users.Password);
 
                     return RedirectToAction("Brokers", "CRM", new { token = "success" });
                 }
                 else
                 {
+         
                     return RedirectToAction("Brokers", "CRM", new { token = "success" });
                 }
 
@@ -473,14 +482,23 @@ namespace Realestate_portal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditBroker(string BrokerName, string Web, string Name, string LastName, string Email, string Password, int ID_Company, int agents)
+        public ActionResult EditBroker(string BrokerName, string Web, string Name, string LastName, string Email, string Password, int ID_Company, int agents, string BrokerageName, string BrokerContact, string BrokerAddress, string BrokerLicense)
         {
             try
             {
                 Sys_Company company = db.Sys_Company.Where(c => c.ID_Company == ID_Company).FirstOrDefault();
                 company.Name = BrokerName;
                 company.Web = Web;
-                company.Agents = agents;
+                if (agents != null)
+                {
+                    company.Agents = agents;
+                }
+                else
+                {
+                    company.Agents = 0;
+                }
+               
+                
 
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
@@ -523,6 +541,10 @@ namespace Realestate_portal.Controllers
                 sys_Users.LastName = LastName;
                 sys_Users.Password = Password;
                 sys_Users.Email = Email;
+                sys_Users.Brokerage_name = BrokerName;
+                sys_Users.Brokerage_address = BrokerAddress;
+                sys_Users.Broker_License = BrokerLicense;
+                sys_Users.Broker_Contact = BrokerContact;
 
                 db.Entry(sys_Users).State = EntityState.Modified;
                 db.SaveChanges();
@@ -602,25 +624,40 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Id_Leader == null) { sys_Users.Id_Leader = 0; }
                 if (sys_Users.Leader_Name == null) { sys_Users.Leader_Name = ""; }
 
-                db.Sys_Users.Add(sys_Users);
+               db.Sys_Users.Add(sys_Users);
                 db.SaveChanges();
 
 
                 if (sys_Users.Email != "")
                     {
-                        //Enviamos correo para notificar
-                        dynamic emailtosend = new Email("newBroker");
-                        emailtosend.To = sys_Users.Email.ToString();
-                        emailtosend.From = "support@s7ven.co";
-                        emailtosend.correo = sys_Users.Email;
-                        emailtosend.contrasena = sys_Users.Password;
-                        emailtosend.Send();
-
+                    //Enviamos correo para notificar
+                    //dynamic emailtosend = new Email("newBroker");
+                    //emailtosend.To = sys_Users.Email.ToString();
+                    //emailtosend.From = "support@s7ven.co";
+                    //emailtosend.correo = sys_Users.Email;
+                    //emailtosend.contrasena = sys_Users.Password;
+                    //emailtosend.Send();
+                    SendEmail emailnot = new SendEmail();
+                    //Email formato cliente
+                    var resut = emailnot.SendEmail_newAgentBroker(sys_Users.Email, sys_Users.Password);
+                    //Send SMS notification
+                    if (sys_Users.Main_telephone != "")
+                    {
+                        SendSMS sendsms = new SendSMS();
+                        var result = sendsms.sendSMSTrilio("Hello " + sys_Users.Name + ", we would like to welcome to your WEB S7VEN PLATFORM. Your account is now active, please check your email. https://app.s7ven.co", sys_Users.Main_telephone);
+                    }
 
                     return RedirectToAction("Agents", "CRM", new { token="success"});
                     }
                     else
                     {
+                    //Send SMS notification
+                    if (sys_Users.Main_telephone != "")
+                    {
+                        SendSMS sendsms = new SendSMS();
+                        var result = sendsms.sendSMSTrilio("Hello " + sys_Users.Name + ", we would like to welcome to your WEB S7VEN PLATFORM. Your account is now active, please check your email. https://app.s7ven.co", sys_Users.Main_telephone);
+                    }
+
                     return RedirectToAction("Agents", "CRM", new { token = "success" });
                 }
 
@@ -824,7 +861,7 @@ namespace Realestate_portal.Controllers
                 }
 
                 Sys_Users sys_Users = db.Sys_Users.Find(id);
-                ViewBag.activeuser = activeuser;
+                //ViewBag.activeuser = activeuser;
 
                 ViewBag.states = states;
 
@@ -868,6 +905,9 @@ namespace Realestate_portal.Controllers
                 IQueryable<Tb_Process> Tb_Process;
                 Tb_Process = db.Tb_Process.Where(a => a.ID_User == id).Include(t => t.Tb_Customers);
                 ViewBag.lstproperties = Tb_Process;
+                        //buscamos admin de broker que es quien tiene la info actualizada
+                var brokeruser = (from a in db.Sys_Users where (a.Roles.Contains("Admin") && a.ID_Company == activeuser.ID_Company) select a).FirstOrDefault();
+                ViewBag.activeuser = brokeruser;
                 return View(sys_Users);
 
             }
@@ -1093,6 +1133,8 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Secundary_telephone == null) { sys_Users.Secundary_telephone = ""; }
                 if (sys_Users.Main_telephone == null) { sys_Users.Main_telephone = ""; }
                 if (sys_Users.Position == null) { sys_Users.Position = "Real Estate Salesperson"; }
+                if (sys_Users.Country == null) { sys_Users.Country = ""; }
+                if (sys_Users.City == null) { sys_Users.City = ""; }
                 if (sys_Users.Team_Leader == true) 
                 { 
                     //sys_Users.Id_Leader = 0;
@@ -1400,6 +1442,8 @@ namespace Realestate_portal.Controllers
                 if (sys_Users.Team_Leader == false){ sys_Users.Team_Leader = activeuser.Team_Leader; }
                 if (sys_Users.Id_Leader == null){ sys_Users.Id_Leader= activeuser.Id_Leader; }
                 if (sys_Users.Leader_Name == null){ sys_Users.Leader_Name = activeuser.Leader_Name; }
+                if (sys_Users.City == null) { sys_Users.City = activeuser.City; }
+                if (sys_Users.Country == null) { sys_Users.Country = activeuser.Country; }
                 //assaaaaaaasass  
                 //var team = (from t in db.Sys_Users where (t.Id_Leader == sys_Users.ID_User) select t).ToList();
                 //if (sys_Users.Team_Leader == true)
@@ -1411,7 +1455,7 @@ namespace Realestate_portal.Controllers
                 //        db.SaveChanges();
                 //    }
                 //}
-             
+
                 if (sys_Users.Roles.Contains("Admin")) {
                     var agents = (from a in db.Sys_Users where (a.ID_Company == sys_Users.ID_Company && a.Roles.Contains("Agent")) select a).ToList();
                     if (agents.Count() > 0)

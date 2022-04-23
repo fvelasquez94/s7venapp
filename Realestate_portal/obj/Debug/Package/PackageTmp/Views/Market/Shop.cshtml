@@ -1,0 +1,193 @@
+﻿@using Realestate_portal.Models.ViewModels.Market
+@model List<Template_Type>
+@{
+    ViewBag.Title = "Categories";
+}
+
+<style>
+    .brand-1 {
+        width: 400px;
+        height: 150px;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        font-size: 25px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: antiquewhite;
+        padding: 0;
+    }
+
+
+    .brand-2 {
+        width: 150px;
+        height: 200px;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        border-width: 3px;
+        border-style: solid;
+        border-color: darkgray;
+        padding: 0;
+        box-shadow: rgba(0,0,0,0.2) 5px 5px 7px;
+        margin: 0;
+    }
+
+    .hover-alert {
+        background-color: #70AF85;
+        height: 50px;
+        position: absolute;
+        bottom: 4px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        align-items: center;
+        font-size: 25px;
+        margin-left: 0;
+        display: none;
+    }
+
+    .border-alert {
+        border-width: 5px;
+        border-style: solid;
+        border-color: #70AF85;
+    }
+
+    .show-alert {
+        display: block;
+    }
+
+    .item-brands {
+        position: relative;
+    }
+
+    .message {
+        position: absolute;
+        bottom: 2px;
+        left: 8px;
+        width: 90%;
+        height: 20%;
+        background-color: rgba(112,137,232,1);
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+
+    .item-brands:hover .message {
+        opacity: 1;
+    }
+
+    .brand-2:hover {
+        border-color: rgba(112,137,232,1);
+    }
+
+    .m-label {
+        position: relative;
+        margin-top: 10px;
+        color: white;
+    }
+
+    .bar-top {
+        height: 67px;
+        z-index: 51;
+        display: flex;
+        align-items: center;
+        border-bottom-width: 1px;
+        --tw-border-opacity: 1;
+        border-color: rgba(222, 229, 245, var(--tw-border-opacity));
+    }
+</style>
+
+<div class="bar-top -mx-4 px-4 md:mx-0 md:px-0">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <a href="@Url.Action("Index","Market")">Market</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        <a href="@Url.Action("Brands","Market")">Brands</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        @if (ViewBag.company != 7)
+    {
+
+        <a href="@Url.Action("Categories","Market")">Companies</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+}
+
+
+        <a href="#" class="breadcrumb--active">Template Types</a>
+    </div>
+    <!-- END: Breadcrumb -->
+
+</div><br />
+<br />
+
+<div class="grid grid-cols-12">
+    <div class="col-span-12 2xl:col-span-12">
+        <div class="container mt-1">
+            <div class="row">
+                <div class="col-md-12  text-center">
+                    <h1 style="font-weight: bold; color: black ">Available Products</h1>
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                            @if (Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                var inc = 1;
+
+                <div class="col-md-2 col-sm-12  text-center">
+                    <div class="item-brands">
+                        <a href="@Url.Action("Template", "Market", new { type = item.TypeId, company = item.CompanyId })">
+                            <div class="brand-2">
+                                <br />
+                                <div>
+                                    <p>@item.Type</p>
+                                </div>
+                                <div>
+                                    <img src="~/@item.Path" height="138" style="width:100%" alt="@item.Type" />
+                                </div>
+                                <div class="message">
+                                    <p class="m-label">Click to see details</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                inc++;
+            }
+        }
+        else
+        {
+            <div class="col-md-2 col-sm-12  text-center">
+                <div class="item-brands">
+                    <a href="#">
+                        <div class="brand-2">
+                            <br />
+                            <div>
+                                <p>No Products Available yet</p>
+                            </div>
+                            <br />
+                            <div>
+                                For this category
+                            </div>
+                            <div class="message">
+                                <p class="m-label">Click to see details</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+
+                </div>
+            
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

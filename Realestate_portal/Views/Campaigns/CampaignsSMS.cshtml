@@ -1,0 +1,154 @@
+﻿
+<div id="basic-non-sticky-notification-content" class="toastify-content hidden flex">
+    <i class="text-theme-20" data-feather="check-circle"></i>
+    <div class="ml-4 mr-4">
+        <div class="font-medium">Campaign created successfully!</div>
+
+    </div>
+</div>
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        SMS Campaign
+    </h2>
+    <br /><br /><br />
+</div>
+<!-- BEGIN: Content -->
+<div class="content">
+    <div class="grid grid-cols-12 gap-6 mt-8">
+        <div class="col-span-12 lg:col-span-12 2xl:col-span-12">
+            <!-- BEGIN: Inbox Filter -->
+            <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
+                <div class="w-full sm:w-auto flex">
+                    <button class="btn btn-primary shadow-md mr-2">Create new campaign</button>
+                </div>
+            </div>
+            <!-- END: Inbox Filter  -->
+            <!-- BEGIN: Inbox Content -->
+            <div class="intro-y inbox box mt-5">
+                <div class="p-5 flex flex-col-reverse sm:flex-row text-gray-600 border-b border-gray-200 dark:border-dark-1">
+
+                </div>
+                <div class="overflow-x-auto sm:overflow-x-visible">
+                    <div class="intro-y">
+                        <div class="inbox__item inbox__item--active inline-block sm:block text-gray-700 dark:text-gray-500 bg-gray-100 dark:bg-dark-1 border-b border-gray-200 dark:border-dark-1">
+                            <div class="flex px-5 py-3">
+                                <div class="w-72 flex-none flex items-center mr-5">
+                                    <input class="form-check-input flex-none" type="checkbox">
+                                    <a href="javascript:;" class="w-5 h-5 flex-none ml-4 flex items-center justify-center text-gray-500"> <i class="w-4 h-4" data-feather="star"></i> </a>
+                                    <a href="javascript:;" class="w-5 h-5 flex-none ml-2 flex items-center justify-center text-gray-500"> <i class="w-4 h-4" data-feather="refresh-cw"></i> </a>
+
+                                    <div class="inbox__item--sender truncate ml-3">Denzel Washington</div>
+                                </div>
+                                <div class="w-64 sm:w-auto truncate"> <span class="inbox__item--highlight">It is a long established fact </span> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem </div>
+                                <div class="inbox__item--time whitespace-nowrap ml-auto pl-10">01:10 PM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="p-5 flex flex-col sm:flex-row items-center text-center sm:text-left text-gray-600">
+                    <div class="dark:text-gray-300">Total campaigns: 0</div>
+                    <div class="sm:ml-auto mt-2 sm:mt-0 dark:text-gray-300">Last campaign sent: 36 minutes ago</div>
+                </div>
+            </div>
+            <!-- END: Inbox Content -->
+        </div>
+    </div>
+</div>
+<!-- END: Content -->
+
+<button id="basic-non-sticky-notification-toggle" class="btn btn-primary">Show Notification</button>
+
+@if (ViewBag.token != null && ViewBag.token != "")
+{
+    <script>
+        window.onload = function () {
+            var link = document.getElementById('basic-non-sticky-notification-toggle');
+            link.click();
+        };
+
+    </script>
+}
+@section scripts{
+    <script>
+        function deleteTask(idtask) {
+
+            swal.fire({
+                title: 'Do you want to delete?',
+                text: "This process cannot be undone.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#C83232',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Tasks/DeleteConfirmed',
+                        type: 'POST',
+                        data: { 'id': idtask },
+                        cache: false,
+                        global: false,
+                        success: function (result) {
+                            if (result == "Success") {
+                                Swal.fire(
+                                    'Record deleted',
+                                    'The record has been deleted.',
+                                    'success'
+                                )
+                                window.location.reload(true);
+                            } else {
+                                alert(result);
+                            }
+
+
+                        },
+                        error: function (request) {
+                            alert("Something went wrong.");
+
+                        }
+                    });
+
+
+                }
+            })
+        }
+
+
+        $(document).ready(function () {
+            $('.checktask').change(function () {
+                var value = this.checked;
+                var id = $(this).attr('id');
+
+                $.ajax({
+                    url: '/Tasks/UpdateTask',
+                    type: 'POST',
+                    data: { 'id': id, 'value': value },
+                    cache: false,
+                    global: false,
+                    success: function (result) {
+                        if (result == "Success") {
+                            Swal.fire(
+                                'Record updated',
+                                'The record has been updated.',
+                                'success'
+                            )
+                            window.location.reload(true);
+                        } else {
+                            alert(result);
+                        }
+
+
+                    },
+                    error: function (request) {
+                        alert("Something went wrong.");
+
+                    }
+                });
+
+
+            });
+        });
+    </script>
+}

@@ -1,0 +1,186 @@
+﻿@model List<Realestate_portal.Models.Template_type>
+@{
+    ViewBag.Title = "Categories";
+
+}
+
+<style>
+    .brand-1 {
+        width: 400px;
+        height: 150px;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        font-size: 25px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: antiquewhite;
+        padding: 0;
+    }
+
+
+    .brand-2 {
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        border-width: 3px;
+        border-style: solid;
+        border-color: darkgray;
+        padding: 0;
+        box-shadow: rgba(0,0,0,0.2) 5px 5px 7px;
+    }
+
+    .item-brands {
+        width: 300px;
+        position: relative;
+        height: 200px;
+        position: relative;
+        margin-bottom: 40px;
+        margin-right: 20px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        justify-items: center;
+        align-content: space-around;
+    }
+
+    .message {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 101%;
+        height: 25%;
+        background-color: rgba(112,137,232,1);
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+
+    .item-brands:hover .message {
+        opacity: 1;
+    }
+
+    .brand-2:hover {
+        border-color: rgba(112,137,232,1);
+    }
+
+    .m-label {
+        position: relative;
+        margin-top: 10px;
+        color: white;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px;
+        align-content: space-around;
+    }
+
+    .bar-top {
+        height: 67px;
+        z-index: 51;
+        display: flex;
+        align-items: center;
+        border-bottom-width: 1px;
+        --tw-border-opacity: 1;
+        border-color: rgba(222, 229, 245, var(--tw-border-opacity));
+    }
+</style>
+<div class="bar-top -mx-4 px-4 md:mx-0 md:px-0">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <a href="@Url.Action("Index","Market")">Market</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        <a href="@Url.Action("Brands","Market")">Brands</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        @if (ViewBag.pgr)
+        {
+            <a href="@Url.Action("Companies","Market", new {id=ViewBag.company, subcategory=true })">>PREMIUM GROUP REALTY</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+
+        }
+
+        <a href="#" class="breadcrumb--active">Categories</a>
+    </div>
+    <!-- END: Breadcrumb -->
+
+</div>
+<br />
+<br />
+
+<div class="grid grid-cols-12">
+    <div class="col-span-12 2xl:col-span-12">
+        <div class="container mt-1">
+            <div class="row m-5">
+                <div class="col-md-12  text-center">
+                    <h1 style="font-weight: bold; color: black ">
+                        @if (Model.Count > 1)
+                        {
+                            <span>Categories</span>
+                        }
+                        else
+                        {
+                            <span>Category</span>
+                        }
+                    </h1>
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 col-sm-12  text-center"></div>
+                <div class="flex-container">
+                    @foreach (var item in Model)
+                    {
+                        <div class="item-brands brand-2">
+                            @if (!ViewBag.pgr)
+                            {
+                                <a href="@Url.Action("Template","Market", new {company=ViewBag.company, type=item.id, pgr=ViewBag.pgr, subcategory=ViewBag.sub })">                                   
+                                        <br />
+                                        <div>
+                                            <p>@item.type</p>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <img src="~/@item.path" height="130" alt="@item.type" />
+                                        </div>
+                                        <div class="message">
+                                            <p class="m-label">Click to see details</p>
+                                        </div>                                  
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Template","Market", new {pgr=ViewBag.pgr,company=ViewBag.company, type=item.id, subcategory=ViewBag.sub })">                                   
+                                        <br />
+                                        <div>
+                                            <p>@item.type</p>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <img src="~/@item.path" height="100" alt="@item.type" />
+                                        </div>
+                                        <div class="message">
+                                            <p class="m-label">Click to see details</p>
+                                        </div>                                   
+                                </a>
+                            }
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+

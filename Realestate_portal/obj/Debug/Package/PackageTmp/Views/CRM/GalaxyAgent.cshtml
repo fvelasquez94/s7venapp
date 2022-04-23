@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Dashboard CRM";
+    Layout = "~/Views/Shared/_CRM_Dashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+            <!-- Begin Page Header-->
+            <div class="row">
+                <div class="page-header">
+                    <div class="d-flex align-items-center">
+                        <h2 class="page-header-title">DASHBOARD Broker</h2>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Page Header -->
+            <div class="row">
+                <div class="col-md-12" style="background-color:white">
+                    <img src="~/Content/crm/AGENT.png" style="width: 100%;" />
+                    @*<ul class="nav nav-tabs main-navigationcrm" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="i-vert-tab-1" data-toggle="tab" href="#i-v-tab-1" role="tab" aria-controls="i-v-tab-1" aria-selected="true">Notes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="i-vert-tab-2" data-toggle="tab" href="#i-v-tab-2" role="tab" aria-controls="i-v-tab-2" aria-selected="false">Properties</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="i-vert-tab-3" data-toggle="tab" href="#i-v-tab-3" role="tab" aria-controls="i-v-tab-3" aria-selected="false">Inbox</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="i-vert-tab-4" data-toggle="tab" href="#i-v-tab-4" role="tab" aria-controls="i-v-tab-4" aria-selected="false">Marketing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="i-vert-tab-5" data-toggle="tab" href="#i-v-tab-5" role="tab" aria-controls="i-v-tab-5" aria-selected="false">Calendar</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content d-flex align-items-center">
+                            <div class="tab-pane fade show active" id="i-v-tab-1" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-1">
+                                <div class="row pt-5 pl-3 pr-3">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center mb-4 custom-card" style="display:flex">
+                                        <div class="media w-100">
+                                            <div class="align-self-center mr-2">
+                                                <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <div class="files-title"><a style="color:#000" class="textfileDocs" href="/Portal/Showpdf/10" target="_blank">Lead paint disclosure</a></div>
+                                                <div class="files-number">Last update: 4/21/2020</div>
+                                                <p class="files-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed justo erat. Nullam sodales, risus at tempus pretium, nibh leo porttitor ante, id sagittis mi sapien sit amet diam. Donec mattis consectetur gravida. Vivamus libero elit, tincidunt in tortor ac, sagittis aliquam dui. Nunc quis tellus at libero lobortis iaculis.</p>
+                                            </div>
+                                            <div class="value-progress text-info">
+                                                <label class="badge badgeDocstype">Note</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center mb-4 custom-card" style="display:flex">
+                                        <div class="media w-100">
+                                            <div class="align-self-center mr-2">
+                                                <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <div class="files-title"><a style="color:#000" class="textfileDocs" href="/Portal/Showpdf/10" target="_blank">Lead paint disclosure</a></div>
+                                                <div class="files-number">Last update: 4/21/2020</div>
+                                                <p class="files-title">Ut volutpat augue ut aliquet varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus erat risus, eleifend a mi a, facilisis malesuada velit.</p>
+                                            </div>
+                                            <div class="value-progress text-info">
+                                                <label class="badge badgeDocstype">Note</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center mb-4 custom-card" style="display:flex">
+                                        <div class="media w-100">
+                                            <div class="align-self-center mr-2">
+                                                <i class="la la-newspaper-o" style="font-size:45px;color:cadetblue"></i>
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <div class="files-title"><a style="color:#000" class="textfileDocs" href="/Portal/Showpdf/10" target="_blank">Lead paint disclosure</a></div>
+                                                <div class="files-number">Last update: 4/21/2020</div>
+                                                <p class="files-title">Duis vel metus et diam pellentesque vestibulum vel at leo. Pellentesque condimentum orci sed consequat dapibus. Donec consequat lectus dolor, molestie luctus lorem lacinia at. Morbi volutpat gravida lectus, a rhoncus est semper vel. Donec augue ex, ullamcorper ut ultricies vel, ultrices et ipsum. Suspendisse condimentum ante velit.</p>
+                                            </div>
+                                            <div class="value-progress text-info">
+                                                <label class="badge badgeDocstype">Note</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="i-v-tab-2" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-2">
+                                <div class="row pt-5 pl-0 pr-0">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 justify-content-center mb-4" style="display:flex">
+                                        <div class="custom-card br-50-5 media w-100 mx-1">
+                                            <div class="media-body align-self-center">
+                                                <img src="~/Content/assets/img/smarthome/Properties.jpg" class="img-fluid br-50-5 mb-4" />
+                                                <div class="files-title">
+                                                    <a class="font-weight-600 primary-color font-size-medium" href="/Portal/Showpdf/10" target="_blank">
+                                                        Lead paint disclosure
+                                                    </a>
+                                                </div>
+                                                <div class="files-number">Stage: Sale</div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <a href="#" class="font-weight-600 primary-color">Address</a>
+                                                        <a href="#" class="font-weight-500 primary-color">TOWN street 244354</a>
+                                                    </div>
+                                                    <div class="col-6 text-align-right">
+                                                        <i class="la la-2x la-bed primary-color d-inline-block"></i>
+                                                        <a href="#" class="font-weight-600 font-size-short primary-color d-inline-block">2</a>
+                                                        <i class="la la-2x la-simplybuilt primary-color d-inline-block"></i>
+                                                        <a href="#" class="font-weight-600 font-size-short primary-color d-inline-block">2,250 sqft</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="i-v-tab-3" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-3">
+                                <div class="today">
+                                    <div class="title">CHECK</div>
+                                    <div class="new-tasks">ALL RESOURCES TO HELP YOU 2</div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="i-v-tab-4" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-4">
+                                <div class="today">
+                                    <div class="title">CHECK</div>
+                                    <div class="new-tasks">ALL RESOURCES TO HELP YOU 2</div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="i-v-tab-5" style="width:100% !important" role="tabpanel" aria-labelledby="i-vert-tab-5">
+                                <div class="today">
+                                    <div class="title">CHECK</div>
+                                    <div class="new-tasks">ALL RESOURCES TO HELP YOU 2</div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        @*<div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <nav class="side-navbar right-side-navigation box-scroll sidebar-scroll">
+                    <i class="la la-2x la-tasks primary-color d-inline-block"></i>
+                    <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Task</a>
+                    <i class="la la-2x la-plus-circle primary-color d-inline-block ml-5"></i>
+                    <ul>
+                        <li>No upcoming task</li>
+                    </ul>
+
+                    <hr />
+                    <i class="la la-2x la-file-text-o primary-color d-inline-block"></i>
+                    <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Documents</a>
+                    <i class="la la-2x la-plus-circle primary-color d-inline-block ml-5"></i>
+                    <ul>
+                        <li>No files yet</li>
+                    </ul>
+
+
+                    <hr />
+                    <i class="la la-2x la-area-chart primary-color d-inline-block"></i>
+                    <a href="#" class="font-weight-600 font-size-medium primary-color d-inline-block">Reports</a>
+                </nav>
+            </div>*@
+    </div>
+</div>
